@@ -1,0 +1,71 @@
+#MainDiv {
+
+  position: absolute;
+  z-index: 15;
+  top: 20%;
+  left: 50%;
+  margin: -100px 0 0 -150px;
+}
+
+#Stepscolor{
+  font-family: Lato;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 26px;
+  line-height: 31px;
+  color: #562A6B;
+  padding-left: 7px;
+
+}
+
+input[type="radio"]{
+  margin: 0 5px 0 10px;
+}
+
+#radio{
+    align-content: stretch;
+    padding-bottom: 10px;
+}
+
+.abc{
+  padding-left: 7px;
+  margin-bottom: -2.5rem;
+}
+
+.next{
+position: absolute;
+width: 205px;
+height: 41px;
+background: #F04F1D;
+border-radius: 4px;
+}
+
+.back
+{
+  
+  width: 114px;
+height: 41px;
+
+
+border: 1px solid #F04F1D;
+box-sizing: border-box;
+border-radius: 4px;
+
+}
+
+
+.form-control {
+  display: block;
+  width: 317px;
+  height: calc(1.5em + 0.75rem + 2px);
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
