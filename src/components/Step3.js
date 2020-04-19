@@ -4,6 +4,10 @@ import 'react-dropdown/style.css';
 const stateOptions = [
     'NSW','VIC','QU'
   ];
+
+  const countryOptions = [
+    'Australia'
+  ];
 class Step3 extends Component
 {
     back=e=>
@@ -41,7 +45,7 @@ render()
     <div>
     <label className = "abc">State</label>
     <Dropdown options={stateOptions} onChange={handleChange('stateName')}
-    value= {state.stateName} />
+    value= {state.stateName.fieldValue} />
     </div>
 
     <div>
@@ -51,7 +55,7 @@ render()
     </div>
     <div>
     <label className = "abc">Country</label>
-    <Dropdown options={stateOptions} onChange={handleChange('country')}
+    <Dropdown options={countryOptions} onChange={handleChange('country')}
     value= {state.country} />
     
     </div>

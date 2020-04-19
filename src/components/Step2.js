@@ -17,15 +17,14 @@ class Step2 extends Component {
         return (
           <React.Fragment>
             <label className="abc">
-              Please explain how long you <br/>were off work, on light duties,<br/>
-              the type of injury, and any<br/> other relevant information
+              Please explain how long you were off work, <br/>on light duties,
+              the type of injury, <br/>and any other relevant information
             </label>
             <input
               className="form-control"
               id="CompClaimDetails"
               name="CompClaimDetails"
               type="textarea"
-              placeholder=""
               value={state.CompClaimDetails}
               onChange={handleChange("CompClaimDetails")}
             />
@@ -50,7 +49,6 @@ class Step2 extends Component {
               id="CurrentPosition"
               name="CurrentPosition"
               type="text"
-              placeholder="Enter Current Position"
               value={state.CurrentPosition}
               onChange={handleChange("CurrentPosition")}
             />
@@ -61,7 +59,6 @@ class Step2 extends Component {
               id="EmpStDate"
               name="EmpStDate"
               type="date"
-              placeholder="Employment Start Date"
               value={state.EmpStDate}
               onChange={handleChange("EmpStDate")}
             />
@@ -71,7 +68,6 @@ class Step2 extends Component {
               id="Department"
               name="Department"
               type="text"
-              placeholder="Enter Department"
               value={state.Department}
               onChange={handleChange("Department")}
             />
@@ -81,7 +77,6 @@ class Step2 extends Component {
               id="LineTask"
               name="LineTask"
               type="text"
-              placeholder="Enter Line/Task"
               value={state.LineTask}
               onChange={handleChange("LineTask")}
             />
