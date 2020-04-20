@@ -3,14 +3,6 @@ import Dropdown from "react-dropdown";
 //import { Field, reduxForm } from 'redux-form'
 const options = ["Aus", "Ind", "Pak", ""];
 
-// class Errormsg extends Component{
-//   render(){
-//     return(
-//       <div className = "errorMessage">Missing or invalid fields</div>
-//     )
-//   }
-// };
-
 const Errormsg = () =>  <div className = "errorMessage">Missing or invalid fields</div>
 
 class Step1 extends Component {
@@ -29,6 +21,12 @@ class Step1 extends Component {
 
     else this.setState({submit:true}) 
   };
+
+  // continue = (e) => {
+
+  //     e.preventDefault();
+  //     this.props.nextStep();
+  // };
 
 
 

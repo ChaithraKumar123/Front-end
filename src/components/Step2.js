@@ -1,14 +1,33 @@
 import React, { Component } from "react";
 
+const Errormsg = () => (
+  <div className="errorMessage">Missing or invalid fields</div>
+);
+
 class Step2 extends Component {
+  state = { submit: false };
   back = (e) => {
     e.preventDefault();
     this.props.prevStep();
   };
+
   continue = (e) => {
-    e.preventDefault();
-    this.props.nextStep();
+    if ((
+      !(this.props.state.CompClaim === "") &&
+      this.props.state.EmpStDateisValid &&
+      this.props.state.CompClaimDetailsisValid
+    )|| this.props.state.CompClaim === "No") {
+      e.preventDefault();
+      this.props.nextStep();
+    } else this.setState({ submit: true });
   };
+
+  // continue = (e) => {
+  //   e.preventDefault();
+  //   this.props.nextStep();
+  // };
+
+
   render() {
     const { handleChange, state } = this.props;
 
@@ -17,17 +36,23 @@ class Step2 extends Component {
         return (
           <React.Fragment>
             <label className="abc">
-              Please explain how long you were off work, <br/>on light duties,
-              the type of injury, <br/>and any other relevant information
+              Please explain how long you were off work, <br />
+              on light duties, the type of injury, <br />
+              and any other relevant information
             </label>
-            <input
-              className="form-control"
-              id="CompClaimDetails"
-              name="CompClaimDetails"
-              type="textarea"
-              value={state.CompClaimDetails}
-              onChange={handleChange("CompClaimDetails")}
-            />
+
+            <div>
+              <textarea
+                className="form-control"
+                id="CompClaimDetails"
+                name="CompClaimDetails"
+                type="textarea"
+                value={state.CompClaimDetails}
+                onChange={handleChange("CompClaimDetails")}
+              ></textarea>
+            </div>
+
+            <div className="errorMessage">{state.CompClaimDetailsError}</div>
           </React.Fragment>
         );
       } else {
@@ -62,6 +87,8 @@ class Step2 extends Component {
               value={state.EmpStDate}
               onChange={handleChange("EmpStDate")}
             />
+            <div className="errorMessage">{state.EmpStDateError}</div>
+
             <label className="abc">Department</label>
             <input
               className="form-control"
@@ -105,6 +132,7 @@ class Step2 extends Component {
             No
           </div>
           {RenderCompClaim()}
+          {this.state.submit ? <Errormsg /> : null}
 
           <button className="back" onClick={this.back}>
             Back
