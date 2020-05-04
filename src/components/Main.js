@@ -2,11 +2,50 @@ import React, { Component } from "react";
 import "../App.css";
 // import 'bootstrap/dist/css/bootstrap.css';
 // import 'bootstrap/dist/css/bootstrap-theme.css';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  Redirect
+} from "react-router-dom";
+
+import { ProtectedRoute } from "./protected.route";
+
 import "react-dropdown/style.css";
 import Step1 from "./Step1";
 import Step2 from "./Step2";
 import Step3 from "./Step3";
 import Step4 from "./Step4";
+import Loginpage from "./loginpage";
+import Signup from "./signuppage";
+import Brilliant from './brilliantpage';
+
+
+
+const Auth = {
+  isAuthenticated: false,
+  authenticate(cb) {
+    this.isAuthenticated = true
+    //setTimeout(cb, 100) // fake async
+  },
+  signout(cb) {
+    this.isAuthenticated = false
+    setTimeout(cb, 100) // fake async
+  }
+}
+
+// handleChange={this.handleChange}
+// nextStep={this.nextStep}
+// state={this.state}
+
+// const PrivateRoute = ({ component: Component, ...rest }) => (
+//   <Route {...rest} render={(props) => (
+//     Auth.isAuthenticated === true
+//       ? <Component {...props} />
+//       : <Redirect to='/' />
+//   )} />
+// )
 
 class Main extends Component {
   state = {
@@ -23,11 +62,13 @@ class Main extends Component {
     middleName: "",
     DateofB: "",
     DateofBError: "",
+
     DateofBisValid: false,
     gender: "",
     genderError: "",
     mobileNumber: "",
     mobileNumberError: "",
+
     mobileNumberisValid: false,
     email: "",
     emailError: "",
@@ -90,8 +131,8 @@ class Main extends Component {
           givenNameisValid: false,
         });
         return false;
-      } else this.setState({ givenNameisValid: true });
-      return [true, "givenNameError"];
+      } else this.setState({ givenNameisValid: true, givenNameError: "" });
+      return true;
     }
 
     if (e.target.id === "surName") {
@@ -101,8 +142,8 @@ class Main extends Component {
           surNameisValid: false,
         });
         return false;
-      } else this.setState({ surNameisValid: true });
-      return [true, "surNameError"];
+      } else this.setState({ surNameisValid: true, surNameError: "" });
+      return true;
     }
 
     if (e.target.id === "DateofB") {
@@ -116,8 +157,8 @@ class Main extends Component {
             DateofBisValid: false,
           });
           return false;
-        } else this.setState({ DateofBisValid: true });
-        return [true, "DateofBError"];
+        } else this.setState({ DateofBisValid: true, DateofBError: "" });
+        return true;
       } catch (err) {
         this.setState({
           DateofBError: "Invalid date",
@@ -134,8 +175,8 @@ class Main extends Component {
           EmpStDateisValid: false,
         });
         return false;
-      } else this.setState({ EmpStDateisValid: true });
-      return [true, "EmpStDateError"];
+      } else this.setState({ EmpStDateisValid: true, EmpStDateError: "" });
+      return true;
     }
 
     if (e.target.id === "mobileNumber") {
@@ -151,8 +192,9 @@ class Main extends Component {
           mobileNumberisValid: false,
         });
         return false;
-      } else this.setState({ mobileNumberisValid: true });
-      return [true, "mobileNumberError"];
+      } else
+        this.setState({ mobileNumberisValid: true, mobileNumberError: "" });
+      return true;
     }
 
     if (e.target.id === "email") {
@@ -163,7 +205,8 @@ class Main extends Component {
           emailError: "Invalid email",
         });
         return false;
-      } else return [true, "emailError"];
+      } else this.setState({ emailError: "" });
+      return true;
     }
 
     if (e.target.id === "CompClaimDetails") {
@@ -173,8 +216,12 @@ class Main extends Component {
           CompClaimDetailsisValid: false,
         });
         return false;
-      } else this.setState({ CompClaimDetailsisValid: true });
-      return [true, "CompClaimDetailsError"];
+      } else
+        this.setState({
+          CompClaimDetailsisValid: true,
+          CompClaimDetailsError: "",
+        });
+      return true;
     }
 
     if (e.target.id === "addressLine1") {
@@ -184,8 +231,9 @@ class Main extends Component {
           addressLine1isValid: false,
         });
         return false;
-      } else this.setState({ addressLine1isValid: true });
-      return [true, "addressLine1Error"];
+      } else
+        this.setState({ addressLine1isValid: true, addressLine1Error: "" });
+      return true;
     }
     if (e.target.id === "suburb") {
       if (e.target.value.length <= 0) {
@@ -194,8 +242,8 @@ class Main extends Component {
           suburbisValid: false,
         });
         return false;
-      } else this.setState({ suburbisValid: true });
-      return [true, "suburbError"];
+      } else this.setState({ suburbisValid: true, suburbError: "" });
+      return true;
     }
 
     if (e.target.id === "postCode") {
@@ -205,8 +253,8 @@ class Main extends Component {
           postCodeisValid: false,
         });
         return false;
-      } else this.setState({ postCodeisValid: true });
-      return [true, "postCodeError"];
+      } else this.setState({ postCodeisValid: true, postCodeError: "" });
+      return true;
     }
     if (e.target.id === "height") {
       if (!(Number(e.target.value) >= 50 && Number(e.target.value) <= 250)) {
@@ -215,8 +263,8 @@ class Main extends Component {
           heightisValid: false,
         });
         return false;
-      } else this.setState({ heightisValid: true });
-      return [true, "heightError"];
+      } else this.setState({ heightisValid: true, heightError: "" });
+      return true;
     }
     if (e.target.id === "weight") {
       if (!(Number(e.target.value) >= 20 && Number(e.target.value) <= 500)) {
@@ -225,13 +273,12 @@ class Main extends Component {
           weightisValid: false,
         });
         return false;
-      } else this.setState({ weightisValid: true });
-      return [true, "weightError"];
+      } else this.setState({ weightisValid: true, weightError: "" });
+      return true;
     }
   };
 
   validateStateCountry = (e, input) => {
-    console.log("sdvsdv");
     if (input === "stateName") {
       if (e.value.length <= 0) {
         this.setState({
@@ -239,8 +286,8 @@ class Main extends Component {
           stateNameisValid: false,
         });
         return false;
-      } else this.setState({ stateNameisValid: true });
-      return [true, "stateNameError"];
+      } else this.setState({ stateNameisValid: true, stateNameError: "" });
+      return true;
     }
 
     if (input === "country") {
@@ -250,8 +297,8 @@ class Main extends Component {
           countryisValid: false,
         });
         return false;
-      } else this.setState({ countryisValid: true });
-      return [true, "countryError"];
+      } else this.setState({ countryisValid: true, countryError: "" });
+      return true;
     }
   };
 
@@ -285,33 +332,104 @@ class Main extends Component {
         )
       ) {
         const isValid = this.validator(e);
-
-        if (isValid[0]) {
-          this.setState({
-            [isValid[1]]: "",
-          });
-        }
       }
     } else {
       this.setState({
         [input]: e.value,
       });
-      if (!(input === "culturalGroup"))
-      {
+      if (!(input === "culturalGroup")) {
         const isValid = this.validateStateCountry(e, input);
-        if (isValid[0]) {
-          this.setState({
-            [isValid[1]]: "",
-          });
-        }
       }
-
-
     }
   };
 
+  // showStep = () => {
+  //   const { step } = this.state;
+  //   if (step === 0) {
+  //     return <Loginpage nextStep={this.nextStep} />;
+  //   }
+  //   if (step === 1) {
+  //     return (
+  //       <Signup
+  //         state={this.state}
+  //         handleChange={this.handleChange}
+  //         nextStep={this.nextStep}
+  //       />
+  //     );
+  //   }
+  //   if (step === 2) {
+  //     return (
+  //       <Brilliant
+  //         state={this.state}
+  //         handleChange={this.handleChange}
+  //         nextStep={this.nextStep}
+  //       />
+  //     );
+  //   }
+  //   // if (step === 1)
+  //   //   return (
+  //   //     <Step1
+  //   //       handleChange={this.handleChange}
+  //   //       nextStep={this.nextStep}
+  //   //       state={this.state}
+  //   //     />
+  //   //   );
+  //   if (step === 2)
+  //     return (
+  //       <Step2
+  //         handleChange={this.handleChange}
+  //         nextStep={this.nextStep}
+  //         prevStep={this.prevStep}
+  //         state={this.state}
+  //       />
+  //     );
+  //   if (step === 3)
+  //     return (
+  //       <Step3
+  //         handleChange={this.handleChange}
+  //         nextStep={this.nextStep}
+  //         prevStep={this.prevStep}
+  //         state={this.state}
+  //       />
+  //     );
+  //   if (step === 4)
+  //     return (
+  //       <Step4
+  //         handleChange={this.handleChange}
+  //         nextStep={this.nextStep}
+  //         prevStep={this.prevStep}
+  //         state={this.state}
+  //       />
+  //     );
+  // };
+
+  // render() {
+  //   return <div>{this.showStep()}</div>;
+  // }
+
   showStep = () => {
     const { step } = this.state;
+    // if (step === 0) {
+    //   return <Loginpage nextStep={this.nextStep} />;
+    // }
+    // if (step === 1) {
+    //   return (
+    //     <Signup
+    //       state={this.state}
+    //       handleChange={this.handleChange}
+    //       nextStep={this.nextStep}
+    //     />
+    //   );
+    // }
+    // if (step === 2) {
+    //   return (
+    //     <Brilliant
+    //       state={this.state}
+    //       handleChange={this.handleChange}
+    //       nextStep={this.nextStep}
+    //     />
+    //   );
+    // }
     if (step === 1)
       return (
         <Step1
@@ -350,7 +468,20 @@ class Main extends Component {
   };
 
   render() {
-    return <div>{this.showStep()}</div>;
+    return (
+      <Router>
+        <Switch>
+          <Route exact path="/">
+            <Loginpage />
+          </Route>
+          <Route  path="/Signup">
+            <Signup state={this.state} handleChange={this.handleChange} nextStep={this.nextStep}/>
+          </Route>
+          <ProtectedRoute path='/patientDetails' component={this.showStep}
+          />
+        </Switch>
+      </Router>
+    );
   }
 }
 

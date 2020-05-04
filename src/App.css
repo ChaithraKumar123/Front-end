@@ -41,6 +41,15 @@ background: #F04F1D;
 border-radius: 4px;
 }
 
+.login{
+  position: absolute;
+  width: 315px;
+  height: 41px;
+  background: #F04F1D;
+  border-radius: 4px;
+  
+  }
+
 .back
 {
   
@@ -76,4 +85,52 @@ border-radius: 4px;
     color: #D8000C;
     font-size: smaller;
     padding-left: 9px;
+}
+
+h1.brilliant{
+  font-size: 36px;
+  color: #562A6B;
+  text-align: center;
+}
+
+h4.hbrilliant{
+  font-size: 20px;
+  color: #562A6B;
+  text-align: center;
+  padding-bottom: 40px;
+
+}
+h4.invite{
+  color: #562A6B;
+  padding-top: 85px;
+  text-align: center;
+  margin: -8px;
+
+}
+a.create{
+  color: #562A6B;
+  text-align: center;
+  font-weight: bold;
+  font-size: 18px;
+  padding-left: 53px;
+
+}
+
+
+.brcont{
+  left:208px;
+  position: absolute;
+width: 205px;
+height: 41px;
+background: #F04F1D;
+border-radius: 4px;
+}
+
+#brilliantdiv{
+  position: absolute;
+  z-index: 15;
+  top: 20%;
+  left: 32.5%;
+
+
 }

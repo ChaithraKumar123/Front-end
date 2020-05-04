@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Dropdown from "react-dropdown";
 import "react-dropdown/style.css";
-const stateOptions = ["NSW", "VIC", "QU"];
+const stateOptions = ["QLD", "VIC", "NSW", "NT", "TAS", "ACT", "SA", "WA"];
 
 const countryOptions = ["Australia"];
 
@@ -31,10 +31,10 @@ class Step3 extends Component {
     } else this.setState({ submit: true });
   };
 
-//   continue = (e) => {
-//     e.preventDefault();
-//     this.props.nextStep();
-//   };
+  // continue = (e) => {
+  //   e.preventDefault();
+  //   this.props.nextStep();
+  // };
 
   render() {
     const { handleChange, state } = this.props;

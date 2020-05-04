@@ -4,29 +4,87 @@ const Errormsg = () => (
   <div className="errorMessage">Missing or invalid fields</div>
 );
 
-class Step4 extends Component {
-  state = { submit: false };
 
+class Step4 extends Component {
+  state = { submit: false, op:null};
   back = (e) => {
     e.preventDefault();
     this.props.prevStep();
   };
+
+  save = (e)=> {
+
+    console.log(e)
+
+  }
 
   continue = (e) => {
     if (
       !(this.props.state.handedness === "") &&
       this.props.state.heightisValid &&
       this.props.state.weightisValid    ) {
-      window.confirm("Form Completed \n Next step under construction")
+
+      
+ const schema ={
+  "schema" : {
+    "Title":this.props.state.titleOpt,
+    "FirstName": this.props.state.givenName,
+    "LastName":  this.props.state.surName,
+    "MiddleNames":  this.props.state.middleName,
+    "Email": this.props.state.email,
+    "Gender":this.props.state.gender,
+    "culturalGroup":this.props.state.culturalGroup,
+    "DateOfBirth":this.props.state.DateofB,
+    "Mobile":this.props.state.mobileNumber,
+
+    "CurrentPosition":this.props.state.CurrentPosition,
+    "EmpStartDate":this.props.state.EmpStDate,
+    "EmpDepartment":this.props.state.Department,
+    "PreviousWorkCompClaim":Number(this.props.state.CompClaim),
+    "PreviousWorkCompClaimDetails":this.props.state.CompClaimDetails,
+
+    
+    "Line1":this.props.state.addressLine1,
+    "Line2":this.props.state.addressLine2,
+    "Suburb":this.props.state.suburb,
+    "StateID":1,//this.props.state.stateName,
+    "PostCode":this.props.state.postCode,
+    "CountryID":8,
+
+    "FamilyDoctor":this.props.state.familyDoctor,
+    "LastVisit":this.props.state.lastVisit,
+    "WhyLastVisit":this.props.state.reasonOfVisit,
+    "Height":this.props.state.height,
+    "WeightKg":this.props.state.weight,
+    "Handedness":this.props.state.handedness,
+    "CreateDate": new Date()
+  }
+  }
+
+  
+  const requestOptions = {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json','Accept': 'application/json',  "Access-Control-Allow-Origin": "*","Access-Control-Allow-Methods": "GET,HEAD,OPTIONS,POST,PUT",},
+    body: JSON.stringify(schema.schema)
+};
+
+  console.log(schema.schema)
+  let op;
+  fetch('https://localhost:44338/v1/personaldetails', requestOptions)
+  .then(response => response.json())
+  .then(data => this.save(data));
+  window.confirm("Form Completed \n Next step under construction")
       // e.preventDefault();
       // this.props.nextStep();
+      console.log(op)
     } else this.setState({ submit: true });
   };
 
 
   // continue = (e) => {
   //   e.preventDefault();
-  //   this.props.nextStep();
+
+  //   //this.props.nextStep();
   // };
 
   finish = (e) => {

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Dropdown from "react-dropdown";
 //import { Field, reduxForm } from 'redux-form'
-const options = ["Aus", "Ind", "Pak", ""];
+const options = ["Australia", "India", "New Zealand",];
 
 const Errormsg = () =>  <div className = "errorMessage">Missing or invalid fields</div>
 

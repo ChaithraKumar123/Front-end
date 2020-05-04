@@ -16,10 +16,15 @@ class Step2 extends Component {
       !(this.props.state.CompClaim === "") &&
       this.props.state.EmpStDateisValid &&
       this.props.state.CompClaimDetailsisValid
-    )|| this.props.state.CompClaim === "No") {
+    )) {
       e.preventDefault();
       this.props.nextStep();
-    } else this.setState({ submit: true });
+    } else if(this.props.state.CompClaim === "0" && this.props.state.EmpStDateisValid){
+      this.setState({CompClaimDetailsisValid: true})
+      this.props.nextStep();
+
+    } 
+    else this.setState({ submit: true });
   };
 
   // continue = (e) => {
@@ -32,7 +37,7 @@ class Step2 extends Component {
     const { handleChange, state } = this.props;
 
     const RenderCompClaim = () => {
-      if (state.CompClaim === "Yes") {
+      if (state.CompClaim === "1") {
         return (
           <React.Fragment>
             <label className="abc">
@@ -116,17 +121,17 @@ class Step2 extends Component {
           <div id="radio">
             <input
               type="radio"
-              value="Yes"
+              value="1"
               id="CompClaim"
-              checked={state.CompClaim === "Yes"}
+              checked={state.CompClaim === "1"}
               onChange={handleChange("CompClaim")}
             />
             Yes
             <input
               type="radio"
-              value="No"
+              value="0"
               id="CompClaim"
-              checked={state.CompClaim === "No"}
+              checked={state.CompClaim === "0"}
               onChange={handleChange("CompClaim")}
             />
             No
