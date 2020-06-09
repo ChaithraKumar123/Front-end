@@ -108,8 +108,8 @@ class Step3 extends Component {
           </div>
 
           <div>
-            <div class="form-group">
-              <label class="abc">State</label>
+            <div className="form-group">
+              <label className="abc">State</label>
               <Dropdown
                 id="stateName"
                 options={stateOptions}
@@ -121,7 +121,7 @@ class Step3 extends Component {
           </div>
 
           <div>
-            <div class="form-group">
+            <div className="form-group">
               <label className="abc">Post Code</label>
               <input
                 type="text"
@@ -151,12 +151,12 @@ class Step3 extends Component {
 
           {this.state.submit ? <Errormsg /> : null}
 
-          <div class="btn-block prev-back-btn">
-            <button class="btn btn-outline-primary" onClick={this.back}>
+          <div className="btn-block prev-back-btn">
+            <button className="btn btn-outline-primary" onClick={this.back}>
               Back
             </button>
             <button
-              class="btn btn-primary modal-btn"
+              className="btn btn-primary modal-btn"
               data-modal-id="sampleModal"
               onClick={this.continue}
             >

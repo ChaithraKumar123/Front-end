@@ -251,7 +251,7 @@ class Step1 extends Component {
             </div>
           </div>
           <div className="form-group">
-          <label class="abc">Cultural/Ethnic Group</label>
+          <label className="abc">Cultural/Ethnic Group</label>
           </div>
           <Autocomplete
             id="combo-box-demo"

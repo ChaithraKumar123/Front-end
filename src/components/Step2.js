@@ -42,13 +42,13 @@ class Step2 extends Component {
         return (
           <React.Fragment>
             <div>
-              <div class="form-group">
-                <label class="abc">
+              <div className="form-group">
+                <label className="abc">
                   Please explain how long you were off work, on light duties,
                   the type of injury, and any other relevant information
                 </label>
                 <textarea
-                  class="form-control"
+                  className="form-control"
                   id="CompClaimDetails"
                   name="CompClaimDetails"
                   type="textarea"
@@ -168,12 +168,12 @@ class Step2 extends Component {
           {this.state.submit ? <Errormsg /> : null}
         </div>
 
-        <div class="btn-block prev-back-btn">
-          <button class="btn btn-outline-primary" onClick={this.back}>
+        <div className="btn-block prev-back-btn">
+          <button className="btn btn-outline-primary" onClick={this.back}>
             Back
           </button>
           <button
-            class="btn btn-primary modal-btn"
+            className="btn btn-primary modal-btn"
             data-modal-id="sampleModal"
             onClick={this.continue}
           >
