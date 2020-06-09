@@ -1,0 +1,35 @@
+{
+    "schema" : {
+        
+      "Title":"",
+      "FirstName": "",
+      "LastName":  "",
+      "MiddleNames": "",
+      "Email": "",
+      "Gender":"",
+      "culturalGroup":"",
+      "DateOfBirth":"",
+      "Mobile":"",
+  
+      "CurrentPosition":"",
+      "EmpStartDate":"",
+      "EmpDepartment":"",
+      "PreviousWorkCompClaim":0,
+      "PreviousWorkCompClaimDetails":"",
+      "Line1":"",
+      "Line2":"",
+      "Suburb":"",
+      "StateID":1, 
+      "PostCode":3000,
+      "CountryID":8,
+  
+      "FamilyDoctor":"",
+      "LastVisit":"",
+      "WhyLastVisit":"",
+      "Height":0,
+      "WeightKg":0,
+      "Handedness":"",
+      "CreateDate": "",
+      "KNC" : ""
+    }
+}

@@ -1,4 +1,10 @@
 import React, { Component } from "react";
+//import {schema} from ".userSchema";
+import auth from "./auth";
+import {
+  BrowserRouter as Router,
+  withRouter
+} from "react-router-dom";
 
 const Errormsg = () => (
   <div className="errorMessage">Missing or invalid fields</div>
@@ -57,7 +63,8 @@ class Step4 extends Component {
     "Height":this.props.state.height,
     "WeightKg":this.props.state.weight,
     "Handedness":this.props.state.handedness,
-    "CreateDate": new Date()
+    "CreateDate": new Date(),
+    "KNC": this.props.state.KNC
   }
   }
 
@@ -70,40 +77,48 @@ class Step4 extends Component {
 
   console.log(schema.schema)
   let op;
-  fetch('https://localhost:44338/v1/personaldetails', requestOptions)
+  fetch('https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/v1/personaldetails', requestOptions)
   .then(response => response.json())
-  .then(data => this.save(data));
-  window.confirm("Form Completed \n Next step under construction")
-      // e.preventDefault();
-      // this.props.nextStep();
-      console.log(op)
+  .then(data => {
+    if(Number(data.httpStatusCode) ===200){
+      window.confirm("Form Completed \n Next step under construction")
+    }
+    else{
+      window.confirm(data.message)
+    }
+  
+  });
+      // e.preventDefault();      // this.props.nextStep();
     } else this.setState({ submit: true });
   };
 
 
   // continue = (e) => {
   //   e.preventDefault();
-
-  //   //this.props.nextStep();
+  //   console.log("done")
+  //   auth.login(() => {this.props.history.push("/History")});
+  //  // this.props.nextStep();
   // };
 
   finish = (e) => {
     e.preventDefault();
-    this.props.nextStep();
+  //  this.props.nextStep();
   };
 
   render() {
     const { handleChange, state } = this.props;
     return (
       <div id="MainDiv">
-        <div>
-          <p id="Stepscolor">
-            Step 4 of 4 <br />
-            Medical Details
-          </p>
-
+        <div className="page-title lg">
+          <div className="title">
+            <h1>Medical Details</h1>
+            <p> Step 4 of 4 </p>
+          </div>
+        </div>
+        <div className="row">
           <div>
-            <label className="abc">Family Doctor</label>
+            <div className= "form-group">
+            <label className="abc">Family Doctor<span className="optional">Optional</span></label>
             <input
               type="text"
               className="form-control"
@@ -111,6 +126,11 @@ class Step4 extends Component {
               onChange={handleChange("familyDoctor")}
               value={state.familyDoctor}
             ></input>
+            </div>
+          </div>
+
+          <div>
+            <div className = "form-group">
             <label className="abc">Last Visit</label>
             <input
               type="date"
@@ -119,7 +139,12 @@ class Step4 extends Component {
               value={state.lastVisit}
               onChange={handleChange("lastVisit")}
             ></input>
-            <label className="abc">Reason For Visit</label>
+            </div>
+          </div>
+
+          <div>
+            <div className= "form-group">
+            <label className="abc">Reason For Visit <span className="optional">Optional</span> </label>
             <input
               type="text"
               id="reasonOfVisit"
@@ -127,6 +152,11 @@ class Step4 extends Component {
               value={state.reasonOfVisit}
               onChange={handleChange("reasonOfVisit")}
             ></input>
+            </div>
+          </div>
+
+          <div>
+            <div className= "form-group">
             <label className="abc">Height (cm)</label>
             <input
               type="text"
@@ -135,8 +165,12 @@ class Step4 extends Component {
               value={state.height}
               onChange={handleChange("height")}
             ></input>
+            </div>
             <div className="errorMessage">{state.heightError}</div>
+          </div>
 
+          <div>
+            <div className= "form-group">
             <label className="abc">Weight (kgs)</label>
             <input
               type="text"
@@ -145,52 +179,68 @@ class Step4 extends Component {
               value={state.weight}
               onChange={handleChange("weight")}
             ></input>
+            </div>
             <div className="errorMessage">{state.weightError}</div>
           </div>
 
-          <label className="abc">Handedness</label>
-          <div id="radio">
+            <div className="form-group custom-radio-wrapper">
+
+            <label className="abc">Handedness</label>
+            <div className="custom-radio rounded">
             <input
+              className="custom-input"
               id="handedness"
               type="radio"
               value="Left"
               checked={state.handedness === "Left"}
               onChange={handleChange("handedness")}
             />
-            Left
+            <span>Left</span>
+            </div>
+
+            <div className="custom-radio rounded">
             <input
+            className="custom-input"
               id="handedness"
               type="radio"
               value="Right"
               checked={state.handedness === "Right"}
               onChange={handleChange("handedness")}
             />
-            Right
+            <span>Right</span>
+            </div>
+
+            <div className="custom-radio rounded">
             <input
+            className="custom-input"
               id="handedness"
               type="radio"
               value="Ambidextrous"
               checked={state.handedness === "Ambidextrous"}
               onChange={handleChange("handedness")}
             />
-            Ambidextrous
-          </div>
+            <span>Ambidextrous</span>
+            </div>
+            </div>
           <div className="errorMessage">{state.handednessError}</div>
         </div>
+
         {this.state.submit ? <Errormsg /> : null}
 
-        <button className="back" onClick={this.back}>
-          Back
-        </button>
-        <button
-          className="next"
-          onClick={this.continue}
-        >
-          Finish
-          {/* should implete this feature and navigation */}
-        </button>
+       <div class="btn-block prev-back-btn">
+          <button class="btn btn-outline-primary" onClick={this.back}>
+            Back
+          </button>
+          <button
+            class="btn btn-primary modal-btn"
+            data-modal-id="sampleModal"
+            onClick={this.continue}
+          >
+            Finish
+          </button>
+        </div>
       </div>
     );
   }
 }
-export default Step4;
+export default withRouter(Step4);

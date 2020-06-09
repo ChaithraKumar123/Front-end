@@ -6,9 +6,16 @@ import {
   Switch,
   Route,
   Link,
-  withRouter
+  withRouter,
 } from "react-router-dom";
 import { CognitoUser, AuthenticationDetails } from "amazon-cognito-identity-js";
+import { Ouroboro } from "react-spinners-css";
+
+const IsLoading = () => (
+  <div id="loadingCiricle">
+    <Ouroboro color="#F04F1D" size={200} />
+  </div>
+);
 
 class Loginpage extends Component {
   state = {
@@ -19,101 +26,193 @@ class Loginpage extends Component {
     usernameErrvalid: false,
     passwordErr: "",
     passwordErrvalid: false,
-    authErr: ""
-
+    authErr: "",
   };
 
-  
-  continue = (e) => {
+  returnedUserOp = (data) => {
+    console.log(data);
+    if (data.ok) {
+      this.setState({ authErr: "" });
+      this.setState({ submit: false });
 
+      auth.login(() => {
+        this.props.history.push("/patientDetails");
+      });
+    } else {
+      this.setState({ authErr: "login failed" });
+      this.setState({ submit: false });
+    }
+  };
+
+  authenticate = (e) => {
+    console.log(e);
+    if (e.httpStatusCode !== 200) {
+      window.alert(e.message);
+      return;
+    }
+    const requestOptions = {
+      method: "GET",
+      headers: { Authorization: "Bearer " + e.authenticationResult.idToken },
+    };
+
+    fetch("https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/userAuth", requestOptions)
+      //  .then((response) => response.json())
+      .then((data) => this.returnedUserOp(data));
+  };
+
+  continue = (e) => {
     e.preventDefault();
-    this.setState({authErr: ""})
+    this.setState({ authErr: "" });
     const isValid = this.loginVAlidation(e);
     const passVal = this.passVal(e);
 
     if (isValid && passVal) {
-     // UserPool.signUp()
+      // UserPool.signUp()
       //this.props.nextStep();
-      console.log("logging in")
+      this.setState({ submit: true });
+      console.log("logging in");
 
-      const user = new CognitoUser({
-        Username: this.state.userEmPh,
-        Pool: UserPool
-      });
-
-      const authDetails = new AuthenticationDetails({
-        Username: this.state.userEmPh,
-        Password: this.state.pass
-      });
-
-      user.authenticateUser(authDetails, {
-        onSuccess: data => {
-          console.log("onSuccess:", data);
-          this.setState({authErr: ""})
-          auth.login(() => {this.props.history.push("/patientDetails");})
-          //this.props.nextStep();
+      const schema = {
+        schema: {
+          Email: this.state.userEmPh,
+          Password: this.state.pass,
         },
-  
-        onFailure: err => {
-          console.error("onFailure:", err);
-          this.setState({authErr: err.message})
+      };
+
+      const requestOptions = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "GET,HEAD,OPTIONS,POST,PUT",
         },
-  
-        newPasswordRequired: data => {
-          console.log("newPasswordRequired:", data);
-        }
-      });
+        body: JSON.stringify(schema.schema),
+      };
 
+      console.log(schema.schema);
+      let op;
+      fetch("https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/signin", requestOptions)
+        .then((response) => response.json())
+        .then((data) => this.authenticate(data))
+        .then(this.setState({ submit: false }));
 
+      // const user = new CognitoUser({
+      //   Username: this.state.userEmPh,
+      //   Pool: UserPool,
+      // });
+
+      // const authDetails = new AuthenticationDetails({
+      //   Username: this.state.userEmPh,
+      //   Password: this.state.pass,
+      // });
     }
-
-
-
-     
   };
   passVal = (e) => {
-
-    if (this.state.pass.length === 0){
+    if (this.state.pass.length === 0) {
       this.setState({
         passwordErr: "Please enter you password",
       });
       return false;
-    }
-    else{
-      this.setState({ passwordErrvalid: true,  passwordErr: ""});
+    } else {
+      this.setState({ passwordErrvalid: true, passwordErr: "" });
       return true;
     }
-  }
-  loginVAlidation = (e) => {
-      var phno = /[+]\d{11}$/;
-      var em = /^\S+@\S+\.\S+$/;
-      if ( (this.state.userEmPh.match(phno) && this.state.userEmPh.toString().startsWith("+61")) || (this.state.userEmPh.match(em))){
-        this.setState({ usernameErrvalid: true, usernameErr: "" });
-        return true;
-      }
-      else if(this.state.userEmPh ==="")
-      {
-        this.setState({
-          usernameErr: "Required field",
-        });
-        return false;
-
-      } 
-      else {
-        this.setState({
-          usernameErr: "Invalid input",
-        });
-        return false;
-      }
-
   };
-
-
+  loginVAlidation = (e) => {
+    var phno = /[+]\d{11}$/;
+    var em = /^\S+@\S+\.\S+$/;
+    if (
+      (this.state.userEmPh.match(phno) &&
+        this.state.userEmPh.toString().startsWith("+61")) ||
+      this.state.userEmPh.match(em)
+    ) {
+      this.setState({ usernameErrvalid: true, usernameErr: "" });
+      return true;
+    } else if (this.state.userEmPh === "") {
+      this.setState({
+        usernameErr: "Required field",
+      });
+      return false;
+    } else {
+      this.setState({
+        usernameErr: "Invalid input",
+      });
+      return false;
+    }
+  };
 
   render() {
     return (
       <div id="MainDiv">
-        <div>
+        <div className="page-title lg">
+          <div className="title">
+            <h1>Welcome!</h1>
+          </div>
+        </div>
+        {this.state.submit === true ? <IsLoading /> : null}
+        <div style= {{"textAlignLast": "center"}}>
+        <img src={require("./workhealthy.png")} height = "250px" />
+        </div>
+        <div className="row">
+          <div>
+            <div className="form-group">
+              <label className="abc">Email or Phone number</label>
+              <input
+                className="form-control"
+                id="userEmPh"
+                name="userEmPh"
+                type="text"
+                value={this.state.userEmPh}
+                // onChange={this.handleChange}
+                onChange={(event) =>
+                  this.setState({ userEmPh: event.target.value })
+                }
+              />
+              <div className="errorMessage">{this.state.usernameErr}</div>
+            </div>
+          </div>
+          <div>
+            <div className="form-group">
+              <label className="abc">Password</label>
+              <input
+                className="form-control"
+                id="pass"
+                name="pass"
+                type="password"
+                value={this.state.pass}
+                onChange={(event) =>
+                  this.setState({ pass: event.target.value })
+                }
+                //  onChange={(event) => this.setState({password:event.target.value})}
+              />
+              <div className="errorMessage">{this.state.passwordErr}</div>
+              <div className="errorMessage">{this.state.authErr}</div>
+            </div>
+            <div className="btn-block">
+              <button
+                className="btn btn-primary btn-block"
+                onClick={this.continue}
+              >
+                Login
+              </button>
+            </div>
+          </div>
+          <div className="forg">
+            <Link className="passwordForgot" to="/ForgotPassword">
+              Forgot Password?
+            </Link>
+          </div>
+          <div>
+            <h4 className="invite"> Haven't been invited?</h4>
+            <Link className="create" to="/Signup">
+              Create your own account
+            </Link>
+          </div>
+        </div>
+
+        {/* <div className="loginpage">
+          {this.state.submit === true ? <IsLoading /> : null}
           <label className="abc">Email or Phone number</label>
           <div>
             <input
@@ -122,8 +221,11 @@ class Loginpage extends Component {
               name="userEmPh"
               type="text"
               value={this.state.userEmPh}
-             // onChange={this.handleChange}
-              onChange={(event) => this.setState({userEmPh:event.target.value})}/>
+              // onChange={this.handleChange}
+              onChange={(event) =>
+                this.setState({ userEmPh: event.target.value })
+              }
+            />
             <div className="errorMessage">{this.state.usernameErr}</div>
 
             <label className="abc">Password</label>
@@ -133,7 +235,7 @@ class Loginpage extends Component {
               name="pass"
               type="password"
               value={this.state.pass}
-              onChange={(event) =>this.setState({ pass: event.target.value })}
+              onChange={(event) => this.setState({ pass: event.target.value })}
               //  onChange={(event) => this.setState({password:event.target.value})}
             />
             <div className="errorMessage">{this.state.passwordErr}</div>
@@ -141,17 +243,21 @@ class Loginpage extends Component {
             <button className="login" onClick={this.continue}>
               Login
             </button>
-
+            <div className="forg">
+              <Link className="passwordForgot" to="/ForgotPassword">
+                Forgot Password?
+              </Link>
+            </div>
             <div>
-            <h4 className="invite" > Haven't been invited?</h4>
-            <Link className = "create" to="/Signup">Create your own account</Link>
-
+              <h4 className="invite"> Haven't been invited?</h4>
+              <Link className="create" to="/Signup">
+                Create your own account
+              </Link>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
     );
   }
 }
 export default withRouter(Loginpage);
-

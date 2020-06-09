@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import "../App.css";
+
 // import 'bootstrap/dist/css/bootstrap.css';
 // import 'bootstrap/dist/css/bootstrap-theme.css';
 import {
@@ -7,7 +8,7 @@ import {
   Switch,
   Route,
   Link,
-  Redirect
+  Redirect,
 } from "react-router-dom";
 
 import { ProtectedRoute } from "./protected.route";
@@ -19,21 +20,34 @@ import Step3 from "./Step3";
 import Step4 from "./Step4";
 import Loginpage from "./loginpage";
 import Signup from "./signuppage";
-import Brilliant from './brilliantpage';
+import Brilliant from "./brilliantpage";
+import ForgotPassword from "./ForgotPassword";
+import History from "../patientHistory";
 
+import BodyImageMain from '../components/InjuryDetailsModule/BodyImageMain'
+import CoreMedicalHistory from '../components/PatientIntakeModules/CoreMedicalHistory'
+import CorePsychologicalModule from '../components/PatientIntakeModules/CorePsychologicalModule'
+import RedFlagModule from '../components/PatientIntakeModules/RedFlagModule'
+import CoreLifeStyleModule from '../components/PatientIntakeModules/CoreLifeStyleModule'
+import ManualHandling from '../components/PatientIntakeModules/ManualHandling'
+import IndustrySpecificModule from '../components/PatientIntakeModules/IndustrySpecificModule'
+import FamilyHistoryModule from '../components/PatientIntakeModules/FamilyHistoryModule'
+import MusculoskeletonModule from '../components/PatientIntakeModules/Musculoskeleton_Module'
+import OreboModule from '../components/PatientIntakeModules/OreboModule'
 
+import {Navbar,Container,Nav,NavDropdown} from 'react-bootstrap'
 
 const Auth = {
   isAuthenticated: false,
   authenticate(cb) {
-    this.isAuthenticated = true
+    this.isAuthenticated = true;
     //setTimeout(cb, 100) // fake async
   },
   signout(cb) {
-    this.isAuthenticated = false
-    setTimeout(cb, 100) // fake async
-  }
-}
+    this.isAuthenticated = false;
+    setTimeout(cb, 100); // fake async
+  },
+};
 
 // handleChange={this.handleChange}
 // nextStep={this.nextStep}
@@ -114,6 +128,11 @@ class Main extends Component {
     handedness: "",
     //
     errormsg: "",
+    KNC: "",
+  };
+
+  kncset = (e) => {
+    this.setState({ KNC: e });
   };
 
   nextStep = () => {
@@ -310,9 +329,18 @@ class Main extends Component {
   };
 
   handleChange = (input) => (e) => {
-    if (e.target) {
+    if (input == "culturalGroup") {
       this.setState({
-        [input]: e.target.value,
+        [input]: e.target.textContent,
+      });
+    }
+    if (e.target) {
+      var transfer = e.target.value;
+      if (input == "culturalGroup" || input == "country") {
+        transfer = e.target.textContent;
+      }
+      this.setState({
+        [input]: transfer,
       });
       if (
         !(
@@ -359,11 +387,11 @@ class Main extends Component {
   //   }
   //   if (step === 2) {
   //     return (
-  //       <Brilliant
-  //         state={this.state}
-  //         handleChange={this.handleChange}
-  //         nextStep={this.nextStep}
-  //       />
+  // <Brilliant
+  //   state={this.state}
+  //   handleChange={this.handleChange}
+  //   nextStep={this.nextStep}
+  // />
   //     );
   //   }
   //   // if (step === 1)
@@ -467,6 +495,10 @@ class Main extends Component {
       );
   };
 
+  successPage = () => {
+    return <Brilliant handleChange={this.handleChange} />;
+  };
+
   render() {
     return (
       <Router>
@@ -474,11 +506,63 @@ class Main extends Component {
           <Route exact path="/">
             <Loginpage />
           </Route>
-          <Route  path="/Signup">
-            <Signup state={this.state} handleChange={this.handleChange} nextStep={this.nextStep}/>
+          <Route path="/Signup">
+            <Signup
+              state={this.state}
+              handleChange={this.handleChange}
+              kncset={this.kncset}
+            />
           </Route>
-          <ProtectedRoute path='/patientDetails' component={this.showStep}
-          />
+          <Route path="/ForgotPassword">
+            <ForgotPassword
+              handleChange={this.handleChange}
+              state={this.state}
+            />
+          </Route>
+          <ProtectedRoute path="/patientDetails" component={this.showStep} />
+          <ProtectedRoute path="/success" component={this.successPage} />
+
+          <Route path="/History">
+            <History></History>
+          </Route>
+
+          <Switch>
+            <Route path="/OreboModule" component={OreboModule}></Route>
+            <Route path="/painIndicator" component={BodyImageMain}></Route>
+            <Route
+              path="/CoreMedicalHistory"
+              component={CoreMedicalHistory}
+            ></Route>
+
+            <Route
+              path="/CorePsychologicalModule"
+              component={CorePsychologicalModule}
+            ></Route>
+
+            <Route path="/RedFlagModule" component={RedFlagModule}></Route>
+
+            <Route
+              path="/CoreLifeStyleModule"
+              component={CoreLifeStyleModule}
+            ></Route>
+
+            <Route path="/ManualHandling" component={ManualHandling}></Route>
+
+            <Route
+              path="/IndustrySpecificModule"
+              component={IndustrySpecificModule}
+            ></Route>
+
+            <Route
+              path="/FamilyHistoryModule"
+              component={FamilyHistoryModule}
+            ></Route>
+
+            <Route
+              path="/MusculoskeletonModule"
+              component={MusculoskeletonModule}
+            ></Route>
+          </Switch>
         </Switch>
       </Router>
     );
