@@ -187,7 +187,7 @@ class Step1 extends Component {
               <input
                 type="radio"
                 className="custom-input"
-                name="radio1"
+                name="radio2"
                 value="Male"
                 id="gender"
                 checked={state.gender === "Male"}
@@ -199,7 +199,7 @@ class Step1 extends Component {
               <input
                 type="radio"
                 className="custom-input"
-                name="radio1"
+                name="radio2"
                 value="Female"
                 id="gender"
                 checked={state.gender === "Female"}
@@ -212,7 +212,7 @@ class Step1 extends Component {
               <input
                 type="radio"
                 className="custom-input"
-                name="radio1"
+                name="radio2"
                 value="U"
                 id="gender"
                 checked={state.gender === "U"}
