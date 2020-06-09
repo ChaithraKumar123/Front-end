@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 //import {schema} from ".userSchema";
+import { format } from "date-fns";
+
 import auth from "./auth";
 import {
   BrowserRouter as Router,
@@ -134,6 +136,7 @@ class Step4 extends Component {
             <label className="abc">Last Visit</label>
             <input
               type="date"
+              max={ format(new Date(), "yyyy-MM-dd")}
               id="lastVisit"
               className="form-control"
               value={state.lastVisit}

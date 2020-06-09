@@ -11,6 +11,7 @@
     "amazon-cognito-identity-js": "^4.2.2",
     "axios": "^0.19.2",
     "bootstrap": "^3.4.1",
+    "date-fns": "^2.14.0",
     "email-validator": "^2.0.4",
     "material-ui": "^0.20.2",
     "react": "^16.13.1",

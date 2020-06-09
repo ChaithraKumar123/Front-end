@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { format } from "date-fns";
 
 const Errormsg = () => (
   <div className="errorMessage">Missing or invalid fields</div>
@@ -96,6 +97,7 @@ class Step2 extends Component {
                 id="EmpStDate"
                 name="EmpStDate"
                 type="date"
+                max={ format(new Date(), "yyyy-MM-dd")}
                 value={state.EmpStDate}
                 onChange={handleChange("EmpStDate")}
               />
