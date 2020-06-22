@@ -325,7 +325,7 @@ class Main extends Component {
 
   validateStateCountry = (e, input) => {
     if (input === "stateName") {
-      if (e.value.length <= 0) {
+      if (e.target.textContent.length <= 0) {
         this.setState({
           stateNameError: "Required Field",
           stateNameisValid: false,
@@ -338,7 +338,7 @@ class Main extends Component {
     
 
     if (input === "country") {
-      if (e.value.length <= 0) {
+      if (e.target.textContent.length <= 0) {
         this.setState({
           countryError: "Required Field",
           countryisValid: false,
@@ -384,6 +384,9 @@ class Main extends Component {
         this.setState({
           stateCode: this.state.stateOpts[index].value,
         });
+
+        const isValid = this.validateStateCountry(e, input);
+
   
         
       }
@@ -399,6 +402,7 @@ class Main extends Component {
         this.setState({
           countryCode: this.state.Countryoptions[index].value,
         });
+        const isValid = this.validateStateCountry(e, input);
 
       }
 
