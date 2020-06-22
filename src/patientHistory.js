@@ -15,54 +15,35 @@ import {Navbar,Container,Nav,NavDropdown} from 'react-bootstrap'
 
 
 function History() {
-  
   return (
-    <div className="App container">
-       <Navbar expand="lg" variant="light" bg="light">
+
+    <div id="MainDiv">
+
+<div>
+       <Navbar>
       <Container>
     <Nav.Link href="/painIndicator" >Pain Indicator</Nav.Link>
   
     
-    <NavDropdown title="Medical History" id="nav-dropdown">
+    <NavDropdown title="Medical History">
     <Nav.Link href="/CoreMedicalHistory" >CoreMedicalHistory</Nav.Link>
     <Nav.Link href="/CorePsychologicalModule" >CorePsychologicalModule</Nav.Link>
     <Nav.Link href="/RedFlagModule" >RedFlagModule</Nav.Link>
     <Nav.Link href="/CoreLifeStyleModule" >CoreLifeStyleModule</Nav.Link>
-    <Nav.Link href="/ManualHandling" >ManualHandling</Nav.Link>
+    <Nav.Link href="/ManualHandling">ManualHandling</Nav.Link>
     <Nav.Link href="/IndustrySpecificModule" >IndustrySpecificModule</Nav.Link>
     <Nav.Link href="/FamilyHistoryModule" >FamilyHistoryModule</Nav.Link>
     </NavDropdown>
     
     <Nav.Link href="/MusculoskeletonModule" >MusculoskeletonModule</Nav.Link>
+    
     <Nav.Link href="/OreboModule" >OreboModule</Nav.Link>
   </Container>
-</Navbar>
-    {/* <BrowserRouter>
-      <Container>
-     <Switch>
-     <Route path="/OreboModule" component={OreboModule} ></Route>
-     <Route path="/painIndicator" component={BodyImageMain} ></Route>
-    <Route path="/CoreMedicalHistory" component={CoreMedicalHistory} ></Route>
-     
-     <Route path="/CorePsychologicalModule" component={CorePsychologicalModule} ></Route>
-     
-     <Route path="/RedFlagModule" component={RedFlagModule} ></Route>
-     
-     <Route path="/CoreLifeStyleModule" component={CoreLifeStyleModule} ></Route>
-     
-     <Route path="/ManualHandling" component={ManualHandling} ></Route>
-     
-     <Route path="/IndustrySpecificModule" component={IndustrySpecificModule} ></Route>
-    
-     <Route path="/FamilyHistoryModule" component={FamilyHistoryModule} ></Route>
-    
-     <Route path="/MusculoskeletonModule" component={MusculoskeletonModule} ></Route>
-     </Switch>
-     </Container>
-     </BrowserRouter>  */}
-     
-    
+</Navbar>    
    </div>
+
+    </div>
+
 
     
     

@@ -120,7 +120,7 @@ componentDidMount()
 
         const temp = [];
         axios
-        .get('https://localhost:44338/api/POBdetails',
+        .get('https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/POBdetails',
         {
             params: { value : this.state.POBPatientID }
         }) 
@@ -209,7 +209,7 @@ componentDidMount()
     {
         const save=this.state.InjuryRegion[step1-1]
         axios
-        .post('https://localhost:44338/api/POBdetails', 
+        .post('https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/POBdetails', 
         {
         
             POBPatientID :this.state.POBPatientID, 

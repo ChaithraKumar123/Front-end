@@ -26,6 +26,10 @@ class Step4 extends Component {
 
   }
 
+  // componentDidMount() {
+  //   this.props.stepReset()
+  // }
+
   continue = (e) => {
     if (
       !(this.props.state.handedness === "") &&
@@ -41,7 +45,7 @@ class Step4 extends Component {
     "MiddleNames":  this.props.state.middleName,
     "Email": this.props.state.email,
     "Gender":this.props.state.gender,
-    "culturalGroup":this.props.state.culturalGroup,
+    "culturalGroup":this.props.state.ethnicityCode,
     "DateOfBirth":this.props.state.DateofB,
     "Mobile":this.props.state.mobileNumber,
 
@@ -55,18 +59,18 @@ class Step4 extends Component {
     "Line1":this.props.state.addressLine1,
     "Line2":this.props.state.addressLine2,
     "Suburb":this.props.state.suburb,
-    "StateID":1,//this.props.state.stateName,
+    "StateID":this.props.state.stateCode,
     "PostCode":this.props.state.postCode,
-    "CountryID":8,
+    "CountryID":this.props.state.countryCode,
 
     "FamilyDoctor":this.props.state.familyDoctor,
     "LastVisit":this.props.state.lastVisit,
-    "WhyLastVisit":this.props.state.reasonOfVisit,
+    "WhyLastVisit":this.props.state.reasonOfVisit ? this.props.state.reasonOfVisit: "" ,
     "Height":this.props.state.height,
     "WeightKg":this.props.state.weight,
     "Handedness":this.props.state.handedness,
     "CreateDate": new Date(),
-    "KNC": this.props.state.KNC
+    "KNC": this.props.state.KNC ? this.props.state.KNC : localStorage.getItem("KNC")
   }
   }
 
@@ -83,14 +87,18 @@ class Step4 extends Component {
   .then(response => response.json())
   .then(data => {
     if(Number(data.httpStatusCode) ===200){
-      window.confirm("Form Completed \n Next step under construction")
+      window.confirm("Form Completed")
+      localStorage.removeItem("confToken")
+      this.props.stepReset()
+      auth.login(() => {
+        this.props.history.push("/Home");
+      });
     }
     else{
       window.confirm(data.message)
     }
   
   });
-      // e.preventDefault();      // this.props.nextStep();
     } else this.setState({ submit: true });
   };
 

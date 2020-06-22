@@ -4,9 +4,10 @@ import "react-dropdown/style.css";
 
 import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
-const stateOptions = ["QLD", "VIC", "NSW", "NT", "TAS", "ACT", "SA", "WA"];
+const stateOptions = [{text: "QLD", value: 1}, {text: "VIC", value: 2},
+{text: "NSW", value: 3},{text: "NT", value: 4},{text: "TAS", value: 5},{text: "ACT", value: 6},{text: "SA", value: 7},
+{text: "WA", value: 8} ];
 
-const countryOptions = ["Australia"];
 
 const Errormsg = () => (
   <div className="errorMessage">Missing or invalid fields</div>
@@ -40,6 +41,9 @@ class Step3 extends Component {
 
   saveEthnicity = (data) => {
     this.setState({ Countryoptions: data });
+    this.props.countryCodef(data);
+    this.props.stateCodef(stateOptions);
+
     console.log(this.Countryoptions);
   };
   componentDidMount() {
@@ -110,11 +114,25 @@ class Step3 extends Component {
           <div>
             <div className="form-group">
               <label className="abc">State</label>
-              <Dropdown
+              {/* <Dropdown
                 id="stateName"
                 options={stateOptions}
                 onChange={handleChange("stateName")}
                 value={state.stateName}
+              /> */}
+              <Autocomplete
+                id="combo-box-demo"
+                style={{ width: "646px", height: "38px" }}
+                options={stateOptions}
+                getOptionLabel={(option) => option.text}
+                onChange={handleChange("stateName")}
+                renderInput={(params) => (
+                  <TextField
+                    style={{ width: "646px", height: "38px" }}
+                    variant="outlined"
+                    {...params}
+                  />
+                )}
               />
             </div>
             <div className="errorMessage">{state.stateNameError}</div>

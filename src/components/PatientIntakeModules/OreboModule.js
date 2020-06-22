@@ -34,7 +34,7 @@ class OreboModule extends Component
     componentDidMount()
     {
         axios
-        .get('https://localhost:44338/api/orebrodetails',
+        .get('https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/orebrodetails',
         {
             params: { value : this.state.entityId }
         }) 
@@ -83,7 +83,7 @@ completeForm=event=>{
     alert('Submitted')
 
     axios
-        .post('https://localhost:44338/api/orebrodetails', 
+        .post('https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/orebrodetails', 
         {
             Q1: this.state.current_pain,
             Q2: this.state.rate_pain,

@@ -3,6 +3,7 @@ import UserPool from "../UserPool";
 import auth from "./auth";
 import {
   BrowserRouter as Router,
+  Redirect,
   Switch,
   Route,
   Link,
@@ -36,7 +37,7 @@ class Loginpage extends Component {
       this.setState({ submit: false });
 
       auth.login(() => {
-        this.props.history.push("/patientDetails");
+        this.props.history.push("/Home");
       });
     } else {
       this.setState({ authErr: "login failed" });
@@ -54,6 +55,12 @@ class Loginpage extends Component {
       method: "GET",
       headers: { Authorization: "Bearer " + e.authenticationResult.idToken },
     };
+
+    localStorage.setItem('login', e.authenticationResult.idToken)
+
+    var jwtDecode = require('jwt-decode');
+    var decoded = jwtDecode( e.authenticationResult.idToken);
+    localStorage.setItem('KNC', decoded.sub)
 
     fetch("https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/userAuth", requestOptions)
       //  .then((response) => response.json())
@@ -97,15 +104,6 @@ class Loginpage extends Component {
         .then((data) => this.authenticate(data))
         .then(this.setState({ submit: false }));
 
-      // const user = new CognitoUser({
-      //   Username: this.state.userEmPh,
-      //   Pool: UserPool,
-      // });
-
-      // const authDetails = new AuthenticationDetails({
-      //   Username: this.state.userEmPh,
-      //   Password: this.state.pass,
-      // });
     }
   };
   passVal = (e) => {
@@ -143,106 +141,67 @@ class Loginpage extends Component {
   };
 
   render() {
-    return (
-      <div id="MainDiv">
-        <div className="page-title lg">
-          <div className="title">
-            <h1>Welcome!</h1>
-          </div>
-        </div>
-        {this.state.submit === true ? <IsLoading /> : null}
-        <div style= {{"textAlignLast": "center"}}>
-        <img src={require("./workhealthy.png")} height = "250px" />
-        </div>
-        <div className="row">
-          <div>
-            <div className="form-group">
-              <label className="abc">Email or Phone number</label>
-              <input
-                className="form-control"
-                id="userEmPh"
-                name="userEmPh"
-                type="text"
-                value={this.state.userEmPh}
-                // onChange={this.handleChange}
-                onChange={(event) =>
-                  this.setState({ userEmPh: event.target.value })
-                }
-              />
-              <div className="errorMessage">{this.state.usernameErr}</div>
-            </div>
-          </div>
-          <div>
-            <div className="form-group">
-              <label className="abc">Password</label>
-              <input
-                className="form-control"
-                id="pass"
-                name="pass"
-                type="password"
-                value={this.state.pass}
-                onChange={(event) =>
-                  this.setState({ pass: event.target.value })
-                }
-                //  onChange={(event) => this.setState({password:event.target.value})}
-              />
-              <div className="errorMessage">{this.state.passwordErr}</div>
-              <div className="errorMessage">{this.state.authErr}</div>
-            </div>
-            <div className="btn-block">
-              <button
-                className="btn btn-primary btn-block"
-                onClick={this.continue}
-              >
-                Login
-              </button>
-            </div>
-          </div>
-          <div className="forg">
-            <Link className="passwordForgot" to="/ForgotPassword">
-              Forgot Password?
-            </Link>
-          </div>
-          <div>
-            <h4 className="invite"> Haven't been invited?</h4>
-            <Link className="create" to="/Signup">
-              Create your own account
-            </Link>
-          </div>
-        </div>
 
-        {/* <div className="loginpage">
+    if(localStorage.getItem("login") === null)
+    {
+
+      return (
+        <div id="MainDiv">
+          <div className="page-title lg">
+            <div className="title">
+              <h1>Welcome!</h1>
+            </div>
+          </div>
+          <div>
           {this.state.submit === true ? <IsLoading /> : null}
-          <label className="abc">Email or Phone number</label>
-          <div>
-            <input
-              className="form-control"
-              id="userEmPh"
-              name="userEmPh"
-              type="text"
-              value={this.state.userEmPh}
-              // onChange={this.handleChange}
-              onChange={(event) =>
-                this.setState({ userEmPh: event.target.value })
-              }
-            />
-            <div className="errorMessage">{this.state.usernameErr}</div>
-
-            <label className="abc">Password</label>
-            <input
-              className="form-control"
-              id="pass"
-              name="pass"
-              type="password"
-              value={this.state.pass}
-              onChange={(event) => this.setState({ pass: event.target.value })}
-              //  onChange={(event) => this.setState({password:event.target.value})}
-            />
-            <div className="errorMessage">{this.state.passwordErr}</div>
-            <div className="errorMessage">{this.state.authErr}</div>
-            <button className="login" onClick={this.continue}>
-              Login
-            </button>
+          </div>
+          <div style= {{"textAlignLast": "center"}}>
+          <img src={require("./workhealthy.png")} height = "250px" />
+          </div>
+          <div className="row">
+            <div>
+              <div className="form-group">
+                <label className="abc">Email or Phone number</label>
+                <input
+                  className="form-control"
+                  id="userEmPh"
+                  name="userEmPh"
+                  type="text"
+                  value={this.state.userEmPh}
+                  // onChange={this.handleChange}
+                  onChange={(event) =>
+                    this.setState({ userEmPh: event.target.value })
+                  }
+                />
+                <div className="errorMessage">{this.state.usernameErr}</div>
+              </div>
+            </div>
+            <div>
+              <div className="form-group">
+                <label className="abc">Password</label>
+                <input
+                  className="form-control"
+                  id="pass"
+                  name="pass"
+                  type="password"
+                  value={this.state.pass}
+                  onChange={(event) =>
+                    this.setState({ pass: event.target.value })
+                  }
+                  //  onChange={(event) => this.setState({password:event.target.value})}
+                />
+                <div className="errorMessage">{this.state.passwordErr}</div>
+                <div className="errorMessage">{this.state.authErr}</div>
+              </div>
+              <div className="btn-block">
+                <button
+                  className="btn btn-primary btn-block"
+                  onClick={this.continue}
+                >
+                  Login
+                </button>
+              </div>
+            </div>
             <div className="forg">
               <Link className="passwordForgot" to="/ForgotPassword">
                 Forgot Password?
@@ -255,9 +214,20 @@ class Loginpage extends Component {
               </Link>
             </div>
           </div>
-        </div> */}
-      </div>
-    );
+  
+        </div>
+      )
+    }
+
+    else{
+      auth.login(() => {
+        this.props.history.push("/Home");
+      });
+      return(
+        <Redirect to="/Home" push/>
+      )
+    }
+
   }
 }
 export default withRouter(Loginpage);

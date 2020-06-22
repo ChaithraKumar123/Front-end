@@ -76,9 +76,71 @@ class IndustrySpecificModule extends Component
         const isValid = this.validate();
         if (isValid)
         {
-            this.setState(this.initialState);
-            alert('Submitted')
+          //  this.setState(this.initialState);
+
+
+          const Signupschema = {
+            schema: {
+                KNC: this.props.state.KNC,
+                RespiratoryIllness:  this.state.respiratory === "No" ? "" : this.state.respiratory + ": " + this.state.respiratory_details,
+                Hearing:this.state.hearing === "No"  ? "" :this.state.hearing + ": " + this.state.hearing_details ,
+                Eye: this.state.eye_disorder === "No" ? "" : this.state.eye_disorder + ": " + this.state.eye_disorder_details,
+                Hernia: this.state.hernia_details,
+                FoodBorneIllness: this.state.food_borne_details,
+                SkinDisease: this.state.skin_disease_details,
+                ExposedChemicals: this.state.exposed === "Chemicals" ? this.state.exposed_details : "",
+                ExposedAsbestos: this.state.exposed === "Asbestos" ? this.state.exposed_details : "",
+                ExposedNoise: this.state.exposed === "Noise" ? this.state.exposed_details : "",
+                ExposedRadiation: this.state.exposed === "Radiation" ? this.state.exposed_details : "",
+                ExposedOtherDust: this.state.exposed === "Dust" ? this.state.exposed_details : "",
+                OtherCondition: this.state.exposed === "Other" ? this.state.exposed_details : "",
+                LossOfConsciousness: this.state.consciousness + ": " + this.state.consciousness_details ,
+                Varicose: this.state.varicose_veins_details ,
+                RestrictedActivities: this.state.restricted_activities_details,
+                TimeAwayReason: this.state.regular_time_away_details,
+                InjuryFromWork: this.state.work_illness_details,
+                MedicalConditionsEffectingTest: this.state.functional_assessment_details
+                },
+          };
+    
+          const requestOptions = {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Accept: "application/json",
+              "Access-Control-Allow-Origin": "*",
+              "Access-Control-Allow-Methods": "GET,HEAD,OPTIONS,POST,PUT",
+            },
+            body: JSON.stringify(Signupschema.schema),
+          };
+
+
+
+          try {
+            fetch("https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/industryspecific", requestOptions)
+              .then((response) => response.json())
+              .then(data => {
+                if(Number(data.httpStatusCode) ===200){
+                  window.confirm("Submitted")
+                }
+                else{
+                  window.confirm(data.message)
+                }
+              
+              })
+          } 
+          catch (error) {
+            window.alert(error);
+          }
+          //  alert('Submitted')
         }
+
+        else {
+            alert('error submitting')
+
+          }
+
+
     
     }
       validate = () => {
@@ -107,6 +169,8 @@ class IndustrySpecificModule extends Component
     }
     render()
     {
+        const {  state } = this.props;
+
         return(
             <div id="MainDiv">
                 <p id = "Stepscolor">Industry Specific  Module</p> 
@@ -264,7 +328,7 @@ class IndustrySpecificModule extends Component
                     <textarea className="form-control" rows="1" cols="5" onChange={this.handleChange('functional_assessment_details')} value={this.state.functional_assessment_details}/>
                 </div>
              
-                    <button className="next" onClick={this.completeForm}>Submit</button>}
+                    <button className="next" onClick={this.completeForm}>Submit</button>
             </div>
 
         )

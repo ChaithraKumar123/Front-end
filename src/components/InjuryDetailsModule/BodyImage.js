@@ -100,7 +100,7 @@ componentDidMount()
     const temp=[]
     const temp1=[]
     axios
-    .get('https://localhost:44338/api/POBdetails',
+    .get('https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/POBdetails',
     {
         params: { value : 60 }
     }) 

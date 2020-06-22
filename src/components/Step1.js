@@ -35,9 +35,11 @@ class Step1 extends Component {
 
   saveEthnicity = (data) => {
     this.setState({ ethnicityoptions: data });
+    this.props.ethnicityCodef(data);
     console.log(this.ethnicityoptions);
   };
   componentDidMount() {
+    this.props.stepReset()
     // Typical usage (don't forget to compare props):
     fetch("https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/v1/personaldetails/Ethnicity")
       .then((response) => response.json())

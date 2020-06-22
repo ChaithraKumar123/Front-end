@@ -31,7 +31,7 @@ class CorePsychologicalModule extends Component
     componentDidMount()
     {
         axios
-        .get('https://localhost:44338/api/medhistorydetails',
+        .get('https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/medhistorydetails',
         {
             params: { value : this.state.POBPatientID }
         }) 
@@ -88,7 +88,7 @@ class CorePsychologicalModule extends Component
             this.setState(this.initialState);
             
 
-            axios.post('https://localhost:44338/api/medhistorydetails', 
+            axios.post('https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/medhistorydetails', 
             {
                 ModuleName:'Core Psycholoical',
                 HomeStress: this.state.homestress==="No" ? "No" : this.state.homestress +"-" + this.state.homestress_reason,

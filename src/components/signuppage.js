@@ -11,9 +11,24 @@ import {
 import auth from "./auth";
 
 //import { Field, reduxForm } from 'redux-form'
-
+var randomToken = require('random-token');
 const Errormsg = () => (
   <div className="errorMessage">Missing or invalid fields</div>
+);
+
+
+const thankyou = (email) => (                
+<div id="MainDiv">
+<div className="page-title lg">
+  <div className="title">
+    <p>WorkHealthy Australia</p>
+  </div>
+</div>
+<h4>
+  Thanks!. <br />
+ We've sent an email to {email}. Please confirm your account by clicking the link in the email.
+</h4>
+</div>
 );
 
 class Signup extends Component {
@@ -24,6 +39,7 @@ class Signup extends Component {
     checked: false,
     passwordErr: "",
     passwordErrvalid: false,
+    renderThankyou : false
   };
   toSend = require("./userSchema.json");
 
@@ -103,6 +119,7 @@ class Signup extends Component {
       this.toSend.schema.KNC = e.userSub;
 
       this.props.kncset(e.userSub);
+      localStorage.setItem('KNC', e.userSub)
 
       //  this.setState({KNC: e.userSub})
 
@@ -124,9 +141,20 @@ class Signup extends Component {
           .then((response) => response.json())
           .then((data) => {
             if (Number(data.httpStatusCode) === 200) {
-              auth.login(() => {
-                this.props.history.push("/success");
-              });
+              localStorage.setItem('confToken', randomToken(16))
+              this.setState({
+                renderThankyou: true
+              })
+              // window.alert(
+              //   "Thanks! \n We’ve sent an email to " +
+              //     this.props.state.email +
+              //     ". \n Please confirm your account by clicking the link in the email."
+              // );
+
+             // return thankyou(this.props.state.email); 
+              // auth.login(() => {
+              //   this.props.history.push("/");
+              // });
             } else {
               window.alert(data.message);
             }
@@ -167,222 +195,136 @@ class Signup extends Component {
   render() {
     const { handleChange, state } = this.props;
 
-    return (
-      <div id="MainDiv">
-        <div className="page-title lg">
-          <div className="title">
-            <p> Let's create your account</p>
+    if (!this.state.renderThankyou){
+      return (
+        <div id="MainDiv">
+          <div className="page-title lg">
+            <div className="title">
+              <p> Let's create your account</p>
+            </div>
           </div>
-        </div>
-
-        <div className="row">
-        <div>
-          <div className="form-group">
-            <label className="abc">Given Name</label>
-            <input
-              className="form-control"
-              id="givenName"
-              type="text"
-              value={state.givenName}
-              onChange={handleChange("givenName")}
-            />
-            <div className="errorMessage">{state.givenNameError}</div>
-          </div>
-        </div>
-        <div>
-          <div className="form-group">
-            <label className="abc">Surname</label>
-            <input
-              className="form-control"
-              id="surName"
-              type="text"
-              value={state.surName.fieldValue}
-              onChange={handleChange("surName")}
-            />
-            <div className="errorMessage">{state.surNameError}</div>
-          </div>
-        </div>
-        <div>
-          <div className="form-group">
-            <label className="abc">Middle Name <span className="optional">Optional</span> </label>
-            <input
-              className="form-control"
-              id="middleName"
-              type="text"
-              value={state.middleName}
-              onChange={handleChange("middleName")}
-            />
-          </div>
-        </div>
-        <div>
-          <div className="form-group">
-            <label className="abc">Phone Number</label>
-            <input
-              className="form-control"
-              id="mobileNumber"
-              type="text"
-              value={state.mobileNumber}
-              onChange={handleChange("mobileNumber")}
-            />
-            {/* <Errormsg arg = {state.mobileNumber}></Errormsg> */}
-            <div className="errorMessage">{state.mobileNumberError}</div>
-          </div>
-        </div>
-        <div>
-          <div className="form-group">
-            <label className="abc">Email</label>
-            <input
-              className="form-control"
-              id="email"
-              type="email"
-              value={state.email}
-              onChange={handleChange("email")}
-            />
-            {/* <Errormsg arg = {state.email}></Errormsg> */}
-            <div className="errorMessage">{state.emailError}</div>
-          </div>
-        </div>
-        <div>
-          <div className="form-group">
-          <label className="abc">Password</label>
-        <input
-          className="form-control"
-          id="pass"
-          name="pass"
-          type="password"
-          value={this.state.password}
-          onChange={(event) => this.setState({ password: event.target.value })}
-          //  onChange={(event) => this.setState({password:event.target.value})}
-        />
-          </div>
-        </div>
-        <div>
-          <div className="form-group">
-          <label className="abc">Re-enter password</label>
-        <input
-          className="form-control"
-          id="Repass"
-          name="pass"
-          type="password"
-          value={this.state.retypePassword}
-          onChange={(event) =>
-            this.setState({ retypePassword: event.target.value })
-          }
-          //  onChange={(event) => this.setState({password:event.target.value})}
-        />
-        <div className="errorMessage">{this.state.passwordErr}</div>
-          </div>
-        </div>
-      </div>
-      <div className="custom-radio square">
-        <input type="checkbox" className="custom-input" 
-                    checked={this.state.checked}
-                    onChange={this.termsAgree}/>
-        <span> I agree to work Healthy Australia's terms</span>
-      </div>
-      {this.state.submit ? <Errormsg /> : null}
-      <div className="btn-block prev-back-btn">
-        <button className="btn btn-outline-primary" onClick={this.back} >Back</button>
-        <button className="btn btn-primary modal-btn" data-modal-id="sampleModal"
-                  id="stepOneSubmit"
-                  onClick={this.continue}>Continue</button>
-      </div>
-
-
-
-{/* 
-        <div>
-           <div>
-            <label className="abc">Given Name</label>
-            <input
-              className="form-control"
-              id="givenName"
-              type="text"
-              value={state.givenName}
-              onChange={handleChange("givenName")}
-            />
-            <div className="errorMessage">{state.givenNameError}</div>
-            <label className="abc">Surname</label>
-            <input
-              className="form-control"
-              id="surName"
-              type="text"
-              value={state.surName.fieldValue}
-              onChange={handleChange("surName")}
-            />
-            <div className="errorMessage">{state.surNameError}</div>
-            <label className="abc">Middle Name </label>
-            <input
-              className="form-control"
-              id="middleName"
-              type="text"
-              value={state.middleName}
-              onChange={handleChange("middleName")}
-            />
+  
+          <div className="row">
+          <div>
+            <div className="form-group">
+              <label className="abc">Given Name</label>
+              <input
+                className="form-control"
+                id="givenName"
+                type="text"
+                value={state.givenName}
+                onChange={handleChange("givenName")}
+              />
+              <div className="errorMessage">{state.givenNameError}</div>
+            </div>
           </div>
           <div>
-            <label className="abc">Phone Number</label>
-            <input
-              className="form-control"
-              id="mobileNumber"
-              type="text"
-              value={state.mobileNumber}
-              onChange={handleChange("mobileNumber")}
-            />
-            <div className="errorMessage">{state.mobileNumberError}</div>
-
-            <label className="abc">Email</label>
-            <input
-              className="form-control"
-              id="email"
-              type="email"
-              value={state.email}
-              onChange={handleChange("email")}
-            />
-            <div className="errorMessage">{state.emailError}</div>
+            <div className="form-group">
+              <label className="abc">Surname</label>
+              <input
+                className="form-control"
+                id="surName"
+                type="text"
+                value={state.surName.fieldValue}
+                onChange={handleChange("surName")}
+              />
+              <div className="errorMessage">{state.surNameError}</div>
+            </div>
+          </div>
+          <div>
+            <div className="form-group">
+              <label className="abc">Middle Name <span className="optional">Optional</span> </label>
+              <input
+                className="form-control"
+                id="middleName"
+                type="text"
+                value={state.middleName}
+                onChange={handleChange("middleName")}
+              />
+            </div>
+          </div>
+          <div>
+            <div className="form-group">
+              <label className="abc">Phone Number</label>
+              <input
+                className="form-control"
+                id="mobileNumber"
+                type="text"
+                value={state.mobileNumber}
+                onChange={handleChange("mobileNumber")}
+              />
+              {/* <Errormsg arg = {state.mobileNumber}></Errormsg> */}
+              <div className="errorMessage">{state.mobileNumberError}</div>
+            </div>
+          </div>
+          <div>
+            <div className="form-group">
+              <label className="abc">Email</label>
+              <input
+                className="form-control"
+                id="email"
+                type="email"
+                value={state.email}
+                onChange={handleChange("email")}
+              />
+              {/* <Errormsg arg = {state.email}></Errormsg> */}
+              <div className="errorMessage">{state.emailError}</div>
+            </div>
+          </div>
+          <div>
+            <div className="form-group">
+            <label className="abc">Password</label>
+          <input
+            className="form-control"
+            id="pass"
+            name="pass"
+            type="password"
+            value={this.state.password}
+            onChange={(event) => this.setState({ password: event.target.value })}
+            //  onChange={(event) => this.setState({password:event.target.value})}
+          />
+            </div>
+          </div>
+          <div>
+            <div className="form-group">
+            <label className="abc">Re-enter password</label>
+          <input
+            className="form-control"
+            id="Repass"
+            name="pass"
+            type="password"
+            value={this.state.retypePassword}
+            onChange={(event) =>
+              this.setState({ retypePassword: event.target.value })
+            }
+            //  onChange={(event) => this.setState({password:event.target.value})}
+          />
+          <div className="errorMessage">{this.state.passwordErr}</div>
+            </div>
           </div>
         </div>
-        <label className="abc">Password</label>
-        <input
-          className="form-control"
-          id="pass"
-          name="pass"
-          type="password"
-          value={this.state.password}
-          onChange={(event) => this.setState({ password: event.target.value })}
-        />
-        <label className="abc">Re-enter password</label>
-        <input
-          className="form-control"
-          id="Repass"
-          name="pass"
-          type="password"
-          value={this.state.retypePassword}
-          onChange={(event) =>
-            this.setState({ retypePassword: event.target.value })
-          }
-        />
-        <div className="errorMessage">{this.state.passwordErr}</div>
-
-        <div>
-          <input
-            type="checkbox"
-            checked={this.state.checked}
-            onChange={this.termsAgree}
-          />
-          I agree to work Healthy Australia's terms
+        <div className="custom-radio square">
+          <input type="checkbox" className="custom-input" 
+                      checked={this.state.checked}
+                      onChange={this.termsAgree}/>
+          <span> I agree to work Healthy Australia's terms</span>
         </div>
         {this.state.submit ? <Errormsg /> : null}
+        <div className="btn-block prev-back-btn">
+          <button className="btn btn-outline-primary" onClick={this.back} >Back</button>
+          <button className="btn btn-primary modal-btn" data-modal-id="sampleModal"
+                    id="stepOneSubmit"
+                    onClick={this.continue}>Continue</button>
+        </div>
+        </div>
+      );
 
-        <button
-          id="stepOneSubmit"
-          className="next"
-          onClick={this.continue}
-        >
-          Continue
-        </button> */}
-      </div>
-    );
+    }
+
+    else {
+      return thankyou(this.props.state.email);
+    }
+
   }
 }
 export default withRouter(Signup);

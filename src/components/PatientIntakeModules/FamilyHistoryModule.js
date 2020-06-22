@@ -23,7 +23,7 @@ class FamilyHistoryModule extends Component
     componentDidMount()
     {
         axios
-        .get('https://localhost:44338/api/medhistorydetails',
+        .get('https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/medhistorydetails',
         {
             params: { value : this.state.POBPatientID }
         }) 
@@ -68,7 +68,7 @@ completeForm=event=>{
     {
         this.setState(this.initialState);
         
-        axios.post('https://localhost:44338/api/medhistorydetails', 
+        axios.post('https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/medhistorydetails', 
             {
                 ModuleName:'Family History',
                 FamilyHistory  :this.state.family_disorder_details!==""?this.state.family_disorder +'-'+this.state.family_disorder_details:this.state.family_disorder,

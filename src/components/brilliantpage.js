@@ -19,33 +19,47 @@ class Brilliant extends Component {
   };
 
   render() {
-    return (
-      <div id="MainDiv">
-        <div className="page-title lg">
-          <div className="title">
-            <h1>Brilliant!</h1>
-          </div>
+
+    const { handleChange, state } = this.props;
+    let tempToken = localStorage.getItem("confToken")
+ if(tempToken !== null){
+  return (
+    <div id="MainDiv">
+      <div className="page-title lg">
+        <div className="title">
+          <h1>Brilliant!</h1>
         </div>
+      </div>
+      <div>
+        <h4>
+        Account confirmed. <br/> 
+        To help us understand you better, we need you to complete the following forms. 
+        These will be passed on to your company once we match you up.
+        You can delete your details at any point.
+        </h4>
         <div>
-          <h4>
-            To help us understand better, we need you to complete the following
-            forms. These will be passed on to your company once we match you up.
-          </h4>
-          <div>
-            <div className="btn-block prev-back-btn">
-              <button
-                className="btn btn-primary modal-btn"
-                data-modal-id="sampleModal"
-                id="stepOneSubmit"
-                onClick={this.continue}
-              >
-                Continue
-              </button>
-            </div>
+          <div className="btn-block prev-back-btn">
+            <button
+              className="btn btn-primary modal-btn"
+              data-modal-id="sampleModal"
+              id="stepOneSubmit"
+              onClick={this.continue}
+            >
+              Continue
+            </button>
           </div>
         </div>
       </div>
-    );
+    </div>
+  );
+ } 
+
+ else{
+   return(
+     <h4>Unauthorized access</h4>
+   )
+ }
+
   }
 }
 export default withRouter(Brilliant);

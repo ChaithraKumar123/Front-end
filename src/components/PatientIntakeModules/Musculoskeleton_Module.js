@@ -66,7 +66,7 @@ class MusculoskeletonModule extends Component
     {
         
         axios
-        .get('https://localhost:44338/api/mskdetails',
+        .get('https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/mskdetails',
         {
             params: { value : 60 }
         }) 
@@ -216,7 +216,7 @@ completeForm=event=>{
 
 
     
-    axios.post('https://localhost:44338/api/mskdetails',
+    axios.post('https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/mskdetails',
     {
             NeckPain:this.state.NeckPain,
             NeckPainDate:this.state.NeckPain==="No"?'':this.state.NeckPainDate,

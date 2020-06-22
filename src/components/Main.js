@@ -23,6 +23,8 @@ import Signup from "./signuppage";
 import Brilliant from "./brilliantpage";
 import ForgotPassword from "./ForgotPassword";
 import History from "../patientHistory";
+import Home from "./Home";
+
 
 import BodyImageMain from '../components/InjuryDetailsModule/BodyImageMain'
 import CoreMedicalHistory from '../components/PatientIntakeModules/CoreMedicalHistory'
@@ -129,10 +131,34 @@ class Main extends Component {
     //
     errormsg: "",
     KNC: "",
+    ethnicityCode: "",
+    ethnicityoptions: [],
+    Countryoptions: [],
+    countryCode: "",
+    stateOpts:[],
+    stateCode:""
+
   };
 
   kncset = (e) => {
     this.setState({ KNC: e });
+  };
+
+  ethnicityCodef = (e) => {
+    this.setState({ ethnicityoptions: e });
+  };
+
+  countryCodef = (e) => {
+    this.setState({ Countryoptions: e });
+  };
+
+  stateCodef = (e) => {
+    this.setState({ stateOpts: e });
+  };
+
+
+  stepReset = () => {
+    this.setState({ step: 1 });
   };
 
   nextStep = () => {
@@ -309,6 +335,8 @@ class Main extends Component {
       return true;
     }
 
+    
+
     if (input === "country") {
       if (e.value.length <= 0) {
         this.setState({
@@ -333,15 +361,51 @@ class Main extends Component {
       this.setState({
         [input]: e.target.textContent,
       });
+
+     var index =  this.state.ethnicityoptions.findIndex(function(item, i){
+        return item.text === e.target.textContent
+      })
+
+      this.setState({
+        ethnicityCode: this.state.ethnicityoptions[index].value,
+      });
+
     }
     if (e.target) {
       var transfer = e.target.value;
-      if (input == "culturalGroup" || input == "country") {
+      if (input == "stateName") {
         transfer = e.target.textContent;
+
+
+        var index =  this.state.stateOpts.findIndex(function(item, i){
+          return item.text === e.target.textContent
+        })
+  
+        this.setState({
+          stateCode: this.state.stateOpts[index].value,
+        });
+  
+        
       }
+      if ( input == "country"){
+
+        transfer = e.target.textContent;
+
+
+        var index =  this.state.Countryoptions.findIndex(function(item, i){
+          return item.text === e.target.textContent
+        })
+  
+        this.setState({
+          countryCode: this.state.Countryoptions[index].value,
+        });
+
+      }
+
       this.setState({
         [input]: transfer,
       });
+      
       if (
         !(
           e.target.id === "titleOpt" ||
@@ -371,98 +435,16 @@ class Main extends Component {
     }
   };
 
-  // showStep = () => {
-  //   const { step } = this.state;
-  //   if (step === 0) {
-  //     return <Loginpage nextStep={this.nextStep} />;
-  //   }
-  //   if (step === 1) {
-  //     return (
-  //       <Signup
-  //         state={this.state}
-  //         handleChange={this.handleChange}
-  //         nextStep={this.nextStep}
-  //       />
-  //     );
-  //   }
-  //   if (step === 2) {
-  //     return (
-  // <Brilliant
-  //   state={this.state}
-  //   handleChange={this.handleChange}
-  //   nextStep={this.nextStep}
-  // />
-  //     );
-  //   }
-  //   // if (step === 1)
-  //   //   return (
-  //   //     <Step1
-  //   //       handleChange={this.handleChange}
-  //   //       nextStep={this.nextStep}
-  //   //       state={this.state}
-  //   //     />
-  //   //   );
-  //   if (step === 2)
-  //     return (
-  //       <Step2
-  //         handleChange={this.handleChange}
-  //         nextStep={this.nextStep}
-  //         prevStep={this.prevStep}
-  //         state={this.state}
-  //       />
-  //     );
-  //   if (step === 3)
-  //     return (
-  //       <Step3
-  //         handleChange={this.handleChange}
-  //         nextStep={this.nextStep}
-  //         prevStep={this.prevStep}
-  //         state={this.state}
-  //       />
-  //     );
-  //   if (step === 4)
-  //     return (
-  //       <Step4
-  //         handleChange={this.handleChange}
-  //         nextStep={this.nextStep}
-  //         prevStep={this.prevStep}
-  //         state={this.state}
-  //       />
-  //     );
-  // };
-
-  // render() {
-  //   return <div>{this.showStep()}</div>;
-  // }
-
+  
   showStep = () => {
     const { step } = this.state;
-    // if (step === 0) {
-    //   return <Loginpage nextStep={this.nextStep} />;
-    // }
-    // if (step === 1) {
-    //   return (
-    //     <Signup
-    //       state={this.state}
-    //       handleChange={this.handleChange}
-    //       nextStep={this.nextStep}
-    //     />
-    //   );
-    // }
-    // if (step === 2) {
-    //   return (
-    //     <Brilliant
-    //       state={this.state}
-    //       handleChange={this.handleChange}
-    //       nextStep={this.nextStep}
-    //     />
-    //   );
-    // }
     if (step === 1)
       return (
         <Step1
           handleChange={this.handleChange}
           nextStep={this.nextStep}
+          stepReset={this.stepReset}
+          ethnicityCodef={this.ethnicityCodef}
           state={this.state}
         />
       );
@@ -481,6 +463,8 @@ class Main extends Component {
           handleChange={this.handleChange}
           nextStep={this.nextStep}
           prevStep={this.prevStep}
+          countryCodef={this.countryCodef}
+          stateCodef={this.stateCodef}
           state={this.state}
         />
       );
@@ -490,15 +474,22 @@ class Main extends Component {
           handleChange={this.handleChange}
           nextStep={this.nextStep}
           prevStep={this.prevStep}
+          stepReset={this.stepReset}
           state={this.state}
         />
       );
   };
 
   successPage = () => {
-    return <Brilliant handleChange={this.handleChange} />;
+    return <Brilliant state = {this.state} handleChange={this.handleChange} />;
+  };
+  HomePage = () => {
+    return <Home state = {this.state}/>;
   };
 
+  History = () =>{
+    return <History state={this.state}></History>
+  }
   render() {
     return (
       <Router>
@@ -506,6 +497,9 @@ class Main extends Component {
           <Route exact path="/">
             <Loginpage />
           </Route>
+          <ProtectedRoute path="/Home"
+            component = {this.HomePage}
+        />
           <Route path="/Signup">
             <Signup
               state={this.state}
@@ -520,11 +514,11 @@ class Main extends Component {
             />
           </Route>
           <ProtectedRoute path="/patientDetails" component={this.showStep} />
-          <ProtectedRoute path="/success" component={this.successPage} />
+          <Route path="/success" component={this.successPage} />
 
-          <Route path="/History">
-            <History></History>
-          </Route>
+          <ProtectedRoute path="/History" component={this.History}/>
+            {/* <History state={this.state}></History>
+          </Route> */}
 
           <Switch>
             <Route path="/OreboModule" component={OreboModule}></Route>
@@ -546,12 +540,20 @@ class Main extends Component {
               component={CoreLifeStyleModule}
             ></Route>
 
-            <Route path="/ManualHandling" component={ManualHandling}></Route>
+            <Route path="/ManualHandling">
+              <ManualHandling state={this.state} />
+            </Route>
+            {/* <Route path="/ManualHandling" component={ManualHandling}></Route> */}
 
-            <Route
+            <Route path="/IndustrySpecificModule">
+              <IndustrySpecificModule state={this.state} />
+            </Route>
+
+            {/* <Route
               path="/IndustrySpecificModule"
+              state={this.state}
               component={IndustrySpecificModule}
-            ></Route>
+            ></Route> */}
 
             <Route
               path="/FamilyHistoryModule"

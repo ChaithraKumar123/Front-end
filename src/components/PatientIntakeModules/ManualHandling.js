@@ -31,7 +31,9 @@ class ManualHandling extends Component
                problem_working_heights:'',
                require_assistance_reason:'',
                require_assistance:'',
-               nameError:''
+               nameError:'',
+               pain_grip_reason:"",
+               pain_grip:""
         };
         this.state = this.initialState;
 
@@ -60,9 +62,64 @@ class ManualHandling extends Component
         const isValid = this.validate();
         if (isValid)
         {
-            this.setState(this.initialState);
-            alert('Submitted')
+          //  this.setState(this.initialState);
+
+
+          const Signupschema = {
+            schema: {
+                KNC: this.props.state.KNC,
+                HeavyObjects: this.state.pain_lift_reason,
+                PainWalking: this.state.pain_walk_reason,
+                PainBending: this.state.pain_bend_reason,
+                PainSquating: this.state.pain_squat_reason,
+                PainStanding: this.state.pain_stand_reason,
+                BelowOverhead: this.state.pain_lift_below_reason,
+                Gripping: this.state.pain_grip_reason,
+                OperatingMachinery: this.state.difficult_operating_reason,
+                TemperatureDifficulty: this.state.problem_working_conditions_reason,
+                Heights: this.state.problem_working_heights_reason,
+                AncticipateAssistance: this.state.require_assistance_reason
+            },
+          };
+    
+          const requestOptions = {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Accept: "application/json",
+              "Access-Control-Allow-Origin": "*",
+              "Access-Control-Allow-Methods": "GET,HEAD,OPTIONS,POST,PUT",
+            },
+            body: JSON.stringify(Signupschema.schema),
+          };
+
+
+
+          try {
+            fetch("https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/manualhandling", requestOptions)
+              .then((response) => response.json())
+              .then(data => {
+                if(Number(data.httpStatusCode) ===200){
+                  window.confirm("Submitted")
+                }
+                else{
+                  window.confirm(data.message)
+                }
+              
+              })
+          } 
+          catch (error) {
+            window.alert(error);
+          }
+          //  alert('Submitted')
         }
+
+        else {
+            alert('error submitting')
+
+          }
+
+
     
     }
       validate = () => {
@@ -71,6 +128,7 @@ class ManualHandling extends Component
         const val = this.state
         if (val.pain_lift==="" ||val.pain_walk ==="" ||val.pain_stand ==="" || val.pain_squat==="" 
         || val.pain_bend===""|| val.problem_working_conditions===""||val.difficult_operating===""
+        || val.pain_grip ===""
         || val.pain_lift_below==="" || val.problem_working_heights === "" || val.require_assistance==="") {
           nameError = "*required";
         }
@@ -89,7 +147,10 @@ class ManualHandling extends Component
         }
     }
     render()
-    {
+    {   
+         const { handleChange, state } = this.props;
+         
+
         return(
             <div id="MainDiv">
                <p id = "Stepscolor">Manual Handling Module</p> 
@@ -173,6 +234,23 @@ class ManualHandling extends Component
                     <label className="abc">Provide Details</label>
                     <textarea className="form-control" rows="1" cols="5" onChange={this.handleChange('pain_lift_below_reason')} value={this.state.pain_lift_below_reason}/>
                 </div>
+
+
+                <div>
+                    <label className="abc">Do you have any pain when using a gripping motion?</label>
+                    <label style={{ fontSize: 12, color: "red" }}>{this.state.pain_grip==="" && this.state.nameError}</label>
+                    <div id = "radio">
+                    <RadioGroup name="grip" selectedValue={this.state.pain_grip} onChange={this.handleChange('pain_grip')}>
+                        <Radio value="Yes" />Yes
+                        <Radio value="No" />No
+                        <Radio value="Sometimes" />Sometimes
+                   </RadioGroup>
+                    </div>
+                    <label className="abc">Provide Details</label>
+                    <textarea className="form-control" rows="1" cols="5" onChange={this.handleChange('pain_grip_reason')} value={this.state.pain_grip_reason}/>
+                </div>
+
+
                 <div>
                     <label className="abc">Do you experience any difficulty operating machinery?</label>
                     <label style={{ fontSize: 12, color: "red" }}>{this.state.difficult_operating==="" && this.state.nameError}</label>
@@ -225,7 +303,7 @@ class ManualHandling extends Component
                     <label className="abc">Provide Details</label>
                     <textarea className="form-control" rows="1" cols="5" onChange={this.handleChange('require_assistance_reason')} value={this.state.require_assistance_reason}/>
                 </div>
-                    <button className="next" onClick={this.completeForm}>Submit</button>}
+                    <button className="next" onClick={this.completeForm}>Submit</button>
             </div>
 
         )
