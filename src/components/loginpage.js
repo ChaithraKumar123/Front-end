@@ -214,7 +214,6 @@ class Loginpage extends Component {
               </Link>
             </div>
           </div>
-  
         </div>
       )
     }

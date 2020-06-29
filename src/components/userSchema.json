@@ -7,7 +7,7 @@
       "MiddleNames": "",
       "Email": "",
       "Gender":"",
-      "culturalGroup":"",
+      "culturalGroup":0,
       "DateOfBirth":"",
       "Mobile":"",
   
@@ -19,8 +19,8 @@
       "Line1":"",
       "Line2":"",
       "Suburb":"",
-      "StateID":1, 
-      "PostCode":3000,
+      "StateID":0, 
+      "PostCode":0,
       "CountryID":8,
   
       "FamilyDoctor":"",

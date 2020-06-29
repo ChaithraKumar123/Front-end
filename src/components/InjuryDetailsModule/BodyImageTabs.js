@@ -329,7 +329,7 @@ componentDidMount()
         const{state}=this.props
         return (
             
-            <div id="MainDiv">
+            <div>
                 <p id = "Stepscolor">Step {this.state.step1} of {state.body_area1.length}</p> 
                 
                 {this.state.step1===1 &&<p>Primary Region-{state.body_area1[this.state.step1 - 1]}</p>}
