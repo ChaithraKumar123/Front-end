@@ -170,13 +170,17 @@ componentDidMount()
                     }
                 )
             }
-            this.setState({InjuryRegion:temp})
+            if (temp.length !== 0)
+            {
+                this.setState({InjuryRegion:temp})
+            }
             this.addExtra(response.data.length ,this.props.state.body_area1.length)
            
         })
         .catch(error => {
             console.log(error)
         })
+        
     }
 
 
@@ -329,18 +333,32 @@ componentDidMount()
         const{state}=this.props
         return (
             
-            <div>
-                <p id = "Stepscolor">Step {this.state.step1} of {state.body_area1.length}</p> 
-                
-                {this.state.step1===1 &&<p>Primary Region-{state.body_area1[this.state.step1 - 1]}</p>}
+            <div id = "MainDiv">
+                        <div className="page-title lg">
+          <div className="title">
+            <h1>Step {this.state.step1} of {state.body_area1.length}</h1>
+            {this.state.step1===1 &&<p>Primary Region-{state.body_area1[this.state.step1 - 1]}</p>}
                 {this.state.step1!==1 &&<p>Secondary Region-{state.body_area1[this.state.step1 - 1]}</p>}
+          </div>
+        </div>
+                {/* <p id = "Stepscolor">Step {this.state.step1} of {state.body_area1.length}</p>  */}
+                
+                {/* {this.state.step1===1 &&<p>Primary Region-{state.body_area1[this.state.step1 - 1]}</p>}
+                {this.state.step1!==1 &&<p>Secondary Region-{state.body_area1[this.state.step1 - 1]}</p>} */}
                 
                 <InjuryQuestions  InjuryRegion={this.state.InjuryRegion[this.state.step1 - 1]} handleChange={this.handleChange} handleChangeCheck={this.handleChangeCheck} state={this.state}/>
-           
-                {this.state.step1>=1 && <button className="back" onClick={this.prevStep} >Back</button>}
+                
+
+        <div className="btn-block prev-back-btn">
+          {this.state.step1>=1 && <button className="btn btn-outline-primary" onClick={this.prevStep} >Back</button>}
+          {this.state.step1!==state.body_area1.length && <button className="btn btn-primary modal-btn" data-modal-id="sampleModal"  onClick={this.nextStep}>Continue</button>} 
+          {this.state.step1===state.body_area1.length && <button className="btn btn-primary modal-btn" data-modal-id="sampleModal" onClick={this.completeForm}>Finish</button>}
+        </div>
+
+                {/* {this.state.step1>=1 && <button className="back" onClick={this.prevStep} >Back</button>}
                 {this.state.step1!==state.body_area1.length &&<button className="next" onClick={this.nextStep}>Continue</button>}
                 {this.state.step1===state.body_area1.length && <button className="next" onClick={this.completeForm}>Finish</button>}
-                
+                 */}
   {/* <Tabs>
             <TabList>
         <Tab>{state.body_area1[0]}</Tab>

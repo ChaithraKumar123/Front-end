@@ -243,3 +243,12 @@ main { margin-bottom: 50px; }
 	box-shadow: none !important;
 	border: aliceblue;
 }
+
+#tooltip {
+	position: absolute;
+	color: rgb(15, 14, 14);
+	padding: 10px;
+	background:rgb(211,211,211);
+	border-radius: 2px;
+	z-index: 1000;
+  }

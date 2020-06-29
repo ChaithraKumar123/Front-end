@@ -5,6 +5,7 @@ import ImageMapper from "react-image-mapper";
 import "../../App.css";
 import axios from "axios";
 
+
 const MAP = {
   name: "my-map",
   areas: [
@@ -190,9 +191,9 @@ class BodyImage extends Component {
 
   getTipPosition(area) {
     return {
-      top: `${area.center[1]}px`,
-      center: `${area.center[0]}px`,
-      left: `${area.center[0]}px`,
+      top: `${area.coords[0]}px`,
+      center: `${area.coords[1]}px`,
+      left: `${area.coords[2]}px`,
       right: "inherit",
     };
   }
@@ -200,17 +201,23 @@ class BodyImage extends Component {
   render() {
     return (
       <div id="MainDiv">
-        <p id="Stepscolor">Pain Indicator</p>
-        <p>Click Body region to indicate Pain(Can select upto 3 regions)</p>
+                <div className="page-title lg">
+          <div className="title">
+            <h1>Pain Indicator</h1>
+            <p> Click Body region to indicate Pain(Can select upto 3 regions) </p>
+          </div>
+        </div>
 
         <ImageMapper
-          src="/Images/BodyImage.jpeg"
+          src= {require("./BodyImage.jpeg")}
+          width={273}
+          height = {507}
+
           map={MAP}
           onClick={(area) => this.clicked(area)}
           onMouseEnter={(area, event) => this.enterArea(area, event)}
           onMouseLeave={(area) => this.leaveArea(area)}
         />
-
         <br />
         <ul className="list-group" style={{ width: `40%` }}>
           {this.state.body_area.map((listitem) => (
@@ -220,19 +227,25 @@ class BodyImage extends Component {
           ))}
         </ul>
 
-        {this.state.hoveredArea && (
+        {/* {this.state.hoveredArea && (
           <span
             id="tooltip"
             style={{ ...this.getTipPosition(this.state.hoveredArea) }}
           >
             {this.state.hoveredArea && this.state.hoveredArea.name}
           </span>
-        )}
+        )} */}
         <br />
         {this.state.body_area.length !== 0 && (
-          <button className="next" onClick={this.continue}>
-            Confirm and Fill Details
-          </button>
+                  <div>
+                  <button
+                    className="btn btn-primary btn-block"
+                    onClick={this.continue}
+                  >
+                                Confirm and Fill Details
+
+                  </button>
+                </div>
         )}
       </div>
     );

@@ -355,7 +355,7 @@ class CoreLifeStyleModule extends Component {
                   {this.state.diet === "" && this.state.nameError}
                 </label>
                 {Array.from(Array(1, 2, 3, 4, 5, 6, 7, 8, 9, 10), (e, i) => {
-                  return this.RadioStyle(i, i, "diet", this.state.diet);
+                  return this.RadioStyle(e, e, "diet", this.state.diet);
                 })}
               </div>
             </div>
