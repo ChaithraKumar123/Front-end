@@ -10,13 +10,15 @@ class BodyImageMain extends Component {
     step:1,
     body_area1:[],
     body_region_id1:[],
+    data_id1:[],
     POBPatientID:60
 }
-nextStep1=(body_area,body_region)=>{
+nextStep1=(body_area,body_region,data_id)=>{
     const{step}=this.state;
     this.setState({
         step:step+1,
         body_area1:body_area,
+        data_id1:data_id,
         body_region_id1:body_region,
     })
     

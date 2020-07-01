@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-
+import update from 'react-addons-update';
 import "react-tabs/style/react-tabs.css";
 import ImageMapper from "react-image-mapper";
 import "../../App.css";
@@ -120,26 +120,35 @@ class BodyImage extends Component {
       first1: "",
       body_area: this.props.state.body_area1,
       body_region_id: this.props.state.body_region_id1,
+      data_id :this.props.state.data_id1
     };
   }
   componentDidMount() {
     const temp = [];
     const temp1 = [];
+    const temp2=[]
     axios
-      .get("https://localhost:44338/api/POBdetails", {
+      .get("https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/POBdetails", {
         params: { value: 60 },
       })
       .then((response) => {
         console.log(response.data[0]);
         for (let i = 0; i < response.data.length; i++) {
-          temp.push(response.data[0].painWhere);
-          temp1.push(response.data[0].painRegionID);
-        }
+          temp.push(response.data[i].painWhere);
+          temp1.push(response.data[i].painRegionID);
+          temp2.push(response.data[i].pobcpRegionID)
 
-        this.setState({
-          body_area: temp,
-          body_region_id: temp1,
-        });
+          this.setState({
+            //body_area: body_area,
+            body_region_id: update(this.state.body_region_id, {$splice: [[i, 1, temp1[i]]]}),
+            data_id :update(this.state.data_id, {$splice: [[i, 1, temp2[i]]]}),
+            body_area: update(this.state.body_area, {$splice: [[i, 1, temp[i]]]})
+          });
+         
+        }
+        
+      
+        
       })
       .catch((error) => {
         console.log(error);
@@ -156,7 +165,7 @@ class BodyImage extends Component {
 
   continue = (e) => {
     e.preventDefault();
-    this.props.nextStep1(this.state.body_area, this.state.body_region_id);
+    this.props.nextStep1(this.state.body_area, this.state.body_region_id,this.state.data_id);
   };
 
   clicked(area) {
@@ -166,18 +175,70 @@ class BodyImage extends Component {
     //     body_region:area.name,
     //     region_id:area.id,
     // })
-    if (this.state.body_area.length <= 3) {
+    if (this.state.body_area.length < 3) {
       this.setState({
         hoveredArea: "",
         first1: area.name,
         body_area: [...this.state.body_area, area.name],
         body_region_id: [...this.state.body_region_id, area.id],
+        data_id : [...this.state.data_id,-1]
       });
     } else {
       alert("Cannot select more than three regions");
     }
   }
 
+  delete_api(val,next_val,index)
+  {
+    
+    axios
+    .delete("https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/POBdetails", {
+      params: { value: val  , next_val :next_val , index:index} ,
+    })
+    .then((response) => {
+      console.log(response.data[0]);
+      this.delete_array(index)
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+  }
+  delete_array(index)
+  {
+    var array = [...this.state.body_area]; 
+    var array_id  =[...this.state.body_region_id]
+    var id  = [...this.state.data_id]
+    array.splice(index, 1);
+    this.setState({body_area: array});
+    array_id.splice(index, 1);
+    this.setState({body_region_id: array_id});
+    id.splice(index, 1);
+    this.setState({data_id: id});
+
+  }
+
+  delete_region=(event,index)=>
+  {
+    event.preventDefault();
+   
+   
+    var str = "Delete Body Region -" + this.state.body_area[index] +'?';
+    if (window.confirm(str)) 
+    {
+     
+      if(this.state.data_id[index]!==-1)
+      {
+      this.delete_api(this.state.data_id[index],this.state.data_id[index+1],index)
+      }
+      else
+      {
+        this.delete_array(index)
+      }
+     
+     
+    }
+
+  }
   enterArea(area) {
     this.setState({
       hoveredArea: area,
@@ -220,12 +281,16 @@ class BodyImage extends Component {
         />
         <br />
         <ul className="list-group" style={{ width: `40%` }}>
-          {this.state.body_area.map((listitem) => (
+          {this.state.body_area.map((listitem,index) => (
             <li className="list-group-item list-group-item-action">
               {listitem}
+              
+              <button style={{float:"right"}} id = {index} onClick=  {(e) => this.delete_region(e,index)} >X</button>
             </li>
           ))}
         </ul>
+        
+       
 
         {/* {this.state.hoveredArea && (
           <span

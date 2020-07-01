@@ -73,8 +73,8 @@ addExtra(k,n)
     for (let i = k; i < n; i++) {
         people.push({
             id: i,
-            region_name: this.props.state.body_area1[i-1],
-            PainRegionID: this.props.state.body_region_id1[i-1],
+            region_name: this.props.state.body_area1[i],
+            PainRegionID: this.props.state.body_region_id1[i],
             pain_side:'',
             pain_duration:'',
             pain_duration_approx:false,
@@ -107,13 +107,18 @@ addExtra(k,n)
             pain_limit_work_reason:'',
             pain_futurerisk:'',
             POBCPRegionID:-1
-
+            
             
         });
+        this.setState({
+           // InjuryRegion: update(this.state.InjuryRegion, {$push: people})
+            //InjuryRegion: update(this.state.InjuryRegion, {[i]:people[i]})
+            
+            InjuryRegion: update(this.state.InjuryRegion, {$splice: [[i, 1, people[i]]]})
+            
+         })
 }
-this.setState({
-   InjuryRegion: update(this.state.InjuryRegion, {$push: people})
-})
+
 }
 componentDidMount()
     {
@@ -165,16 +170,23 @@ componentDidMount()
                     //pain_treatment_reason:'',
                     pain_limit_work:response.data[i].limitWorkLife,
                    // pain_limit_work_reason:response.data[i].Limi,
-                    //pain_futurerisk:response.data[i].painRegionID,
+                    pain_futurerisk:response.data[i].futurePainRisk.toString(),
                     POBCPRegionID:response.data[i].pobcpRegionID,
                     }
                 )
+                this.setState({
+                    // InjuryRegion: update(this.state.InjuryRegion, {$push: people})
+                     //InjuryRegion: update(this.state.InjuryRegion, {[i]:people[i]})
+                     
+                     InjuryRegion: update(this.state.InjuryRegion, {$splice: [[i, 1, temp[i]]]})
+                     
+                  })
             }
-            if (temp.length !== 0)
-            {
-                this.setState({InjuryRegion:temp})
-            }
-            this.addExtra(response.data.length ,this.props.state.body_area1.length)
+            // if (temp.length !== 0)
+            // {
+            //     this.setState({InjuryRegion:temp})
+            // }
+            //this.addExtra(response.data.length ,this.props.state.body_area1.length)
            
         })
         .catch(error => {
@@ -245,9 +257,9 @@ componentDidMount()
             SymptomWeakness:save.pain_symp_weak,
             SymptomOther:save.pain_symp_reason,
             OccurredCurrent :save.pain_duration,
-            OccurredCurrentApprox :save.pain_duration_approx.toString() ,
-            OccurredFirst :save.pain_firstime_date===''?"1990-01-01":save.pain_firstime_date,
-            OccurredFirstApprox :save.pain_firstime_approx.toString() ,
+            OccurredCurrentApprox :save.pain_duration_approx ,
+            OccurredFirst :save.pain_firstime==='I’ve had it before'?save.pain_firstime_date:"1990-01-01",
+            OccurredFirstApprox :save.pain_firstime==='I’ve had it before'?save.pain_firstime_approx:false ,
             FuturePainRisk :save.pain_futurerisk
         }
         
@@ -297,7 +309,8 @@ componentDidMount()
         const isValid = this.validate();
         if (isValid)
         {
-            this.apicall(this.state.step1)
+        alert('Successfully Submitted!')
+        this.apicall(this.state.step1)
         this.props.render_main()
         }
 
