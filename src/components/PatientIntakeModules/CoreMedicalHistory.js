@@ -4,9 +4,11 @@ import axios from "axios";
 import Dropdown from "react-dropdown";
 import "react-dropdown/style.css";
 import auth from "../auth";
+import Select from 'react-select'
 
 
-import { RadioGroup, Radio } from "react-radio-group";
+
+import { RadioGroup } from "react-radio-group";
 
 const cholesteroloptions = [
   "No",
@@ -47,7 +49,7 @@ const breathing_options = [
   "Pain with breathing",
   "Other",
 ];
-const medications_options = [];
+
 
 class CoreMedicalHistory extends Component {
   constructor(props) {
@@ -69,7 +71,7 @@ class CoreMedicalHistory extends Component {
       headache_details: "",
       headache: "",
       medication: "",
-      medication_yes: "",
+      medication_yes: null,
       fracture: "",
       fracture_details: "",
       high_fever: "",
@@ -83,12 +85,35 @@ class CoreMedicalHistory extends Component {
       concerns: "",
       dizziness: "",
       POBPatientID: 60,
+      medications_options:[],
       id: -1,
     };
     this.state = this.initialState;
   }
+  onChangeMultipleSelect = input=>(event) => {
+       
+         
+    this.setState({
+        [input]: event
+    }); 
 
+
+}
   componentDidMount() {
+
+   
+
+    axios
+    .get('https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/medlist') 
+    .then(response => {
+        this.setState({
+            medications_options : response.data
+        }) 
+        
+    })
+    .catch(error => {
+        console.log(error)
+    })
     axios
       .get(
         "https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/medhistorydetails",
@@ -200,6 +225,20 @@ class CoreMedicalHistory extends Component {
       .catch((error) => {
         console.log(error);
       });
+      axios
+      .get('https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/med_list_insert',
+      {
+        params: { value: this.state.POBPatientID ,value1 : this.state.id},
+      })
+      .then(response => {
+          this.setState({
+              medication_yes : response.data
+          }) 
+          
+      })
+      .catch(error => {
+          console.log(error)
+      })
   }
 
   handleChange = (input) => (e) => {
@@ -266,11 +305,9 @@ class CoreMedicalHistory extends Component {
                 : this.state.headache,
 
             Medications:
-              this.state.medical_conditions === "No"
+              this.state.medication === "No"
                 ? "No"
-                : this.state.medical_conditions +
-                  "-" +
-                  this.state.medication_yes,
+                : this.state.medication ,
             //this.state.medication_yes
             PreviousTrauma:
               this.state.fracture === "No"
@@ -310,9 +347,37 @@ class CoreMedicalHistory extends Component {
         .catch((error) => {
           console.log(error);
         });
+
+        if(this.state.medication==="Yes")
+        {
+          if(this.state.medication_yes!=="" || this.state.medication_yes===null)
+          {
+          for(var i=0 ; i< this.state.medication_yes.length ;i++)
+          {
+          axios
+          .post(
+            "https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/med_list_insert",
+            {
+              
+              POBPatientID : this.state.POBPatientID,
+              EntityType : 52,
+              MedicationID : this.state.medication_yes[i].value,
+              POBCPMedHistoryID: this.state.id,
+            }
+          )
+          .then((response) => {
+            console.log(response);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+        }
+      }
+      }
         auth.login(() => {
           this.props.history.push("/Home");
         });
+        
     }
   };
   validate = () => {
@@ -336,6 +401,7 @@ class CoreMedicalHistory extends Component {
       val.headache === "" ||
       (val.headache === "Other" && val.headache_details === "") ||
       val.medication === "" ||
+      (val.medication === "Yes" && (val.medication_yes===null || val.medication_yes==="")) ||
       val.fracture === "" ||
       (val.fracture === "Yes" && val.fracture_details === "") ||
       val.high_fever === "" ||
@@ -384,8 +450,9 @@ class CoreMedicalHistory extends Component {
             <h1>Core Medical History Module</h1>
           </div>
         </div>
-        <div>
-          <div id="radio">
+       
+         
+         <div>
             <div class="row">
               <div class="col-md-12">
                 <div class="form-group custom-radio-wrapper">
@@ -412,7 +479,12 @@ class CoreMedicalHistory extends Component {
                 </div>
               </div>
             </div>
-          </div>
+          
+          
+           {this.state.allergies === "Yes" &&
+           <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
           <label className="abc">Provide Details if Yes</label>
           <label style={{ fontSize: 12, color: "red" }}>
             {this.state.allergies === "Yes" &&
@@ -426,8 +498,12 @@ class CoreMedicalHistory extends Component {
             onChange={this.handleChange("allergies_reason")}
             value={this.state.allergies_reason}
           />
-        </div>
-        <br></br>
+                </div>
+                </div>
+                </div>
+                }
+                </div>
+
         <div>
           <div class="row">
             <div class="col-md-12">
@@ -466,6 +542,10 @@ class CoreMedicalHistory extends Component {
             </div>
           </div>
 
+          {this.state.diabetes === "Other" && 
+          <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
           <label className="abc">Provide Details if Other</label>
           <label style={{ fontSize: 12, color: "red" }}>
             {this.state.diabetes === "Other" &&
@@ -479,14 +559,19 @@ class CoreMedicalHistory extends Component {
             onChange={this.handleChange("diabetes_other_details")}
             value={this.state.diabetes_other_details}
           />
-        </div>
-        <div>
-        <div className="form-group custom-radio-wrapper">
-        <label className="abc">
-            Do you have any problems with your blood pressure or cholesterol?
-          </label>
           </div>
- 
+          </div>
+          </div> }
+        </div>
+        
+        <div>
+        <div class="row">
+          <div class="col-md-12">
+          <div class="form-group">
+    
+            <label className="abc">
+            Do you have any problems with your blood pressure or cholesterol?
+            </label>
           <label style={{ fontSize: 12, color: "red" }}>
             {this.state.cholesterol === "" && this.state.nameError}
           </label>
@@ -496,6 +581,14 @@ class CoreMedicalHistory extends Component {
             value={this.state.cholesterol}
             placeholder="Select an option"
           />
+          </div>
+          </div>
+          </div>
+          
+          {this.state.cholesterol === "Other" &&
+            <div class="row">
+          <div class="col-md-12">
+          <div class="form-group">
           <label className="abc">Provide Details if Other</label>
           <label style={{ fontSize: 12, color: "red" }}>
             {this.state.cholesterol === "Other" &&
@@ -509,15 +602,19 @@ class CoreMedicalHistory extends Component {
             onChange={this.handleChange("cholesterol_details")}
             value={this.state.cholesterol_details}
           />
+          </div>
+          </div>
+          </div> }
         </div>
+        
         <div>
-        <div className="form-group custom-radio-wrapper">
-        <label className="abc">
+        <div class="row">
+          <div class="col-md-12">
+          <div class="form-group">
+            <label className="abc">
             Do you experience any digestive issues, such as heartburn or
             irritable bowel syndrome (IBS)?{" "}
           </label>
-          </div>
-
           <label style={{ fontSize: 12, color: "red" }}>
             {this.state.digestive === "" && this.state.nameError}
           </label>
@@ -527,6 +624,14 @@ class CoreMedicalHistory extends Component {
             value={this.state.digestive}
             placeholder="Select an option"
           />
+          </div>
+          </div>
+          </div>
+          
+        {this.state.digestive === "Other" &&
+          <div class="row">
+          <div class="col-md-12">
+          <div class="form-group">
           <label className="abc">Provide Details if Other</label>
           <label style={{ fontSize: 12, color: "red" }}>
             {this.state.digestive === "Other" &&
@@ -540,12 +645,17 @@ class CoreMedicalHistory extends Component {
             onChange={this.handleChange("digestive_details")}
             value={this.state.digestive_details}
           />
-        </div>
-        <div>
-        <div className="form-group custom-radio-wrapper">
-        <label className="abc">Do you have any known heart problems? </label>
-
           </div>
+          </div>
+          </div>
+          }
+        </div>
+        
+        <div>
+        <div class="row">
+          <div class="col-md-12">
+          <div class="form-group">
+        <label className="abc">Do you have any known heart problems? </label>
           <label style={{ fontSize: 12, color: "red" }}>
             {this.state.heart_problems === "" && this.state.nameError}
           </label>
@@ -555,6 +665,13 @@ class CoreMedicalHistory extends Component {
             value={this.state.heart_problems}
             placeholder="Select an option"
           />
+          </div>
+          </div>
+          </div>
+          { this.state.heart_problems === "Other" &&
+            <div class="row">
+            <div class="col-md-12">
+            <div class="form-group">
           <label className="abc">Provide Details if Other</label>
           <label style={{ fontSize: 12, color: "red" }}>
             {this.state.heart_problems === "Other" &&
@@ -568,15 +685,21 @@ class CoreMedicalHistory extends Component {
             onChange={this.handleChange("heart_problems_details")}
             value={this.state.heart_problems_details}
           />
+          </div>
+          </div>
+          </div>
+          }
         </div>
+          
         <div>
-        <div className="form-group custom-radio-wrapper">
+        
+        <div class="row">
+          <div class="col-md-12">
+          <div class="form-group">
         <label className="abc">
             Do you ever have any problems with breathing or being short of
             breath?{" "}
           </label>
-          </div>
- 
           <label style={{ fontSize: 12, color: "red" }}>
             {this.state.breathing_problems === "" && this.state.nameError}
           </label>
@@ -586,6 +709,15 @@ class CoreMedicalHistory extends Component {
             value={this.state.breathing_problems}
             placeholder="Select an option"
           />
+          </div>
+          </div>
+          </div>
+         
+         {
+           this.state.breathing_problems === "Other" &&
+         <div class="row">
+          <div class="col-md-12">
+          <div class="form-group">
           <label className="abc">Provide Details if Other</label>
           <label style={{ fontSize: 12, color: "red" }}>
             {this.state.breathing_problems === "Other" &&
@@ -599,7 +731,12 @@ class CoreMedicalHistory extends Component {
             onChange={this.handleChange("breathing_problems_details")}
             value={this.state.breathing_problems_details}
           />
+          </div>
+          </div>
+          </div>
+        }
         </div>
+       
         <div>
           <div class="row">
             <div class="col-md-12">
@@ -629,6 +766,7 @@ class CoreMedicalHistory extends Component {
             </div>
           </div>
         </div>
+        
         <div>
           <div class="row">
             <div class="col-md-12">
@@ -671,10 +809,15 @@ class CoreMedicalHistory extends Component {
                     this.state.headache
                   )}
                 </RadioGroup>
+             
               </div>
             </div>
           </div>
 
+        {this.state.headache === "Other" &&
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group ">
           <label className="abc">Provide Details if Other</label>
           <label style={{ fontSize: 12, color: "red" }}>
             {this.state.headache === "Other" &&
@@ -689,6 +832,11 @@ class CoreMedicalHistory extends Component {
             value={this.state.headache_details}
           />
         </div>
+        </div>
+        </div>
+        }
+        </div>
+              
         <div>
           <div class="row">
             <div class="col-md-12">
@@ -717,14 +865,18 @@ class CoreMedicalHistory extends Component {
             </div>
           </div>
 
-          <label className="abc">Select medication if yes </label>
-          {/* <label style={{ fontSize: 12, color: "red" }}>{this.state.headache==="Other" && this.state.headache_details==="" && this.state.nameError}</label> */}
-          <Dropdown
-            options={medications_options}
-            onChange={this.handleChange("medication_yes")}
-            value={this.state.medication_yes}
-            placeholder="Select an option"
-          />
+        {  this.state.medication === "Yes" &&
+         <div class="row">
+         <div class="col-md-12">
+           <div class="form-group">
+        <label className="abc">Select medication if yes </label>
+       
+        <label style={{ fontSize: 12, color: "red" }}>{this.state.medication==="Yes" && (this.state.medication_yes===null || this.state.medication_yes==="" )&& this.state.nameError}</label> 
+        <Select options={this.state.medications_options} placeholder="select" isSearchable isMulti autoFocus onChange={this.onChangeMultipleSelect('medication_yes')} value={this.state.medication_yes}></Select>
+         
+             </div>
+             </div>
+             </div>    }
         </div>
 
         <div>
@@ -732,9 +884,8 @@ class CoreMedicalHistory extends Component {
             <div class="col-md-12">
               <div class="form-group custom-radio-wrapper">
                 <label className="abc">
-                  {" "}
                   Have you previously had any bone fractures/breaks, surgeries
-                  or trauma?{" "}
+                  or trauma?
                 </label>
                 <label style={{ fontSize: 12, color: "red" }}>
                   {this.state.fracture === "" && this.state.nameError}
@@ -756,7 +907,10 @@ class CoreMedicalHistory extends Component {
               </div>
             </div>
           </div>
-
+        
+       {this.state.fracture === "Yes" &&   <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
           <label className="abc">Provide Details if Yes </label>
           <label style={{ fontSize: 12, color: "red" }}>
             {this.state.fracture === "Yes" &&
@@ -771,13 +925,15 @@ class CoreMedicalHistory extends Component {
             value={this.state.fracture_details}
           />
         </div>
+        </div>
+        </div>}
+        </div>
 
         <div>
           <div class="row">
             <div class="col-md-12">
               <div class="form-group custom-radio-wrapper">
                 <label className="abc">
-                  {" "}
                   Have you ever been very ill eg. fever or spent the night in a
                   hospital
                 </label>
@@ -802,6 +958,9 @@ class CoreMedicalHistory extends Component {
             </div>
           </div>
 
+         {this.state.high_fever === "Yes" && <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
           <label className="abc">Provide Details if Yes </label>
           <label style={{ fontSize: 12, color: "red" }}>
             {this.state.high_fever === "Yes" &&
@@ -816,6 +975,10 @@ class CoreMedicalHistory extends Component {
             value={this.state.high_fever_details}
           />
         </div>
+        </div>
+        </div>}
+        </div>
+        
         <div>
           <div class="row">
             <div class="col-md-12">
@@ -851,6 +1014,11 @@ class CoreMedicalHistory extends Component {
             </div>
           </div>
 
+         {
+           this.state.disorders === "Other" &&
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group ">
           <label className="abc">Provide Details if Other </label>
           <label style={{ fontSize: 12, color: "red" }}>
             {this.state.disorders === "Other" &&
@@ -864,7 +1032,12 @@ class CoreMedicalHistory extends Component {
             onChange={this.handleChange("disorders_details")}
             value={this.state.disorders_details}
           />
+          </div>
+          </div>
+          </div> 
+          }
         </div>
+       
         <div>
           <div class="row">
             <div class="col-md-12">
@@ -902,6 +1075,10 @@ class CoreMedicalHistory extends Component {
               </div>
             </div>
           </div>
+          
+        { this.state.thyroid === "Other" && <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
           <label className="abc">Provide Details if Other </label>
           <label style={{ fontSize: 12, color: "red" }}>
             {this.state.thyroid === "Other" &&
@@ -915,14 +1092,17 @@ class CoreMedicalHistory extends Component {
             onChange={this.handleChange("thyroid_details")}
             value={this.state.thyroid_details}
           />
+          </div>
+          </div>
+          </div>}
         </div>
+        
         <div>
           <div class="row">
             <div class="col-md-12">
               <div class="form-group custom-radio-wrapper">
                 <label className="abc">
-                  {" "}
-                  Have you ever had any medical conditions/diseases{" "}
+                  Have you ever had any medical conditions/diseases
                 </label>
                 <label style={{ fontSize: 12, color: "red" }}>
                   {this.state.medical_conditions === "" && this.state.nameError}
@@ -944,6 +1124,10 @@ class CoreMedicalHistory extends Component {
               </div>
             </div>
           </div>
+         
+        {  this.state.medical_conditions === "Yes" && <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
           <label className="abc">Provide Details if Yes </label>
           <label style={{ fontSize: 12, color: "red" }}>
             {this.state.medical_conditions === "Yes" &&
@@ -957,13 +1141,18 @@ class CoreMedicalHistory extends Component {
             onChange={this.handleChange("medical_conditions_details")}
             value={this.state.medical_conditions_details}
           />
+          </div>
+          </div>
+          </div> }
         </div>
-        <div>
-        <div>
+        
+       
+        <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
         <label className="abc">
             Do you have any other issues of concern?
           </label>
-          </div>
 
           <textarea
             className="form-control"
@@ -973,13 +1162,15 @@ class CoreMedicalHistory extends Component {
             value={this.state.concerns}
           />
         </div>
-        <br></br>
+        </div>
+        </div>
+       
         <div>
           <button className="btn btn-primary btn-block" onClick={this.completeForm}>
           Submit
           </button>
         </div>
-      </div>
+     </div>
     );
   }
 }

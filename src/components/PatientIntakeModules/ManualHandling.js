@@ -201,8 +201,11 @@ class ManualHandling extends Component
             </div>
           </div>
    
-                    <label className="abc">Provide Details if Yes</label>
+                  <div>
+                      <label className="abc">Provide Details if Yes</label>
                     <textarea className="form-control" rows="1" cols="5" onChange={this.handleChange('pain_lift_reason')} value={this.state.pain_lift_reason}/>
+                </div>
+                
                 </div>
                 <div>
                     <label className="abc"> Do you have any pain when doing any of the following for any period of time:</label><br/>

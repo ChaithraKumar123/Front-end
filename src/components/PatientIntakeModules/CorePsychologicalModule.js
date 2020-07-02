@@ -3,7 +3,7 @@ import '../../App.css'
 import axios from 'axios'
 import Dropdown from 'react-dropdown';
 import 'react-dropdown/style.css';
-import { RadioGroup, Radio } from "react-radio-group";
+import { RadioGroup } from "react-radio-group";
 import auth from "../auth";
 
 
@@ -197,6 +197,10 @@ class CorePsychologicalModule extends Component
                 </div>
               </div>
 
+              { this.state.homestress === "Yes" &&
+                <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group">
               <label className="abc">Provide Details if Yes</label>
               <label style={{ fontSize: 12, color: "red" }}>
                 {this.state.homestress === "Yes" &&
@@ -211,9 +215,16 @@ class CorePsychologicalModule extends Component
                 value={this.state.homestress_reason}
               />
             </div>
-            <div>
+            </div>
+            </div> }
+            </div>
+            
+            
+            <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group">
               <label className="abc">
-                How often do you feel nervous and “stressed”?{" "}
+                How often do you feel nervous and “stressed”?
               </label>
               <label style={{ fontSize: 12, color: "red" }}>
                 {this.state.personalstress === "" && this.state.nameError}
@@ -225,6 +236,10 @@ class CorePsychologicalModule extends Component
                 placeholder="Select an option"
               />
             </div>
+            </div>
+            </div>
+            
+           
             <div>
             <div class="row">
                 <div class="col-md-12">
@@ -253,6 +268,10 @@ class CorePsychologicalModule extends Component
                 </div>
               </div>
 
+           {this.state.depression === "Yes" &&
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group">
               <label className="abc">Provide Details if Yes</label>
               <label style={{ fontSize: 12, color: "red" }}>
                 {this.state.depression === "Yes" &&
@@ -266,7 +285,12 @@ class CorePsychologicalModule extends Component
                 onChange={this.handleChange("depression_reason")}
                 value={this.state.depression_reason}
               />
+              </div>
+              </div>
+              </div>
+            }
             </div>
+            
             <div>
             <div class="row">
                 <div class="col-md-12">
@@ -295,6 +319,9 @@ class CorePsychologicalModule extends Component
                 </div>
               </div>
 
+              {this.state.medications_impair === "Yes" &&<div class="row">
+                <div class="col-md-12">
+                  <div class="form-group custom-radio-wrapper">
               <label className="abc">Provide Details if Yes</label>
               <label style={{ fontSize: 12, color: "red" }}>
                 {this.state.medications_impair === "Yes" &&
@@ -309,8 +336,11 @@ class CorePsychologicalModule extends Component
                 value={this.state.medications_impair_reason}
               />
             </div>
-            <br></br>
-            <div>
+            </div>
+            </div>}
+            </div>
+            
+            <div className="row">
           <button className="btn btn-primary btn-block" onClick={this.completeForm}>
           Submit
           </button>

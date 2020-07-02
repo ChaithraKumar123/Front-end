@@ -331,7 +331,10 @@ class CoreLifeStyleModule extends Component {
           </div>
         </div>
 
-        <div id="radio">
+       
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group ">
           <label className="abc">
             Do you have any recreational interests/hobbies?
           </label>
@@ -343,6 +346,9 @@ class CoreLifeStyleModule extends Component {
             onChange={this.handleChange("recreational_hobbies")}
           />
         </div>
+        </div>
+        </div>
+
         <div>
           <div class="row">
             <div class="col-md-12">

@@ -129,6 +129,11 @@ class FamilyHistoryModule extends Component {
           </div>
         </div>
         <div>
+
+        <div class="row">
+          <div class="col-md-12">
+          <div class="form-group ">
+          
           <label className="abc">
             Has anyone in your family had or suffered from cancer, diabetes,
             heart disease, lung disease, mental illness, stroke or thyroid
@@ -143,6 +148,13 @@ class FamilyHistoryModule extends Component {
             value={this.state.family_disorder}
             placeholder="Select an option"
           />
+           </div>
+        </div>
+        </div>
+          {this.state.family_disorder === "Other" && <div>
+          <div class="row">
+          <div class="col-md-12">
+          <div class="form-group ">
           <label className="abc">Provide Details if Other</label>
           <label style={{ fontSize: 12, color: "red" }}>
             {this.state.family_disorder === "Other" &&
@@ -156,8 +168,12 @@ class FamilyHistoryModule extends Component {
             onChange={this.handleChange("family_disorder_details")}
             value={this.state.family_disorder_details}
           />
+          </div>
+          </div>
         </div>
-        <br></br>
+        </div>}
+        </div>
+       
         <div>
           <button
             className="btn btn-primary btn-block"
