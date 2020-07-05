@@ -40,11 +40,11 @@ class FamilyHistoryModule extends Component {
       .then((response) => {
         console.log(response.data[0]);
         this.setState({
-          family_disorder: response.data[0].familyHistory.includes("-")
-            ? response.data[0].familyHistory.split("-")[0]
+          family_disorder: response.data[0].familyHistory.includes("|")
+            ? response.data[0].familyHistory.split("|")[0]
             : response.data[0].familyHistory,
-          family_disorder_details: response.data[0].familyHistory.includes("-")
-            ? response.data[0].familyHistory.split("-")[1]
+          family_disorder_details: response.data[0].familyHistory.includes("|")
+            ? response.data[0].familyHistory.split("|")[1]
             : "",
           id: response.data[0].pobcpMedHistoryID,
           POBPatientID: response.data[0].pobPatientID,
@@ -80,7 +80,7 @@ class FamilyHistoryModule extends Component {
             FamilyHistory:
               this.state.family_disorder_details !== ""
                 ? this.state.family_disorder +
-                  "-" +
+                  "|" +
                   this.state.family_disorder_details
                 : this.state.family_disorder,
             //family_disorder_details:this.state.family_disorder==="Other"?this.state.family_disorder.split('-')[1]:"",

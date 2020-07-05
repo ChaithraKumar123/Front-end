@@ -43,28 +43,28 @@ class CorePsychologicalModule extends Component {
       .then((response) => {
         console.log(response.data[0]);
         this.setState({
-          homestress: response.data[0].homeStress.includes("-")
-            ? response.data[0].homeStress.split("-")[0]
+          homestress: response.data[0].homeStress.includes("|")
+            ? response.data[0].homeStress.split("|")[0]
             : response.data[0].homeStress,
-          homestress_reason: response.data[0].homeStress.includes("-")
-            ? response.data[0].homeStress.split("-")[1]
+          homestress_reason: response.data[0].homeStress.includes("|")
+            ? response.data[0].homeStress.split("|")[1]
             : "",
           personalstress: response.data[0].personalStress,
           medications_impair: response.data[0].depressionMedication.includes(
-            "-"
+            "|"
           )
-            ? response.data[0].depressionMedication.split("-")[0]
+            ? response.data[0].depressionMedication.split("|")[0]
             : response.data[0].depressionMedication,
           medications_impair_reason: response.data[0].depressionMedication.includes(
-            "-"
+            "|"
           )
-            ? response.data[0].depressionMedication.split("-")[1]
+            ? response.data[0].depressionMedication.split("|")[1]
             : "",
-          depression: response.data[0].depression.includes("-")
-            ? response.data[0].depression.split("-")[0]
+          depression: response.data[0].depression.includes("|")
+            ? response.data[0].depression.split("|")[0]
             : response.data[0].depression,
-          depression_reason: response.data[0].depression.includes("-")
-            ? response.data[0].depression.split("-")[1]
+          depression_reason: response.data[0].depression.includes("|")
+            ? response.data[0].depression.split("|")[1]
             : "",
           id: response.data[0].pobcpMedHistoryID,
           POBPatientID: response.data[0].pobPatientID,
@@ -100,18 +100,18 @@ class CorePsychologicalModule extends Component {
             HomeStress:
               this.state.homestress === "No"
                 ? "No"
-                : this.state.homestress + "-" + this.state.homestress_reason,
+                : this.state.homestress + "|" + this.state.homestress_reason,
             // ? this.state.homestress:this.state.homestress+ '-' + this.state.homestress_reason,
             PersonalStress: this.state.personalstress,
             Depression:
               this.state.depression === "No"
                 ? "No"
-                : this.state.depression + "-" + this.state.depression_reason,
+                : this.state.depression + "|" + this.state.depression_reason,
             DepressionMedication:
               this.state.medications_impair === "No"
                 ? "No"
                 : this.state.medications_impair +
-                  "-" +
+                  "|" +
                   this.state.medications_impair_reason,
             POBPatientID: this.state.POBPatientID,
             POBCPMedHistoryID: this.state.id,

@@ -9,6 +9,7 @@ import Select from 'react-select'
 
 
 import { RadioGroup } from "react-radio-group";
+import { id } from "date-fns/locale";
 
 const cholesteroloptions = [
   "No",
@@ -72,6 +73,7 @@ class CoreMedicalHistory extends Component {
       headache: "",
       medication: "",
       medication_yes: null,
+      medication_yes_temp : null,
       fracture: "",
       fracture_details: "",
       high_fever: "",
@@ -85,20 +87,27 @@ class CoreMedicalHistory extends Component {
       concerns: "",
       dizziness: "",
       POBPatientID: 60,
+      temp:'',
       medications_options:[],
       id: -1,
     };
     this.state = this.initialState;
   }
   onChangeMultipleSelect = input=>(event) => {
-       
-         
+    
+   
+  if (event!==null)
+
+    {
+    
     this.setState({
         [input]: event
     }); 
-
-
+  }
 }
+
+
+
   componentDidMount() {
 
    
@@ -124,97 +133,95 @@ class CoreMedicalHistory extends Component {
       .then((response) => {
         console.log(response.data[0]);
         this.setState({
-          allergies: response.data[0].allergies.includes("-")
-            ? response.data[0].allergies.split("-")[0]
+          allergies: response.data[0].allergies.includes("|")
+            ? response.data[0].allergies.split("|")[0]
             : response.data[0].allergies,
-          allergies_reason: response.data[0].allergies.includes("-")
-            ? response.data[0].allergies.split("-")[1]
+          allergies_reason: response.data[0].allergies.includes("|")
+            ? response.data[0].allergies.split("|")[1]
             : "",
 
-          diabetes: response.data[0].diabetes.includes("-")
-            ? response.data[0].diabetes.split("-")[0]
+          diabetes: response.data[0].diabetes.includes("|")
+            ? response.data[0].diabetes.split("|")[0]
             : response.data[0].diabetes,
-          diabetes_other_details: response.data[0].diabetes.includes("-")
-            ? response.data[0].diabetes.split("-")[1]
+          diabetes_other_details: response.data[0].diabetes.includes("|")
+            ? response.data[0].diabetes.split("|")[1]
             : "",
 
-          cholesterol: response.data[0].cholesterol.includes("-")
-            ? response.data[0].cholesterol.split("-")[0]
+          cholesterol: response.data[0].cholesterol.includes("|")
+            ? response.data[0].cholesterol.split("|")[0]
             : response.data[0].cholesterol,
-          cholesterol_details: response.data[0].cholesterol.includes("-")
-            ? response.data[0].cholesterol.split("-")[1]
+          cholesterol_details: response.data[0].cholesterol.includes("|")
+            ? response.data[0].cholesterol.split("|")[1]
             : "",
 
-          digestive: response.data[0].digestive.includes("-")
-            ? response.data[0].digestive.split("-")[0]
+          digestive: response.data[0].digestive.includes("|")
+            ? response.data[0].digestive.split("|")[0]
             : response.data[0].digestive,
-          digestive_details: response.data[0].digestive.includes("-")
-            ? response.data[0].digestive.split("-")[1]
+          digestive_details: response.data[0].digestive.includes("|")
+            ? response.data[0].digestive.split("|")[1]
             : "",
 
-          heart_problems: response.data[0].heart.includes("-")
-            ? response.data[0].heart.split("-")[0]
+          heart_problems: response.data[0].heart.includes("|")
+            ? response.data[0].heart.split("|")[0]
             : response.data[0].heart,
-          heart_problems_details: response.data[0].heart.includes("-")
-            ? response.data[0].heart.split("-")[1]
+          heart_problems_details: response.data[0].heart.includes("|")
+            ? response.data[0].heart.split("|")[1]
             : "",
 
-          breathing_problems: response.data[0].breath.includes("-")
-            ? response.data[0].breath.split("-")[0]
+          breathing_problems: response.data[0].breath.includes("|")
+            ? response.data[0].breath.split("|")[0]
             : response.data[0].breath,
-          breathing_problems_details: response.data[0].breath.includes("-")
-            ? response.data[0].breath.split("-")[1]
+          breathing_problems_details: response.data[0].breath.includes("|")
+            ? response.data[0].breath.split("|")[1]
             : "",
 
           dizziness: response.data[0].vertigo,
 
-          headache: response.data[0].headaches.includes("-")
-            ? response.data[0].headaches.split("-")[0]
+          headache: response.data[0].headaches.includes("|")
+            ? response.data[0].headaches.split("|")[0]
             : response.data[0].headaches,
-          headache_details: response.data[0].headaches.includes("-")
-            ? response.data[0].headaches.split("-")[1]
+          headache_details: response.data[0].headaches.includes("|")
+            ? response.data[0].headaches.split("|")[1]
             : "",
 
-          medication: response.data[0].medications.includes("-")
-            ? response.data[0].medications.split("-")[0]
+          medication: response.data[0].medications.includes("|")
+            ? response.data[0].medications.split("|")[0]
             : response.data[0].medications,
-          medication_yes: response.data[0].medications.includes("-")
-            ? response.data[0].medications.split("-")[1]
-            : "",
+        
 
-          fracture: response.data[0].previousTrauma.includes("-")
-            ? response.data[0].previousTrauma.split("-")[0]
+          fracture: response.data[0].previousTrauma.includes("|")
+            ? response.data[0].previousTrauma.split("|")[0]
             : response.data[0].previousTrauma,
-          fracture_details: response.data[0].previousTrauma.includes("-")
-            ? response.data[0].previousTrauma.split("-")[1]
+          fracture_details: response.data[0].previousTrauma.includes("|")
+            ? response.data[0].previousTrauma.split("|")[1]
             : "",
 
-          high_fever: response.data[0].hospitalDetails.includes("-")
-            ? response.data[0].hospitalDetails.split("-")[0]
+          high_fever: response.data[0].hospitalDetails.includes("|")
+            ? response.data[0].hospitalDetails.split("|")[0]
             : response.data[0].hospitalDetails,
-          high_fever_details: response.data[0].hospitalDetails.includes("-")
-            ? response.data[0].hospitalDetails.split("-")[1]
+          high_fever_details: response.data[0].hospitalDetails.includes("|")
+            ? response.data[0].hospitalDetails.split("|")[1]
             : "",
 
-          disorders: response.data[0].degenerativeDisorder.includes("-")
-            ? response.data[0].degenerativeDisorder.split("-")[0]
+          disorders: response.data[0].degenerativeDisorder.includes("|")
+            ? response.data[0].degenerativeDisorder.split("|")[0]
             : response.data[0].degenerativeDisorder,
-          disorders_details: response.data[0].degenerativeDisorder.includes("-")
-            ? response.data[0].degenerativeDisorder.split("-")[1]
+          disorders_details: response.data[0].degenerativeDisorder.includes("|")
+            ? response.data[0].degenerativeDisorder.split("|")[1]
             : "",
 
-          thyroid: response.data[0].thyroidDisorder.includes("-")
-            ? response.data[0].thyroidDisorder.split("-")[0]
+          thyroid: response.data[0].thyroidDisorder.includes("|")
+            ? response.data[0].thyroidDisorder.split("|")[0]
             : response.data[0].thyroidDisorder,
-          thyroid_details: response.data[0].thyroidDisorder.includes("-")
-            ? response.data[0].thyroidDisorder.split("-")[1]
+          thyroid_details: response.data[0].thyroidDisorder.includes("|")
+            ? response.data[0].thyroidDisorder.split("|")[1]
             : "",
 
-          medical_conditions: response.data[0].illDisease.includes("-")
-            ? response.data[0].illDisease.split("-")[0]
+          medical_conditions: response.data[0].illDisease.includes("|")
+            ? response.data[0].illDisease.split("|")[0]
             : response.data[0].illDisease,
-          medical_conditions_details: response.data[0].illDisease.includes("-")
-            ? response.data[0].illDisease.split("-")[1]
+          medical_conditions_details: response.data[0].illDisease.includes("|")
+            ? response.data[0].illDisease.split("|")[1]
             : "",
           //concerns:response.data[0].digestive,
 
@@ -232,8 +239,12 @@ class CoreMedicalHistory extends Component {
       })
       .then(response => {
           this.setState({
-              medication_yes : response.data
+              
+              medication_yes_temp : response.data
           }) 
+          this.setState({
+            medication_yes : response.data
+          })
           
       })
       .catch(error => {
@@ -265,35 +276,35 @@ class CoreMedicalHistory extends Component {
             Allergies:
               this.state.allergies === "No"
                 ? "No"
-                : this.state.allergies + "-" + this.state.allergies_reason,
+                : this.state.allergies + "|" + this.state.allergies_reason,
             ModuleName: "Core Medical History",
             //this.state.allergies_reason
             Diabetes:
               this.state.diabetes_other_details !== ""
-                ? this.state.diabetes + "-" + this.state.diabetes_other_details
+                ? this.state.diabetes + "|" + this.state.diabetes_other_details
                 : this.state.diabetes,
             //this.state.diabetes_other_details
             Cholesterol:
               this.state.cholesterol_details !== ""
-                ? this.state.cholesterol + "-" + this.state.cholesterol_details
+                ? this.state.cholesterol + "|" + this.state.cholesterol_details
                 : this.state.cholesterol,
             //this.state.cholesterol_details
             Digestive:
               this.state.digestive_details !== ""
-                ? this.state.digestive + "-" + this.state.digestive_details
+                ? this.state.digestive + "|" + this.state.digestive_details
                 : this.state.digestive,
             //this.state.digestive_details
             Heart:
               this.state.heart_problems_details !== ""
                 ? this.state.heart_problems +
-                  "-" +
+                  "|" +
                   this.state.heart_problems_details
                 : this.state.heart_problems,
             //this.state.heart_problems_details
             Breath:
               this.state.breathing_problems_details !== ""
                 ? this.state.breathing_problems +
-                  "-" +
+                  "|" +
                   this.state.breathing_problems_details
                 : this.state.breathing_problems,
             //this.state.breathing_problems_details
@@ -301,7 +312,7 @@ class CoreMedicalHistory extends Component {
             Vertigo: this.state.dizziness,
             Headaches:
               this.state.headache_details !== ""
-                ? this.state.headache + "-" + this.headache_details
+                ? this.state.headache + "|" + this.headache_details
                 : this.state.headache,
 
             Medications:
@@ -312,28 +323,28 @@ class CoreMedicalHistory extends Component {
             PreviousTrauma:
               this.state.fracture === "No"
                 ? "No"
-                : this.state.fracture + "-" + this.state.fracture_details,
+                : this.state.fracture + "|" + this.state.fracture_details,
             // this.state.fracture_details
             HospitalDetails:
               this.state.high_fever === "No"
                 ? "No"
-                : this.state.high_fever + "-" + this.state.high_fever_details,
+                : this.state.high_fever + "|" + this.state.high_fever_details,
             // this.state.high_fever_details
             DegenerativeDisorder:
               this.state.disorders_details !== ""
-                ? this.state.disorders + "-" + this.state.disorders_details
+                ? this.state.disorders + "|" + this.state.disorders_details
                 : this.state.disorders,
             // this.state.disorders_details
             ThyroidDisorder:
               this.state.thyroid_details !== ""
-                ? this.state.thyroid + "-" + this.state.thyroid_details
+                ? this.state.thyroid + "|" + this.state.thyroid_details
                 : this.state.thyroid,
             // this.state.thyroid_details
             IllDisease:
               this.state.medical_conditions === "No"
                 ? "No"
                 : this.state.medical_conditions +
-                  "-" +
+                  "|" +
                   this.state.medical_conditions_details,
             // this.state.medical_conditions_details
 
@@ -354,6 +365,8 @@ class CoreMedicalHistory extends Component {
           {
           for(var i=0 ; i< this.state.medication_yes.length ;i++)
           {
+          if(!this.state.medication_yes[i].id)
+          {
           axios
           .post(
             "https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/med_list_insert",
@@ -361,7 +374,7 @@ class CoreMedicalHistory extends Component {
               
               POBPatientID : this.state.POBPatientID,
               EntityType : 52,
-              MedicationID : this.state.medication_yes[i].value,
+              MedicationPBSID : this.state.medication_yes[i].value,
               POBCPMedHistoryID: this.state.id,
             }
           )
@@ -373,7 +386,34 @@ class CoreMedicalHistory extends Component {
           });
         }
       }
-      }
+     }
+      if(this.state.medication_yes_temp!=="" || this.state.medication_yes_temp===null)
+      {
+        for(var i=0 ; i < this.state.medication_yes_temp.length ;i ++)
+        {
+          if (this.state.medication_yes.includes(this.state.medication_yes_temp[i]))
+          {
+            continue ;
+          }
+          else
+          {
+            axios
+            .delete("https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/med_list_insert", {
+              params: { value: this.state.medication_yes_temp[i].id} ,
+            })
+            .then((response) => {
+              console.log(response.data[0]);
+
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+
+          }
+        }
+
+      }  
+    }
         auth.login(() => {
           this.props.history.push("/Home");
         });

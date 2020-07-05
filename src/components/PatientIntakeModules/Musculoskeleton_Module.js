@@ -78,20 +78,20 @@ class MusculoskeletonModule extends Component {
             NeckPainConsulted:
               response.data[0].neckPainConsulted === "No"
                 ? response.data[0].neckPainConsulted
-                : response.data[0].neckPainConsulted.split("-")[0],
+                : response.data[0].neckPainConsulted.split("|")[0],
             Neck_type_health_practitioner:
               response.data[0].neckPainConsulted === "No"
                 ? ""
-                : response.data[0].neckPainConsulted.split("-")[1],
+                : response.data[0].neckPainConsulted.split("|")[1],
             NeckPainTimeOffWork: response.data[0].neckPainTimeOffWork,
             NeckPainIntervention:
               response.data[0].neckPainIntervention === "No"
                 ? response.data[0].neckPainIntervention
-                : response.data[0].neckPainIntervention.split("-")[0],
+                : response.data[0].neckPainIntervention.split("|")[0],
             NeckPainIntervention_details:
               response.data[0].neckPainIntervention === "No"
                 ? ""
-                : response.data[0].neckPainIntervention.split("-")[1],
+                : response.data[0].neckPainIntervention.split("|")[1],
             //NeckPainIntervention_details:'',
             NeckPainStatus: response.data[0].neckPainStatus,
           });
@@ -106,21 +106,21 @@ class MusculoskeletonModule extends Component {
             BackPainConsulted:
               response.data[0].backPainConsulted === "No"
                 ? response.data[0].backPainConsulted
-                : response.data[0].backPainConsulted.split("-")[0],
+                : response.data[0].backPainConsulted.split("|")[0],
             Back_type_health_practitioner:
               response.data[0].backPainConsulted === "No"
                 ? ""
-                : response.data[0].backPainConsulted.split("-")[1],
+                : response.data[0].backPainConsulted.split("|")[1],
             //Neck_type_health_practitioner:response.data[0],
             BackPainTimeOffWork: response.data[0].backPainTimeOffWork,
             BackPainIntervention:
               response.data[0].backPainIntervention === "No"
                 ? response.data[0].backPainIntervention
-                : response.data[0].backPainIntervention.split("-")[0],
+                : response.data[0].backPainIntervention.split("|")[0],
             BackPainIntervention_details:
               response.data[0].backPainIntervention === "No"
                 ? ""
-                : response.data[0].backPainIntervention.split("-")[1],
+                : response.data[0].backPainIntervention.split("|")[1],
 
             //NeckPainIntervention_details:'',
             BackPainStatus: response.data[0].backPainStatus,
@@ -136,22 +136,22 @@ class MusculoskeletonModule extends Component {
             SHULPainConsulted:
               response.data[0].shulPainConsulted === "No"
                 ? response.data[0].shulPainConsulted
-                : response.data[0].shulPainConsulted.split("-")[0],
+                : response.data[0].shulPainConsulted.split("|")[0],
             SHUL_type_health_practitioner:
               response.data[0].shulPainConsulted === "No"
                 ? ""
-                : response.data[0].shulPainConsulted.split("-")[1],
+                : response.data[0].shulPainConsulted.split("|")[1],
 
             //Neck_type_health_practitioner:response.data[0],
             SHULPainTimeOffWork: response.data[0].shulPainTimeOffWork,
             SHULPainIntervention:
               response.data[0].shulPainIntervention === "No"
                 ? response.data[0].shulPainIntervention
-                : response.data[0].shulPainIntervention.split("-")[0],
+                : response.data[0].shulPainIntervention.split("|")[0],
             SHULPainIntervention_details:
               response.data[0].shulPainIntervention === "No"
                 ? ""
-                : response.data[0].shulPainIntervention.split("-")[1],
+                : response.data[0].shulPainIntervention.split("|")[1],
 
             //NeckPainIntervention_details:'',
             SHULPainStatus: response.data[0].shulPainStatus,
@@ -167,20 +167,20 @@ class MusculoskeletonModule extends Component {
             HILLPainConsulted:
               response.data[0].hillPainConsulted === "No"
                 ? response.data[0].hillPainConsulted
-                : response.data[0].hillPainConsulted.split("-")[0],
+                : response.data[0].hillPainConsulted.split("|")[0],
             HILL_type_health_practitioner:
               response.data[0].hillPainConsulted === "No"
                 ? ""
-                : response.data[0].hillPainConsulted.split("-")[1],
+                : response.data[0].hillPainConsulted.split("|")[1],
             HILLPainTimeOffWork: response.data[0].hillPainTimeOffWork,
             HILLPainIntervention:
               response.data[0].hillPainIntervention === "No"
                 ? response.data[0].hillPainIntervention
-                : response.data[0].hillPainIntervention.split("-")[0],
+                : response.data[0].hillPainIntervention.split("|")[0],
             HILLPainIntervention_details:
               response.data[0].hillPainIntervention === "No"
                 ? ""
-                : response.data[0].hillPainIntervention.split("-")[1],
+                : response.data[0].hillPainIntervention.split("|")[1],
             HILLPainStatus: response.data[0].hillPainStatus,
           });
         } else {
@@ -238,7 +238,7 @@ class MusculoskeletonModule extends Component {
                 : this.state.NeckPainConsulted === "No"
                 ? "No"
                 : this.state.NeckPainConsulted +
-                  "-" +
+                  "|" +
                   this.state.Neck_type_health_practitioner,
             //Neck_type_health_practitioner:this.state.NeckPain==="No"?'':this.state.Neck_type_health_practitioner,
             NeckPainTimeOffWork:
@@ -251,7 +251,7 @@ class MusculoskeletonModule extends Component {
                 : this.state.NeckPainIntervention === "No"
                 ? "No"
                 : this.state.NeckPainIntervention +
-                  "-" +
+                  "|" +
                   this.state.NeckPainIntervention_details,
             //NeckPainIntervention_details:this.state.NeckPain==="No"?'':this.state.NeckPainIntervention_details,
             NeckPainStatus:
@@ -270,7 +270,7 @@ class MusculoskeletonModule extends Component {
                 : this.state.BackPainConsulted === "No"
                 ? "No"
                 : this.state.BackPainConsulted +
-                  "-" +
+                  "|" +
                   this.state.Back_type_health_practitioner,
             //Back_type_health_practitioner:this.state.BackPain==="No"?'':this.state.Back_type_health_practitioner,
             BackPainTimeOffWork:
@@ -283,7 +283,7 @@ class MusculoskeletonModule extends Component {
                 : this.state.BackPainIntervention === "No"
                 ? "No"
                 : this.state.BackPainIntervention +
-                  "-" +
+                  "|" +
                   this.state.HILLPainIntervention_details,
             // BackPainIntervention_details:this.state.BackPain==="No"?'':this.state.BackPainIntervention_details,
             BackPainStatus:
@@ -302,7 +302,7 @@ class MusculoskeletonModule extends Component {
                 : this.state.shulPainConsulted === "No"
                 ? "No"
                 : this.state.SHULPainConsulted +
-                  "-" +
+                  "|" +
                   this.state.SHUL_type_health_practitioner,
             //SHUL_type_health_practitioner:this.state.SHULPain==="No"?'':this.state.SHUL_type_health_practitioner,
             SHULPainTimeOffWork:
@@ -315,7 +315,7 @@ class MusculoskeletonModule extends Component {
                 : this.state.SHULPainIntervention === "No"
                 ? "No"
                 : this.state.SHULPainIntervention +
-                  "-" +
+                  "|" +
                   this.state.SHULPainIntervention_details,
             //SHULPainIntervention_details:this.state.SHULPain==="No"?'':this.state.SHULPainIntervention_details,
             SHULPainStatus:
@@ -334,7 +334,7 @@ class MusculoskeletonModule extends Component {
                 : this.state.HILLPainConsulted === "No"
                 ? "No"
                 : this.state.HILLPainConsulted +
-                  "-" +
+                  "|" +
                   this.state.HILL_type_health_practitioner,
             //HILL_type_health_practitioner:this.state.HILLPain==="No"?'':this.state.HILL_type_health_practitioner,
             HILLPainTimeOffWork:
@@ -347,7 +347,7 @@ class MusculoskeletonModule extends Component {
                 : this.state.HILLPainIntervention === "No"
                 ? "No"
                 : this.state.HILLPainIntervention +
-                  "-" +
+                  "|" +
                   this.state.HILLPainIntervention_details,
             //HILLPainIntervention_details:this.state.HILLPain==="No"?'':this.state.HILLPainIntervention_details,
             HILLPainStatus:
