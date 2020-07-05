@@ -1,12 +1,13 @@
 import React, { Component } from "react";
 import Dropdown from "react-dropdown";
 import "react-dropdown/style.css";
+import Select from 'react-select'
 
 import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
-const stateOptions = [{text: "QLD", value: 1}, {text: "VIC", value: 2},
-{text: "NSW", value: 3},{text: "NT", value: 4},{text: "TAS", value: 5},{text: "ACT", value: 6},{text: "SA", value: 7},
-{text: "WA", value: 8} ];
+const stateOptions = [{label: "QLD", value: 1}, {label: "VIC", value: 2},
+{label: "NSW", value: 3},{label: "NT", value: 4},{label: "TAS", value: 5},{label: "ACT", value: 6},{label: "SA", value: 7},
+{label: "WA", value: 8} ];
 
 
 const Errormsg = () => (
@@ -48,7 +49,10 @@ class Step3 extends Component {
   };
   componentDidMount() {
     // Typical usage (don't forget to compare props):
-    fetch("https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/v1/personaldetails/Country")
+    fetch(
+      "https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/v1/personaldetails/Country"
+      // "https://localhost:44338/v1/personaldetails/Country"
+      )
       .then((response) => response.json())
       .catch(function (data) {
         window.alert(data);
@@ -66,6 +70,7 @@ class Step3 extends Component {
             <p> Step 3 of 4 </p>
           </div>
         </div>
+        <div className = "contentSpacing">
         <div className="row">
           <div>
             <div className="form-group">
@@ -120,20 +125,19 @@ class Step3 extends Component {
                 onChange={handleChange("stateName")}
                 value={state.stateName}
               /> */}
-              <Autocomplete
-                id="combo-box-demo"
-                style={{ width: "646px", height: "38px" }}
-                options={stateOptions}
-                getOptionLabel={(option) => option.text}
-                onChange={handleChange("stateName")}
-                renderInput={(params) => (
-                  <TextField
-                    style={{ width: "646px", height: "38px" }}
-                    variant="outlined"
-                    {...params}
-                  />
-                )}
-              />
+
+              
+            <Select
+           options={stateOptions} 
+           theme={theme => ({
+            ...theme,
+            borderRadius: 8,
+          })}
+           isSearchable 
+           menuPlacement="top"
+            onChange={handleChange('stateName')} 
+            value={state.stateName}></Select>
+
             </div>
             <div className="errorMessage">{state.stateNameError}</div>
           </div>
@@ -154,7 +158,19 @@ class Step3 extends Component {
 
           <div>
             <label className="abc">Country</label>
-            <Autocomplete
+
+            <Select
+           options={this.state.Countryoptions} 
+           theme={theme => ({
+            ...theme,
+            borderRadius: 8,
+          })}
+           isSearchable 
+           menuPlacement="top"
+            onChange={handleChange('country')} 
+            value={state.country}></Select>
+
+            {/* <Autocomplete
               id="combo-box-demo"
               style={{ width: "646px", height: "38px" }}
               options={this.state.Countryoptions}
@@ -163,7 +179,7 @@ class Step3 extends Component {
               renderInput={(params) => (
                 <TextField className="Minput" variant="outlined" {...params} />
               )}
-            />
+            /> */}
             <div className="errorMessage">{state.countryError}</div>
           </div>
 
@@ -181,6 +197,7 @@ class Step3 extends Component {
               Continue
             </button>
           </div>
+        </div>
         </div>
       </div>
     );

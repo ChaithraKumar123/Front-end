@@ -152,13 +152,14 @@ class Loginpage extends Component {
               <h1>Welcome!</h1>
             </div>
           </div>
+          <div className = "contentSpacing">
           <div>
           {this.state.submit === true ? <IsLoading /> : null}
           </div>
           <div style= {{"textAlignLast": "center"}}>
-          <img src={require("./workhealthy.png")} height = "250px" />
+          <img src={require("./workhealthy.png")} height = "150px" />
           </div>
-          <div className="row">
+          <div className="row"  style = {{"margin-top": "24px"}}>
             <div>
               <div className="form-group">
                 <label className="abc">Email or Phone number</label>
@@ -202,17 +203,18 @@ class Loginpage extends Component {
                 </button>
               </div>
             </div>
-            <div className="forg">
+            <div className="forg" style = {{"marginTop": "16px", "text-align-last": "center"}}>
               <Link className="passwordForgot" to="/ForgotPassword">
                 Forgot Password?
               </Link>
             </div>
             <div>
-              <h4 className="invite"> Haven't been invited?</h4>
-              <Link className="create" to="/Signup">
+              <h4 className="invite"  style = {{"text-align-last": "center"}}> Haven't been invited?</h4>
+              <Link className="create" style = {{"text-align-last": "center"}} to="/Signup">
                 Create your own account
               </Link>
             </div>
+          </div>
           </div>
         </div>
       )

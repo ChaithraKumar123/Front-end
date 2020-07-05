@@ -73,7 +73,7 @@ class Step2 extends Component {
             <p> Step 2 of 4 </p>
           </div>
         </div>
-
+        <div className = "contentSpacing">
         <div className="row">
           <div>
             <div className="form-group">
@@ -179,6 +179,7 @@ class Step2 extends Component {
           >
             Continue
           </button>
+        </div>
         </div>
       </div>
     );

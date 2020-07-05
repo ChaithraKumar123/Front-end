@@ -325,7 +325,7 @@ class Main extends Component {
 
   validateStateCountry = (e, input) => {
     if (input === "stateName") {
-      if (e.target.textContent.length <= 0) {
+      if (e.label.length <= 0) {
         this.setState({
           stateNameError: "Required Field",
           stateNameisValid: false,
@@ -338,7 +338,7 @@ class Main extends Component {
     
 
     if (input === "country") {
-      if (e.target.textContent.length <= 0) {
+      if (e.label.length <= 0) {
         this.setState({
           countryError: "Required Field",
           countryisValid: false,
@@ -359,11 +359,11 @@ class Main extends Component {
   handleChange = (input) => (e) => {
     if (input == "culturalGroup") {
       this.setState({
-        [input]: e.target.textContent,
+        [input]: e,
       });
 
      var index =  this.state.ethnicityoptions.findIndex(function(item, i){
-        return item.text === e.target.textContent
+        return item.label === e.label
       })
 
       this.setState({
@@ -371,41 +371,42 @@ class Main extends Component {
       });
 
     }
-    if (e.target) {
+    else if (input == "stateName") {
+      this.setState({
+        [input]: e,
+      });
+
+      var index =  this.state.stateOpts.findIndex(function(item, i){
+        return item.label === e.label
+      })
+
+      this.setState({
+        stateCode: this.state.stateOpts[index].value,
+      });
+
+      this.validateStateCountry(e, input);
+
+
+      
+    }
+    else if ( input == "country"){
+
+      this.setState({
+        [input]: e,
+      });
+
+      var index =  this.state.Countryoptions.findIndex(function(item, i){
+        return item.label === e.label
+      })
+
+      this.setState({
+        countryCode: this.state.Countryoptions[index].value,
+      });
+      this.validateStateCountry(e, input);
+
+    }
+    else if (e.target) {
       var transfer = e.target.value;
-      if (input == "stateName") {
-        transfer = e.target.textContent;
-
-
-        var index =  this.state.stateOpts.findIndex(function(item, i){
-          return item.text === e.target.textContent
-        })
-  
-        this.setState({
-          stateCode: this.state.stateOpts[index].value,
-        });
-
-        const isValid = this.validateStateCountry(e, input);
-
-  
-        
-      }
-      if ( input == "country"){
-
-        transfer = e.target.textContent;
-
-
-        var index =  this.state.Countryoptions.findIndex(function(item, i){
-          return item.text === e.target.textContent
-        })
-  
-        this.setState({
-          countryCode: this.state.Countryoptions[index].value,
-        });
-        const isValid = this.validateStateCountry(e, input);
-
-      }
-
       this.setState({
         [input]: transfer,
       });
@@ -478,7 +479,6 @@ class Main extends Component {
           handleChange={this.handleChange}
           nextStep={this.nextStep}
           prevStep={this.prevStep}
-          stepReset={this.stepReset}
           state={this.state}
         />
       );
@@ -488,7 +488,9 @@ class Main extends Component {
     return <Brilliant state = {this.state} handleChange={this.handleChange} />;
   };
   HomePage = () => {
-    return <Home state = {this.state}/>;
+    return <Home          
+     stepReset={this.stepReset}
+     state = {this.state}/>;
   };
 
   History = () =>{

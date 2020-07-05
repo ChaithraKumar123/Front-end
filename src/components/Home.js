@@ -14,11 +14,16 @@ class Home extends Component {
     localStorage.removeItem("login");
   };
 
+  componentDidMount(){
+    this.props.stepReset()
+  }
+
   render() {
     const { handleChange, state } = this.props;
 
     return (
       <div id="MainDiv">
+        <div style = {{"height" : "739px"}}>
         <div className="page-title lg">
           <div className="title">
             <h1>Home</h1>
@@ -38,14 +43,14 @@ class Home extends Component {
               <div>
                 <Link
                   style={{ textDecoration: "inherit" }}
-                  className="create"
+                  className="HomeList"
                   to="/patientDetails"
                 >
                   Patient Details
                 </Link>
                 <Link
                   style={{ textDecoration: "inherit" }}
-                  className="create"
+                  className="HomeList"
                   to="/History"
                 >
                   Patient Medical History
@@ -62,6 +67,7 @@ class Home extends Component {
                   Logout
                 </button>
               </div>
+        </div>
       </div>
     );
   }

@@ -5,6 +5,7 @@ import { Dropdown } from "semantic-ui-react";
 
 import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
+import Select from "react-select";
 
 const options = {};
 
@@ -39,9 +40,12 @@ class Step1 extends Component {
     console.log(this.ethnicityoptions);
   };
   componentDidMount() {
-    this.props.stepReset()
+    this.props.stepReset();
     // Typical usage (don't forget to compare props):
-    fetch("https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/v1/personaldetails/Ethnicity")
+    fetch(
+      "https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/v1/personaldetails/Ethnicity"
+      // "https://localhost:44338/v1/personaldetails/Ethnicity"
+    )
       .then((response) => response.json())
       .catch(function (data) {
         window.alert(data);
@@ -60,218 +64,216 @@ class Step1 extends Component {
             <p> Step 1 of 4 </p>
           </div>
         </div>
-        <div className="row">
-          <div className="form-group custom-radio-wrapper">
-            <label className="abc">Title</label>
-            <div className="custom-radio rounded">
-              <input
-                type="radio"
-                className="custom-input"
-                name="radio1"
-                type="radio"
-                value="Mr"
-                id="titleOpt"
-                checked={state.titleOpt === "Mr"}
-                onChange={handleChange("titleOpt")}
-              />
-              <span>Mr</span>
+        <div className="contentSpacing">
+          <div className="row">
+            <div className="form-group custom-radio-wrapper">
+              <label className="abc">Title</label>
+              <div className="custom-radio rounded">
+                <input
+                  type="radio"
+                  className="custom-input"
+                  name="radio1"
+                  type="radio"
+                  value="Mr"
+                  id="titleOpt"
+                  checked={state.titleOpt === "Mr"}
+                  onChange={handleChange("titleOpt")}
+                />
+                <span>Mr</span>
+              </div>
+              <div className="custom-radio rounded">
+                <input
+                  type="radio"
+                  className="custom-input"
+                  name="radio1"
+                  value="Mrs"
+                  id="titleOpt"
+                  checked={state.titleOpt === "Mrs"}
+                  onChange={handleChange("titleOpt")}
+                />
+                <span>Mrs</span>
+              </div>
+              <div className="custom-radio rounded">
+                <input
+                  type="radio"
+                  className="custom-input"
+                  name="radio1"
+                  value="Miss"
+                  id="titleOpt"
+                  checked={state.titleOpt === "Miss"}
+                  onChange={handleChange("titleOpt")}
+                />
+                <span>Miss</span>
+              </div>
+              <div className="custom-radio rounded">
+                <input
+                  type="radio"
+                  className="custom-input"
+                  name="radio1"
+                  value="Ms"
+                  id="titleOpt"
+                  checked={state.titleOpt === "Ms"}
+                  onChange={handleChange("titleOpt")}
+                />
+                <span>Ms</span>
+              </div>
+              <div className="custom-radio rounded">
+                <input
+                  type="radio"
+                  className="custom-input"
+                  name="radio1"
+                  value="Other"
+                  id="titleOpt"
+                  checked={state.titleOpt === "Other"}
+                  onChange={handleChange("titleOpt")}
+                />
+                <span>Other</span>
+              </div>
             </div>
-            <div className="custom-radio rounded">
-              <input
-                type="radio"
-                className="custom-input"
-                name="radio1"
-                value="Mrs"
-                id="titleOpt"
-                checked={state.titleOpt === "Mrs"}
-                onChange={handleChange("titleOpt")}
-              />
-              <span>Mrs</span>
-            </div>
-            <div className="custom-radio rounded">
-              <input
-                type="radio"
-                className="custom-input"
-                name="radio1"
-                value="Miss"
-                id="titleOpt"
-                checked={state.titleOpt === "Miss"}
-                onChange={handleChange("titleOpt")}
-              />
-              <span>Miss</span>
-            </div>
-            <div className="custom-radio rounded">
-              <input
-                type="radio"
-                className="custom-input"
-                name="radio1"
-                value="Ms"
-                id="titleOpt"
-                checked={state.titleOpt === "Ms"}
-                onChange={handleChange("titleOpt")}
-              />
-              <span>Ms</span>
-            </div>
-            <div className="custom-radio rounded">
-              <input
-                type="radio"
-                className="custom-input"
-                name="radio1"
-                value="Other"
-                id="titleOpt"
-                checked={state.titleOpt === "Other"}
-                onChange={handleChange("titleOpt")}
-              />
-              <span>Other</span>
-            </div>
-          </div>
-          <div className="errorMessage">{state.titleOptError}</div>
+            <div className="errorMessage">{state.titleOptError}</div>
 
-          <div>
+            <div>
+              <div className="form-group">
+                <label className="abc">Given Name</label>
+                <input
+                  className="form-control"
+                  id="givenName"
+                  type="text"
+                  value={state.givenName}
+                  onChange={handleChange("givenName")}
+                />
+                <div className="errorMessage">{state.givenNameError}</div>
+              </div>
+            </div>
+            <div>
+              <div className="form-group">
+                <label className="abc">
+                  Middle Name <span className="optional">Optional</span>{" "}
+                </label>
+                <input
+                  className="form-control"
+                  id="middleName"
+                  type="text"
+                  value={state.middleName}
+                  onChange={handleChange("middleName")}
+                />
+              </div>
+            </div>
+            <div>
+              <div className="form-group">
+                <label className="abc">Surname</label>
+                <input
+                  className="form-control"
+                  id="surName"
+                  type="text"
+                  value={state.surName.fieldValue}
+                  onChange={handleChange("surName")}
+                />
+                <div className="errorMessage">{state.surNameError}</div>
+              </div>
+            </div>
+            <div>
+              <div className="form-group">
+                <label className="abc">Date of Birth</label>
+                <input
+                  className="form-control"
+                  id="DateofB"
+                  name="DateofB"
+                  type="date"
+                  value={state.DateofB}
+                  onChange={handleChange("DateofB")}
+                />
+                <div className="errorMessage">{state.DateofBError}</div>
+              </div>
+            </div>
+
+            <div className="form-group custom-radio-wrapper">
+              <label className="abc">Gender</label>
+
+              <div className="custom-radio rounded">
+                <input
+                  type="radio"
+                  className="custom-input"
+                  name="radio2"
+                  value="Male"
+                  id="gender"
+                  checked={state.gender === "Male"}
+                  onChange={handleChange("gender")}
+                />
+                <span>Male</span>
+              </div>
+              <div className="custom-radio rounded">
+                <input
+                  type="radio"
+                  className="custom-input"
+                  name="radio2"
+                  value="Female"
+                  id="gender"
+                  checked={state.gender === "Female"}
+                  onChange={handleChange("gender")}
+                />
+                <span>Female</span>
+              </div>
+
+              <div className="custom-radio rounded">
+                <input
+                  type="radio"
+                  className="custom-input"
+                  name="radio2"
+                  value="U"
+                  id="gender"
+                  checked={state.gender === "U"}
+                  onChange={handleChange("gender")}
+                />
+                <span>Unspecified</span>
+              </div>
+            </div>
+            <div className="errorMessage">{state.genderError}</div>
+
+            <div>
+              <div className="form-group">
+                <label className="abc">Phone Number</label>
+                <input
+                  className="form-control"
+                  id="mobileNumber"
+                  type="text"
+                  value={state.mobileNumber}
+                  onChange={handleChange("mobileNumber")}
+                />
+
+                <div className="errorMessage">{state.mobileNumberError}</div>
+              </div>
+            </div>
+            <div>
+              <div className="form-group">
+                <label className="abc">Email</label>
+                <input
+                  className="form-control"
+                  id="email"
+                  type="email"
+                  value={state.email}
+                  onChange={handleChange("email")}
+                />
+                <div className="errorMessage">{state.emailError}</div>
+              </div>
+            </div>
             <div className="form-group">
-              <label className="abc">Given Name</label>
-              <input
-                className="form-control"
-                id="givenName"
-                type="text"
-                value={state.givenName}
-                onChange={handleChange("givenName")}
-              />
-              <div className="errorMessage">{state.givenNameError}</div>
+              <label className="abc">Cultural/Ethnic Group</label>
+              <Select
+                options={this.state.ethnicityoptions}
+                theme={(theme) => ({
+                  ...theme,
+                  borderRadius: 8,
+                })}
+                isSearchable
+                menuPlacement="top"
+                onChange={handleChange("culturalGroup")}
+                value={state.culturalGroup}
+              ></Select>
+              {this.state.submit ? <Errormsg /> : null}
+              <br></br>
             </div>
-          </div>
-          <div>
-            <div className="form-group">
-              <label className="abc">Surname</label>
-              <input
-                className="form-control"
-                id="surName"
-                type="text"
-                value={state.surName.fieldValue}
-                onChange={handleChange("surName")}
-              />
-              <div className="errorMessage">{state.surNameError}</div>
-            </div>
-          </div>
-          <div>
-            <div className="form-group">
-              <label className="abc">
-                Middle Name <span className="optional">Optional</span>{" "}
-              </label>
-              <input
-                className="form-control"
-                id="middleName"
-                type="text"
-                value={state.middleName}
-                onChange={handleChange("middleName")}
-              />
-            </div>
-          </div>
-          <div>
-            <div className="form-group">
-              <label className="abc">Date of Birth</label>
-              <input
-                className="form-control"
-                id="DateofB"
-                name="DateofB"
-                type="date"
-                value={state.DateofB}
-                onChange={handleChange("DateofB")}
-              />
-              <div className="errorMessage">{state.DateofBError}</div>
-            </div>
-          </div>
-
-          <div className="form-group custom-radio-wrapper">
-            <label className="abc">Gender</label>
-
-            <div className="custom-radio rounded">
-              <input
-                type="radio"
-                className="custom-input"
-                name="radio2"
-                value="Male"
-                id="gender"
-                checked={state.gender === "Male"}
-                onChange={handleChange("gender")}
-              />
-              <span>Male</span>
-            </div>
-            <div className="custom-radio rounded">
-              <input
-                type="radio"
-                className="custom-input"
-                name="radio2"
-                value="Female"
-                id="gender"
-                checked={state.gender === "Female"}
-                onChange={handleChange("gender")}
-              />
-              <span>Female</span>
-            </div>
-
-            <div className="custom-radio rounded">
-              <input
-                type="radio"
-                className="custom-input"
-                name="radio2"
-                value="U"
-                id="gender"
-                checked={state.gender === "U"}
-                onChange={handleChange("gender")}
-              />
-              <span>Unspecified</span>
-            </div>
-          </div>
-          <div className="errorMessage">{state.genderError}</div>
-
-          <div>
-            <div className="form-group">
-              <label className="abc">Phone Number</label>
-              <input
-                className="form-control"
-                id="mobileNumber"
-                type="text"
-                value={state.mobileNumber}
-                onChange={handleChange("mobileNumber")}
-              />
-
-              <div className="errorMessage">{state.mobileNumberError}</div>
-            </div>
-          </div>
-          <div>
-            <div className="form-group">
-              <label className="abc">email</label>
-              <input
-                className="form-control"
-                id="email"
-                type="email"
-                value={state.email}
-                onChange={handleChange("email")}
-              />
-              <div className="errorMessage">{state.emailError}</div>
-            </div>
-          </div>
-          <div className="form-group">
-          <label className="abc">Cultural/Ethnic Group</label>
-          </div>
-          <Autocomplete
-            id="combo-box-demo"
-            style={{ width: "646px", height: "38px" }}
-            options={this.state.ethnicityoptions}
-            getOptionLabel={(option) => option.text}
-            onChange={handleChange("culturalGroup")}
-            renderInput={(params) => (
-              <TextField
-                style={{ width: "646px", height: "38px" }}
-                variant="outlined"
-                {...params}
-              />
-            )}
-          />
-          {this.state.submit ? <Errormsg /> : null}
-
-          <div className="btn-block prev-back-btn">
+            {/* <div className="btn-block prev-back-btn">
             <button
               className="btn btn-primary modal-btn"
               data-modal-id="sampleModal"
@@ -280,6 +282,16 @@ class Step1 extends Component {
             >
               Continue
             </button>
+          </div> */}
+
+            <div>
+              <button
+                className="btn btn-primary btn-block"
+                onClick={this.continue}
+              >
+                Continue
+              </button>
+            </div>
           </div>
         </div>
       </div>

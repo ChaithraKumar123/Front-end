@@ -66,7 +66,7 @@ class InjuryQuestions extends Component
 
         return(
             <div className="Container">
-              <div id = "MainDiv">
+        <div className = "contentSpacing">
                 
                     <div className="row">
                     <div class="col-md-12">

@@ -16,6 +16,7 @@ import { Navbar, Container, Nav, NavDropdown } from "react-bootstrap";
 function History() {
   return (
     <div id="MainDiv">
+      <div style = {{"height" : "739px"}}>
       <div className="page-title lg">
         <div className="title">
           <h1>Patient History</h1>
@@ -55,6 +56,7 @@ function History() {
             <Nav.Link style = {{fontSize: "16px"}}  href="/OreboModule">OreboModule</Nav.Link>
           </Container>
         </Navbar>
+      </div>
       </div>
     </div>
   );
