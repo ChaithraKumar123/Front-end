@@ -129,12 +129,13 @@ class ManualHandling extends Component
       validate = () => {
         let nameError = "";
         
-        const val = this.state
-        if (val.pain_lift==="" ||val.pain_walk ==="" ||val.pain_stand ==="" || val.pain_squat==="" 
-        || val.pain_bend===""|| val.problem_working_conditions===""||val.difficult_operating===""
-        || val.pain_grip ===""
-        || val.pain_lift_below==="" || val.problem_working_heights === "" || val.require_assistance==="") {
+        const val = this.state;
+        if (val.pain_lift==="" ||(val.pain_lift==="Yes" && val.pain_lift_reason==="") ||val.pain_walk ==="" ||(this.state.pain_walk==="Yes" && this.state.pain_walk_reason==="") ||val.pain_stand ==="" || val.pain_squat===""  || (val.pain_squat==="Yes"&&val.pain_squat_reason==="")
+        || val.pain_bend===""||(val.pain_bend==="Yes" && val.pain_bend_reason==="")|| val.problem_working_conditions===""||val.difficult_operating==="" ||(this.state.difficult_operating==="Yes"  &&  this.state.difficult_operating_reason==="")
+        || val.pain_grip ==="" || (this.state.pain_grip==="Yes" && this.state.pain_grip_reason==="") || (this.state.problem_working_heights==="Yes" && this.state.problem_working_heights_reason==="")
+        || val.pain_lift_below==="" ||(val.pain_lift_below==="Yes" && val.pain_lift_below_reason==="")|| val.problem_working_heights === "" || val.require_assistance==="" || (this.state.require_assistance==="Yes"  && this.state.require_assistance_reason ==="")) {
           nameError = "*required";
+          
         }
         if (nameError) {
             this.setState({nameError });
@@ -178,7 +179,7 @@ class ManualHandling extends Component
           </div>
         </div>
                 <div>
-                <div class="row">
+          <div class="row">
             <div class="col-md-12">
               <div class="form-group custom-radio-wrapper">
               <label className="abc">Do you have any pain/discomfort when lifting/handling heavy objects?</label>
@@ -201,21 +202,28 @@ class ManualHandling extends Component
             </div>
           </div>
    
-                  <div>
-                      <label className="abc">Provide Details if Yes</label>
-                    <textarea className="form-control" rows="1" cols="5" onChange={this.handleChange('pain_lift_reason')} value={this.state.pain_lift_reason}/>
+         { this.state.pain_lift === "Yes" && 
+         <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                  <label className="abc">Provide Details if Yes</label>
+                  <label style={{ fontSize: 12, color: "red" }}>{this.state.pain_lift === "Yes" &&  this.state.pain_lift_reason==="" && this.state.nameError}</label>
+                  <textarea className="form-control" rows="1" cols="5" onChange={this.handleChange('pain_lift_reason')} value={this.state.pain_lift_reason}/>
                 </div>
+                </div>
+                </div>
+    }
                 
                 </div>
+               
                 <div>
-                    <label className="abc"> Do you have any pain when doing any of the following for any period of time:</label><br/>
-                  
-                    <div>
-                    <div class="row">
+                <div>
+              <div class="row">
             <div class="col-md-12">
               <div class="form-group custom-radio-wrapper">
+              <label className="abc"> Do you have any pain when doing any of the following for any period of time:</label>  
               <label className="abc">Walking</label>
-                    <label style={{ fontSize: 12, color: "red" }}>{this.state.pain_walk==="" && this.state.nameError}</label>
+                <label style={{ fontSize: 12, color: "red" }}>{this.state.pain_walk==="" && this.state.nameError}</label>
                 <RadioGroup>
                   {this.RadiobtnStyle(
                     "No",
@@ -240,15 +248,24 @@ class ManualHandling extends Component
             </div>
           </div>
      
-                    <label className="abc">Provide Details</label>
-                    <textarea className="form-control" rows="1" cols="5" onChange={this.handleChange('pain_walk_reason')} value={this.state.pain_walk_reason}/>
+          {this.state.pain_walk==="Yes" && <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+              <label className="abc">Provide Details</label>
+              <label style={{ fontSize: 12, color: "red" }}>{this.state.pain_walk==="Yes" && this.state.pain_walk_reason==="" && this.state.nameError}</label>
+              <textarea className="form-control" rows="1" cols="5" onChange={this.handleChange('pain_walk_reason')} value={this.state.pain_walk_reason}/>
+              </div>
+              </div>
+              </div>
+              }   
                     </div>
-                    <div>
-                    <div class="row">
+                    
+                <div>
+              <div class="row">
             <div class="col-md-12">
               <div class="form-group custom-radio-wrapper">
               <label className="abc">Bending</label>
-                    <label style={{ fontSize: 12, color: "red" }}>{this.state.pain_bend==="" && this.state.nameError}</label>
+                <label style={{ fontSize: 12, color: "red" }}>{this.state.pain_bend==="" && this.state.nameError}</label>
                 <RadioGroup>
                   {this.RadiobtnStyle(
                     "No",
@@ -273,10 +290,21 @@ class ManualHandling extends Component
             </div>
           </div>
      
+               {
+                 this.state.pain_bend==="Yes" && <div class="row">
+                 <div class="col-md-12">
+                   <div class="form-group">
                     <label className="abc">Provide Details</label>
+                    <label style={{ fontSize: 12, color: "red" }}>{this.state.pain_bend==="Yes" && this.state.pain_bend_reason==="" && this.state.nameError}</label>
                     <textarea className="form-control" rows="1" cols="5" onChange={this.handleChange('pain_bend_reason')} value={this.state.pain_bend_reason}/>
                     </div>
-                    <div>
+                    </div>
+                    </div>
+
+                    }
+                    </div>
+                               
+                <div>
                     <div class="row">
             <div class="col-md-12">
               <div class="form-group custom-radio-wrapper">
@@ -306,10 +334,19 @@ class ManualHandling extends Component
             </div>
           </div>
   
+           { this.state.pain_squat==="Yes" && <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
                     <label className="abc">Provide Details</label>
+                    <label style={{ fontSize: 12, color: "red" }}>{this.state.pain_squat==="Yes" && this.state.pain_squat_reason==="" && this.state.nameError}</label>
                     <textarea className="form-control" rows="1" cols="5" onChange={this.handleChange('pain_squat_reason')} value={this.state.pain_squat_reason}/>
                     </div>
-                    <div>
+                    </div>
+                    </div>
+           }
+           </div>
+                    
+               <div>
                     <div class="row">
             <div class="col-md-12">
               <div class="form-group custom-radio-wrapper">
@@ -338,11 +375,20 @@ class ManualHandling extends Component
               </div>
             </div>
           </div>
-   
+          { this.state.pain_stand==="Yes" && <div class="row">
+            <div class="col-md-12">
+              <div class="form-group custom-radio-wrapper">
                     <label className="abc">Provide Details</label>
+                    <label style={{ fontSize: 12, color: "red" }}>{this.state.pain_stand==="Yes" && this.state.pain_stand_reason==="" && this.state.nameError}</label>
                     <textarea className="form-control" rows="1" cols="5" onChange={this.handleChange('pain_stand_reason')} value={this.state.pain_stand_reason}/>
                     </div>
+                    </div>
+                    </div> }
+                    
+                    </div>
+                
                 </div>
+                
                 <div>
                 <div class="row">
             <div class="col-md-12">
@@ -373,8 +419,15 @@ class ManualHandling extends Component
             </div>
           </div>
   
+          {this.state.pain_lift_below==="Yes"  &&  <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
                     <label className="abc">Provide Details</label>
+                    <label style={{ fontSize: 12, color: "red" }}>{this.state.pain_lift==="Yes" && this.state.pain_lift_below_reason==="" && this.state.nameError}</label>
                     <textarea className="form-control" rows="1" cols="5" onChange={this.handleChange('pain_lift_below_reason')} value={this.state.pain_lift_below_reason}/>
+                    </div>
+                    </div>
+                    </div> }
                 </div>
 
 
@@ -383,7 +436,7 @@ class ManualHandling extends Component
             <div class="col-md-12">
               <div class="form-group custom-radio-wrapper">
               <label className="abc">Do you have any pain when using a gripping motion?</label>
-                    <label style={{ fontSize: 12, color: "red" }}>{this.state.pain_grip==="" && this.state.nameError}</label>
+                  <label style={{ fontSize: 12, color: "red" }}>{this.state.pain_grip==="" && this.state.nameError}</label>
                 <RadioGroup>
                   {this.RadiobtnStyle(
                     "No",
@@ -408,9 +461,19 @@ class ManualHandling extends Component
             </div>
           </div>
   
-                    <label className="abc">Provide Details</label>
-                    <textarea className="form-control" rows="1" cols="5" onChange={this.handleChange('pain_grip_reason')} value={this.state.pain_grip_reason}/>
+                    
+          {this.state.pain_grip==="Yes" &&<div class="row">
+            <div class="col-md-12">
+              <div class="form-group custom-radio-wrapper">
+                <label className="abc">Provide Details</label>
+                <label style={{ fontSize: 12, color: "red" }}>{this.state.pain_grip==="Yes" && this.state.pain_grip_reason==="" && this.state.nameError}</label>
+
+                <textarea className="form-control" rows="1" cols="5" onChange={this.handleChange('pain_grip_reason')} value={this.state.pain_grip_reason}/>
                 </div>
+                </div>
+                </div>}
+                </div>
+
 
 
                 <div>
@@ -443,9 +506,18 @@ class ManualHandling extends Component
             </div>
           </div>
 
+         {this.state.difficult_operating==="Yes"  &&  <div class="row">
+            <div class="col-md-12">
+              <div class="form-group custom-radio-wrapper">
                     <label className="abc">Provide Details</label>
+                    <label style={{ fontSize: 12, color: "red" }}>{this.state.difficult_operating==="Yes"  &&  this.state.difficult_operating_reason==="" && this.state.nameError}</label>
                     <textarea className="form-control" rows="1" cols="5" onChange={this.handleChange('difficult_operating_reason')} value={this.state.difficult_operating_reason}/>
                 </div>
+                </div>
+                </div>
+                }
+                </div>
+
                 <div>
                 <div class="row">
             <div class="col-md-12">
@@ -476,9 +548,19 @@ class ManualHandling extends Component
             </div>
           </div>
 
+        {this.state.problem_working_conditions==="Yes" &&   <div class="row">
+            <div class="col-md-12">
+              <div class="form-group custom-radio-wrapper">
                     <label className="abc">Provide Details</label>
+                    <label style={{ fontSize: 12, color: "red" }}>{this.state.problem_working_conditions==="Yes" && this.state.problem_working_conditions_reason==="" && this.state.nameError}</label>
+
                     <textarea className="form-control" rows="1" cols="5" onChange={this.handleChange('problem_working_conditions_reason')} value={this.state.problem_working_conditions_reason}/>
                 </div>
+                </div>
+                </div>
+                }
+                </div>
+                
                 <div>
                 <div class="row">
             <div class="col-md-12">
@@ -509,9 +591,18 @@ class ManualHandling extends Component
             </div>
           </div>
 
+          { this.state.problem_working_heights==="Yes" && <div class="row">
+            <div class="col-md-12">
+              <div class="form-group custom-radio-wrapper">
                     <label className="abc">Provide Details</label>
+                    <label style={{ fontSize: 12, color: "red" }}>{this.state.problem_working_heights==="Yes" && this.state.problem_working_heights_reason==="" && this.state.nameError}</label>
                     <textarea className="form-control" rows="1" cols="5" onChange={this.handleChange('problem_working_heights_reason')} value={this.state.problem_working_heights_reason}/>
                 </div>
+                </div>
+                </div>
+                }
+                </div>
+                
                 <div>
                 <div class="row">
             <div class="col-md-12">
@@ -541,12 +632,19 @@ class ManualHandling extends Component
               </div>
             </div>
           </div>
+          {this.state.require_assistance==="Yes" && <div class="row">
+            <div class="col-md-12">
+              <div class="form-group custom-radio-wrapper">
  
                     <label className="abc">Provide Details</label>
+                    <label style={{ fontSize: 12, color: "red" }}>{this.state.require_assistance==="Yes"  && this.state.require_assistance_reason ===""&& this.state.nameError}</label>
                     <textarea className="form-control" rows="1" cols="5" onChange={this.handleChange('require_assistance_reason')} value={this.state.require_assistance_reason}/>
                 </div>
-                <br></br>
-                <div>
+                </div>
+                </div>}
+                </div>
+               
+                <div className="row">
           <button className="btn btn-primary btn-block" onClick={this.completeForm}>
           Submit
           </button>

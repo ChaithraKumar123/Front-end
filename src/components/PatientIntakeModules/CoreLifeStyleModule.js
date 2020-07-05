@@ -125,7 +125,7 @@ class CoreLifeStyleModule extends Component {
           class="custom-input"
           value={num}
           name={type}
-          selectedValue={tmpstate}
+          selectedValue={tmpstate.toString()}
           onChange={this.handleChange(type)}
         />
         <span>{sptxt}</span>

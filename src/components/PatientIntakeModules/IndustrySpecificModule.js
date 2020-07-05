@@ -191,18 +191,33 @@ class IndustrySpecificModule extends Component {
     const val = this.state;
     if (
       val.respiratory === "" ||
+      (val.respiratory === "Other" && val.respiratory_details==="") ||
       val.hearing === "" ||
-      (val.eye_disorder === "") | (val.hernia === "") ||
+      (val.hearing === "Other" && val.hearing_details==="") ||
+      (val.eye_disorder === "") || 
+      (val.eye_disorder === "Other" && val.eye_disorder_details ==="")||
+       (val.hernia === "") ||
+       (val.hernia === "Yes" &&val.hernia_details==="") ||
       val.food_borne === "" ||
+      (val.food_borne === "Yes"&&val.food_borne_details==="")||
       val.skin_disease === "" ||
+      (val.skin_disease === "Yes" && val.skin_disease_details==="")||
       val.exposed === "" ||
+      (val.exposed === "Other" && val.exposed_details ==="")||
       val.consciousness === "" ||
+      (val.consciousness === "Other" && val.consciousness_details === "")||
       val.restricted_activities === "" ||
+      (val.restricted_activities === "Yes" && val.restricted_activities_details==="") ||
       val.regular_time_away === "" ||
+      (val.regular_time_away === "Yes" && val.regular_time_away_details==="")||
       val.work_illness === "" ||
+      (val.work_illness === "Yes" &&val.work_illness_details==="" )||
       val.work_compensation === "" ||
+      (val.work_compensation === "Yes" &&val.work_compensation_details==="" )||
       val.functional_assessment === "" ||
-      val.varicose_veins === ""
+      (val.functional_assessment === "Yes" &&val.functional_assessment_details==="" )||
+      val.varicose_veins === "" ||
+      (val.varicose_veins === "Yes" && val.varicose_veins_details==="")
     ) {
       nameError = "*required";
     }
@@ -242,6 +257,9 @@ class IndustrySpecificModule extends Component {
           </div>
         </div>
         <div>
+        <div class="row">
+            <div class="col-md-12">
+              <div class="form-group custom-radio-wrapper">
           <label className="abc">
             Do you have a history of Severe respiratory illness, eg asthma,
             emphysema, bronchitis, pneumonia, tuberculosis, industrial lung
@@ -256,7 +274,18 @@ class IndustrySpecificModule extends Component {
             value={this.state.respiratory}
             placeholder="Select an option"
           />
+          </div>
+          </div>
+          </div>
+          
+         { this.state.respiratory === "Other" && 
+         <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
           <label className="abc">Provide Details if Other</label>
+          <label style={{ fontSize: 12, color: "red" }}>
+            {this.state.respiratory === "Other"  && this.state.respiratory_details==="" && this.state.nameError}
+          </label>
           <textarea
             className="form-control"
             rows="1"
@@ -264,8 +293,15 @@ class IndustrySpecificModule extends Component {
             onChange={this.handleChange("respiratory_details")}
             value={this.state.respiratory_details}
           />
+            </div>
+            </div>
+            </div> }
         </div>
+       
         <div>
+        <div class="row">
+            <div class="col-md-12">
+              <div class="form-group custom-radio-wrapper">
           <label className="abc">
             Do you currently or have history of Hearing problem or ear disease?
             eg. hearing loss, ringing/tinnitus, perforation, chronic ear
@@ -280,7 +316,17 @@ class IndustrySpecificModule extends Component {
             value={this.state.hearing}
             placeholder="Select an option"
           />
-          <label className="abc">Provide Details if Other</label>
+          </div>
+          </div>
+          </div>
+         
+          {this.state.hearing==="Other" && <div class="row">
+            <div class="col-md-12">
+              <div class="form-group custom-radio-wrapper">
+                <label className="abc">Provide Details if Other</label>
+                <label style={{ fontSize: 12, color: "red" }}>
+            {this.state.hearing === "Other" && this.state.hearing_details==="" && this.state.nameError}
+          </label>
           <textarea
             className="form-control"
             rows="1"
@@ -288,8 +334,15 @@ class IndustrySpecificModule extends Component {
             onChange={this.handleChange("hearing_details")}
             value={this.state.hearing_details}
           />
+            </div>
+            </div>
+            </div>}
         </div>
+        
         <div>
+        <div class="row">
+            <div class="col-md-12">
+              <div class="form-group custom-radio-wrapper">
           <label className="abc">
             Do you currently or in the past have an eye disorder, such as
             glaucoma, cataracts, lazy eye, double vision, including the need for
@@ -304,7 +357,17 @@ class IndustrySpecificModule extends Component {
             value={this.state.eye_disorder}
             placeholder="Select an option"
           />
+          </div>
+          </div>
+          </div>
+
+          {this.state.eye_disorder === "Other" && <div class="row">
+            <div class="col-md-12">
+              <div class="form-group custom-radio-wrapper">
           <label className="abc">Provide Details if Other</label>
+          <label style={{ fontSize: 12, color: "red" }}>
+            {this.state.eye_disorder === "Other" && this.state.eye_disorder_details ===""&& this.state.nameError}
+          </label>
           <textarea
             className="form-control"
             rows="1"
@@ -312,7 +375,11 @@ class IndustrySpecificModule extends Component {
             onChange={this.handleChange("eye_disorder_details")}
             value={this.state.eye_disorder_details}
           />
+          </div>
+          </div>
+          </div> }
         </div>
+        
         <div>
           <div class="row">
             <div class="col-md-12">
@@ -335,7 +402,13 @@ class IndustrySpecificModule extends Component {
               </div>
             </div>
           </div>
+         { this.state.hernia==="Yes" && <div class="row">
+            <div class="col-md-12">
+              <div class="form-group custom-radio-wrapper">
           <label className="abc">Provide Details if Yes</label>
+          <label style={{ fontSize: 12, color: "red" }}>
+                  {this.state.hernia === "Yes" &&this.state.hernia_details==="" && this.state.nameError}
+                </label>
           <textarea
             className="form-control"
             rows="1"
@@ -343,7 +416,11 @@ class IndustrySpecificModule extends Component {
             onChange={this.handleChange("hernia_details")}
             value={this.state.hernia_details}
           />
+           </div>
+           </div>
+           </div>}
         </div>
+        
         <div>
           <div class="row">
             <div class="col-md-12">
@@ -372,8 +449,13 @@ class IndustrySpecificModule extends Component {
               </div>
             </div>
           </div>
-
+         { this.state.food_borne === "Yes"&& <div class="row">
+            <div class="col-md-12">
+              <div class="form-group custom-radio-wrapper">
           <label className="abc">Provide Details if Yes</label>
+          <label style={{ fontSize: 12, color: "red" }}>
+                  {this.state.food_borne === "Yes"&&this.state.food_borne_details==="" && this.state.nameError}
+                </label>
           <textarea
             className="form-control"
             rows="1"
@@ -381,7 +463,11 @@ class IndustrySpecificModule extends Component {
             onChange={this.handleChange("food_borne_details")}
             value={this.state.food_borne_details}
           />
+            </div>
+            </div>
+          </div> }
         </div>
+       
         <div>
           <div class="row">
             <div class="col-md-12">
@@ -409,8 +495,13 @@ class IndustrySpecificModule extends Component {
               </div>
             </div>
           </div>
-
+         { this.state.skin_disease === "Yes" && <div class="row">
+            <div class="col-md-12">
+              <div class="form-group custom-radio-wrapper">
           <label className="abc">Provide Details if Yes</label>
+          <label style={{ fontSize: 12, color: "red" }}>
+                  {this.state.skin_disease === "Yes" && this.state.skin_disease_details==="" && this.state.nameError}
+                </label>
           <textarea
             className="form-control"
             rows="1"
@@ -418,7 +509,11 @@ class IndustrySpecificModule extends Component {
             onChange={this.handleChange("skin_disease_details")}
             value={this.state.skin_disease_details}
           />
+           </div>
+            </div>
+          </div>}
         </div>
+       
         <div>
           <div class="row">
             <div class="col-md-12">
@@ -477,8 +572,13 @@ class IndustrySpecificModule extends Component {
               </div>
             </div>
           </div>
-
+         {this.state.exposed === "Other"&& <div class="row">
+            <div class="col-md-12">
+              <div class="form-group custom-radio-wrapper">
           <label className="abc">Provide Details if Other</label>
+          <label style={{ fontSize: 12, color: "red" }}>
+                  {this.state.exposed === "Other" && this.state.exposed_details ===""&& this.state.nameError}
+                </label>
           <textarea
             className="form-control"
             rows="1"
@@ -486,8 +586,15 @@ class IndustrySpecificModule extends Component {
             onChange={this.handleChange("exposed_details")}
             value={this.state.exposed_details}
           />
+          </div>
+            </div>
+          </div> }
         </div>
+        
         <div>
+        <div class="row">
+            <div class="col-md-12">
+              <div class="form-group custom-radio-wrapper">
           <label className="abc">
             {" "}
             Any condition that has or may lead to sudden loss of consciousness
@@ -501,6 +608,13 @@ class IndustrySpecificModule extends Component {
             value={this.state.consciousness}
             placeholder="Select an option"
           />
+          </div>
+          </div>
+          </div>
+
+         { this.state.consciousness === "Other" && <div class="row">
+            <div class="col-md-12">
+              <div class="form-group custom-radio-wrapper">
           <label className="abc">Provide Details if Other</label>
           <textarea
             className="form-control"
@@ -509,7 +623,11 @@ class IndustrySpecificModule extends Component {
             onChange={this.handleChange("consciousness_details")}
             value={this.state.consciousness_details}
           />
+          </div>
+          </div>
+          </div>}
         </div>
+        
         <div>
           <div class="row">
             <div class="col-md-12">
@@ -537,8 +655,13 @@ class IndustrySpecificModule extends Component {
               </div>
             </div>
           </div>
-
+          {this.state.varicose_veins ==="Yes" && <div class="row">
+            <div class="col-md-12">
+              <div class="form-group custom-radio-wrapper">
           <label className="abc">Provide Details if Yes</label>
+          <label style={{ fontSize: 12, color: "red" }}>
+                  {this.state.varicose_veins === "Yes" && this.state.varicose_veins_details==="" && this.state.nameError}
+                </label>
           <textarea
             className="form-control"
             rows="1"
@@ -546,7 +669,11 @@ class IndustrySpecificModule extends Component {
             onChange={this.handleChange("varicose_veins_details")}
             value={this.state.varicose_veins_details}
           />
+            </div>
+            </div>
+          </div>}
         </div>
+        
         <div>
           <div class="row">
             <div class="col-md-12">
@@ -576,8 +703,15 @@ class IndustrySpecificModule extends Component {
               </div>
             </div>
           </div>
-
+          
+          {this.state.restricted_activities==="Yes" &&<div class="row">
+            <div class="col-md-12">
+              <div class="form-group custom-radio-wrapper">
           <label className="abc">Provide Details if Yes</label>
+          <label style={{ fontSize: 12, color: "red" }}>
+                  {this.state.restricted_activities === "Yes" && this.state.restricted_activities_details==="" &&
+                    this.state.nameError}
+                </label>
           <textarea
             className="form-control"
             rows="1"
@@ -585,7 +719,11 @@ class IndustrySpecificModule extends Component {
             onChange={this.handleChange("restricted_activities_details")}
             value={this.state.restricted_activities_details}
           />
+          </div>
+          </div>
+          </div>}
         </div>
+        
         <div>
           <div class="row">
             <div class="col-md-12">
@@ -615,7 +753,13 @@ class IndustrySpecificModule extends Component {
             </div>
           </div>
 
+          {this.state.regular_time_away==="Yes" && <div class="row">
+            <div class="col-md-12">
+              <div class="form-group custom-radio-wrapper">
           <label className="abc">Provide Details if Yes</label>
+          <label style={{ fontSize: 12, color: "red" }}>
+                  {this.state.regular_time_away === "Yes" && this.state.regular_time_away_details===""  && this.state.nameError}
+                </label>
           <textarea
             className="form-control"
             rows="1"
@@ -623,7 +767,11 @@ class IndustrySpecificModule extends Component {
             onChange={this.handleChange("regular_time_away_details")}
             value={this.state.regular_time_away_details}
           />
+          </div>
+            </div>
+          </div>}
         </div>
+        
         <div>
           <div class="row">
             <div class="col-md-12">
@@ -652,8 +800,13 @@ class IndustrySpecificModule extends Component {
               </div>
             </div>
           </div>
-
+          {this.state.work_illness === "Yes" && this.state.work_illness==="Yes" &&<div class="row">
+            <div class="col-md-12">
+              <div class="form-group custom-radio-wrapper">
           <label className="abc">Provide Details if Yes</label>
+          <label style={{ fontSize: 12, color: "red" }}>
+                  {this.state.work_illness === "Yes" &&this.state.work_illness_details==="" && this.state.nameError}
+                </label>
           <textarea
             className="form-control"
             rows="1"
@@ -661,6 +814,9 @@ class IndustrySpecificModule extends Component {
             onChange={this.handleChange("work_illness_details")}
             value={this.state.work_illness_details}
           />
+            </div>
+            </div>
+          </div>}
         </div>
         <div>
           <div class="row">
@@ -691,7 +847,13 @@ class IndustrySpecificModule extends Component {
             </div>
           </div>
 
+          {this.state.work_compensation==="Yes" &&<div class="row">
+            <div class="col-md-12">
+              <div class="form-group custom-radio-wrapper">
           <label className="abc">Provide Details if Yes</label>
+          <label style={{ fontSize: 12, color: "red" }}>
+                  {this.state.work_compensation === "Yes" && this.state.work_compensation_details==="" && this.state.nameError}
+                </label>
           <textarea
             className="form-control"
             rows="1"
@@ -699,7 +861,11 @@ class IndustrySpecificModule extends Component {
             onChange={this.handleChange("work_compensation_details")}
             value={this.state.work_compensation_details}
           />
+          </div>
+          </div>
+          </div>}
         </div>
+        
         <div>
           <div class="row">
             <div class="col-md-12">
@@ -732,7 +898,14 @@ class IndustrySpecificModule extends Component {
             </div>
           </div>
 
+         {  this.state.functional_assessment==="Yes" && <div class="row">
+            <div class="col-md-12">
+              <div class="form-group custom-radio-wrapper">
           <label className="abc">Provide Details if Yes</label>
+          <label style={{ fontSize: 12, color: "red" }}>
+                  {this.state.functional_assessment === "Yes" && this.state.functional_assessment_details==="" &&
+                    this.state.nameError}
+                </label>
           <textarea
             className="form-control"
             rows="1"
@@ -741,8 +914,11 @@ class IndustrySpecificModule extends Component {
             value={this.state.functional_assessment_details}
           />
         </div>
-        <br></br>
-        <div>
+        </div>
+        </div>}
+        </div>
+        
+        <div className="row">
           <button
             className="btn btn-primary btn-block"
             onClick={this.completeForm}

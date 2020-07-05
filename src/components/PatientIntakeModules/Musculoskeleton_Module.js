@@ -638,7 +638,7 @@ class MusculoskeletonModule extends Component {
                     </div>
                   </div>
 
-                  <label className="abc">Provide Details if Yes</label>
+                 { this.state.NeckPainIntervention === "Yes" && <div><label className="abc">Provide Details if Yes</label>
                   <label style={{ fontSize: 12, color: "red" }}>
                     {this.state.NeckPainIntervention_details === "" &&
                       this.state.NeckPainIntervention === "Yes" &&
@@ -651,6 +651,7 @@ class MusculoskeletonModule extends Component {
                     onChange={this.handleChange("NeckPainIntervention_details")}
                     value={this.state.NeckPainIntervention_details}
                   />
+                  </div> }
                 </div>
                 <div>
                   <div class="row">
@@ -869,7 +870,7 @@ class MusculoskeletonModule extends Component {
                     </div>
                   </div>
 
-                  <label className="abc">Provide Details if Yes</label>
+                 {this.state.BackPainIntervention === "Yes" &&<div> <label className="abc">Provide Details if Yes</label>
                   <label style={{ fontSize: 12, color: "red" }}>
                     {this.state.BackPainIntervention === "Yes" &&
                       this.state.BackPainIntervention_details === "" &&
@@ -882,6 +883,7 @@ class MusculoskeletonModule extends Component {
                     onChange={this.handleChange("BackPainIntervention_details")}
                     value={this.state.BackPainIntervention_details}
                   />
+                  </div>}
                 </div>
                 <div>
                   <div class="row">
@@ -1102,7 +1104,8 @@ class MusculoskeletonModule extends Component {
                     </div>
                   </div>
 
-                  <label className="abc">Provide Details if Yes</label>
+                 {this.state.SHULPainIntervention === "Yes" && <div>
+                    <label className="abc">Provide Details if Yes</label>
                   <label style={{ fontSize: 12, color: "red" }}>
                     {this.state.SHULPainIntervention === "Yes" &&
                       this.state.SHULPainIntervention_details === "" &&
@@ -1116,6 +1119,7 @@ class MusculoskeletonModule extends Component {
                     onChange={this.handleChange("SHULPainIntervention_details")}
                     value={this.state.SHULPainIntervention_details}
                   />
+                  </div>}
                 </div>
                 <div>
                   <div class="row">
@@ -1335,7 +1339,7 @@ class MusculoskeletonModule extends Component {
                     </div>
                   </div>
 
-                  <label className="abc">Provide Details if Yes</label>
+               { this.state.HILLPainIntervention === "Yes" && <div> <label className="abc">Provide Details if Yes</label>
                   <label style={{ fontSize: 12, color: "red" }}>
                     {this.state.HILLPainIntervention === "Yes" &&
                       this.state.HILLPainIntervention_details === "" &&
@@ -1348,6 +1352,7 @@ class MusculoskeletonModule extends Component {
                     onChange={this.handleChange("HILLPainIntervention_details")}
                     value={this.state.HILLPainIntervention_details}
                   />
+                   </div>}
                 </div>
                 <div>
                   <div class="row">
