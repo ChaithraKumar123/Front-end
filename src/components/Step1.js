@@ -65,7 +65,7 @@ class Step1 extends Component {
           </div>
         </div>
         <div className="contentSpacing">
-          <div className="row">
+          <div className="row has-form">
             <div className="form-group custom-radio-wrapper">
               <label className="abc">Title</label>
               <div className="custom-radio rounded">

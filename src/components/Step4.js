@@ -135,7 +135,7 @@ class Step4 extends Component {
             </div>
           </div>
           <div className = "contentSpacing">
-          <div className="row">
+          <div className="row has-form">
             <div>
               <div className= "form-group">
               <label className="abc">Family Doctor<span className="optional">Optional</span></label>
@@ -244,7 +244,7 @@ class Step4 extends Component {
               </div>
               </div>
             <div className="errorMessage">{state.handednessError}</div>
-          </div>
+
   
           {this.state.submit ? <Errormsg /> : null}
   
@@ -259,6 +259,7 @@ class Step4 extends Component {
             >
               Finish
             </button>
+          </div>
           </div>
           </div>
         </div>

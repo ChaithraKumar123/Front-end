@@ -225,7 +225,7 @@ class Signup extends Component {
             </div>
           </div>
           <div className="contentSpacing">
-            <div className="row">
+            <div className="row has-form">
               <div>
                 <div className="form-group">
                   <label className="abc">Given Name</label>
@@ -327,7 +327,6 @@ class Signup extends Component {
                   <div className="errorMessage">{this.state.passwordErr}</div>
                 </div>
               </div>
-            </div>
             <div className="custom-radio square">
               <input
                 type="checkbox"
@@ -351,6 +350,8 @@ class Signup extends Component {
                 Continue
               </button>
             </div>
+            </div>
+
           </div>
         </div>
       );

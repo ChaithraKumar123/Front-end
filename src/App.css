@@ -196,7 +196,7 @@ main { margin-bottom: 50px; }
 .tile.type4 .chat-outer.reverse .date { padding: 0 3px 0 0; }
 .tile.type4 .chat-outer.reverse p { background: #5F60A9; color: #fff; text-align: left; padding: 7px 6px 7px 9px; max-width: 78%; }
 
-
+.has-form { max-width: 465px; margin: 0 auto; }
 
 @media(max-width: 1199px) {
 	.container { max-width: 100%; }

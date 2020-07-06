@@ -71,7 +71,7 @@ class Step3 extends Component {
           </div>
         </div>
         <div className = "contentSpacing">
-        <div className="row">
+        <div className="row has-form">
           <div>
             <div className="form-group">
               <label className="abc">Street Address (Line1)</label>
