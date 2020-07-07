@@ -23,6 +23,7 @@
     "react-dom": "^16.13.1",
     "react-dropdown": "^1.7.0",
     "react-image-mapper": "0.0.15",
+    "react-modal": "^3.11.2",
     "react-radio-group": "^3.0.3",
     "react-redux": "^7.2.0",
     "react-router-dom": "^5.1.2",
@@ -31,6 +32,7 @@
     "react-spinners-css": "^1.1.7",
     "react-tabs": "^3.1.1",
     "react-tap-event-plugin": "^3.0.3",
+    "reactjs-popup": "^1.5.0",
     "redux": "^4.0.5",
     "redux-form": "^8.3.5",
     "semantic-ui-react": "^0.88.2"

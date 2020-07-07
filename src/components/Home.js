@@ -22,7 +22,7 @@ class Home extends Component {
     const { handleChange, state } = this.props;
 
     return (
-      <div id="MainDiv">
+      <div className= "cont" id="MainDiv">
         <div style = {{"height" : "739px"}}>
         <div className="page-title lg">
           <div className="title">

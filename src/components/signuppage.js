@@ -9,12 +9,10 @@ import {
   withRouter,
 } from "react-router-dom";
 import auth from "./auth";
+import { startOfSecond } from "date-fns";
 
-//import { Field, reduxForm } from 'redux-form'
 var randomToken = require("random-token");
-const Errormsg = () => (
-  <div className="errorMessage">Missing or invalid fields</div>
-);
+const Errormsg = () => <div className="errorMessage">Required Field</div>;
 
 const thankyou = (email) => (
   <div id="MainDiv">
@@ -47,15 +45,22 @@ const thankyou = (email) => (
 );
 
 class Signup extends Component {
-  state = {
-    password: "",
-    retypePassword: "",
-    submit: false,
-    checked: false,
-    passwordErr: "",
-    passwordErrvalid: false,
-    renderThankyou: false,
-  };
+  constructor() {
+    super();
+    this.state = {
+      password: "",
+      retypePassword: "",
+      submit: false,
+      checked: false,
+      passwordErr: "",
+      passwordErrvalid: false,
+      renderThankyou: false,
+      closed: false,
+    };
+
+    this.handleCloseModal = this.handleCloseModal.bind(this);
+  }
+
   toSend = require("./userSchema.json");
 
   continue = (e) => {
@@ -166,16 +171,6 @@ class Signup extends Component {
               this.setState({
                 renderThankyou: true,
               });
-              // window.alert(
-              //   "Thanks! \n We’ve sent an email to " +
-              //     this.props.state.email +
-              //     ". \n Please confirm your account by clicking the link in the email."
-              // );
-
-              // return thankyou(this.props.state.email);
-              // auth.login(() => {
-              //   this.props.history.push("/");
-              // });
             } else {
               window.alert(data.message);
             }
@@ -213,146 +208,224 @@ class Signup extends Component {
     this.setState({ checked: !this.state.checked });
   };
 
+  componentDidUpdate() {
+    if (this.state.checked === false && this.state.closed === true) {
+      this.setState({
+        closed: false,
+      });
+    }
+  }
+  handleCloseModal() {
+    this.setState({
+      closed: !this.state.closed,
+    });
+  }
+
   render() {
     const { handleChange, state } = this.props;
 
     if (!this.state.renderThankyou) {
       return (
-        <div id="MainDiv">
-          <div className="page-title lg">
-            <div className="title">
-              <p> Let's create your account</p>
-            </div>
-          </div>
-          <div className="contentSpacing">
-            <div className="row has-form">
-              <div>
-                <div className="form-group">
-                  <label className="abc">Given Name</label>
-                  <input
-                    className="form-control"
-                    id="givenName"
-                    type="text"
-                    value={state.givenName}
-                    onChange={handleChange("givenName")}
-                  />
-                  <div className="errorMessage">{state.givenNameError}</div>
+        <div>
+          {this.state.checked === true && this.state.closed === false ? (
+            <div id="MainDiv">
+              <div className="page-title lg">
+                <div className="title">
+                  <p>Work Healthy Australia's terms</p>
                 </div>
               </div>
-              <div>
-                <div className="form-group">
-                  <label className="abc">
-                    Middle Name <span className="optional">Optional</span>{" "}
-                  </label>
-                  <input
-                    className="form-control"
-                    id="middleName"
-                    type="text"
-                    value={state.middleName}
-                    onChange={handleChange("middleName")}
-                  />
-                </div>
+              <div style={{ fontFamily: "Roboto, sans-serif" }}>
+                By clicking the checkbox, you confirm the information provided
+                above is correct and agree to the following:
+                <br />
+                <br />
+                You have been provided with a copy of the Work Healthy Australia
+                Privacy Policy, and you agree to the handling of your personal
+                information by Work Healthy Australia in accordance with that
+                Policy, including the ways in which Work Healthy Australia may
+                collect and use your personal information, and may disclose your
+                personal information to the third parties specified in that
+                Policy.
+                <br />
+                <br />
+                Due to the duty of care that any company has with respect to
+                your health and safety, it may be necessary for the Work Healthy
+                Australia provider to coordinate with the relevant persons at
+                this workplace. You therefore consent to allow the Work Healthy
+                Australia provider to discuss, disclose or share your health
+                information and other personal information relevant to your
+                prospective job performance at this workplace with any of the
+                following persons that are responsible for your health care or
+                safety: other health and medical providers, OHS staff, HR staff,
+                Rehabilitation Coordinators, and supervisors and managers at
+                this workplace
               </div>
-              <div>
-                <div className="form-group">
-                  <label className="abc">Surname</label>
-                  <input
-                    className="form-control"
-                    id="surName"
-                    type="text"
-                    value={state.surName.fieldValue}
-                    onChange={handleChange("surName")}
-                  />
-                  <div className="errorMessage">{state.surNameError}</div>
-                </div>
-              </div>
-              <div>
-                <div className="form-group">
-                  <label className="abc">Phone Number</label>
-                  <input
-                    className="form-control"
-                    id="mobileNumber"
-                    type="text"
-                    value={state.mobileNumber}
-                    onChange={handleChange("mobileNumber")}
-                  />
-                  {/* <Errormsg arg = {state.mobileNumber}></Errormsg> */}
-                  <div className="errorMessage">{state.mobileNumberError}</div>
-                </div>
-              </div>
-              <div>
-                <div className="form-group">
-                  <label className="abc">Email</label>
-                  <input
-                    className="form-control"
-                    id="email"
-                    type="email"
-                    value={state.email}
-                    onChange={handleChange("email")}
-                  />
-                  {/* <Errormsg arg = {state.email}></Errormsg> */}
-                  <div className="errorMessage">{state.emailError}</div>
-                </div>
-              </div>
-              <div>
-                <div className="form-group">
-                  <label className="abc">Password</label>
-                  <input
-                    className="form-control"
-                    id="pass"
-                    name="pass"
-                    type="password"
-                    value={this.state.password}
-                    onChange={(event) =>
-                      this.setState({ password: event.target.value })
-                    }
-                    //  onChange={(event) => this.setState({password:event.target.value})}
-                  />
-                </div>
-              </div>
-              <div>
-                <div className="form-group">
-                  <label className="abc">Re-enter password</label>
-                  <input
-                    className="form-control"
-                    id="Repass"
-                    name="pass"
-                    type="password"
-                    value={this.state.retypePassword}
-                    onChange={(event) =>
-                      this.setState({ retypePassword: event.target.value })
-                    }
-                    //  onChange={(event) => this.setState({password:event.target.value})}
-                  />
-                  <div className="errorMessage">{this.state.passwordErr}</div>
-                </div>
-              </div>
-            <div className="custom-radio square">
-              <input
-                type="checkbox"
-                className="custom-input"
-                checked={this.state.checked}
-                onChange={this.termsAgree}
-              />
-              <span> I agree to work Healthy Australia's terms</span>
-            </div>
-            {this.state.submit ? <Errormsg /> : null}
-            <div className="btn-block prev-back-btn">
-              <button className="btn btn-outline-primary" onClick={this.back}>
-                Back
-              </button>
+              <br />
+              <br />
               <button
                 className="btn btn-primary modal-btn"
                 data-modal-id="sampleModal"
                 id="stepOneSubmit"
-                onClick={this.continue}
+                onClick={this.handleCloseModal}
               >
-                Continue
+                Close
               </button>
             </div>
-            </div>
+          ) : (
+            <div id="MainDiv">
+              <div className="page-title lg">
+                <div className="title">
+                  <p> Let's create your account</p>
+                </div>
+              </div>
+              <div className="contentSpacing">
+                <div className="row has-form">
+                  <div>
+                    <div className="form-group">
+                      <label className="abc">Given Name</label>
+                      <input
+                        className="form-control"
+                        id="givenName"
+                        type="text"
+                        value={state.givenName}
+                        onChange={handleChange("givenName")}
+                      />
+                      {this.state.submit === true && state.givenName === "" ? (
+                        <div className="errorMessage">*required</div>
+                      ) : null}
+                    </div>
+                  </div>
+                  <div>
+                    <div className="form-group">
+                      <label className="abc">
+                        Middle Name <span className="optional">Optional</span>{" "}
+                      </label>
+                      <input
+                        className="form-control"
+                        id="middleName"
+                        type="text"
+                        value={state.middleName}
+                        onChange={handleChange("middleName")}
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <div className="form-group">
+                      <label className="abc">Surname</label>
+                      <input
+                        className="form-control"
+                        id="surName"
+                        type="text"
+                        value={state.surName}
+                        onChange={handleChange("surName")}
+                      />
+                      {this.state.submit === true && state.surName === "" ? (
+                        <div className="errorMessage">*required</div>
+                      ) : null}
 
-          </div>
+                      {/* <div className="errorMessage">{state.surNameError}</div> */}
+                    </div>
+                  </div>
+                  <div>
+                    <div className="form-group">
+                      <label className="abc">Phone Number</label>
+                      <input
+                        className="form-control"
+                        id="mobileNumber"
+                        type="text"
+                        value={state.mobileNumber}
+                        onChange={handleChange("mobileNumber")}
+                      />
+                      {/* <Errormsg arg = {state.mobileNumber}></Errormsg> */}
+                      {/* <div className="errorMessage">{state.mobileNumberError}</div> */}
+                      {this.state.submit === true &&
+                      state.mobileNumber === "" ? (
+                        <div className="errorMessage">*required</div>
+                      ) : null}
+                    </div>
+                  </div>
+                  <div>
+                    <div className="form-group">
+                      <label className="abc">Email</label>
+                      <input
+                        className="form-control"
+                        id="email"
+                        type="email"
+                        value={state.email}
+                        onChange={handleChange("email")}
+                      />
+                      {/* <Errormsg arg = {state.email}></Errormsg> */}
+                      {/* <div className="errorMessage">{state.emailError}</div> */}
+                      {this.state.submit === true && state.email === "" ? (
+                        <div className="errorMessage">*required</div>
+                      ) : null}
+                    </div>
+                  </div>
+                  <div>
+                    <div className="form-group">
+                      <label className="abc">Password</label>
+                      <input
+                        className="form-control"
+                        id="pass"
+                        name="pass"
+                        type="password"
+                        value={this.state.password}
+                        onChange={(event) =>
+                          this.setState({ password: event.target.value })
+                        }
+                        //  onChange={(event) => this.setState({password:event.target.value})}
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <div className="form-group">
+                      <label className="abc">Re-enter password</label>
+                      <input
+                        className="form-control"
+                        id="Repass"
+                        name="pass"
+                        type="password"
+                        value={this.state.retypePassword}
+                        onChange={(event) =>
+                          this.setState({ retypePassword: event.target.value })
+                        }
+                        //  onChange={(event) => this.setState({password:event.target.value})}
+                      />
+                      <div className="errorMessage">
+                        {this.state.passwordErr}
+                      </div>
+                    </div>
+                  </div>
+                  <div className="custom-radio square">
+                    <input
+                      type="checkbox"
+                      className="custom-input"
+                      checked={this.state.checked}
+                      onChange={this.termsAgree}
+                    />
+                    <span> I agree to work Healthy Australia's terms</span>
+                  </div>
+                  {/* {this.state.submit ? <Errormsg /> : null} */}
+                  <div className="btn-block prev-back-btn">
+                    <button
+                      className="btn btn-outline-primary"
+                      onClick={this.back}
+                    >
+                      Back
+                    </button>
+                    <button
+                      className="btn btn-primary modal-btn"
+                      data-modal-id="sampleModal"
+                      id="stepOneSubmit"
+                      onClick={this.continue}
+                    >
+                      Continue
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       );
     } else {
