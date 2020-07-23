@@ -239,8 +239,10 @@ class Signup extends Component {
                 above is correct and agree to the following:
                 <br />
                 <br />
-                You have been provided with a copy of the Work Healthy Australia
-                Privacy Policy, and you agree to the handling of your personal
+                You have been provided with a copy of the 
+                {/* <a href="https://wha-consentform.s3-ap-southeast-2.amazonaws.com/WHA_Privacy_Policy_Public_V07a.pdf" download="WHA_Privacy_Policy_Public_V07a.pdf">Download Your Expense Report</a> */}
+                <a href={"https://wha-consentform.s3-ap-southeast-2.amazonaws.com/WHA_Privacy_Policy_Public_V07a.pdf"} target="_blank" download={"WHA_Privacy_Policy_Public_V07a.pdf"}> Work Healthy Australia Privacy Policy </a>
+                , and you agree to the handling of your personal
                 information by Work Healthy Australia in accordance with that
                 Policy, including the ways in which Work Healthy Australia may
                 collect and use your personal information, and may disclose your
