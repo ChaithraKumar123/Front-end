@@ -385,7 +385,7 @@ class IndustrySpecificModule extends Component {
             <div class="col-md-12">
               <div class="form-group custom-radio-wrapper">
                 <label className="abc">
-                  Do you currently or in the past had a hernia?
+                Do you currently or have you in the past had a hernia?
                 </label>
                 <label style={{ fontSize: 12, color: "red" }}>
                   {this.state.hernia === "" && this.state.nameError}

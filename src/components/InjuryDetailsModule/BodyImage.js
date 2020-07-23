@@ -4,13 +4,11 @@ import "react-tabs/style/react-tabs.css";
 import ImageMapper from "react-image-mapper";
 import "../../App.css";
 import axios from "axios";
-import 'react-notifications/lib/notifications.css';
+//import 'react-notifications/lib/notifications.css';
 import Switch from '@material-ui/core/Switch';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
-
-import {NotificationContainer, NotificationManager} from 'react-notifications';
 
 const AntSwitch = withStyles((theme) => ({
   root: {
@@ -288,7 +286,7 @@ class BodyImage extends Component {
         body_region_id: [...this.state.body_region_id, area.id],
         data_id: [...this.state.data_id, -1],
       });
-      NotificationManager.success("", 'Added selected region');
+      //NotificationManager.success("", 'Added selected region');
     } else {
       alert("Cannot select more than three regions");
     }

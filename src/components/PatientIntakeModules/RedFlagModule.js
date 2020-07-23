@@ -143,8 +143,8 @@ class RedFlagModule extends Component {
                 </label>
                 <RadioGroup>
                   {this.RadiobtnStyle(
-                    "No",
-                    "No",
+                    "Never",
+                    "Never",
                     "recent_weight_gain",
                     this.state.recent_weight_gain
                   )}
@@ -184,20 +184,20 @@ class RedFlagModule extends Component {
                 </label>
                 <RadioGroup>
                   {this.RadiobtnStyle(
-                    "No",
-                    "No",
+                    "Never",
+                    "Never",
+                    "toilet_pain",
+                    this.state.toilet_pain
+                  )}
+                  {this.RadiobtnStyle(
+                    "Often",
+                    "Often",
                     "toilet_pain",
                     this.state.toilet_pain
                   )}
                   {this.RadiobtnStyle(
                     "Sometimes",
                     "Sometimes",
-                    "toilet_pain",
-                    this.state.toilet_pain
-                  )}
-                  {this.RadiobtnStyle(
-                    "Yes",
-                    "Yes",
                     "toilet_pain",
                     this.state.toilet_pain
                   )}
@@ -218,8 +218,14 @@ class RedFlagModule extends Component {
                 </label>
                 <RadioGroup>
                   {this.RadiobtnStyle(
-                    "No",
-                    "No",
+                    "Never",
+                    "Never",
+                    "wake_up_pain",
+                    this.state.wake_up_pain
+                  )}
+                  {this.RadiobtnStyle(
+                    "Often",
+                    "Often",
                     "wake_up_pain",
                     this.state.wake_up_pain
                   )}
@@ -229,12 +235,7 @@ class RedFlagModule extends Component {
                     "wake_up_pain",
                     this.state.wake_up_pain
                   )}
-                  {this.RadiobtnStyle(
-                    "Yes",
-                    "Yes",
-                    "wake_up_pain",
-                    this.state.wake_up_pain
-                  )}
+                  
                 </RadioGroup>
               </div>
             </div>
@@ -254,8 +255,14 @@ class RedFlagModule extends Component {
                 </label>
                 <RadioGroup>
                   {this.RadiobtnStyle(
-                    "No",
-                    "No",
+                    "Never",
+                    "Never",
+                    "coordination_change",
+                    this.state.coordination_change
+                  )}
+                   {this.RadiobtnStyle(
+                    "Often",
+                    "Often",
                     "coordination_change",
                     this.state.coordination_change
                   )}
@@ -265,12 +272,7 @@ class RedFlagModule extends Component {
                     "coordination_change",
                     this.state.coordination_change
                   )}
-                  {this.RadiobtnStyle(
-                    "Yes",
-                    "Yes",
-                    "coordination_change",
-                    this.state.coordination_change
-                  )}
+                 
                 </RadioGroup>
               </div>
             </div>

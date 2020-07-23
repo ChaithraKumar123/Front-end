@@ -162,49 +162,16 @@ class CoreLifeStyleModule extends Component {
               <div class="form-group custom-radio-wrapper">
                 <label className="abc">
                   How do you generally rate the quality of your sleep on a scale
-                  of 1-5, with 5 being excellent?
+                  of 1-10, with 10 being excellent?
                 </label>
                 <label style={{ fontSize: 12, color: "red" }}>
                   {this.state.quality_sleep === "" && this.state.nameError}
                 </label>
-                <RadioGroup>
-                  {this.RadiobtnStyle(
-                    "1",
-                    "1",
-                    "quality_sleep",
-                    this.state.quality_sleep
-                  )}
-                  {this.RadiobtnStyle(
-                    "2",
-                    "2",
-                    "quality_sleep",
-                    this.state.quality_sleep
-                  )}
-                  {this.RadiobtnStyle(
-                    "3",
-                    "3",
-                    "quality_sleep",
-                    this.state.quality_sleep
-                  )}
-                  {this.RadiobtnStyle(
-                    "4",
-                    "4",
-                    "quality_sleep",
-                    this.state.quality_sleep
-                  )}
-                  {this.RadiobtnStyle(
-                    "4",
-                    "4",
-                    "quality_sleep",
-                    this.state.quality_sleep
-                  )}
-                  {this.RadiobtnStyle(
-                    "5",
-                    "5",
-                    "quality_sleep",
-                    this.state.quality_sleep
-                  )}
-                </RadioGroup>
+                <div class="center">
+                {Array.from(Array(1, 2, 3, 4, 5, 6, 7, 8, 9, 10), (e, i) => {
+                  return this.RadioStyle(e, e, "quality_sleep", this.state.quality_sleep);
+                })}
+                </div>
               </div>
             </div>
           </div>
@@ -246,6 +213,7 @@ class CoreLifeStyleModule extends Component {
                     this.state.smoke_cigar
                   )}
                 </RadioGroup>
+                
               </div>
             </div>
           </div>
@@ -372,7 +340,7 @@ class CoreLifeStyleModule extends Component {
             <div class="col-md-12">
               <div class="form-group custom-radio-wrapper">
                 <label className="abc">
-                  Do you often sit more than 8hrs/day?
+                Do you sit for more than 8 hours a day (at work and home combined) more than twice a week?
                 </label>
                 <label style={{ fontSize: 12, color: "red" }}>
                   {this.state.sit === "" && this.state.nameError}

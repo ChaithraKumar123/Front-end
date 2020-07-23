@@ -308,7 +308,7 @@ class CorePsychologicalModule extends Component {
             <div class="col-md-12">
               <div class="form-group custom-radio-wrapper">
                 <label className="abc">
-                  Do you take medications that may impair your ability?
+                Do you take any medications that may impair your ability to operate equipment?
                 </label>
                 <label style={{ fontSize: 12, color: "red" }}>
                   {this.state.medications_impair === "" && this.state.nameError}
