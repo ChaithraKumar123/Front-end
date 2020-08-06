@@ -33,8 +33,10 @@ class FamilyHistoryModule extends Component {
     axios
       .get(
         "https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/medhistorydetails",
+        // "https://localhost:44338/api/medhistorydetails",
+
         {
-          params: { value: this.state.POBPatientID },
+          params: { value: localStorage.getItem("KNC") },
         }
       )
       .then((response) => {
@@ -75,6 +77,8 @@ class FamilyHistoryModule extends Component {
       axios
         .post(
           "https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/medhistorydetails",
+          // "https://localhost:44338/api/medhistorydetails",
+
           {
             ModuleName: "Family History",
             FamilyHistory:
@@ -84,7 +88,7 @@ class FamilyHistoryModule extends Component {
                   this.state.family_disorder_details
                 : this.state.family_disorder,
             //family_disorder_details:this.state.family_disorder==="Other"?this.state.family_disorder.split('-')[1]:"",
-            POBPatientID: this.state.POBPatientID,
+            POBPatientID: localStorage.getItem("KNC"),
             POBCPMedHistoryID: this.state.id,
           }
         )
@@ -95,9 +99,33 @@ class FamilyHistoryModule extends Component {
         .catch((error) => {
           console.log(error);
         });
+
+        axios
+        .post(
+          "https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/saveWorkflow",
+          // "https://localhost:44338/api/saveWorkflow",
+
+          {
+            KNC: localStorage.getItem("KNC"),
+            DateCompleted: new Date()
+          }
+        )
+        .then((response) => {
+          if (response.data = "Success")
+          {
+            console.log(response);
         auth.login(() => {
           this.props.history.push("/Home");
         });
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+
+        // auth.login(() => {
+        //   this.props.history.push("/Home");
+        // });
     }
   };
   validate = () => {

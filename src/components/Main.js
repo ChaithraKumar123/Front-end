@@ -37,7 +37,15 @@ import FamilyHistoryModule from '../components/PatientIntakeModules/FamilyHistor
 import MusculoskeletonModule from '../components/PatientIntakeModules/Musculoskeleton_Module'
 import OreboModule from '../components/PatientIntakeModules/OreboModule'
 
+import FormProgress from './FormProgress'
+
 import {Navbar,Container,Nav,NavDropdown} from 'react-bootstrap'
+import { Ouroboro } from "react-spinners-css";
+
+
+const IsLoading = () => (
+    <Ouroboro style = {{"position": "absolute", "margin-left": "275px", "margin-top": "400px"}} color="#F04F1D" size={200} />
+);
 
 const Auth = {
   isAuthenticated: false,
@@ -157,8 +165,17 @@ class Main extends Component {
   };
 
 
-  stepReset = () => {
-    this.setState({ step: 1 });
+  stepReset = (e) => {
+    if (e = "reset")
+    {
+      this.setState({ step: 1 });
+
+    }
+
+    else {
+      this.setState({ step: e });
+
+    }
   };
 
   nextStep = () => {
@@ -167,6 +184,45 @@ class Main extends Component {
       step: step + 1,
     });
   };
+
+  getdetails = (patient, address, employment) => {
+
+    this.setState({
+
+      titleOpt: patient[0].title ? patient[0].title : "",
+      givenName: patient[0].firstName ? patient[0].firstName : "",
+      surName: patient[0].lastName ? patient[0].lastName : "",
+      middleName: patient[0].middleNames ? patient[0].middleNames : "",
+      DateofB: patient[0].dateOfBirth ? patient[0].dateOfBirth : "",
+      gender: patient[0].gender ? patient[0].gender : "",
+      mobileNumber: "0" + patient[0].mobile ? "0" + patient[0].mobile : "",
+      email: patient[0].email ? patient[0].email : "",
+      // culturalGroup: e.,
+      //step2
+      // CurrentPosition: "",
+      // EmpStDate: "",
+      // Department: "",
+      // LineTask: "",
+      // CompClaim: "",
+      // CompClaimDetails: "",
+      // //step3
+      // addressLine1: address[0].line1 ? address[0].line1 : "",
+      // addressLine2: address[0].line2 ? address[0].line2 : "",
+      // suburb: address[0].suburb ? address[0].suburb : "",
+      // stateName: address[0].familyDoctor ? address[0].familyDoctor : "",
+      // postCode: address[0].postcode ? address[0].postcode : "",
+      // // country: address.familyDoctor ? address.familyDoctor : "",
+      // //step4
+      // familyDoctor: patient[0].familyDoctor ? patient[0].familyDoctor : "",
+      // lastVisit: patient[0].lastVisit ? patient[0].lastVisit : "",
+      // reasonOfVisit: patient[0].whyLastVisit ? patient[0].whyLastVisit : "",
+      // height: patient[0].height ? patient[0].height : "",
+      // weight: patient[0].weightKg ? patient[0].weightKg : "",
+      // handedness: patient[0].handedness ? patient[0].handedness : "",
+
+
+    })
+  }
 
   validator = (e) => {
     if (e.target.id === "givenName") {
@@ -451,9 +507,10 @@ class Main extends Component {
           stepReset={this.stepReset}
           ethnicityCodef={this.ethnicityCodef}
           state={this.state}
+          getdetails = {this.getdetails}
         />
       );
-    if (step === 2)
+    if (step === "abc")
       return (
         <Step2
           handleChange={this.handleChange}
@@ -462,7 +519,7 @@ class Main extends Component {
           state={this.state}
         />
       );
-    if (step === 3)
+    if (step === 2)
       return (
         <Step3
           handleChange={this.handleChange}
@@ -473,7 +530,7 @@ class Main extends Component {
           state={this.state}
         />
       );
-    if (step === 4)
+    if (step === 3)
       return (
         <Step4
           handleChange={this.handleChange}
@@ -496,12 +553,16 @@ class Main extends Component {
   History = () =>{
     return <History state={this.state}></History>
   }
+
+  Formsprogress = () =>{
+    return <FormProgress state={this.state}></FormProgress>
+  }
   render() {
     return (
       <Router>
         <Switch>
           <Route exact path="/">
-            <Loginpage />
+            <Loginpage loadingCircle = {<IsLoading/>} />
           </Route>
           <ProtectedRoute path="/Home"
             component = {this.HomePage}
@@ -511,6 +572,7 @@ class Main extends Component {
               state={this.state}
               handleChange={this.handleChange}
               kncset={this.kncset}
+              loadingCircle = {<IsLoading/>}
             />
           </Route>
           <Route path="/ForgotPassword">
@@ -519,6 +581,11 @@ class Main extends Component {
               state={this.state}
             />
           </Route>
+
+          <ProtectedRoute path="/formprogress" component = {this.Formsprogress}/>
+
+
+
           <ProtectedRoute path="/patientDetails" component={this.showStep} />
           <Route path="/success" component={this.successPage} />
 
@@ -529,6 +596,7 @@ class Main extends Component {
           <Switch>
             <Route path="/OreboModule" component={OreboModule}></Route>
             <Route path="/painIndicator" component={BodyImageMain}></Route>
+            
             <Route
               path="/CoreMedicalHistory"
               component={CoreMedicalHistory}

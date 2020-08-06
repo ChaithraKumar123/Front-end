@@ -26,8 +26,11 @@ class CoreLifeStyleModule extends Component {
     axios
       .get(
         "https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/medhistorydetails",
+        // "https://localhost:44338/api/medhistorydetails",
+
+
         {
-          params: { value: this.state.POBPatientID },
+          params: { value: localStorage.getItem("KNC") },
         }
       )
       .then((response) => {
@@ -70,6 +73,8 @@ class CoreLifeStyleModule extends Component {
       axios
         .post(
           "https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/medhistorydetails",
+          // "https://localhost:44338/api/medhistorydetails",
+
           {
             ModuleName: "Core Life Style",
 
@@ -80,7 +85,7 @@ class CoreLifeStyleModule extends Component {
             Recreation: this.state.recreational_hobbies,
             DietRating: this.state.diet,
             SitEightsHours: this.state.sit,
-            POBPatientID: this.state.POBPatientID,
+            POBPatientID: localStorage.getItem("KNC"),
             POBCPMedHistoryID: this.state.id,
           }
         )
@@ -90,9 +95,30 @@ class CoreLifeStyleModule extends Component {
         .catch((error) => {
           console.log(error);
         });
+
+        axios
+        .post(
+          "https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/saveWorkflow",
+          // "https://localhost:44338/api/saveWorkflow",
+
+          {
+            KNC: localStorage.getItem("KNC"),
+            DateCompleted: new Date()
+          }
+        )
+        .then((response) => {
+          if (response.data = "Success")
+          {
+            console.log(response);
         auth.login(() => {
           this.props.history.push("/Home");
         });
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+
     }
   };
   validate = () => {

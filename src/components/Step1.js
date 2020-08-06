@@ -2,6 +2,7 @@ import React, { Component } from "react";
 //import Dropdown from "react-dropdown";
 //import { Field, reduxForm } from 'redux-form'
 import { Dropdown } from "semantic-ui-react";
+import axios from "axios";
 
 import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
@@ -19,10 +20,10 @@ class Step1 extends Component {
     if (
       !(this.props.state.titleOpt === "") &&
       !(this.props.state.gender === "") &&
-      this.props.state.givenNameisValid &&
-      this.props.state.surNameisValid &&
+      (this.props.state.givenNameisValid === true | this.props.state.givenName !== "") &&
+      (this.props.state.surNameisValid === true | this.props.state.surName !== "") &&
       this.props.state.DateofBisValid &&
-      this.props.state.mobileNumberisValid
+      (this.props.state.mobileNumberisValid === true | this.props.state.mobileNumber !== "") 
     ) {
       e.preventDefault();
       this.props.nextStep();
@@ -51,10 +52,27 @@ class Step1 extends Component {
         window.alert(data);
       })
       .then((data) => this.saveEthnicity(data));
+
+
+
+      axios
+      .get(
+        // "https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/medhistorydetails",
+        'https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/v1/personaldetails/'+ localStorage.getItem("KNC"),
+        // "https://localhost:44338/v1/personaldetails/" + localStorage.getItem("KNC"),
+      )
+      .then((response) => {
+        console.log(response.data[0]);
+          this.props.getdetails(response.data[0], response.data[1], response.data[2])
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
   }
 
   render() {
-    const { handleChange, state } = this.props;
+    const { handleChange, state, getdetails } = this.props;
 
     return (
       <div id="MainDiv">
@@ -166,7 +184,7 @@ class Step1 extends Component {
                   className="form-control"
                   id="surName"
                   type="text"
-                  value={state.surName.fieldValue}
+                  value={state.surName}
                   onChange={handleChange("surName")}
                 />
                 <div className="errorMessage">{state.surNameError}</div>

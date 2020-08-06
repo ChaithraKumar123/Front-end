@@ -23,8 +23,10 @@ class RedFlagModule extends Component {
     axios
       .get(
         "https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/medhistorydetails",
+        // "https://localhost:44338/api/medhistorydetails",
+
         {
-          params: { value: this.state.POBPatientID },
+          params: { value: localStorage.getItem("KNC") },
         }
       )
       .then((response) => {
@@ -63,13 +65,15 @@ class RedFlagModule extends Component {
       axios
         .post(
           "https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/medhistorydetails",
+          // "https://localhost:44338/api/medhistorydetails",
+
           {
             ModuleName: "Red Flag",
             WeightChanges: this.state.recent_weight_gain,
             ToiletPain: this.state.toilet_pain,
             NightPain: this.state.wake_up_pain,
             Coordination: this.state.coordination_change,
-            POBPatientID: this.state.POBPatientID,
+            POBPatientID: localStorage.getItem("KNC"),
             POBCPMedHistoryID: this.state.id,
           }
         )
@@ -79,9 +83,34 @@ class RedFlagModule extends Component {
         .catch((error) => {
           console.log(error);
         });
+
+        axios
+        .post(
+          "https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/saveWorkflow",
+          // "https://localhost:44338/api/saveWorkflow",
+
+          {
+            KNC: localStorage.getItem("KNC"),
+            DateCompleted: new Date()
+          }
+        )
+        .then((response) => {
+          if (response.data = "Success")
+          {
+            console.log(response);
         auth.login(() => {
           this.props.history.push("/Home");
         });
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+
+        
+        // auth.login(() => {
+        //   this.props.history.push("/Home");
+        // });
     }
   };
 

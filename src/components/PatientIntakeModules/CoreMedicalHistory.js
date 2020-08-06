@@ -113,7 +113,11 @@ class CoreMedicalHistory extends Component {
    
 
     axios
-    .get('https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/medlist') 
+    .get(
+      'https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/medlist'
+      
+
+      ) 
     .then(response => {
         this.setState({
             medications_options : response.data
@@ -126,8 +130,10 @@ class CoreMedicalHistory extends Component {
     axios
       .get(
         "https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/medhistorydetails",
+        // "https://localhost:44338/api/medhistorydetails",
+
         {
-          params: { value: this.state.POBPatientID },
+          params: { value: localStorage.getItem("KNC") },
         }
       )
       .then((response) => {
@@ -233,9 +239,12 @@ class CoreMedicalHistory extends Component {
         console.log(error);
       });
       axios
-      .get('https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/med_list_insert',
+      .get(
+        'https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/med_list_insert',
+        // 'https://localhost:44338/api/med_list_insert',
+
       {
-        params: { value: this.state.POBPatientID ,value1 : this.state.id},
+        params: { value: localStorage.getItem("KNC") ,value1 : this.state.id},
       })
       .then(response => {
           this.setState({
@@ -272,6 +281,8 @@ class CoreMedicalHistory extends Component {
       axios
         .post(
           "https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/medhistorydetails",
+          // "https://localhost:44338/api/medhistorydetails",
+
           {
             Allergies:
               this.state.allergies === "No"
@@ -348,7 +359,7 @@ class CoreMedicalHistory extends Component {
                   this.state.medical_conditions_details,
             // this.state.medical_conditions_details
 
-            POBPatientID: this.state.POBPatientID,
+            POBPatientID: localStorage.getItem("KNC"),
             POBCPMedHistoryID: this.state.id,
           }
         )
@@ -372,7 +383,7 @@ class CoreMedicalHistory extends Component {
             "https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/med_list_insert",
             {
               
-              POBPatientID : this.state.POBPatientID,
+              POBPatientID : localStorage.getItem("KNC"),
               EntityType : 52,
               MedicationPBSID : this.state.medication_yes[i].value,
               POBCPMedHistoryID: this.state.id,
@@ -414,7 +425,30 @@ class CoreMedicalHistory extends Component {
 
       }  
     }
-        auth.login(() => {
+    axios
+    .post(
+      "https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/saveWorkflow",
+      // "https://localhost:44338/api/saveWorkflow",
+
+      {
+        KNC: localStorage.getItem("KNC"),
+        DateCompleted: new Date()
+      }
+    )
+    .then((response) => {
+      if (response.data = "Success")
+      {
+        console.log(response);
+    auth.login(() => {
+      this.props.history.push("/Home");
+    });
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+    
+    auth.login(() => {
           this.props.history.push("/Home");
         });
         

@@ -26,7 +26,7 @@ class Brilliant extends Component {
         <div id="MainDiv">
           <div className="page-title lg">
             <div className="title">
-              <h1>Account confirmed</h1>
+              <h1>Success!</h1>
             </div>
           </div>
           <div>
@@ -39,9 +39,7 @@ class Brilliant extends Component {
             >
               Your account has been confirmed.
               <br /> <br />
-              To help us understand you better, we need you to complete the
-              following forms. These will be passed on to your company once we
-              match you up. You can delete your details at any point.
+              Click continue to complete the registration process.
             </h4>
             <br></br>
             <div>

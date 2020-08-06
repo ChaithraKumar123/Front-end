@@ -224,8 +224,10 @@ class BodyImage extends Component {
     axios
       .get(
         "https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/POBdetails",
+        // "https://localhost:44338/api/POBdetails",
+
         {
-          params: { value: 60 },
+          params: { value: localStorage.getItem("KNC") },
         }
       )
       .then((response) => {

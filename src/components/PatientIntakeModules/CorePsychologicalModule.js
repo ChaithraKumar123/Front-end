@@ -36,8 +36,10 @@ class CorePsychologicalModule extends Component {
     axios
       .get(
         "https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/medhistorydetails",
+        // "https://localhost:44338/api/medhistorydetails",
+
         {
-          params: { value: this.state.POBPatientID },
+          params: { value: localStorage.getItem("KNC") },
         }
       )
       .then((response) => {
@@ -95,6 +97,8 @@ class CorePsychologicalModule extends Component {
       axios
         .post(
           "https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/medhistorydetails",
+          // "https://localhost:44338/api/medhistorydetails",
+
           {
             ModuleName: "Core Psycholoical",
             HomeStress:
@@ -113,7 +117,7 @@ class CorePsychologicalModule extends Component {
                 : this.state.medications_impair +
                   "|" +
                   this.state.medications_impair_reason,
-            POBPatientID: this.state.POBPatientID,
+            POBPatientID: localStorage.getItem("KNC"),
             POBCPMedHistoryID: this.state.id,
           }
         )
@@ -124,9 +128,30 @@ class CorePsychologicalModule extends Component {
         .catch((error) => {
           console.log(error);
         });
-      auth.login(() => {
-        this.props.history.push("/Home");
-      });
+
+        axios
+        .post(
+          "https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/saveWorkflow",
+          // "https://localhost:44338/api/saveWorkflow",
+
+          {
+            KNC: localStorage.getItem("KNC"),
+            DateCompleted: new Date()
+          }
+        )
+        .then((response) => {
+          if (response.data = "Success")
+          {
+            console.log(response);
+        auth.login(() => {
+          this.props.history.push("/Home");
+        });
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+
     }
   };
   validate = () => {

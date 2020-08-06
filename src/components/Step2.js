@@ -70,7 +70,7 @@ class Step2 extends Component {
         <div className="page-title lg">
           <div className="title">
             <h1>Job Details</h1>
-            <p> Step 2 of 4 </p>
+            <p> Step 2 of 3 </p>
           </div>
         </div>
         <div className="contentSpacing">

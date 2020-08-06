@@ -3,6 +3,7 @@ import '../../App.css'
 import {RadioGroup, Radio} from 'react-radio-group';
 
 import auth from "../auth";
+import axios from "axios";
 
 
 class ManualHandling extends Component
@@ -58,6 +59,50 @@ class ManualHandling extends Component
               })  
         }
     }
+
+    // componentDidMount() {
+    //   axios
+    //     .get(
+    //       // "https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/manualhandling",
+    //       "https://localhost:44338/api/manualhandling",  
+  
+    //       {
+    //         params: { value: localStorage.getItem("KNC") },
+    //       }
+    //     )
+    //     .then((response) => {
+    //       console.log(response.data[0]);
+    //       this.setState({
+    //         // quality_sleep: response.data[0].sleepQuality,
+    //         // smoke_cigar: response.data[0].smokePerDay,
+    //         // water_day: response.data[0].waterPerDay,
+    //         // exercise: response.data[0].exercise,
+    //         // recreational_hobbies: response.data[0].recreation,
+    //         // diet: response.data[0].dietRating,
+    //         // sit: response.data[0].sitEightsHours,
+    //         // id: response.data[0].pobcpMedHistoryID,
+    //         // POBPatientID: response.data[0].pobPatientID,
+
+
+    //         HeavyObjects: response.data[0].heavyObjects,
+    //         PainWalking: response.data[0].painWalking,
+    //         PainBending: response.data[0].painBending,
+    //         PainSquating: response.data[0].painSquating,
+    //         PainStanding: response.data[0].painStanding,
+    //         BelowOverhead: response.data[0].belowOverhead,
+    //         Gripping: response.data[0].gripping,
+    //         OperatingMachinery: response.data[0].operatingMachinery,
+    //         TemperatureDifficulty: response.data[0].temperatureDifficulty,
+    //         Heights: response.data[0].heights,
+    //         AncticipateAssistance: response.data[0].ancticipateAssistance
+    //       });
+    //     })
+    //     .catch((error) => {
+    //       console.log(error);
+    //     });
+    // }
+
+    
     completeForm=event=>{
         event.preventDefault();
         const isValid = this.validate();
@@ -97,7 +142,11 @@ class ManualHandling extends Component
 
 
           try {
-            fetch("https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/manualhandling", requestOptions)
+            fetch(
+              "https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/manualhandling"
+              // "https://localhost:44338/api/manualhandling"
+
+            , requestOptions)
               .then((response) => response.json())
               .then(data => {
                 if(Number(data.httpStatusCode) ===200){

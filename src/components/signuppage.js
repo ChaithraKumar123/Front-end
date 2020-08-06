@@ -10,9 +10,10 @@ import {
 } from "react-router-dom";
 import auth from "./auth";
 import { startOfSecond } from "date-fns";
+import axios from "axios";
 
 var randomToken = require("random-token");
-const Errormsg = () => <div className="errorMessage">Required Field</div>;
+const Errormsg = () => <div className="errorMessage">Missing or invalid field</div>;
 
 const thankyou = (email) => (
   <div id="MainDiv">
@@ -56,15 +57,22 @@ class Signup extends Component {
       passwordErrvalid: false,
       renderThankyou: false,
       closed: false,
+      modaldisplay: false,
+      loadingCircle : false,
+      cognitoErr: ""
     };
 
     this.handleCloseModal = this.handleCloseModal.bind(this);
   }
 
   toSend = require("./userSchema.json");
-
+  changeLoadingCircle = () => {
+    this.setState({ loadingCircle: true });
+    return true;
+  }
   continue = (e) => {
     e.preventDefault();
+    this.setState({ cognitoErr: "" });
 
     var isvalid = this.passVal();
     if (
@@ -76,6 +84,8 @@ class Signup extends Component {
       this.state.checked !== false &&
       this.state.password === this.state.retypePassword
     ) {
+      const cir = this.changeLoadingCircle();
+
       const Signupschema = {
         schema: {
           Password: this.state.password,
@@ -101,17 +111,26 @@ class Signup extends Component {
         )
           .then((response) => response.json())
           .catch(function (data) {
-            window.alert(data);
+            this.setState({
+              loadingCircle : false,
+            });
+            // window.alert(data);
           })
           .then((data) => this.authenticate(data));
       } catch (error) {
-        window.alert(error);
+        this.setState({
+          loadingCircle : false,
+          cognitoErr: error
+        });
+        // window.alert(error);
       }
     } else if (this.state.password !== this.state.retypePassword) {
       this.setState({
         passwordErr: "Password does not match",
+        loadingCircle : false
+
       });
-    } else this.setState({ submit: true });
+    } else this.setState({ submit: true, loadingCircle : false });
   };
 
   // continue = (e) => {
@@ -162,31 +181,66 @@ class Signup extends Component {
       try {
         fetch(
           "https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/v1/personaldetails",
+                    // "https://localhost:44338/v1/personaldetails",
+
           requestOptions
         )
           .then((response) => response.json())
           .then((data) => {
             if (Number(data.httpStatusCode) === 200) {
+
+              axios
+              .post(
+                // "https://localhost:44338/api/workflowNewreg",
+                "https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/workflowNewreg",
+        
+                {
+                  KNC: localStorage.getItem("KNC"),
+                  DateCompleted: new Date(),
+                }
+              )
+              .then((response) => {
+                if (response.data == "Success") {
+                  console.log(response);
+                }
+              })
+              .catch((error) => {
+                console.log(error);
+              });
+
               localStorage.setItem("confToken", randomToken(16));
               this.setState({
                 renderThankyou: true,
+                loadingCircle : false
               });
             } else {
-              window.alert(data.message);
+              // window.alert(data.message);
+              this.setState({
+                loadingCircle : false
+              });
             }
           });
       } catch (error) {
+        this.setState({
+          loadingCircle : false,
+          cognitoErr: error
+
+        });
         console.log(error);
       }
     } else {
-      window.alert(e.message);
+      this.setState({
+        loadingCircle : false,
+        cognitoErr: e.message
+      });
+      // window.alert(e.message);
     }
   };
 
   passVal = (e) => {
     if (this.state.password.length === 0) {
       this.setState({
-        passwordErr: "Please enter you password",
+        passwordErr: "password required",
       });
       return false;
     } else if (this.state.password.length < 8) {
@@ -205,8 +259,13 @@ class Signup extends Component {
   //   };
   termsAgree = (e) => {
     console.log(e.target.checked);
-    this.setState({ checked: !this.state.checked });
+    this.setState({checked : ! this.state.checked});
   };
+  
+  termslink = (e) => {
+    this.setState({modaldisplay: !this.state.modaldisplay });
+  };
+
 
   componentDidUpdate() {
     if (this.state.checked === false && this.state.closed === true) {
@@ -221,60 +280,52 @@ class Signup extends Component {
     });
   }
 
+  termsmodal = () => {
+    return (
+      <div>
+      <div style={{ fontFamily: "Roboto, sans-serif", marginTop : "10px" }}>
+        By clicking the checkbox, you confirm the information provided
+        above is correct and agree to the following:
+        <br />
+        <br />
+        You have been provided with a copy of the 
+        {/* <a href="https://wha-consentform.s3-ap-southeast-2.amazonaws.com/WHA_Privacy_Policy_Public_V07a.pdf" download="WHA_Privacy_Policy_Public_V07a.pdf">Download Your Expense Report</a> */}
+        <a href={"https://wha-consentform.s3-ap-southeast-2.amazonaws.com/WHA_Privacy_Policy_Public_V07a.pdf"} target="_blank" download={"WHA_Privacy_Policy_Public_V07a.pdf"}> Work Healthy Australia Privacy Policy </a>
+        , and you agree to the handling of your personal
+        information by Work Healthy Australia in accordance with that
+        Policy, including the ways in which Work Healthy Australia may
+        collect and use your personal information, and may disclose your
+        personal information to the third parties specified in that
+        Policy.
+        <br />
+        <br />
+        Due to the duty of care that any company has with respect to
+        your health and safety, it may be necessary for the Work Healthy
+        Australia provider to coordinate with the relevant persons at
+        this workplace. You therefore consent to allow the Work Healthy
+        Australia provider to discuss, disclose or share your health
+        information and other personal information relevant to your
+        prospective job performance at this workplace with any of the
+        following persons that are responsible for your health care or
+        safety: other health and medical providers, OHS staff, HR staff,
+        Rehabilitation Coordinators, and supervisors and managers at
+        this workplace
+      </div>
+      <br />
+      <br />
+    </div>
+    )
+  }
+
   render() {
-    const { handleChange, state } = this.props;
+    const { handleChange, state, loadingCircle } = this.props;
 
     if (!this.state.renderThankyou) {
       return (
         <div>
-          {this.state.checked === true && this.state.closed === false ? (
             <div id="MainDiv">
-              <div className="page-title lg">
-                <div className="title">
-                  <p>Work Healthy Australia's terms</p>
-                </div>
-              </div>
-              <div style={{ fontFamily: "Roboto, sans-serif" }}>
-                By clicking the checkbox, you confirm the information provided
-                above is correct and agree to the following:
-                <br />
-                <br />
-                You have been provided with a copy of the 
-                {/* <a href="https://wha-consentform.s3-ap-southeast-2.amazonaws.com/WHA_Privacy_Policy_Public_V07a.pdf" download="WHA_Privacy_Policy_Public_V07a.pdf">Download Your Expense Report</a> */}
-                <a href={"https://wha-consentform.s3-ap-southeast-2.amazonaws.com/WHA_Privacy_Policy_Public_V07a.pdf"} target="_blank" download={"WHA_Privacy_Policy_Public_V07a.pdf"}> Work Healthy Australia Privacy Policy </a>
-                , and you agree to the handling of your personal
-                information by Work Healthy Australia in accordance with that
-                Policy, including the ways in which Work Healthy Australia may
-                collect and use your personal information, and may disclose your
-                personal information to the third parties specified in that
-                Policy.
-                <br />
-                <br />
-                Due to the duty of care that any company has with respect to
-                your health and safety, it may be necessary for the Work Healthy
-                Australia provider to coordinate with the relevant persons at
-                this workplace. You therefore consent to allow the Work Healthy
-                Australia provider to discuss, disclose or share your health
-                information and other personal information relevant to your
-                prospective job performance at this workplace with any of the
-                following persons that are responsible for your health care or
-                safety: other health and medical providers, OHS staff, HR staff,
-                Rehabilitation Coordinators, and supervisors and managers at
-                this workplace
-              </div>
-              <br />
-              <br />
-              <button
-                className="btn btn-primary modal-btn"
-                data-modal-id="sampleModal"
-                id="stepOneSubmit"
-                onClick={this.handleCloseModal}
-              >
-                Close
-              </button>
-            </div>
-          ) : (
-            <div id="MainDiv">
+            {this.state.loadingCircle === true ? loadingCircle : null}
+
               <div className="page-title lg">
                 <div className="title">
                   <p> Let's create your account</p>
@@ -403,11 +454,16 @@ class Signup extends Component {
                       type="checkbox"
                       className="custom-input"
                       checked={this.state.checked}
-                      onChange={this.termsAgree}
+                     onChange={this.termsAgree}
                     />
-                    <span> I agree to work Healthy Australia's terms</span>
+                    <span></span>
                   </div>
-                  {/* {this.state.submit ? <Errormsg /> : null} */}
+                   <a style = {{float : "right", "margin-right": "180px", "cursor":"pointer"}} onClick = {this.termslink}> I agree to work Healthy Australia's terms</a>
+
+                  {this.state.modaldisplay ? this.termsmodal(): null}
+
+                  {this.state.submit ? <Errormsg /> : null}
+                      <div className="errorMessage">{this.state.cognitoErr}</div>
                   <div className="btn-block prev-back-btn">
                     <button
                       className="btn btn-outline-primary"
@@ -427,7 +483,6 @@ class Signup extends Component {
                 </div>
               </div>
             </div>
-          )}
         </div>
       );
     } else {

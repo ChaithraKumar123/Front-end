@@ -61,8 +61,10 @@ class MusculoskeletonModule extends Component {
     axios
       .get(
         "https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/mskdetails",
+        // "https://localhost:44338/api/mskdetails",
+
         {
-          params: { value: 60 },
+          params: { value: localStorage.getItem("KNC") },
         }
       )
       .then((response) => {
@@ -224,6 +226,8 @@ class MusculoskeletonModule extends Component {
       axios
         .post(
           "https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/mskdetails",
+          // "https://localhost:44338/api/mskdetails",
+
           {
             NeckPain: this.state.NeckPain,
             NeckPainDate:
@@ -354,6 +358,7 @@ class MusculoskeletonModule extends Component {
               this.state.HILLPain === "No" ? "" : this.state.HILLPainStatus,
 
             MSKID: this.state.MSKID,
+            KNC:localStorage.getItem("KNC")
           }
         )
         .then((response) => {
@@ -362,9 +367,34 @@ class MusculoskeletonModule extends Component {
         .catch((error) => {
           console.log(error);
         });
+
+        axios
+        .post(
+          "https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/saveWorkflow",
+          // "https://localhost:44338/api/saveWorkflow",
+
+          {
+            KNC: localStorage.getItem("KNC"),
+            DateCompleted: new Date()
+          }
+        )
+        .then((response) => {
+          if (response.data = "Success")
+          {
+            console.log(response);
         auth.login(() => {
           this.props.history.push("/Home");
         });
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+
+
+        // auth.login(() => {
+        //   this.props.history.push("/Home");
+        // });
     }
   };
 

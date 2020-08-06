@@ -12,15 +12,15 @@ import {
 import { CognitoUser, AuthenticationDetails } from "amazon-cognito-identity-js";
 import { Ouroboro } from "react-spinners-css";
 
-const IsLoading = () => (
-  <div id="loadingCiricle">
-    <Ouroboro color="#F04F1D" size={200} />
-  </div>
-);
+import Landingpage from './Landingpage';
+
+// const IsLoading = () => (
+//     <Ouroboro style = {{"position": "absolute", "margin-left": "280px", "margin-top": "-57px"}} color="#F04F1D" size={200} />
+// );
 
 class Loginpage extends Component {
   state = {
-    submit: false,
+    loadingCircle: false,
     userEmPh: "",
     pass: "",
     usernameErr: "",
@@ -28,27 +28,32 @@ class Loginpage extends Component {
     passwordErr: "",
     passwordErrvalid: false,
     authErr: "",
+    showLogin : false
   };
 
   returnedUserOp = (data) => {
     console.log(data);
     if (data.ok) {
       this.setState({ authErr: "" });
-      this.setState({ submit: false });
+      this.setState({ loadingCircle: false });
 
       auth.login(() => {
         this.props.history.push("/Home");
       });
     } else {
       this.setState({ authErr: "login failed" });
-      this.setState({ submit: false });
+      this.setState({ loadingCircle: false });
     }
   };
 
   authenticate = (e) => {
     console.log(e);
     if (e.httpStatusCode !== 200) {
-      window.alert(e.message);
+
+      this.setState({ authErr: e.message });
+      this.setState({ loadingCircle: false });
+
+      //window.alert(e.message);
       return;
     }
     const requestOptions = {
@@ -67,16 +72,19 @@ class Loginpage extends Component {
       .then((data) => this.returnedUserOp(data));
   };
 
+  changeLoadingCircle = () => {
+    this.setState({ loadingCircle: true });
+    return true;
+  }
   continue = (e) => {
     e.preventDefault();
     this.setState({ authErr: "" });
     const isValid = this.loginVAlidation(e);
     const passVal = this.passVal(e);
-
+    const cir = this.changeLoadingCircle();
     if (isValid && passVal) {
       // UserPool.signUp()
       //this.props.nextStep();
-      this.setState({ submit: true });
       console.log("logging in");
 
       const schema = {
@@ -102,7 +110,7 @@ class Loginpage extends Component {
       fetch("https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/signin", requestOptions)
         .then((response) => response.json())
         .then((data) => this.authenticate(data))
-        .then(this.setState({ submit: false }));
+        // .then(this.setState({ loadingCircle: false }));
 
     }
   };
@@ -140,83 +148,98 @@ class Loginpage extends Component {
     }
   };
 
+  loginswitch = () => {
+    this.setState({showLogin :true})
+  }
+
+
   render() {
+
+    const { loadingCircle } = this.props;
+
 
     if(localStorage.getItem("login") === null)
     {
 
       return (
-        <div id="MainDiv">
-          <div className="page-title lg">
-            <div className="title">
-              <h1>Welcome!</h1>
-            </div>
-          </div>
-          <div className = "contentSpacing">
-          <div>
-          {this.state.submit === true ? <IsLoading /> : null}
-          </div>
-          <div style= {{"textAlignLast": "center"}}>
-          <img src={require("./workhealthy.png")} height = "150px" />
-          </div>
-          <div className="row"  style = {{"margin-top": "24px"}}>
-            <div>
-              <div className="form-group">
-                <label className="abc">Email or Phone number</label>
-                <input
-                  className="form-control"
-                  id="userEmPh"
-                  name="userEmPh"
-                  type="text"
-                  value={this.state.userEmPh}
-                  // onChange={this.handleChange}
-                  onChange={(event) =>
-                    this.setState({ userEmPh: event.target.value })
-                  }
-                />
-                <div className="errorMessage">{this.state.usernameErr}</div>
-              </div>
-            </div>
-            <div>
-              <div className="form-group">
-                <label className="abc">Password</label>
-                <input
-                  className="form-control"
-                  id="pass"
-                  name="pass"
-                  type="password"
-                  value={this.state.pass}
-                  onChange={(event) =>
-                    this.setState({ pass: event.target.value })
-                  }
-                  //  onChange={(event) => this.setState({password:event.target.value})}
-                />
-                <div className="errorMessage">{this.state.passwordErr}</div>
-                <div className="errorMessage">{this.state.authErr}</div>
-              </div>
-              <div className="btn-block">
-                <button
-                  className="btn btn-primary btn-block"
-                  onClick={this.continue}
-                >
-                  Login
-                </button>
-              </div>
-            </div>
-            <div className="forg" style = {{"marginTop": "16px", "text-align-last": "center"}}>
-              <Link className="passwordForgot" to="/ForgotPassword">
-                Forgot Password?
-              </Link>
-            </div>
-            <div>
-              <h4 className="invite"  style = {{"text-align-last": "center"}}> Haven't been invited?</h4>
-              <Link className="create" style = {{"text-align-last": "center"}} to="/Signup">
-                Create your own account
-              </Link>
-            </div>
-          </div>
-          </div>
-        </div>
+        <div>
+          {this.state.showLogin ? 
+
+<div id="MainDiv">
+{this.state.loadingCircle === true ? loadingCircle : null}
+
+<div className="page-title lg">
+  <div className="title">
+    <h1>Welcome!</h1>
+  </div>
+</div>
+<div className = "contentSpacing">
+<div>
+</div>
+<div style= {{"textAlignLast": "center"}}>
+<img src={require("./workhealthy.png")} height = "150px" />
+</div>
+<div className="row"  style = {{"margin-top": "24px"}}>
+  <div>
+    <div className="form-group">
+      <label className="abc">Email or Phone number</label>
+      <input
+        className="form-control"
+        id="userEmPh"
+        name="userEmPh"
+        type="text"
+        value={this.state.userEmPh}
+        // onChange={this.handleChange}
+        onChange={(event) =>
+          this.setState({ userEmPh: event.target.value })
+        }
+      />
+      <div className="errorMessage">{this.state.usernameErr}</div>
+    </div>
+  </div>
+  <div>
+    <div className="form-group">
+      <label className="abc">Password</label>
+      <input
+        className="form-control"
+        id="pass"
+        name="pass"
+        type="password"
+        value={this.state.pass}
+        onChange={(event) =>
+          this.setState({ pass: event.target.value })
+        }
+        //  onChange={(event) => this.setState({password:event.target.value})}
+      />
+      <div className="errorMessage">{this.state.passwordErr}</div>
+      <div className="errorMessage">{this.state.authErr}</div>
+    </div>
+    <div className="btn-block">
+      <button
+        className="btn btn-primary btn-block"
+        onClick={this.continue}
+      >
+        Login
+      </button>
+    </div>
+  </div>
+  <div className="forg" style = {{"marginTop": "16px", "text-align-last": "center"}}>
+    <Link className="passwordForgot" to="/ForgotPassword">
+      Forgot Password?
+    </Link>
+  </div>
+  <div>
+    <Link className="create" style = {{"text-align-last": "center"}} to="/Signup">
+      Create your own account
+    </Link>
+  </div>
+</div>
+</div>
+</div>
+          : <Landingpage loginswitch = {this.loginswitch}></Landingpage>}
+        
+        
+    </div>
       )
     }
 

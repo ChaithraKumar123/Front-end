@@ -115,8 +115,10 @@ class BodyImageTabs extends Component {
     axios
       .get(
         "https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/POBdetails",
+        // "https://localhost:44338/api/POBdetails",
+
         {
-          params: { value: this.state.POBPatientID },
+          params: { value: localStorage.getItem("KNC") },
         }
       )
       .then((response) => {
@@ -206,8 +208,10 @@ class BodyImageTabs extends Component {
     axios
       .post(
         "https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/POBdetails",
+        // "https://localhost:44338/api/POBdetails",
+
         {
-          POBPatientID: this.state.POBPatientID,
+          POBPatientID: localStorage.getItem("KNC"),
           POBCPRegionID: save.POBCPRegionID,
           PainRegionID: save.PainRegionID,
           PainSide: save.pain_side,

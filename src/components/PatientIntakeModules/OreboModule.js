@@ -32,9 +32,12 @@ class OreboModule extends Component {
   componentDidMount() {
     axios
       .get(
+        // "https://localhost:44338/api/orebrodetails",
         "https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/orebrodetails",
+        
+
         {
-          params: { value: this.state.entityId },
+          params: { value: localStorage.getItem("KNC") },
         }
       )
       .then((response) => {
@@ -69,11 +72,12 @@ class OreboModule extends Component {
     const isValid = this.validate();
     if (isValid) {
       this.setState(this.initialState);
-      alert("Submitted");
 
       axios
         .post(
           "https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/orebrodetails",
+
+          // "https://localhost:44338/api/orebrodetails",
           {
             Q1: this.state.current_pain,
             Q2: this.state.rate_pain,
@@ -85,20 +89,22 @@ class OreboModule extends Component {
             Q8: this.state.normal_duties,
             Q9: this.state.stop_work,
             Q10: this.state.stop_normal_work,
-            EntityID: this.state.entityId,
+            EntityID: localStorage.getItem("KNC"),
             OMPQID: this.state.OMPQID,
           }
         )
         .then((response) => {
+          alert("Submitted");
           console.log(response);
         })
         .catch((error) => {
+          alert("Error submitting the form");
           console.log(error);
         });
 
-        auth.login(() => {
-            this.props.history.push("/Home");
-          });
+        // auth.login(() => {
+        //     this.props.history.push("/Home");
+        //   });
     }
   };
   validate = () => {

@@ -51,7 +51,7 @@ class Step4 extends Component {
     "Mobile":this.props.state.mobileNumber,
 
     "CurrentPosition":this.props.state.CurrentPosition,
-    "EmpStartDate":this.props.state.EmpStDate,
+    "EmpStartDate":this.props.state.EmpStDate ? this.props.state.EmpStDate : "01-01-1990",
     "EmpDepartment":this.props.state.Department,
     "PreviousWorkCompClaim":Number(this.props.state.CompClaim),
     "PreviousWorkCompClaimDetails":this.props.state.CompClaimDetails,
@@ -84,7 +84,11 @@ class Step4 extends Component {
 
   console.log(schema.schema)
   let op;
-  fetch('https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/v1/personaldetails', requestOptions)
+  fetch(
+    'https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/v1/personaldetails'
+    // "https://localhost:44338/v1/personaldetails"
+
+    , requestOptions)
   .then(response => response.json())
   .then(data => {
     if(Number(data.httpStatusCode) ===200){
@@ -131,52 +135,12 @@ class Step4 extends Component {
           <div className="page-title lg">
             <div className="title">
               <h1>Medical Details</h1>
-              <p> Step 4 of 4 </p>
+              <p> Step 3 of 3 </p>
             </div>
           </div>
           <div className = "contentSpacing">
           <div className="row has-form">
-            <div>
-              <div className= "form-group">
-              <label className="abc">Family Doctor<span className="optional">Optional</span></label>
-              <input
-                type="text"
-                className="form-control"
-                id="familyDoctor"
-                onChange={handleChange("familyDoctor")}
-                value={state.familyDoctor}
-              ></input>
-              </div>
-            </div>
-  
-            <div>
-              <div className = "form-group">
-              <label className="abc">Last Visit</label>
-              <input
-                type="date"
-                max={ format(new Date(), "yyyy-MM-dd")}
-                id="lastVisit"
-                className="form-control"
-                value={state.lastVisit}
-                onChange={handleChange("lastVisit")}
-              ></input>
-              </div>
-            </div>
-  
-            <div>
-              <div className= "form-group">
-              <label className="abc">Reason For Visit <span className="optional">Optional</span> </label>
-              <input
-                type="text"
-                id="reasonOfVisit"
-                className="form-control"
-                value={state.reasonOfVisit}
-                onChange={handleChange("reasonOfVisit")}
-              ></input>
-              </div>
-            </div>
-  
-            <div>
+          <div>
               <div className= "form-group">
               <label className="abc">Height (cm)</label>
               <input
@@ -244,7 +208,47 @@ class Step4 extends Component {
               </div>
               </div>
             <div className="errorMessage">{state.handednessError}</div>
-
+            
+            <div>
+              <div className= "form-group">
+              <label className="abc">Family Doctor<span className="optional">Optional</span></label>
+              <input
+                type="text"
+                className="form-control"
+                id="familyDoctor"
+                onChange={handleChange("familyDoctor")}
+                value={state.familyDoctor}
+              ></input>
+              </div>
+            </div>
+  
+            <div>
+              <div className = "form-group">
+              <label className="abc">Last Visit</label>
+              <input
+                type="date"
+                max={ format(new Date(), "yyyy-MM-dd")}
+                id="lastVisit"
+                className="form-control"
+                value={state.lastVisit}
+                onChange={handleChange("lastVisit")}
+              ></input>
+              </div>
+            </div>
+  
+            <div>
+              <div className= "form-group">
+              <label className="abc">Reason For Visit <span className="optional">Optional</span> </label>
+              <input
+                type="text"
+                id="reasonOfVisit"
+                className="form-control"
+                value={state.reasonOfVisit}
+                onChange={handleChange("reasonOfVisit")}
+              ></input>
+              </div>
+            </div>
+  
   
           {this.state.submit ? <Errormsg /> : null}
   
