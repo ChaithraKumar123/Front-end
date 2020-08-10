@@ -546,6 +546,7 @@ class Main extends Component {
   };
   HomePage = () => {
     return <Home          
+     loadingCircle = {<IsLoading/>}
      stepReset={this.stepReset}
      state = {this.state}/>;
   };

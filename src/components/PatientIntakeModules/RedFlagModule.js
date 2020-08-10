@@ -91,7 +91,9 @@ class RedFlagModule extends Component {
 
           {
             KNC: localStorage.getItem("KNC"),
-            DateCompleted: new Date()
+            DateCompleted: new Date(),
+            processID: localStorage.getItem("WorkFlowId")
+
           }
         )
         .then((response) => {

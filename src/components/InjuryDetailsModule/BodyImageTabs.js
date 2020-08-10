@@ -205,7 +205,7 @@ class BodyImageTabs extends Component {
   };
   apicall = (step1) => {
     const save = this.state.InjuryRegion[step1 - 1];
-    axios
+      axios
       .post(
         "https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/POBdetails",
         // "https://localhost:44338/api/POBdetails",
@@ -253,11 +253,45 @@ class BodyImageTabs extends Component {
         }
       )
       .then((response) => {
-        console.log(response);
+
+        if (response.data === "Success"){
+          alert("Successfully Submitted!");
+          console.log(response);
+
+          if (this.state.step1 === 1){
+            axios
+            .post(
+              "https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/saveWorkflow",
+              // "https://localhost:44338/api/saveWorkflow",
+    
+              {
+                KNC: localStorage.getItem("KNC"),
+                DateCompleted: new Date(),
+                processID: localStorage.getItem("WorkFlowId")
+
+              }
+            )
+            .then((response) => {
+              if (response)
+              {
+                console.log(response);
+  
+              }
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+          }
+        }
+
+
       })
       .catch((error) => {
         console.log(error);
       });
+
+
+
   };
 
   nextStep = (event) => {
@@ -284,13 +318,18 @@ class BodyImageTabs extends Component {
     }
   };
 
-  completeForm = (event) => {
+    completeForm = (event) => {
     event.preventDefault();
     const isValid = this.validate();
     if (isValid) {
-      alert("Successfully Submitted!");
-      this.apicall(this.state.step1);
-      this.props.render_main();
+      try{
+        var no = this.apicall(this.state.step1);
+        console.log(no);
+      }
+      catch(err){
+        console.log(err)
+      }
+     // this.props.render_main();
     }
   };
   validate = () => {

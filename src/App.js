@@ -13,6 +13,8 @@ class App extends Component {
     });
   
     localStorage.removeItem("login");
+    localStorage.removeItem("WorkFlowId")
+
   };
 
   render()
