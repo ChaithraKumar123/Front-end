@@ -90,6 +90,7 @@ class Signup extends Component {
         schema: {
           Password: this.state.password,
           email: this.props.state.email,
+          name: this.props.state.givenName
         },
       };
 
@@ -107,9 +108,10 @@ class Signup extends Component {
       try {
         fetch(
           "https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/register",
+          // "https://localhost:44338/api/register",
           requestOptions
         )
-          .then((response) => response.json())
+        .then((response) => response.json())
           .catch(function (data) {
             this.setState({
               loadingCircle : false,
@@ -191,8 +193,8 @@ class Signup extends Component {
 
               axios
               .post(
-                // "https://localhost:44338/api/workflowNewreg",
-                "https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/workflowNewreg",
+                "https://localhost:44338/api/workflowNewreg",
+                // "https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/workflowNewreg",
         
                 {
                   KNC: localStorage.getItem("KNC"),
@@ -290,7 +292,7 @@ class Signup extends Component {
         <br />
         You have been provided with a copy of the 
         {/* <a href="https://wha-consentform.s3-ap-southeast-2.amazonaws.com/WHA_Privacy_Policy_Public_V07a.pdf" download="WHA_Privacy_Policy_Public_V07a.pdf">Download Your Expense Report</a> */}
-        <a href={"https://wha-consentform.s3-ap-southeast-2.amazonaws.com/WHA_Privacy_Policy_Public_V07a.pdf"} target="_blank" download={"WHA_Privacy_Policy_Public_V07a.pdf"}> Work Healthy Australia Privacy Policy </a>
+        <a href={"https://wha-consentform.s3-ap-southeast-2.amazonaws.com/WHA_Privacy_Policy_Public_V07a.pdf"} target="_blank" download={"WHA_Privacy_Policy_Public_V07a.pdf"}> Work Healthy Australia Privacy Policy</a>
         , and you agree to the handling of your personal
         information by Work Healthy Australia in accordance with that
         Policy, including the ways in which Work Healthy Australia may
@@ -328,7 +330,9 @@ class Signup extends Component {
 
               <div className="page-title lg">
                 <div className="title">
-                  <p> Let's create your account</p>
+                <h1 style = {{float : "left"}}> Let's create your account</h1>
+                <img style = {{float : "right", marginLeft : "200px",  marginBottom: "-4px", marginTop: "-19px"}} src={require("./whitelogo.png")} height = "60px"/>   
+                  {/* <p> Let's create your account</p> */}
                 </div>
               </div>
               <div className="contentSpacing">
@@ -344,7 +348,7 @@ class Signup extends Component {
                         onChange={handleChange("givenName")}
                       />
                       {this.state.submit === true && state.givenName === "" ? (
-                        <div className="errorMessage">*required</div>
+                        <div className="errorMessage">This field is required</div>
                       ) : null}
                     </div>
                   </div>
@@ -373,7 +377,7 @@ class Signup extends Component {
                         onChange={handleChange("surName")}
                       />
                       {this.state.submit === true && state.surName === "" ? (
-                        <div className="errorMessage">*required</div>
+                        <div className="errorMessage">This field is required</div>
                       ) : null}
 
                       {/* <div className="errorMessage">{state.surNameError}</div> */}
@@ -393,7 +397,7 @@ class Signup extends Component {
                       {/* <div className="errorMessage">{state.mobileNumberError}</div> */}
                       {this.state.submit === true &&
                       state.mobileNumber === "" ? (
-                        <div className="errorMessage">*required</div>
+                        <div className="errorMessage">This field is required</div>
                       ) : null}
                     </div>
                   </div>
@@ -410,7 +414,7 @@ class Signup extends Component {
                       {/* <Errormsg arg = {state.email}></Errormsg> */}
                       {/* <div className="errorMessage">{state.emailError}</div> */}
                       {this.state.submit === true && state.email === "" ? (
-                        <div className="errorMessage">*required</div>
+                        <div className="errorMessage">This field is required</div>
                       ) : null}
                     </div>
                   </div>
@@ -449,8 +453,10 @@ class Signup extends Component {
                       </div>
                     </div>
                   </div>
+                  <div>
                   <div className="custom-radio square">
                     <input
+                    style = {{float: "left"}}
                       type="checkbox"
                       className="custom-input"
                       checked={this.state.checked}
@@ -458,8 +464,10 @@ class Signup extends Component {
                     />
                     <span></span>
                   </div>
-                   <a style = {{float : "right", "margin-right": "180px", "cursor":"pointer"}} onClick = {this.termslink}> I agree to work Healthy Australia's terms</a>
+                   <a style = {{"cursor":"pointer"}} onClick = {this.termslink}> I agree to <b>Work Healthy Australia's terms</b></a>
 
+                  </div>
+                
                   {this.state.modaldisplay ? this.termsmodal(): null}
 
                   {this.state.submit ? <Errormsg /> : null}

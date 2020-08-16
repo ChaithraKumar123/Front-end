@@ -32,7 +32,20 @@ class CorePsychologicalModule extends Component {
     this.state = this.initialState;
   }
 
+  roundedDropdown= ()=> {
+    var element = document.getElementsByClassName("Dropdown-control");
+    var i;
+    var len = element.length;
+    for (i = 0; i < len; i++) {
+      element[0].className = element[0].className.replace("Dropdown-control", "pleasework");
+    }
+
+  }
+
+
   componentDidMount() {
+    this.roundedDropdown()
+
     axios
       .get(
         "https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/medhistorydetails",
@@ -170,7 +183,7 @@ class CorePsychologicalModule extends Component {
       val.depression === "" ||
       (val.depression === "Yes" && val.depression_reason === "")
     ) {
-      nameError = "*required";
+      nameError = "This field is required";
     }
     if (nameError) {
       this.setState({ nameError });
@@ -207,7 +220,7 @@ class CorePsychologicalModule extends Component {
             <h1>Core Psychological Module</h1>
           </div>
         </div>
-        <div className = "contentSpacing">
+        <div className = "contentSpacing row has-form-forms">
         <div>
           <div class="row">
             <div class="col-md-12">
@@ -240,7 +253,7 @@ class CorePsychologicalModule extends Component {
             <div class="row">
               <div class="col-md-12">
                 <div class="form-group">
-                  <label className="abc">Provide Details if Yes</label>
+                  <label className="abc">Please provide details</label>
                   <label style={{ fontSize: 12, color: "red" }}>
                     {this.state.homestress === "Yes" &&
                       this.state.homestress_reason === "" &&
@@ -311,7 +324,7 @@ class CorePsychologicalModule extends Component {
             <div class="row">
               <div class="col-md-12">
                 <div class="form-group">
-                  <label className="abc">Provide Details if Yes</label>
+                  <label className="abc">Please provide details</label>
                   <label style={{ fontSize: 12, color: "red" }}>
                     {this.state.depression === "Yes" &&
                       this.state.depression_reason === "" &&
@@ -362,7 +375,7 @@ class CorePsychologicalModule extends Component {
             <div class="row">
               <div class="col-md-12">
                 <div class="form-group custom-radio-wrapper">
-                  <label className="abc">Provide Details if Yes</label>
+                  <label className="abc">Please provide details</label>
                   <label style={{ fontSize: 12, color: "red" }}>
                     {this.state.medications_impair === "Yes" &&
                       this.state.medications_impair_reason === "" &&

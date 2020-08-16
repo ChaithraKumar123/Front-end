@@ -304,6 +304,7 @@ class Home extends Component {
               </div>
             </div>
           </div>
+          <div className = "row has-form-forms">
           {this.state.todo ? null : (
             <div>
               <h4
@@ -331,7 +332,7 @@ class Home extends Component {
             </div>
           )}
 
-          <div style={{ marginTop: "70px" }}>
+          <div>
             {this.state.todo ? (
               <div>
                 <h4 style={{ fontWeight: "700" }}>To Do</h4>
@@ -404,6 +405,7 @@ class Home extends Component {
           </div>
         </div>
       </div> */}
+      </div>
       </div>
     );
   }

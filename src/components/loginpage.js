@@ -166,20 +166,22 @@ class Loginpage extends Component {
           {this.state.showLogin ? 
 
 <div id="MainDiv">
-{this.state.loadingCircle === true ? loadingCircle : null}
+{this.state.loadingCircle === true ? loadingCircle : null}    
 
 <div className="page-title lg">
   <div className="title">
-    <h1>Welcome!</h1>
+    <h1 style = {{float : "left"}}>Welcome!</h1>
+    <img style = {{float : "right", marginLeft : "400px", marginBottom: "-4px", marginTop: "-19px"}} src={require("./whitelogo.png")} height = "60px"/>
+
   </div>
 </div>
 <div className = "contentSpacing">
 <div>
 </div>
 <div style= {{"textAlignLast": "center"}}>
-<img src={require("./workhealthy.png")} height = "150px" />
+<img src={require("./workhealthy.jfif")} height = "150px" />
 </div>
-<div className="row"  style = {{"margin-top": "24px"}}>
+<div className="row has-form"  style = {{"margin-top": "24px"}}>
   <div>
     <div className="form-group">
       <label className="abc">Email or Phone number</label>

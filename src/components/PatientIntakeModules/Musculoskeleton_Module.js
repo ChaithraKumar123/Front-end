@@ -57,7 +57,22 @@ class MusculoskeletonModule extends Component {
     this.state = this.initialState;
   }
 
+  roundedDropdown= ()=> {
+    var element = document.getElementsByClassName("Dropdown-control");
+    var i;
+    var len = element.length;
+    for (i = 0; i < len; i++) {
+      element[0].className = element[0].className.replace("Dropdown-control", "pleasework");
+    }
+
+  }
+
+  componentDidUpdate(){
+    this.roundedDropdown()
+
+  }
   componentDidMount() {
+
     axios
       .get(
         "https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/mskdetails",
@@ -450,7 +465,7 @@ class MusculoskeletonModule extends Component {
             val.HILLPainIntervention_details === "") ||
           val.HILLPainStatus === ""))
     ) {
-      nameError = "*required";
+      nameError = "This field is required";
     }
     if (nameError) {
       this.setState({ nameError });
@@ -486,13 +501,17 @@ class MusculoskeletonModule extends Component {
             <h1>Musculoskeletal Pain Questionnaire</h1>
           </div>
         </div>
+        <div className = "row has-form-forms">
+
         <div class="row">
           <div class="col-md-12">
             <div class="form-group custom-radio-wrapper">
               <label className="abc">
                 Have you had or have you ever had pain or injury to your:
               </label>
-              <label className="abc">Neck</label>
+              <br></br>
+
+              <label className="abc">Neck?</label>
               <label style={{ fontSize: 12, color: "red" }}>
                 {this.state.NeckPain === "" && this.state.nameError}
               </label>
@@ -522,7 +541,7 @@ class MusculoskeletonModule extends Component {
                   <label style={{ fontSize: 12, color: "red" }}>
                     {this.state.NeckPainDate === "" && this.state.nameError}
                   </label>
-                  <div>
+                  <div style = {{maxWidth: "175px"}}>
                   <input
                     className="form-control"
                     id="NeckPainDate"
@@ -606,7 +625,8 @@ class MusculoskeletonModule extends Component {
                             this.state.nameError}
                         </label>
                         <RadioGroup>
-                          {this.RadiobtnStyle(
+                          <div>                          
+                            {this.RadiobtnStyle(
                             "No",
                             "No",
                             "NeckPainTimeOffWork",
@@ -630,6 +650,9 @@ class MusculoskeletonModule extends Component {
                             "NeckPainTimeOffWork",
                             this.state.NeckPainTimeOffWork
                           )}{" "}
+
+                          </div>
+
                           {this.RadiobtnStyle(
                             "More than a month",
                             "More than a month",
@@ -670,7 +693,7 @@ class MusculoskeletonModule extends Component {
                     </div>
                   </div>
 
-                 { this.state.NeckPainIntervention === "Yes" && <div><label className="abc">Provide Details if Yes</label>
+                 { this.state.NeckPainIntervention === "Yes" && <div><label className="abc">Please provide details</label>
                   <label style={{ fontSize: 12, color: "red" }}>
                     {this.state.NeckPainIntervention_details === "" &&
                       this.state.NeckPainIntervention === "Yes" &&
@@ -728,7 +751,7 @@ class MusculoskeletonModule extends Component {
             <div class="row">
               <div class="col-md-12">
                 <div class="form-group custom-radio-wrapper">
-                  <label className="abc">Back</label>
+                  <label className="abc">Back?</label>
                   <label style={{ fontSize: 12, color: "red" }}>
                     {this.state.BackPain === "" && this.state.nameError}
                   </label>
@@ -757,6 +780,7 @@ class MusculoskeletonModule extends Component {
                   <label style={{ fontSize: 12, color: "red" }}>
                     {this.state.BackPainDate === "" && this.state.nameError}
                   </label>
+                  <div style = {{maxWidth: "175px"}}>
                   <input
                     className="form-control"
                     id="BackPainDate"
@@ -765,7 +789,9 @@ class MusculoskeletonModule extends Component {
                     placeholder="last date occurred"
                     value={this.state.BackPainDate}
                     onChange={this.handleChange("BackPainDate")}
-                  /><br></br>
+                  />
+                  </div>
+<br></br>
                     <div className="custom-radio square">
                     <input
                       type="checkbox"
@@ -838,6 +864,7 @@ class MusculoskeletonModule extends Component {
                             this.state.nameError}
                         </label>
                         <RadioGroup>
+                          <div>
                           {this.RadiobtnStyle(
                             "No",
                             "No",
@@ -862,6 +889,9 @@ class MusculoskeletonModule extends Component {
                             "BackPainTimeOffWork",
                             this.state.BackPainTimeOffWork
                           )}{" "}
+                          </div>
+
+
                           {this.RadiobtnStyle(
                             "More than a month",
                             "More than a month",
@@ -902,7 +932,7 @@ class MusculoskeletonModule extends Component {
                     </div>
                   </div>
 
-                 {this.state.BackPainIntervention === "Yes" &&<div> <label className="abc">Provide Details if Yes</label>
+                 {this.state.BackPainIntervention === "Yes" &&<div> <label className="abc">Please provide details</label>
                   <label style={{ fontSize: 12, color: "red" }}>
                     {this.state.BackPainIntervention === "Yes" &&
                       this.state.BackPainIntervention_details === "" &&
@@ -960,7 +990,7 @@ class MusculoskeletonModule extends Component {
             <div class="row">
               <div class="col-md-12">
                 <div class="form-group custom-radio-wrapper">
-                  <label className="abc">Shoulders and Upper Limbs</label>
+                  <label className="abc">Shoulders and Upper Limbs?</label>
                   <label style={{ fontSize: 12, color: "red" }}>
                     {this.state.SHULPain === "" && this.state.nameError}
                   </label>
@@ -989,6 +1019,7 @@ class MusculoskeletonModule extends Component {
                   <label style={{ fontSize: 12, color: "red" }}>
                     {this.state.SHULPainDate === "" && this.state.nameError}
                   </label>
+                  <div style = {{maxWidth: "175px"}}>
                   <input
                     className="form-control"
                     id="SHULPainDate"
@@ -998,6 +1029,8 @@ class MusculoskeletonModule extends Component {
                     value={this.state.SHULPainDate}
                     onChange={this.handleChange("SHULPainDate")}
                   />
+                  </div>
+
                     <br></br>
                   <div className="custom-radio square">
                     <input
@@ -1072,6 +1105,7 @@ class MusculoskeletonModule extends Component {
                             this.state.nameError}
                         </label>
                         <RadioGroup>
+                          <div>
                           {this.RadiobtnStyle(
                             "No",
                             "No",
@@ -1096,6 +1130,8 @@ class MusculoskeletonModule extends Component {
                             "SHULPainTimeOffWork",
                             this.state.SHULPainTimeOffWork
                           )}{" "}
+                          </div>
+
                           {this.RadiobtnStyle(
                             "More than a month",
                             "More than a month",
@@ -1137,7 +1173,7 @@ class MusculoskeletonModule extends Component {
                   </div>
 
                  {this.state.SHULPainIntervention === "Yes" && <div>
-                    <label className="abc">Provide Details if Yes</label>
+                    <label className="abc">Please provide details</label>
                   <label style={{ fontSize: 12, color: "red" }}>
                     {this.state.SHULPainIntervention === "Yes" &&
                       this.state.SHULPainIntervention_details === "" &&
@@ -1196,7 +1232,7 @@ class MusculoskeletonModule extends Component {
             <div class="row">
               <div class="col-md-12">
                 <div class="form-group custom-radio-wrapper">
-                  <label className="abc">Hips and Lower Limbs</label>
+                  <label className="abc">Hips and Lower Limbs?</label>
                   <label style={{ fontSize: 12, color: "red" }}>
                     {this.state.HILLPain === "" && this.state.nameError}
                   </label>
@@ -1225,6 +1261,7 @@ class MusculoskeletonModule extends Component {
                   <label style={{ fontSize: 12, color: "red" }}>
                     {this.state.HILLPainDate === "" && this.state.nameError}
                   </label>
+                  <div style = {{maxWidth: "175px"}}>
                   <input
                     className="form-control"
                     id="HILLPainDate"
@@ -1234,6 +1271,8 @@ class MusculoskeletonModule extends Component {
                     value={this.state.HILLPainDate}
                     onChange={this.handleChange("HILLPainDate")}
                   />
+                  </div>
+
                     <br></br>
                   <div className="custom-radio square">
                     <input
@@ -1307,6 +1346,7 @@ class MusculoskeletonModule extends Component {
                             this.state.nameError}
                         </label>
                         <RadioGroup>
+                          <div>
                           {this.RadiobtnStyle(
                             "No",
                             "No",
@@ -1330,13 +1370,18 @@ class MusculoskeletonModule extends Component {
                             "A week to a month",
                             "HILLPainTimeOffWork",
                             this.state.HILLPainTimeOffWork
-                          )}{" "}
+                          )}
+
+                          </div>
+                          <div>
                           {this.RadiobtnStyle(
                             "More than a month",
                             "More than a month",
                             "HILLPainTimeOffWork",
                             this.state.HILLPainTimeOffWork
                           )}
+                          </div>
+
                         </RadioGroup>
                       </div>
                     </div>
@@ -1371,7 +1416,7 @@ class MusculoskeletonModule extends Component {
                     </div>
                   </div>
 
-               { this.state.HILLPainIntervention === "Yes" && <div> <label className="abc">Provide Details if Yes</label>
+               { this.state.HILLPainIntervention === "Yes" && <div> <label className="abc">Please provide details</label>
                   <label style={{ fontSize: 12, color: "red" }}>
                     {this.state.HILLPainIntervention === "Yes" &&
                       this.state.HILLPainIntervention_details === "" &&
@@ -1432,6 +1477,8 @@ class MusculoskeletonModule extends Component {
           </button>
         </div>
       </div>
+      </div>
+
     );
   }
 }

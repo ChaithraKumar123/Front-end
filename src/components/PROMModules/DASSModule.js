@@ -140,7 +140,7 @@ class DASSModule extends Component
             ||val.Q8===-1 || val.Q9===-1||val.Q10===-1))||
             (this.state.step===2 && (val.Q11===-1 ||val.Q12===-1||val.Q13===-1||val.Q14===-1||val.Q15===-1||val.Q16===-1||val.Q17===-1
                 ||val.Q18===-1 || val.Q19===-1||val.Q20===-1 || val.Q21===-1))){
-          nameError = "*required";
+          nameError = "This field is required";
         }
         if (nameError) {
             this.setState({nameError });

@@ -366,13 +366,13 @@ class BodyImage extends Component {
             <h1>Pain Indicator</h1>
             <p>
               {" "}
-              Click Body region to indicate Pain(Can select upto 3 regions){" "}
+              Please select where your most important problem is first 
+             {" "}
             </p>
+            <p> (Select up to 3 areas of pain)</p>
           </div>
         </div>
-        <br></br>
-
-        <Grid component="label" container alignItems="center" spacing={1}>
+        {/* <Grid component="label" container alignItems="center" spacing={1}>
           <Grid item>Front</Grid>
           <Grid item>
             <AntSwitch
@@ -382,9 +382,30 @@ class BodyImage extends Component {
             />
           </Grid>
           <Grid item>Back</Grid>
-        </Grid>
+        </Grid> */}
 
+        <div className="form-group custom-radio-wrapper" style = {{"text-align-last": "center"}}>
+        <div id="radio">
+        <div class="custom-radio">
 
+                <input type="radio"className="custom-input"
+                  name="radio1" value="Front"
+                  id="Front" checked={this.state.checkedA === false ? true : false}
+                  onChange={() => this.setState({ checkedA: !this.state.checkedA })}
+                 />
+                <span>Front</span>
+                </div>
+                <div class="custom-radio">
+
+                <input type="radio" className="custom-input"
+                  name="radio1" value="Back"
+                  id="Back" checked={this.state.checkedA}
+                  onChange={() => this.setState({ checkedA: !this.state.checkedA })}
+                  />
+                <span>Back</span>
+                </div>
+              </div>
+              </div>
 
         <div class="pain-selector-block">
           <div class="human-body-block-outer">
@@ -1529,21 +1550,21 @@ alt=""
         /> */}
         <br />
 
-        <ul className="list-group" style={{ width: `40%` }}>
+        <div>
+
+        <ul className="list-group" style={{ width: `40%`, marginLeft: "180px" }}>
           {this.state.body_area.map((listitem, index) => (
             <li className="list-group-item list-group-item-action">
               {listitem}
 
-              <button
-                style={{ float: "right" }}
-                id={index}
-                onClick={(e) => this.delete_region(e, index)}
-              >
-                X
+              <button style={{ float: "right", "margin-top": "-3px", "border-color": "transparent", "background": "transparent"}} id={index} onClick={(e) => this.delete_region(e, index)}>
+              <img src={require("../../images/cross.svg")} />
               </button>
             </li>
           ))}
         </ul>
+        </div>
+
 
         <br />
         {this.state.body_area.length !== 0 && (
@@ -1552,7 +1573,7 @@ alt=""
               className="btn btn-primary btn-block"
               onClick={this.continue}
             >
-              Confirm and Fill Details
+              Continue
             </button>
           </div>
         )}

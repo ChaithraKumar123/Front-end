@@ -34,6 +34,9 @@ class Landingpage extends Component {
             <h1>Your Health Manager</h1>
           </div>
         </div>
+        <div style= {{"textAlignLast": "center"}}>
+<img src={require("./workhealthy.jfif")} height = "150px" />
+</div>
         <h4
               style={{
                 "text-align": "center",
@@ -64,7 +67,7 @@ Welcome to Your Health Manager, this is an application to manage your
               className="btn btn-primary btn-block"
               onClick={() =>window.location.href='/Signup'}
             >
-              Register
+              Create your account
             </button>
           </div>
         </div>

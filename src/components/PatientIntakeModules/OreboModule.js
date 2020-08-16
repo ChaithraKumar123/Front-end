@@ -112,7 +112,7 @@ class OreboModule extends Component {
 
     const val = this.state;
     if (val.current_pain === -1 || val.rate_pain === -1) {
-      nameError = "*required";
+      nameError = "This field is required";
     }
     if (nameError) {
       this.setState({ nameError });
@@ -165,6 +165,7 @@ class OreboModule extends Component {
             <h1>Örebro Musculoskeletal Pain Questionnaire</h1>
           </div>
         </div>
+        <div className = "row has-form-forms">
         <div>
           <div class="row">
             <div class="col-md-12">
@@ -176,6 +177,7 @@ class OreboModule extends Component {
                   {this.state.current_pain === -1 && this.state.nameError}
                 </label>{" "}
                 <RadioGroup>
+                  <div>
                   {this.RadiobtnStyle(
                     0,
                     " 0-1 weeks",
@@ -200,6 +202,9 @@ class OreboModule extends Component {
                     "current_pain",
                     this.state.current_pain
                   )}
+                  </div>
+
+                  <div>
                   {this.RadiobtnStyle(
                     4,
                     "6-8 weeks",
@@ -224,6 +229,10 @@ class OreboModule extends Component {
                     "current_pain",
                     this.state.current_pain
                   )}
+                  </div>
+
+
+
                   {this.RadiobtnStyle(
                     8,
                     "9-12 months",
@@ -232,7 +241,7 @@ class OreboModule extends Component {
                   )}
                   {this.RadiobtnStyle(
                     9,
-                    "over 1 year",
+                    "Over 1 year",
                     "current_pain",
                     this.state.current_pain
                   )}
@@ -452,6 +461,7 @@ class OreboModule extends Component {
           Submit
           </button>
         </div>
+      </div>
       </div>
     );
   }

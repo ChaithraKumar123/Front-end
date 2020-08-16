@@ -97,6 +97,20 @@ class IndustrySpecificModule extends Component {
       });
     }
   };
+
+  roundedDropdown= ()=> {
+    var element = document.getElementsByClassName("Dropdown-control");
+    var i;
+    var len = element.length;
+    for (i = 0; i < len; i++) {
+      element[0].className = element[0].className.replace("Dropdown-control", "pleasework");
+    }
+
+  }
+
+  componentDidMount() {
+    this.roundedDropdown()
+  }
   completeForm = (event) => {
     event.preventDefault();
     const isValid = this.validate();
@@ -219,7 +233,7 @@ class IndustrySpecificModule extends Component {
       val.varicose_veins === "" ||
       (val.varicose_veins === "Yes" && val.varicose_veins_details==="")
     ) {
-      nameError = "*required";
+      nameError = "This field is required";
     }
     if (nameError) {
       this.setState({ nameError });
@@ -256,7 +270,9 @@ class IndustrySpecificModule extends Component {
             <h1>Industry Specific Module</h1>
           </div>
         </div>
-        <div>
+        <div className = "row has-form-forms">
+        <div >
+
         <div class="row">
             <div class="col-md-12">
               <div class="form-group custom-radio-wrapper">
@@ -303,9 +319,7 @@ class IndustrySpecificModule extends Component {
             <div class="col-md-12">
               <div class="form-group custom-radio-wrapper">
           <label className="abc">
-            Do you currently or have history of Hearing problem or ear disease?
-            eg. hearing loss, ringing/tinnitus, perforation, chronic ear
-            infections?
+          Do you currently have or have previously had hearing problems or ear disease? eg....
           </label>
           <label style={{ fontSize: 12, color: "red" }}>
             {this.state.hearing === "" && this.state.nameError}
@@ -344,9 +358,7 @@ class IndustrySpecificModule extends Component {
             <div class="col-md-12">
               <div class="form-group custom-radio-wrapper">
           <label className="abc">
-            Do you currently or in the past have an eye disorder, such as
-            glaucoma, cataracts, lazy eye, double vision, including the need for
-            glasses or contacts?
+          Do you currently have or have previously had an eye disorder such as glaucoma, cataracts, lazy eye, double vision, or have needed glasses or contacts?
           </label>
           <label style={{ fontSize: 12, color: "red" }}>
             {this.state.eye_disorder === "" && this.state.nameError}
@@ -385,7 +397,7 @@ class IndustrySpecificModule extends Component {
             <div class="col-md-12">
               <div class="form-group custom-radio-wrapper">
                 <label className="abc">
-                Do you currently or have you in the past had a hernia?
+                Do you currently have or have previously had a hernia?
                 </label>
                 <label style={{ fontSize: 12, color: "red" }}>
                   {this.state.hernia === "" && this.state.nameError}
@@ -405,7 +417,7 @@ class IndustrySpecificModule extends Component {
          { this.state.hernia==="Yes" && <div class="row">
             <div class="col-md-12">
               <div class="form-group custom-radio-wrapper">
-          <label className="abc">Provide Details if Yes</label>
+          <label className="abc">Please provide details</label>
           <label style={{ fontSize: 12, color: "red" }}>
                   {this.state.hernia === "Yes" &&this.state.hernia_details==="" && this.state.nameError}
                 </label>
@@ -452,7 +464,7 @@ class IndustrySpecificModule extends Component {
          { this.state.food_borne === "Yes"&& <div class="row">
             <div class="col-md-12">
               <div class="form-group custom-radio-wrapper">
-          <label className="abc">Provide Details if Yes</label>
+          <label className="abc">Please provide details</label>
           <label style={{ fontSize: 12, color: "red" }}>
                   {this.state.food_borne === "Yes"&&this.state.food_borne_details==="" && this.state.nameError}
                 </label>
@@ -498,7 +510,7 @@ class IndustrySpecificModule extends Component {
          { this.state.skin_disease === "Yes" && <div class="row">
             <div class="col-md-12">
               <div class="form-group custom-radio-wrapper">
-          <label className="abc">Provide Details if Yes</label>
+          <label className="abc">Please provide details</label>
           <label style={{ fontSize: 12, color: "red" }}>
                   {this.state.skin_disease === "Yes" && this.state.skin_disease_details==="" && this.state.nameError}
                 </label>
@@ -526,6 +538,7 @@ class IndustrySpecificModule extends Component {
                   {this.state.exposed === "" && this.state.nameError}
                 </label>
                 <RadioGroup>
+                  <div>
                   {this.RadiobtnStyle(
                     "No",
                     "No",
@@ -556,6 +569,8 @@ class IndustrySpecificModule extends Component {
                     "exposed",
                     this.state.exposed
                   )}
+                  </div>
+
                   {this.RadiobtnStyle(
                     "Dust",
                     "Dust",
@@ -597,7 +612,7 @@ class IndustrySpecificModule extends Component {
               <div class="form-group custom-radio-wrapper">
           <label className="abc">
             {" "}
-            Any condition that has or may lead to sudden loss of consciousness
+            Have you had any condition that has or may lead to a sudden loss of consciousness?
           </label>
           <label style={{ fontSize: 12, color: "red" }}>
             {this.state.consciousness === "" && this.state.nameError}
@@ -658,7 +673,7 @@ class IndustrySpecificModule extends Component {
           {this.state.varicose_veins ==="Yes" && <div class="row">
             <div class="col-md-12">
               <div class="form-group custom-radio-wrapper">
-          <label className="abc">Provide Details if Yes</label>
+          <label className="abc">Please provide details</label>
           <label style={{ fontSize: 12, color: "red" }}>
                   {this.state.varicose_veins === "Yes" && this.state.varicose_veins_details==="" && this.state.nameError}
                 </label>
@@ -707,7 +722,7 @@ class IndustrySpecificModule extends Component {
           {this.state.restricted_activities==="Yes" &&<div class="row">
             <div class="col-md-12">
               <div class="form-group custom-radio-wrapper">
-          <label className="abc">Provide Details if Yes</label>
+          <label className="abc">Please provide details</label>
           <label style={{ fontSize: 12, color: "red" }}>
                   {this.state.restricted_activities === "Yes" && this.state.restricted_activities_details==="" &&
                     this.state.nameError}
@@ -756,7 +771,7 @@ class IndustrySpecificModule extends Component {
           {this.state.regular_time_away==="Yes" && <div class="row">
             <div class="col-md-12">
               <div class="form-group custom-radio-wrapper">
-          <label className="abc">Provide Details if Yes</label>
+          <label className="abc">Please provide details</label>
           <label style={{ fontSize: 12, color: "red" }}>
                   {this.state.regular_time_away === "Yes" && this.state.regular_time_away_details===""  && this.state.nameError}
                 </label>
@@ -803,7 +818,7 @@ class IndustrySpecificModule extends Component {
           {this.state.work_illness === "Yes" && this.state.work_illness==="Yes" &&<div class="row">
             <div class="col-md-12">
               <div class="form-group custom-radio-wrapper">
-          <label className="abc">Provide Details if Yes</label>
+          <label className="abc">Please provide details</label>
           <label style={{ fontSize: 12, color: "red" }}>
                   {this.state.work_illness === "Yes" &&this.state.work_illness_details==="" && this.state.nameError}
                 </label>
@@ -850,7 +865,7 @@ class IndustrySpecificModule extends Component {
           {this.state.work_compensation==="Yes" &&<div class="row">
             <div class="col-md-12">
               <div class="form-group custom-radio-wrapper">
-          <label className="abc">Provide Details if Yes</label>
+          <label className="abc">Please provide details</label>
           <label style={{ fontSize: 12, color: "red" }}>
                   {this.state.work_compensation === "Yes" && this.state.work_compensation_details==="" && this.state.nameError}
                 </label>
@@ -901,7 +916,7 @@ class IndustrySpecificModule extends Component {
          {  this.state.functional_assessment==="Yes" && <div class="row">
             <div class="col-md-12">
               <div class="form-group custom-radio-wrapper">
-          <label className="abc">Provide Details if Yes</label>
+          <label className="abc">Please provide details</label>
           <label style={{ fontSize: 12, color: "red" }}>
                   {this.state.functional_assessment === "Yes" && this.state.functional_assessment_details==="" &&
                     this.state.nameError}
@@ -927,6 +942,8 @@ class IndustrySpecificModule extends Component {
           </button>
         </div>
       </div>
+      </div>
+
     );
   }
 }

@@ -139,7 +139,7 @@ class ForgotPassword extends Component {
           </div>
         </div>
 
-        <div className="row">
+        <div className="row has-form">
           <div>
             <div className="form-group">
               <label className="abc">Enter your email</label>

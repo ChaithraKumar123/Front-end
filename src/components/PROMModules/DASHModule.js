@@ -185,7 +185,7 @@ class DASHModule extends Component
            (this.state.step===5 && (val.work_check===true && (val.work===""||val.work_Q1===-1||val.work_Q2===-1||val.work_Q3===-1||val.work_Q4===-1)))
            
            ){
-          nameError = "*required";
+          nameError = "This field is required";
         }
         if (nameError) {
             this.setState({nameError });

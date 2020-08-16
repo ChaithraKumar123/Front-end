@@ -66,7 +66,7 @@ class PainScaleModule extends Component
         const val = this.state
         if (val.Q1===-1 ||val.Q2===-1||val.Q3===-1||val.Q4===-1||val.Q5===-1||val.Q6===-1||val.Q7===-1
             ||val.Q8===-1 || val.Q9===-1||val.Q10===-1||val.Q11===-1||val.Q12===-1||val.Q13===-1) {
-          nameError = "*required";
+          nameError = "This field is required";
         }
         if (nameError) {
             this.setState({nameError });

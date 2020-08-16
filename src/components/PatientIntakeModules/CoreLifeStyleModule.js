@@ -133,7 +133,7 @@ class CoreLifeStyleModule extends Component {
       val.water_day === "" ||
       val.exercise === ""
     ) {
-      nameError = "*required";
+      nameError = "*This field is required";
     }
     if (nameError) {
       this.setState({ nameError });
@@ -184,19 +184,21 @@ class CoreLifeStyleModule extends Component {
           </div>
         </div>
 
+
+        <div className = "row has-form-forms">
         <div>
           <div class="row">
             <div class="col-md-12">
               <div class="form-group custom-radio-wrapper">
                 <label className="abc">
                   How do you generally rate the quality of your sleep on a scale
-                  of 1-10, with 10 being excellent?
+                  of 1-5, with 5 being excellent?
                 </label>
                 <label style={{ fontSize: 12, color: "red" }}>
                   {this.state.quality_sleep === "" && this.state.nameError}
                 </label>
                 <div class="center">
-                {Array.from(Array(1, 2, 3, 4, 5, 6, 7, 8, 9, 10), (e, i) => {
+                {Array.from(Array(1, 2, 3, 4, 5), (e, i) => {
                   return this.RadioStyle(e, e, "quality_sleep", this.state.quality_sleep);
                 })}
                 </div>
@@ -389,6 +391,7 @@ class CoreLifeStyleModule extends Component {
             </button>
           </div>
         </div>
+      </div>
       </div>
     );
   }

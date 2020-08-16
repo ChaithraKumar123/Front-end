@@ -35,10 +35,10 @@ main { margin-bottom: 50px; }
 
 /* Custom radio-checkbox */
 .custom-radio { display: inline-flex; align-items: center; position: relative; }
-.custom-radio + .custom-radio { margin-left: 8px; }
+.custom-radio + .custom-radio { margin-left: 20px; margin-bottom: 9px; }
 .custom-radio .custom-input { position: absolute; left: 0; right: 0; top: 0; bottom: 0; height: 100%; width: 100%; z-index: 1; cursor: pointer; opacity: 0; }
-.custom-radio .custom-input:checked + span { color: #fff; background-color: #5F60A9; }
-.custom-radio span { font-size: 16px; line-height: 19px; font-weight: 700; color: #5F60A9; border: 1px solid #024D80; border-radius: 12px; padding: 9px 11px; position: relative; }
+.custom-radio .custom-input:checked + span { color: #fff; background-color: #5E3976; }
+.custom-radio span { font-size: 16px; line-height: 19px; font-weight: 700; color: #5E3976; border: 1px solid #5E3976; border-radius: 12px; padding: 9px 11px; position: relative; }
 .custom-radio.secondary span { padding: 0 9px; border-radius: 50%; width: auto; max-width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; font-weight: 400; border: 0; }
 /*.custom-radio.secondary span {
 	padding: 3px 4px;
@@ -51,8 +51,8 @@ main { margin-bottom: 50px; }
 	display: block;
 	text-align: center;
 	}*/
-	.custom-radio.secondary + .custom-radio.secondary { margin-left: 0; }
-	.radio-indicators { display: flex; justify-content: space-between; margin-top: 5px; max-width: 326px; }
+	.custom-radio.secondary + .custom-radio.secondary { margin-left: 20px; }
+	.radio-indicators { display: flex; justify-content: space-between; margin-top: 5px; max-width: 482px; }
 	.radio-indicators span { color: #8E8E93; font-size: 14px; line-height: 16px; width: 30%; }
 	.radio-indicators span:last-child { text-align: right; }
 
@@ -84,7 +84,7 @@ main { margin-bottom: 50px; }
 
 
 	/* Input & Dropdowns styling */
-	.form-control { padding: 7px 12px; border-radius: 8px; border: 1px solid #c4c4c4; color: #000; }
+	.form-control { padding: 7px 12px; border-radius: 8px; border: 1px solid #c4c4c4; color: #000; height: 40px;}
 	.form-control:focus { color: #000; border-color: #5F60A9; outline: 0; box-shadow: none; }
 	textarea.form-control { height: auto; min-height: 100px; }
 	.form-control.custom-dropdown { -webkit-appearance: none; background: url('./images/dropdown-arrow.svg'); background-repeat: no-repeat; background-position: calc(100% - 16px) center; padding-right: 40px; }
@@ -107,7 +107,7 @@ main { margin-bottom: 50px; }
 
 
 /* Primary button */
-.btn-primary { background-color: #FF6B38 ; border: 0; overflow: hidden; }
+.btn-primary { background-color: #FF6B38 ; border: 0; overflow: hidden;}
 .btn-primary:after { background: #fd7345 ; }
 .btn-primary:hover, .btn-primary:focus { color: #fff; background-color: #E65526; border-color: #E65526; }
 /* .btn-primary:not(:disabled):not(.disabled).active, .btn-primary:not(:disabled):not(.disabled):active, .show>.btn-primary.dropdown-toggle { color: #fff; background-color: #E65526; border-color: #E65526; } */
@@ -196,7 +196,9 @@ main { margin-bottom: 50px; }
 .tile.type4 .chat-outer.reverse .date { padding: 0 3px 0 0; }
 .tile.type4 .chat-outer.reverse p { background: #5F60A9; color: #fff; text-align: left; padding: 7px 6px 7px 9px; max-width: 78%; }
 
-.has-form { max-width: 465px; margin: 0 auto; }
+.has-form { max-width: 360px; margin: 0 auto; }
+.has-form-forms {margin-left: 60px; margin-right: 60px;}
+
 /* 
 @media(max-width: 1199px) {
 	.container { max-width: 100%; }
@@ -212,7 +214,7 @@ main { margin-bottom: 50px; }
 
 
 .abc{
-	padding-left: 7px;
+	/* padding-left: 7px; */
 	font-weight: 100;
 	margin-top: 10px;
 	font-size: 16px;
@@ -232,7 +234,7 @@ main { margin-bottom: 50px; }
 .create{
     font-size: 16px;
 	padding-right: 50px;
-	margin-left: 223px;
+	margin-left: 90px;
 }
 
 .HomeList{
@@ -720,4 +722,19 @@ transform: matrix(1, 0, 0, 1, 0, 0);
 
 .todoList{
 height: 57.34px;
+}
+
+
+.pleasework {
+    position: relative;
+    overflow: hidden;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-sizing: border-box;
+    color: #333;
+    cursor: default;
+    outline: none;
+    padding: 8px 52px 8px 10px;
+	transition: all 200ms ease;
 }

@@ -129,7 +129,7 @@ class NDSModule extends Component
         const val = this.state
         if ((this.state.step===1 && (val.Q1===-1 ||val.Q2===-1||val.Q3===-1||val.Q4===-1||val.Q5===-1))||
             (this.state.step===2 && (val.Q6===-1||val.Q7===-1||val.Q8===-1 || val.Q9===-1||val.Q10===-1))){
-          nameError = "*required";
+          nameError = "This field is required";
         }
         if (nameError) {
             this.setState({nameError });

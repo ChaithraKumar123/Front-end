@@ -111,6 +111,8 @@ class BodyImageTabs extends Component {
     }
   }
   componentDidMount() {
+    window.scrollTo(0, 0)
+
     const temp = [];
     axios
       .get(
@@ -295,6 +297,8 @@ class BodyImageTabs extends Component {
   };
 
   nextStep = (event) => {
+    window.scrollTo(0, 0)
+
     const { step1 } = this.state;
     event.preventDefault();
     const isValid = this.validate();
@@ -308,6 +312,8 @@ class BodyImageTabs extends Component {
   };
 
   prevStep = () => {
+    window.scrollTo(0, 0)
+
     const { step1 } = this.state;
     if (step1 === 1) {
       this.props.render_main();
@@ -319,6 +325,8 @@ class BodyImageTabs extends Component {
   };
 
     completeForm = (event) => {
+      window.scrollTo(0, 0)
+
     event.preventDefault();
     const isValid = this.validate();
     if (isValid) {
@@ -362,7 +370,7 @@ class BodyImageTabs extends Component {
       val.pain_treatment === "" ||
       val.pain_limit_work === ""
     ) {
-      nameError = "*required";
+      nameError = "This field is required";
     }
     if (nameError) {
       this.setState({ emailError, nameError });
@@ -381,13 +389,13 @@ class BodyImageTabs extends Component {
         <div className="page-title lg">
           <div className="title">
             <h1>
-              Step {this.state.step1} of {state.body_area1.length}
+            Pain indicator step {this.state.step1} of {state.body_area1.length}
             </h1>
             {this.state.step1 === 1 && (
-              <p>Primary Region-{state.body_area1[this.state.step1 - 1]}</p>
+              <p>{state.body_area1[this.state.step1 - 1]}</p>
             )}
             {this.state.step1 !== 1 && (
-              <p>Secondary Region-{state.body_area1[this.state.step1 - 1]}</p>
+              <p>{state.body_area1[this.state.step1 - 1]}</p>
             )}
           </div>
         </div>

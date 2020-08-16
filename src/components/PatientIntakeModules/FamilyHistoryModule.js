@@ -4,19 +4,33 @@ import Dropdown from "react-dropdown";
 import axios from "axios";
 import "react-dropdown/style.css";
 import auth from "../auth";
+import Select from "react-select";
+
+// const family_disorder_options = [
+//   "No",
+//   "Cancer",
+//   "Diabetes",
+//   "Heart Condition",
+//   "Lung Disease",
+//   "Mental Illness",
+//   "Stroke",
+//   "Thyroid Problems",
+//   "Don’t know",
+//   "Other",
+// ];
 
 const family_disorder_options = [
-  "No",
-  "Cancer",
-  "Diabetes",
-  "Heart Condition",
-  "Lung Disease",
-  "Mental Illness",
-  "Stroke",
-  "Thyroid Problems",
-  "Don’t know",
-  "Other",
-];
+  { value: 'No', label: 'No' },
+  { value: 'Cancer', label: 'Cancer' },
+  { value: 'Diabetes', label: 'Diabetes' },
+  { value: 'Heart Condition', label: 'Heart Condition' },
+  { value: 'Mental Illness', label: 'Mental Illness' },
+  { value: 'Stroke', label: 'Stroke' },
+  { value: 'Thyroid Problems', label: 'Thyroid Problems' },
+  { value: 'Don’t know', label: 'Don’t know' },
+  { value: 'Other', label: 'Other' }
+]
+
 class FamilyHistoryModule extends Component {
   constructor(props) {
     super(props);
@@ -25,6 +39,7 @@ class FamilyHistoryModule extends Component {
       family_disorder_details: "",
       POBPatientID: 60,
       id: -1,
+      other: ""
     };
     this.state = this.initialState;
   }
@@ -43,8 +58,8 @@ class FamilyHistoryModule extends Component {
         console.log(response.data[0]);
         this.setState({
           family_disorder: response.data[0].familyHistory.includes("|")
-            ? response.data[0].familyHistory.split("|")[0]
-            : response.data[0].familyHistory,
+            ? JSON.parse(response.data[0].familyHistory.split("|")[0])
+            : JSON.parse(response.data[0].familyHistory),
           family_disorder_details: response.data[0].familyHistory.includes("|")
             ? response.data[0].familyHistory.split("|")[1]
             : "",
@@ -83,10 +98,10 @@ class FamilyHistoryModule extends Component {
             ModuleName: "Family History",
             FamilyHistory:
               this.state.family_disorder_details !== ""
-                ? this.state.family_disorder +
+                ? JSON.stringify(this.state.family_disorder) +
                   "|" +
                   this.state.family_disorder_details
-                : this.state.family_disorder,
+                : JSON.stringify(this.state.family_disorder),
             //family_disorder_details:this.state.family_disorder==="Other"?this.state.family_disorder.split('-')[1]:"",
             POBPatientID: localStorage.getItem("KNC"),
             POBCPMedHistoryID: this.state.id,
@@ -116,9 +131,9 @@ class FamilyHistoryModule extends Component {
           if (response.data = "Success")
           {
             console.log(response);
-        auth.login(() => {
-          this.props.history.push("/Home");
-        });
+        // auth.login(() => {
+        //   this.props.history.push("/Home");
+        // });
           }
         })
         .catch((error) => {
@@ -138,7 +153,7 @@ class FamilyHistoryModule extends Component {
       val.family_disorder === "" ||
       (val.family_disorder === "Other" && val.family_disorder_details === "")
     ) {
-      nameError = "*required";
+      nameError = "This field is required";
     }
     if (nameError) {
       this.setState({ nameError });
@@ -150,21 +165,54 @@ class FamilyHistoryModule extends Component {
       return true;
     }
   };
+
+  onChangeMultipleSelect = input=>(event) => {
+
+    try{
+      if (event[0].value === "Other"  ){
+        this.setState({other :"Other"})
+      }
+
+    }
+    catch{}
+    try {
+      if (event.length === 0){
+        this.setState({other :""})
+
+      }
+    }
+     catch{}
+
+    if (event!==null)
+      {
+      this.setState({
+          [input]: event,
+      });
+    }
+
+    else {
+      this.setState ({
+        [input]: null,
+        other : ""
+      })
+    }
+  }
+
   render() {
     return (
-      <div id="MainDiv">
-        <div className="page-title lg">
+      <div id="MainDiv" className = {{height: "500px"}}>
+        <div className="page-title lg" style = {{    marginBottom: "80px"}}>
           <div className="title">
             <h1>Family History Module</h1>
           </div>
         </div>
-        <div>
+        <div class="row has-form-forms">
 
-        <div class="row">
+        <div>
           <div class="col-md-12">
           <div class="form-group ">
-          
-          <label className="abc">
+          <br></br>
+          <label className="abc" style = {{marginBottom: "10px"}}>
             Has anyone in your family had or suffered from cancer, diabetes,
             heart disease, lung disease, mental illness, stroke or thyroid
             problems?{" "}
@@ -172,26 +220,42 @@ class FamilyHistoryModule extends Component {
           <label style={{ fontSize: 12, color: "red" }}>
             {this.state.family_disorder === "" && this.state.nameError}
           </label>
-          <Dropdown
+          {/* <Dropdown
             options={family_disorder_options}
             onChange={this.handleChange("family_disorder")}
             value={this.state.family_disorder}
             placeholder="Select an option"
-          />
+          /> */}
+
+          <br></br>
+
+          <Select 
+          theme={(theme) => ({
+          ...theme,
+          borderRadius: 8,
+          })}
+          options={family_disorder_options} 
+          placeholder="select" 
+          menuPlacement="top"
+          isSearchable
+          isMulti 
+          onChange={this.onChangeMultipleSelect('family_disorder')} value={this.state.family_disorder}></Select>
+
            </div>
         </div>
         </div>
-          {this.state.family_disorder === "Other" && <div>
+          {this.state.other === "Other" && <div>
           <div class="row">
           <div class="col-md-12">
           <div class="form-group ">
-          <label className="abc">Provide Details if Other</label>
+          <label style = {{"margin-left": "15px"}} className="abc">Provide Details if Other</label>
           <label style={{ fontSize: 12, color: "red" }}>
-            {this.state.family_disorder === "Other" &&
+            {this.state.other === "Other" &&
               this.state.family_disorder_details === "" &&
               this.state.nameError}
           </label>
           <textarea
+            style = {{"width": "473px", "margin-left": "12px"}}
             className="form-control"
             rows="1"
             cols="5"
@@ -202,8 +266,7 @@ class FamilyHistoryModule extends Component {
           </div>
         </div>
         </div>}
-        </div>
-       
+
         <div>
           <button
             className="btn btn-primary btn-block"
@@ -212,6 +275,9 @@ class FamilyHistoryModule extends Component {
             Submit
           </button>
         </div>
+        </div>
+       
+
       </div>
     );
   }

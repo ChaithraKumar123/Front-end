@@ -558,6 +558,9 @@ class Main extends Component {
   Formsprogress = () =>{
     return <FormProgress state={this.state}></FormProgress>
   }
+
+  
+
   render() {
     return (
       <Router>
@@ -600,6 +603,7 @@ class Main extends Component {
             
             <Route
               path="/CoreMedicalHistory"
+              roundedDropdown = {this.roundedDropdown}
               component={CoreMedicalHistory}
             ></Route>
 

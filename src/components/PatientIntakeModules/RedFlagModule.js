@@ -126,7 +126,7 @@ class RedFlagModule extends Component {
       val.wake_up_pain === "" ||
       val.coordination_change === ""
     ) {
-      nameError = "*required";
+      nameError = "This field is required";
     }
     if (nameError) {
       this.setState({ nameError });
