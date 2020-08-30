@@ -1,15 +1,9 @@
 import React, { Component } from "react";
-import Dropdown from "react-dropdown";
-import Checkbox from "@material-ui/core/Checkbox";
+
 import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link,
   withRouter,
 } from "react-router-dom";
 import auth from "./auth";
-import { startOfSecond } from "date-fns";
 import axios from "axios";
 
 var randomToken = require("random-token");
@@ -79,12 +73,13 @@ class Signup extends Component {
       isvalid &&
       this.props.state.givenNameisValid &&
       this.props.state.surNameisValid &&
+      this.props.state.emailError !== "Invalid email" &&
       this.props.state.mobileNumberisValid &&
       this.props.state.email !== "" &&
       this.state.checked !== false &&
       this.state.password === this.state.retypePassword
     ) {
-      const cir = this.changeLoadingCircle();
+      this.changeLoadingCircle();
 
       const Signupschema = {
         schema: {
@@ -193,8 +188,8 @@ class Signup extends Component {
 
               axios
               .post(
-                "https://localhost:44338/api/workflowNewreg",
-                // "https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/workflowNewreg",
+                // "https://localhost:44338/api/workflowNewreg",
+                "https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/workflowNewreg",
         
                 {
                   KNC: localStorage.getItem("KNC"),
@@ -202,7 +197,7 @@ class Signup extends Component {
                 }
               )
               .then((response) => {
-                if (response.data == "Success") {
+                if (response.data === "Success") {
                   console.log(response);
                 }
               })
@@ -292,7 +287,7 @@ class Signup extends Component {
         <br />
         You have been provided with a copy of the 
         {/* <a href="https://wha-consentform.s3-ap-southeast-2.amazonaws.com/WHA_Privacy_Policy_Public_V07a.pdf" download="WHA_Privacy_Policy_Public_V07a.pdf">Download Your Expense Report</a> */}
-        <a href={"https://wha-consentform.s3-ap-southeast-2.amazonaws.com/WHA_Privacy_Policy_Public_V07a.pdf"} target="_blank" download={"WHA_Privacy_Policy_Public_V07a.pdf"}> Work Healthy Australia Privacy Policy</a>
+        <a rel="noopener noreferrer" href={"https://wha-consentform.s3-ap-southeast-2.amazonaws.com/WHA_Privacy_Policy_Public_V07a.pdf"} target="_blank" download={"WHA_Privacy_Policy_Public_V07a.pdf"}> Work Healthy Australia Privacy Policy</a>
         , and you agree to the handling of your personal
         information by Work Healthy Australia in accordance with that
         Policy, including the ways in which Work Healthy Australia may
@@ -331,7 +326,7 @@ class Signup extends Component {
               <div className="page-title lg">
                 <div className="title">
                 <h1 style = {{float : "left"}}> Let's create your account</h1>
-                <img style = {{float : "right", marginLeft : "200px",  marginBottom: "-4px", marginTop: "-19px"}} src={require("./whitelogo.png")} height = "60px"/>   
+                <img style = {{float : "right", marginLeft : "200px",  marginBottom: "-4px", marginTop: "-19px"}} src={require("./whitelogo.png")} alt = "" height = "60px"/>   
                   {/* <p> Let's create your account</p> */}
                 </div>
               </div>
@@ -412,7 +407,7 @@ class Signup extends Component {
                         onChange={handleChange("email")}
                       />
                       {/* <Errormsg arg = {state.email}></Errormsg> */}
-                      {/* <div className="errorMessage">{state.emailError}</div> */}
+                      <div className="errorMessage">{state.emailError}</div>
                       {this.state.submit === true && state.email === "" ? (
                         <div className="errorMessage">This field is required</div>
                       ) : null}
@@ -423,6 +418,7 @@ class Signup extends Component {
                       <label className="abc">Password</label>
                       <input
                         className="form-control"
+                        placeholder = "Password must be atleast 8 characters long"
                         id="pass"
                         name="pass"
                         type="password"
@@ -464,7 +460,10 @@ class Signup extends Component {
                     />
                     <span></span>
                   </div>
-                   <a style = {{"cursor":"pointer"}} onClick = {this.termslink}> I agree to <b>Work Healthy Australia's terms</b></a>
+                  <div style = {{float : "right" , marginRight: "55px"}}>
+                  I agree to <a style = {{"cursor":"pointer"}} onClick = {this.termslink}><b>Work Healthy Australia's terms</b></a>
+
+                  </div>
 
                   </div>
                 

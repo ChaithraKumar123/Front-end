@@ -1,18 +1,8 @@
 import React, { Component } from "react";
-import UserPool from "../UserPool";
 import auth from "./auth";
-import {
-  BrowserRouter as Router,
-  Redirect,
-  Switch,
-  Route,
-  Link,
-  withRouter,
-} from "react-router-dom";
-import { CognitoUser, AuthenticationDetails } from "amazon-cognito-identity-js";
-import { Ouroboro } from "react-spinners-css";
+import { Redirect, Link, withRouter } from "react-router-dom";
 
-import Landingpage from './Landingpage';
+import Landingpage from "./Landingpage";
 
 // const IsLoading = () => (
 //     <Ouroboro style = {{"position": "absolute", "margin-left": "280px", "margin-top": "-57px"}} color="#F04F1D" size={200} />
@@ -28,7 +18,7 @@ class Loginpage extends Component {
     passwordErr: "",
     passwordErrvalid: false,
     authErr: "",
-    showLogin : false
+    showLogin: false,
   };
 
   returnedUserOp = (data) => {
@@ -49,7 +39,6 @@ class Loginpage extends Component {
   authenticate = (e) => {
     console.log(e);
     if (e.httpStatusCode !== 200) {
-
       this.setState({ authErr: e.message });
       this.setState({ loadingCircle: false });
 
@@ -61,13 +50,16 @@ class Loginpage extends Component {
       headers: { Authorization: "Bearer " + e.authenticationResult.idToken },
     };
 
-    localStorage.setItem('login', e.authenticationResult.idToken)
+    localStorage.setItem("login", e.authenticationResult.idToken);
 
-    var jwtDecode = require('jwt-decode');
-    var decoded = jwtDecode( e.authenticationResult.idToken);
-    localStorage.setItem('KNC', decoded.sub)
+    var jwtDecode = require("jwt-decode");
+    var decoded = jwtDecode(e.authenticationResult.idToken);
+    localStorage.setItem("KNC", decoded.sub);
 
-    fetch("https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/userAuth", requestOptions)
+    fetch(
+      "https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/userAuth",
+      requestOptions
+    )
       //  .then((response) => response.json())
       .then((data) => this.returnedUserOp(data));
   };
@@ -75,13 +67,13 @@ class Loginpage extends Component {
   changeLoadingCircle = () => {
     this.setState({ loadingCircle: true });
     return true;
-  }
+  };
   continue = (e) => {
     e.preventDefault();
     this.setState({ authErr: "" });
     const isValid = this.loginVAlidation(e);
     const passVal = this.passVal(e);
-    const cir = this.changeLoadingCircle();
+    this.changeLoadingCircle();
     if (isValid && passVal) {
       // UserPool.signUp()
       //this.props.nextStep();
@@ -106,12 +98,13 @@ class Loginpage extends Component {
       };
 
       console.log(schema.schema);
-      let op;
-      fetch("https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/signin", requestOptions)
+      fetch(
+        "https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/signin",
+        requestOptions
+      )
         .then((response) => response.json())
-        .then((data) => this.authenticate(data))
-        // .then(this.setState({ loadingCircle: false }));
-
+        .then((data) => this.authenticate(data));
+      // .then(this.setState({ loadingCircle: false }));
     }
   };
   passVal = (e) => {
@@ -149,111 +142,108 @@ class Loginpage extends Component {
   };
 
   loginswitch = () => {
-    this.setState({showLogin :true})
-  }
-
+    this.setState({ showLogin: true });
+  };
 
   render() {
-
     const { loadingCircle } = this.props;
 
-
-    if(localStorage.getItem("login") === null)
-    {
-
+    if (localStorage.getItem("login") === null && localStorage.getItem("confToken") === null ) {
       return (
         <div>
-          {this.state.showLogin ? 
+          {this.state.showLogin ? (
+            <div id="MainDiv">
+              {this.state.loadingCircle === true ? loadingCircle : null}
 
-<div id="MainDiv">
-{this.state.loadingCircle === true ? loadingCircle : null}    
-
-<div className="page-title lg">
-  <div className="title">
-    <h1 style = {{float : "left"}}>Welcome!</h1>
-    <img style = {{float : "right", marginLeft : "400px", marginBottom: "-4px", marginTop: "-19px"}} src={require("./whitelogo.png")} height = "60px"/>
-
-  </div>
-</div>
-<div className = "contentSpacing">
-<div>
-</div>
-<div style= {{"textAlignLast": "center"}}>
-<img src={require("./workhealthy.jfif")} height = "150px" />
-</div>
-<div className="row has-form"  style = {{"margin-top": "24px"}}>
-  <div>
-    <div className="form-group">
-      <label className="abc">Email or Phone number</label>
-      <input
-        className="form-control"
-        id="userEmPh"
-        name="userEmPh"
-        type="text"
-        value={this.state.userEmPh}
-        // onChange={this.handleChange}
-        onChange={(event) =>
-          this.setState({ userEmPh: event.target.value })
-        }
-      />
-      <div className="errorMessage">{this.state.usernameErr}</div>
-    </div>
-  </div>
-  <div>
-    <div className="form-group">
-      <label className="abc">Password</label>
-      <input
-        className="form-control"
-        id="pass"
-        name="pass"
-        type="password"
-        value={this.state.pass}
-        onChange={(event) =>
-          this.setState({ pass: event.target.value })
-        }
-        //  onChange={(event) => this.setState({password:event.target.value})}
-      />
-      <div className="errorMessage">{this.state.passwordErr}</div>
-      <div className="errorMessage">{this.state.authErr}</div>
-    </div>
-    <div className="btn-block">
-      <button
-        className="btn btn-primary btn-block"
-        onClick={this.continue}
-      >
-        Login
-      </button>
-    </div>
-  </div>
-  <div className="forg" style = {{"marginTop": "16px", "text-align-last": "center"}}>
-    <Link className="passwordForgot" to="/ForgotPassword">
-      Forgot Password?
-    </Link>
-  </div>
-  <div>
-    <Link className="create" style = {{"text-align-last": "center"}} to="/Signup">
-      Create your own account
-    </Link>
-  </div>
-</div>
-</div>
-</div>
-          : <Landingpage loginswitch = {this.loginswitch}></Landingpage>}
-        
-        
-    </div>
-      )
-    }
-
-    else{
+              <div className="page-title lg">
+                <div className="title">
+                  <h1 style={{ float: "left" }}>Welcome!</h1>
+                </div>
+              </div>
+              <div className="contentSpacing">
+                <div></div>
+                <div style={{ textAlignLast: "center" }}>
+                  <img src={require("./workhealthy.jfif")} height="150px" />
+                </div>
+                <div className="row has-form" style={{ "margin-top": "24px" }}>
+                  <div>
+                    <div className="form-group">
+                      <label className="abc">Email</label>
+                      <input
+                        className="form-control"
+                        id="userEmPh"
+                        name="userEmPh"
+                        type="text"
+                        value={this.state.userEmPh}
+                        // onChange={this.handleChange}
+                        onChange={(event) =>
+                          this.setState({ userEmPh: event.target.value })
+                        }
+                      />
+                      <div className="errorMessage">
+                        {this.state.usernameErr}
+                      </div>
+                    </div>
+                  </div>
+                  <div>
+                    <div className="form-group">
+                      <label className="abc">Password</label>
+                      <input
+                        className="form-control"
+                        id="pass"
+                        name="pass"
+                        type="password"
+                        value={this.state.pass}
+                        onChange={(event) =>
+                          this.setState({ pass: event.target.value })
+                        }
+                        //  onChange={(event) => this.setState({password:event.target.value})}
+                      />
+                      <div className="errorMessage">
+                        {this.state.passwordErr}
+                      </div>
+                      <div className="errorMessage">{this.state.authErr}</div>
+                    </div>
+                    <div className="btn-block">
+                      <button
+                        className="btn btn-primary btn-block"
+                        onClick={this.continue}
+                      >
+                        Login
+                      </button>
+                    </div>
+                  </div>
+                  <div
+                    className="forg"
+                    style={{ marginTop: "16px", "text-align-last": "center" }}
+                  >
+                    <Link className="passwordForgot" to="/ForgotPassword">
+                      Forgot Password?
+                    </Link>
+                  </div>
+                  <div>
+                    <Link
+                      className="create"
+                      style={{ "text-align-last": "center" }}
+                      to="/Signup"
+                    >
+                      Create your own account
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ) : (
+            <Landingpage loginswitch={this.loginswitch}></Landingpage>
+          )}
+        </div>
+      );
+    } else {
       auth.login(() => {
         this.props.history.push("/Home");
       });
-      return(
-        <Redirect to="/Home" push/>
-      )
+      return <Redirect to="/Home" push />;
     }
-
   }
 }
 export default withRouter(Loginpage);

@@ -1,16 +1,16 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.css";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
-import BodyImageMain from "./components/InjuryDetailsModule/BodyImageMain";
-import CoreMedicalHistory from "./components/PatientIntakeModules/CoreMedicalHistory";
-import CorePsychologicalModule from "./components/PatientIntakeModules/CorePsychologicalModule";
-import RedFlagModule from "./components/PatientIntakeModules/RedFlagModule";
-import CoreLifeStyleModule from "./components/PatientIntakeModules/CoreLifeStyleModule";
-import ManualHandling from "./components/PatientIntakeModules/ManualHandling";
-import IndustrySpecificModule from "./components/PatientIntakeModules/IndustrySpecificModule";
-import FamilyHistoryModule from "./components/PatientIntakeModules/FamilyHistoryModule";
-import MusculoskeletonModule from "./components/PatientIntakeModules/Musculoskeleton_Module";
-import OreboModule from "./components/PatientIntakeModules/OreboModule";
+// import { BrowserRouter, Route, Switch } from "react-router-dom";
+// import BodyImageMain from "./components/InjuryDetailsModule/BodyImageMain";
+// import CoreMedicalHistory from "./components/PatientIntakeModules/CoreMedicalHistory";
+// import CorePsychologicalModule from "./components/PatientIntakeModules/CorePsychologicalModule";
+// import RedFlagModule from "./components/PatientIntakeModules/RedFlagModule";
+// import CoreLifeStyleModule from "./components/PatientIntakeModules/CoreLifeStyleModule";
+// import ManualHandling from "./components/PatientIntakeModules/ManualHandling";
+// import IndustrySpecificModule from "./components/PatientIntakeModules/IndustrySpecificModule";
+// import FamilyHistoryModule from "./components/PatientIntakeModules/FamilyHistoryModule";
+// import MusculoskeletonModule from "./components/PatientIntakeModules/Musculoskeleton_Module";
+// import OreboModule from "./components/PatientIntakeModules/OreboModule";
 import { Navbar, Container, Nav, NavDropdown } from "react-bootstrap";
 
 function History() {

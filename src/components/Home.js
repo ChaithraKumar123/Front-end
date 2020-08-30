@@ -1,11 +1,10 @@
 import React, { Component } from "react";
 import auth from "./auth";
-import { BrowserRouter as Router, withRouter, Link } from "react-router-dom";
-import { Navbar, Container, Nav, NavDropdown } from "react-bootstrap";
+import {  withRouter } from "react-router-dom";
 import axios from "axios";
-import Popup from "reactjs-popup";
-import CustomModal from "./CustomModal";
-import { Ouroboro } from "react-spinners-css";
+// import Popup from "reactjs-popup";
+// import CustomModal from "./CustomModal";
+// import { Ouroboro } from "react-spinners-css";
 
 
 class Home extends Component {
@@ -18,7 +17,7 @@ class Home extends Component {
     Total: "",
     medHistory: false,
     medHistoryCompListSwitch: false,
-    loadingCircle: false,
+    loadingCircle: true,
 
   };
 
@@ -31,6 +30,7 @@ class Home extends Component {
   // };
 
   componentDidMount() {
+    this.props.switchfunc();
     this.props.stepReset("reset");
 
     axios
@@ -44,8 +44,8 @@ class Home extends Component {
       )
       .then((response) => {
         if (response.data[1][0].wfeWorkflowID === -1) {
-          this.setState({ todo: false });
-          return;
+          this.setState({ todo: false, loadingCircle:false });
+          //return;
         }
         if (response.data[0][0].length !== 0) {
           this.setState({
@@ -53,6 +53,7 @@ class Home extends Component {
             // Progress: response.data[1].Progress,
             // Total: response.data[1].Total,
             todo: true,
+            loadingCircle:false
           });
         }
 
@@ -60,6 +61,7 @@ class Home extends Component {
           this.setState({
             progressList: response.data[0][1],
             completedList: true,
+            loadingCircle:false
           });
 
           response.data[0][1].forEach((element) => {
@@ -73,6 +75,7 @@ class Home extends Component {
             ) {
               this.setState({
                 medHistory: true,
+
               });
             }
           });
@@ -83,61 +86,16 @@ class Home extends Component {
 
           this.setState({
             CurrentForm: response.data[2][0]["value"],
+            loadingCircle:false
           });
         }
       })
       .catch((error) => {
         console.log(error);
+        this.setState({loadingCircle:false})
       });
-
-    // let visited = localStorage["alreadyVisited"];
-    // if(visited) {
-    //      this.setState({ popup: false })
-    //      //do not view Popup
-    // } else {
-    //      //this is the first time
-    //      localStorage["alreadyVisited"] = true;
-    //      this.setState({ popup: true});
-    // }
-    //   axios
-    //   .get(
-    //     "https://localhost:44338/api/workflow",
-    //     {
-    //       params: { value: localStorage.getItem("KNC") },
-    //     }
-    //   )
-    //   .then((response) => {
-    //     localStorage.setItem("CurrentForm", response.data[0].CurrentForm );
-    //     localStorage.setItem("NextForm", response.data[0].NextForm);
-    //     localStorage.setItem("Progress", response.data[1].Progress);
-    //     localStorage.setItem("Total", response.data[1].Total);
-    //       // CurrentForm: response.data[0].CurrentForm  ,
-    //       // NextForm: response.data[0].NextForm,
-    //       // Progress: response.data[1].Progress,
-    //       // Total: response.data[1].Total
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //   });
   }
 
-  // BeginPopUp = () => {
-  //   return(
-  //   <div>
-  //     <Popup position="right center">
-  //     <div>Popup content here !!</div>
-  //     <button
-  //           style={{ float: "right", "margin-top": "35px;" }}
-  //           className="btn btn-primary modal-btn"
-  //           data-modal-id="sampleModal"
-  //           onClick={() => this.setState({popup : false})}
-  //         >
-  //           Begin
-  //         </button>
-  //   </Popup>
-  //   </div>
-  //   )
-  // }
 
   continue = (e, id) => {
     localStorage.setItem("WorkFlowId", id) 
@@ -187,22 +145,78 @@ class Home extends Component {
       auth.login(() => {
         this.props.history.push("/painIndicator");
       });
-    } else return null;
+    } else if (e === "PROM NDS - Neck Disability Index") {
+      auth.login(() => {
+        this.props.history.push("/NDSModule");
+      });
+    }else if (e === "PROM QBPD - Quebec Back Pain Disability Scale") {
+      auth.login(() => {
+        this.props.history.push("/QuebecModule");
+      });
+    }
+    else if (e === "PROM LEFS - Lower Extremity Functional Scale") {
+      auth.login(() => {
+        this.props.history.push("/LEFSModule");
+      });
+    }
+    else if (e === "PROM PSS Perceived Stress Scale") {
+      auth.login(() => {
+        this.props.history.push("/PSSModule");
+      });
+    }
+    else if (e === "PROM FABQ - Fear Avoidance Belief Questionnaire") {
+      auth.login(() => {
+        this.props.history.push("/FABQMain");
+      });
+    }
+    else if (e === "PROM FOSQ - Functional Outcomes of Sleep Questionnaire") {
+      auth.login(() => {
+        this.props.history.push("/FOSQModule");
+      });
+    }
+    else if (e === "PROM PCS - Pain Catastrophising Scale") {
+      auth.login(() => {
+        this.props.history.push("/PainScaleModule");
+      });
+    }
+    else if (e === "PROM DASS21 - Depression Anxiety Stress Scale") {
+      auth.login(() => {
+        this.props.history.push("/DASSModule");
+      });
+    }
+    else if (e === "PROM DASH - Disability of the Arm, shoulder, hand") {
+      auth.login(() => {
+        this.props.history.push("/DASHModule");
+      });
+    }
+    else return null;
   };
 
   todoList = (e, id) => {
     return (
       <div>
         <div className="todoList">
-          <h4 style={{ float: "left" }}>{e}</h4>
-          <button
+        <label style={{ float: "left" }} className="abc">{e}</label>
+          {/* <h4 className = "abc" style={{ float: "left" }}>{e}</h4> */}
+          {/* <button
             style={{ float: "right", "margin-top": "4px;" }}
             className="btn btn-primary modal-btn"
             data-modal-id="sampleModal"
             onClick={() => this.continue(e, id)}
           >
             Begin
-          </button>
+          </button> */}
+
+          <button
+                      style={{ float: "right", "margin-top": "4px;" , "min-width": "88px"}}
+
+              className="btn btn-primary modal-btn"
+              data-modal-id="sampleModal"
+              onClick={() => this.continue(e, id)}
+            >
+              Begin
+            </button>
+
         </div>
       </div>
     );
@@ -212,7 +226,9 @@ class Home extends Component {
     return (
       <div>
         <div className="todoList">
-          <h4 style={{ float: "left" }}>{val}</h4>
+          {/* <h4 style={{ float: "left" }}>{val}</h4> */}
+          <label style={{ float: "left" }} className="abc">{val}</label>
+
           <button
             style={{ float: "right", "margin-top": "4px;" }}
             className="btn btn-outline-primary modal-btn"
@@ -230,7 +246,9 @@ class Home extends Component {
     return (
       <div>
         <div className="todoList">
-          <h4 style={{ float: "left" }}>{e}</h4>
+          {/* <h4  style={{ float: "left" }}>{e}</h4> */}
+          <label style={{ float: "left" }} className="abc">{e}</label>
+
           <button
             style={{ float: "right", "margin-top": "4px;" }}
             className="btn btn-outline-primary modal-btn"
@@ -290,7 +308,7 @@ class Home extends Component {
   };
 
   render() {
-    const { handleChange, state, loadingCircle } = this.props;
+    const { loadingCircle, switchfunc } = this.props;
 
     return (
       <div>
@@ -306,7 +324,7 @@ class Home extends Component {
           </div>
           <div className = "row has-form-forms">
           {this.state.todo ? null : (
-            <div>
+            <div  style = {{marginBottom: "65px"}}>
               <h4
                 style={{
                   float: "left",
@@ -317,7 +335,9 @@ class Home extends Component {
                 <h4 style={{ fontWeight: "700" }}>
                   Have a new injury you need to see us about?
                 </h4>
-                New Complaint
+                
+                <label  className="abc">New Complaint</label>
+
               </h4>
               <br></br>
               <br></br>
@@ -334,8 +354,8 @@ class Home extends Component {
 
           <div>
             {this.state.todo ? (
-              <div>
-                <h4 style={{ fontWeight: "700" }}>To Do</h4>
+              <div  style = {{marginBottom: "10px"}}>
+                <label className= "headlinetwo">To Do</label>
 
                 {/* {this.todoList()} */}
                 {Array.from(this.state.CurrentForm, (e, i) => {
@@ -345,7 +365,7 @@ class Home extends Component {
             ) : null}
 
             {this.state.completedList ? (
-              <div>
+              <div style = {{marginTop: "10px"}}>
                 <h4 style={{ fontWeight: "700" }}>Completed</h4>
 
                 {Array.from(this.state.progressList, (e, i) => {
@@ -366,7 +386,7 @@ class Home extends Component {
                   : null}
               </div>
             ) : (
-              <div>
+              <div  style = {{marginTop: "10px"}}>
                 <h4 style={{ fontWeight: "700" }}>Completed</h4>
 
                 {Array.from(this.state.progressList, (e, i) => {
@@ -382,6 +402,8 @@ class Home extends Component {
 
                 <div className="btn-block">
                   <button
+                            style = {{"position": "relative"}}
+
                     className="btn btn-primary btn-block"
                     onClick={() => this.setState({ completedList: true })}
                   >

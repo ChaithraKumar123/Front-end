@@ -1,6 +1,10 @@
-import "../../css/main.css"
+// import "../../css/main.css"
 import React,{Component} from 'react'
 import axios from 'axios'
+import {withRouter} from "react-router-dom";
+import auth from "../auth";
+
+
 class RadioButton extends Component
 {
     render() {
@@ -32,10 +36,13 @@ class RadioButton extends Component
                 <input type="radio" className="custom-input" name={variable} value="4" id="Radio3" checked={Q ==="4"} onChange={handleChange(variable)}/>
                 <span>Extremely</span>
               </div>
+              <div>
               <div className="custom-radio rounded">
                 <input type="radio" className="custom-input" name={variable} value="5" id="Radio3" checked={Q ==="5"} onChange={handleChange(variable)}/>
                 <span>Not difficult</span>
               </div>
+              </div>
+
               <div className="errorMessage">{Q===-1 && state.nameError}</div>
             </div>
             </div>
@@ -81,9 +88,12 @@ class LEFSModule extends Component
     componentDidMount()
     {
         axios
-        .get('https://localhost:44338/api/LEFSDetails',
+        .get(
+            // 'https://localhost:44338/api/LEFSDetails',
+            'https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/LEFSDetails',
+
         {
-            params: { value : this.state.entityId }
+            params: { value : localStorage.getItem("KNC") }
         }) 
         .then(response => {
             console.log(response.data[0])
@@ -188,7 +198,10 @@ class LEFSModule extends Component
         if (isValid)
         {
         axios
-            .post('https://localhost:44338/api/LEFSDetails', 
+            .post(
+                // 'https://localhost:44338/api/LEFSDetails', 
+                'https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/LEFSDetails', 
+
             {
                 Q1: this.state.Q1,
                 Q2: this.state.Q2,
@@ -211,7 +224,7 @@ class LEFSModule extends Component
                 Q19: this.state.Q19,
                 Q20: this.state.Q20,
                
-                EntityID :  this.state.entityId,
+                EntityID :  localStorage.getItem("KNC"),
                 OMPQID: this.state.id,
                 
     
@@ -224,13 +237,37 @@ class LEFSModule extends Component
             })
             .catch(error => {
                 console.log(error)
+            });
+
+            axios
+            .post(
+              "https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/saveWorkflow",
+            //   "https://localhost:44338/api/saveWorkflow",
+        
+              {
+                KNC: localStorage.getItem("KNC"),
+                DateCompleted: new Date(),
+                processID: localStorage.getItem("WorkFlowId")
+              }
+            )
+            .then((response) => {
+              if (response.data === "Success")
+              {
+                console.log(response);
+            auth.login(() => {
+              this.props.history.push("/Home");
+            });
+              }
             })
+            .catch((error) => {
+              console.log(error);
+            });
         }
     }
     render()
     {
         return(
-            <div className="container">
+            <div id= "MainDiv">
             <div className="row">
             <div className="col-md-12">
             <div className="page-title title"> 
@@ -238,7 +275,7 @@ class LEFSModule extends Component
             </div>
             </div>
             </div>
-            <div className="row">
+            <div>
             <h6>We are interested in knowing whether you are having any difficulty at all with the activities listed below because of your lower limb problem for which you are
           currently seeking attention.Today, do you or would you have any difficulty at all with:</h6>
             </div>
@@ -287,4 +324,4 @@ class LEFSModule extends Component
     }
 
 }
-export default  LEFSModule
+export default  withRouter(LEFSModule)

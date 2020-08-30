@@ -4,11 +4,11 @@ import 'bootstrap/dist/css/bootstrap.css';
 
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import { BrowserRouter as Router, withRouter, Link } from "react-router-dom";
+import { BrowserRouter as Router } from "react-router-dom";
 
 ReactDOM.render(
   <Router>
-    <App />
+    <App state = {true}/>
   </Router>
   ,
   document.getElementById('root')

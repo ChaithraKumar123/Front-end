@@ -4,7 +4,6 @@ import { format } from "date-fns";
 
 import auth from "./auth";
 import {
-  BrowserRouter as Router,
   withRouter
 } from "react-router-dom";
 
@@ -83,7 +82,6 @@ class Step4 extends Component {
 };
 
   console.log(schema.schema)
-  let op;
   fetch(
     'https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/v1/personaldetails'
     // "https://localhost:44338/v1/personaldetails"
@@ -96,7 +94,7 @@ class Step4 extends Component {
       this.setState({
         renderThankyou: true
       })
-      localStorage.removeItem("confToken")
+      // localStorage.removeItem("confToken")
       // auth.login(() => {
       //   this.props.history.push("/Home");
       // });
@@ -150,8 +148,9 @@ class Step4 extends Component {
                 value={state.height}
                 onChange={handleChange("height")}
               ></input>
-              </div>
               <div className="errorMessage">{state.heightError}</div>
+
+              </div>
             </div>
   
             <div>
@@ -164,8 +163,9 @@ class Step4 extends Component {
                 value={state.weight}
                 onChange={handleChange("weight")}
               ></input>
-              </div>
               <div className="errorMessage">{state.weightError}</div>
+
+              </div>
             </div>
   
               <div className="form-group custom-radio-wrapper">
@@ -224,7 +224,7 @@ class Step4 extends Component {
   
             <div>
               <div className = "form-group">
-              <label className="abc">Last Visit</label>
+              <label className="abc">Last Visit <span className="optional">Optional</span> </label>
               <input
                 type="date"
                 max={ format(new Date(), "yyyy-MM-dd")}
@@ -276,6 +276,7 @@ class Step4 extends Component {
           <p>Thankyou!</p>
         </div>
       </div>
+      <div className = "row has-form">
       <h4
         style={{
           "text-align": "center",
@@ -298,12 +299,16 @@ class Step4 extends Component {
   <br></br>
       <div>
         <button
+                  style = {{"position": "relative",   "margin-top": "100%"}}
+
           className="btn btn-primary btn-block"
           onClick={this.finish}
         >
           Done
         </button>
       </div>
+      </div>
+      
     </div>
     );
   }

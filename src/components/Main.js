@@ -25,26 +25,44 @@ import ForgotPassword from "./ForgotPassword";
 import History from "../patientHistory";
 import Home from "./Home";
 
+import BodyImageMain from "../components/InjuryDetailsModule/BodyImageMain";
+import CoreMedicalHistory from "../components/PatientIntakeModules/CoreMedicalHistory";
+import CorePsychologicalModule from "../components/PatientIntakeModules/CorePsychologicalModule";
+import RedFlagModule from "../components/PatientIntakeModules/RedFlagModule";
+import CoreLifeStyleModule from "../components/PatientIntakeModules/CoreLifeStyleModule";
+import ManualHandling from "../components/PatientIntakeModules/ManualHandling";
+import IndustrySpecificModule from "../components/PatientIntakeModules/IndustrySpecificModule";
+import FamilyHistoryModule from "../components/PatientIntakeModules/FamilyHistoryModule";
+import MusculoskeletonModule from "../components/PatientIntakeModules/Musculoskeleton_Module";
+import OreboModule from "../components/PatientIntakeModules/OreboModule";
 
-import BodyImageMain from '../components/InjuryDetailsModule/BodyImageMain'
-import CoreMedicalHistory from '../components/PatientIntakeModules/CoreMedicalHistory'
-import CorePsychologicalModule from '../components/PatientIntakeModules/CorePsychologicalModule'
-import RedFlagModule from '../components/PatientIntakeModules/RedFlagModule'
-import CoreLifeStyleModule from '../components/PatientIntakeModules/CoreLifeStyleModule'
-import ManualHandling from '../components/PatientIntakeModules/ManualHandling'
-import IndustrySpecificModule from '../components/PatientIntakeModules/IndustrySpecificModule'
-import FamilyHistoryModule from '../components/PatientIntakeModules/FamilyHistoryModule'
-import MusculoskeletonModule from '../components/PatientIntakeModules/Musculoskeleton_Module'
-import OreboModule from '../components/PatientIntakeModules/OreboModule'
+// prom
 
-import FormProgress from './FormProgress'
+import NDSModule from "../components/PROMModules/NDSModule";
+import QuebecModule from "../components/PROMModules/QuebecModule";
+import LEFSModule from "../components/PROMModules/LEFSModule";
+import PSSModule from "../components/PROMModules/PSSModule";
+import FABQMain from "../components/PROMModules/FABQModule/FABQMain";
+import FOSQModule from "../components/PROMModules/FOSQModule";
+import PainScaleModule from "../components/PROMModules/PainScaleModule";
+import DASSModule from "../components/PROMModules/DASSModule";
+import DASHModule from "../components/PROMModules/DASHModule";
 
-import {Navbar,Container,Nav,NavDropdown} from 'react-bootstrap'
+import FormProgress from "./FormProgress";
+
+import { Navbar, Container, Nav, NavDropdown } from "react-bootstrap";
 import { Ouroboro } from "react-spinners-css";
 
-
 const IsLoading = () => (
-    <Ouroboro style = {{"position": "absolute", "margin-left": "275px", "margin-top": "400px"}} color="#F04F1D" size={200} />
+  <Ouroboro
+    style={{
+      position: "absolute",
+      "margin-left": "275px",
+      "margin-top": "400px",
+    }}
+    color="#F04F1D"
+    size={200}
+  />
 );
 
 const Auth = {
@@ -143,9 +161,9 @@ class Main extends Component {
     ethnicityoptions: [],
     Countryoptions: [],
     countryCode: "",
-    stateOpts:[],
-    stateCode:""
-
+    stateOpts: [],
+    stateCode: "",
+    stepActivate: false,
   };
 
   kncset = (e) => {
@@ -164,17 +182,11 @@ class Main extends Component {
     this.setState({ stateOpts: e });
   };
 
-
   stepReset = (e) => {
-    if (e = "reset")
-    {
+    if ((e = "reset")) {
       this.setState({ step: 1 });
-
-    }
-
-    else {
+    } else {
       this.setState({ step: e });
-
     }
   };
 
@@ -186,43 +198,80 @@ class Main extends Component {
   };
 
   getdetails = (patient, address, employment) => {
+    let sex = patient[0].gender.replace(/\s+/g, "");
+    let temp;
+    if (sex == "M") {
+      temp = "Male";
+    } else if (sex == "F") {
+      temp = "Female";
+    } else {
+      temp = "";
+    }
 
-    this.setState({
+    let code = this.state.ethnicityoptions.findIndex(function(item, i){return item.value === patient[0].ethnicityID})
 
-      titleOpt: patient[0].title ? patient[0].title : "",
-      givenName: patient[0].firstName ? patient[0].firstName : "",
-      surName: patient[0].lastName ? patient[0].lastName : "",
-      middleName: patient[0].middleNames ? patient[0].middleNames : "",
-      DateofB: patient[0].dateOfBirth ? patient[0].dateOfBirth : "",
-      gender: patient[0].gender ? patient[0].gender : "",
-      mobileNumber: "0" + patient[0].mobile ? "0" + patient[0].mobile : "",
-      email: patient[0].email ? patient[0].email : "",
-      // culturalGroup: e.,
-      //step2
-      // CurrentPosition: "",
-      // EmpStDate: "",
-      // Department: "",
-      // LineTask: "",
-      // CompClaim: "",
-      // CompClaimDetails: "",
-      // //step3
-      // addressLine1: address[0].line1 ? address[0].line1 : "",
-      // addressLine2: address[0].line2 ? address[0].line2 : "",
-      // suburb: address[0].suburb ? address[0].suburb : "",
-      // stateName: address[0].familyDoctor ? address[0].familyDoctor : "",
-      // postCode: address[0].postcode ? address[0].postcode : "",
-      // // country: address.familyDoctor ? address.familyDoctor : "",
-      // //step4
-      // familyDoctor: patient[0].familyDoctor ? patient[0].familyDoctor : "",
-      // lastVisit: patient[0].lastVisit ? patient[0].lastVisit : "",
-      // reasonOfVisit: patient[0].whyLastVisit ? patient[0].whyLastVisit : "",
-      // height: patient[0].height ? patient[0].height : "",
-      // weight: patient[0].weightKg ? patient[0].weightKg : "",
-      // handedness: patient[0].handedness ? patient[0].handedness : "",
+    if (this.state.step === 1){
+      this.setState({
+        titleOpt: patient[0].title ? patient[0].title : this.state.titleOpt,
+        givenName: patient[0].firstName
+          ? patient[0].firstName
+          : this.state.givenName,
+        surName: patient[0].lastName ? patient[0].lastName : this.state.surName,
+        middleName: patient[0].middleNames
+          ? patient[0].middleNames
+          : this.state.middleName,
+        DateofB: patient[0].dateOfBirth
+          ? patient[0].dateOfBirth
+          : this.state.DateofB,
+        gender: temp ? temp : this.state.gender,
+        mobileNumber:
+          "0" + patient[0].mobile
+            ? "0" + patient[0].mobile
+            : this.state.mobileNumber,
+        email: patient[0].email ? patient[0].email : this.state.email,
+         culturalGroup:  code ? this.state.ethnicityoptions[code]: this.state.culturalGroup,
+        //step2
+        // CurrentPosition: "",
+        // EmpStDate: "",
+        // Department: "",
+        // LineTask: "",
+        // CompClaim: "",
+        // CompClaimDetails: "",
 
+        // // country: address.familyDoctor ? address.familyDoctor : "",
+        // //step4
 
-    })
-  }
+      });
+    }
+    if (this.state.step === 2){
+      let stcode = this.state.stateOpts.findIndex(function(item, i){return item.value === address[0].stateID})
+
+      this.setState({
+        // //step3
+        addressLine1: address[0].line1
+          ? address[0].line1
+          : this.state.addressLine1,
+        addressLine2: address[0].line2
+          ? address[0].line2
+          : this.state.addressLine2,
+        suburb: address[0].suburb ? address[0].suburb : this.state.suburb,
+         stateName: stcode ? this.state.stateOpts[stcode]: this.state.stateName,
+        postCode: address[0].postCode ? address[0].postCode : this.state.postCode,
+      })
+    }
+
+    if (this.state.step === 3){
+
+      this.setState({
+        familyDoctor: patient[0].familyDoctor ? patient[0].familyDoctor : this.state.familyDoctor,
+        lastVisit: patient[0].lastVisit ? patient[0].lastVisit : this.state.lastVisit,
+        reasonOfVisit: patient[0].whyLastVisit ? patient[0].whyLastVisit : this.state.reasonOfVisit,
+        height: patient[0].height ? patient[0].height : this.state.height,
+        weight: patient[0].weightKg ? patient[0].weightKg : this.state.weight,
+        handedness: patient[0].handedness ? patient[0].handedness : this.state.handedness,
+      })
+    }
+  };
 
   validator = (e) => {
     if (e.target.id === "givenName") {
@@ -258,7 +307,18 @@ class Main extends Component {
             DateofBisValid: false,
           });
           return false;
-        } else this.setState({ DateofBisValid: true, DateofBError: "" });
+        } 
+        if (
+          new Date().getFullYear() - e.target.valueAsDate.getFullYear() >
+          110
+        ) {
+          this.setState({
+            DateofBError: "Invalid Age",
+            DateofBisValid: false,
+          });
+          return false;
+        }
+        else this.setState({ DateofBisValid: true, DateofBError: "" });
         return true;
       } catch (err) {
         this.setState({
@@ -391,8 +451,6 @@ class Main extends Component {
       return true;
     }
 
-    
-
     if (input === "country") {
       if (e.label.length <= 0) {
         this.setState({
@@ -407,6 +465,7 @@ class Main extends Component {
 
   prevStep = () => {
     const { step } = this.state;
+
     this.setState({
       step: step - 1,
     });
@@ -418,55 +477,46 @@ class Main extends Component {
         [input]: e,
       });
 
-     var index =  this.state.ethnicityoptions.findIndex(function(item, i){
-        return item.label === e.label
-      })
+      var index = this.state.ethnicityoptions.findIndex(function (item, i) {
+        return item.label === e.label;
+      });
 
       this.setState({
         ethnicityCode: this.state.ethnicityoptions[index].value,
       });
-
-    }
-    else if (input == "stateName") {
+    } else if (input == "stateName") {
       this.setState({
         [input]: e,
       });
 
-      var index =  this.state.stateOpts.findIndex(function(item, i){
-        return item.label === e.label
-      })
+      var index = this.state.stateOpts.findIndex(function (item, i) {
+        return item.label === e.label;
+      });
 
       this.setState({
         stateCode: this.state.stateOpts[index].value,
       });
 
       this.validateStateCountry(e, input);
-
-
-      
-    }
-    else if ( input == "country"){
-
+    } else if (input == "country") {
       this.setState({
         [input]: e,
       });
 
-      var index =  this.state.Countryoptions.findIndex(function(item, i){
-        return item.label === e.label
-      })
+      var index = this.state.Countryoptions.findIndex(function (item, i) {
+        return item.label === e.label;
+      });
 
       this.setState({
         countryCode: this.state.Countryoptions[index].value,
       });
       this.validateStateCountry(e, input);
-
-    }
-    else if (e.target) {
+    } else if (e.target) {
       var transfer = e.target.value;
       this.setState({
         [input]: transfer,
       });
-      
+
       if (
         !(
           e.target.id === "titleOpt" ||
@@ -496,7 +546,6 @@ class Main extends Component {
     }
   };
 
-  
   showStep = () => {
     const { step } = this.state;
     if (step === 1)
@@ -507,7 +556,7 @@ class Main extends Component {
           stepReset={this.stepReset}
           ethnicityCodef={this.ethnicityCodef}
           state={this.state}
-          getdetails = {this.getdetails}
+          getdetails={this.getdetails}
         />
       );
     if (step === "abc")
@@ -542,41 +591,42 @@ class Main extends Component {
   };
 
   successPage = () => {
-    return <Brilliant state = {this.state} handleChange={this.handleChange} />;
+    return <Brilliant state={this.state} handleChange={this.handleChange} />;
   };
   HomePage = () => {
-    return <Home          
-     loadingCircle = {<IsLoading/>}
-     stepReset={this.stepReset}
-     state = {this.state}/>;
+    return (
+      <Home
+        loadingCircle={<IsLoading />}
+        stepReset={this.stepReset}
+        state={this.state}
+        switchfunc = {this.props.switchFunc}
+      />
+    );
   };
 
-  History = () =>{
-    return <History state={this.state}></History>
-  }
+  History = () => {
+    return <History state={this.state}></History>;
+  };
 
-  Formsprogress = () =>{
-    return <FormProgress state={this.state}></FormProgress>
-  }
-
-  
+  Formsprogress = () => {
+    return <FormProgress state={this.state}></FormProgress>;
+  };
 
   render() {
+    // this.props.switchFunc();
     return (
       <Router>
         <Switch>
           <Route exact path="/">
-            <Loginpage loadingCircle = {<IsLoading/>} />
+            <Loginpage loadingCircle={<IsLoading />} />
           </Route>
-          <ProtectedRoute path="/Home"
-            component = {this.HomePage}
-        />
+          <ProtectedRoute path="/Home" component={this.HomePage} />
           <Route path="/Signup">
             <Signup
               state={this.state}
               handleChange={this.handleChange}
               kncset={this.kncset}
-              loadingCircle = {<IsLoading/>}
+              loadingCircle={<IsLoading />}
             />
           </Route>
           <Route path="/ForgotPassword">
@@ -586,24 +636,22 @@ class Main extends Component {
             />
           </Route>
 
-          <ProtectedRoute path="/formprogress" component = {this.Formsprogress}/>
-
-
+          <ProtectedRoute path="/formprogress" component={this.Formsprogress} />
 
           <ProtectedRoute path="/patientDetails" component={this.showStep} />
           <Route path="/success" component={this.successPage} />
 
-          <ProtectedRoute path="/History" component={this.History}/>
-            {/* <History state={this.state}></History>
+          <ProtectedRoute path="/History" component={this.History} />
+          {/* <History state={this.state}></History>
           </Route> */}
 
           <Switch>
             <Route path="/OreboModule" component={OreboModule}></Route>
             <Route path="/painIndicator" component={BodyImageMain}></Route>
-            
+
             <Route
               path="/CoreMedicalHistory"
-              roundedDropdown = {this.roundedDropdown}
+              roundedDropdown={this.roundedDropdown}
               component={CoreMedicalHistory}
             ></Route>
 
@@ -634,10 +682,27 @@ class Main extends Component {
               component={IndustrySpecificModule}
             ></Route> */}
 
+
             <Route
               path="/FamilyHistoryModule"
               component={FamilyHistoryModule}
             ></Route>
+
+            <Route path="/NDSModule" component={NDSModule}></Route>
+
+            <Route path="/QuebecModule" component={QuebecModule}></Route>
+
+            <Route path="/LEFSModule" component={LEFSModule}></Route>
+
+            <Route path="/PSSModule" component={PSSModule}></Route>
+
+            <Route path="/FABQMain" component={FABQMain}></Route>
+
+            <Route path="/FOSQModule" component={FOSQModule}></Route>
+            <Route path="/PainScaleModule" component={PainScaleModule}></Route>
+
+            <Route path="/DASSModule" component={DASSModule}></Route>
+            <Route path="/DASHModule" component={DASHModule}></Route>
 
             <Route
               path="/MusculoskeletonModule"

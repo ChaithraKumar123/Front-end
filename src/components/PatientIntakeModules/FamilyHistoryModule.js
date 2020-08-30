@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import "../../App.css";
-import Dropdown from "react-dropdown";
 import axios from "axios";
 import "react-dropdown/style.css";
 import auth from "../auth";
@@ -128,12 +127,12 @@ class FamilyHistoryModule extends Component {
           }
         )
         .then((response) => {
-          if (response.data = "Success")
+          if (response.data === "Success")
           {
             console.log(response);
-        // auth.login(() => {
-        //   this.props.history.push("/Home");
-        // });
+        auth.login(() => {
+          this.props.history.push("/Home");
+        });
           }
         })
         .catch((error) => {
@@ -269,6 +268,7 @@ class FamilyHistoryModule extends Component {
 
         <div>
           <button
+          style = {{"position": "relative",   "margin-top": "100%"}}
             className="btn btn-primary btn-block"
             onClick={this.completeForm}
           >

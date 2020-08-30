@@ -1,22 +1,16 @@
 import React, { Component } from "react";
-import UserPool from "../UserPool";
-import auth from "./auth";
+// import UserPool from "../UserPool";
+// import auth from "./auth";
 import {
-  BrowserRouter as Router,
-  Redirect,
-  Switch,
-  Route,
-  Link,
   withRouter,
 } from "react-router-dom";
-import { CognitoUser, AuthenticationDetails } from "amazon-cognito-identity-js";
-import { Ouroboro } from "react-spinners-css";
+// import { Ouroboro } from "react-spinners-css";
 
-const IsLoading = () => (
-  <div id="loadingCiricle">
-    <Ouroboro color="#F04F1D" size={200} />
-  </div>
-);
+// const IsLoading = () => (
+//   <div id="loadingCiricle">
+//     <Ouroboro color="#F04F1D" size={200} />
+//   </div>
+// );
 
 class Landingpage extends Component {
   state = {};

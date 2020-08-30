@@ -1,9 +1,8 @@
 import React, { Component } from "react";
 import axios from "axios";
 import "../../App.css";
-import { RadioGroup, Radio } from "react-radio-group";
-import { Col, Row } from "react-bootstrap";
-import auth from "../auth";
+import { RadioGroup } from "react-radio-group";
+// import auth from "../auth";
 
 
 class OreboModule extends Component {

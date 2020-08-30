@@ -1,8 +1,7 @@
 import React, { Component } from "react";
-import UserPool from "../UserPool";
-import { CognitoUser, AuthenticationDetails } from "amazon-cognito-identity-js";
+
 import auth from "./auth";
-import { BrowserRouter as Router, withRouter } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 
 class Brilliant extends Component {
   state = {};
@@ -19,7 +18,7 @@ class Brilliant extends Component {
   };
 
   render() {
-    const { handleChange, state } = this.props;
+    // const { handleChange, state } = this.props;
     let tempToken = localStorage.getItem("confToken");
     if (tempToken !== null) {
       return (
@@ -29,7 +28,7 @@ class Brilliant extends Component {
               <h1>Success!</h1>
             </div>
           </div>
-          <div>
+          <div className = "row has-form">
             <h4
               style={{
                 "text-align": "center",
@@ -45,6 +44,8 @@ class Brilliant extends Component {
             <div>
               <div>
                 <button
+                          style = {{"position": "relative",   "margin-top": "100%"}}
+
                   className="btn btn-primary btn-block"
                   onClick={this.continue}
                 >

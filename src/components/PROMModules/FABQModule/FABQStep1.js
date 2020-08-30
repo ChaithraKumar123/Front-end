@@ -1,4 +1,4 @@
-import "../../../css/main.css"
+// import "../../../css/main.css"
 import React,{Component} from 'react'
 import RadioButtonRange from './RadioButtonRange'
 
@@ -66,7 +66,7 @@ class FABQStep1 extends Component
     {
       const{handleChange,state}=this.props
         return(
-            <div className="container">
+            <div id="MainDiv">
             <div className="row">
             <div className="col-md-12">
             <div className="page-title title"> 
@@ -74,7 +74,7 @@ class FABQStep1 extends Component
             </div>
             </div>
             </div>
-            <div className="row">
+            <div>
             <h6>Here are some of the things which other patients have told us about their pain. 
             For each statement please circle any number from 0 to 6 to say how much physical activities 
             such as bending, lifting, walking or driving affect or would affect your back pain.</h6>

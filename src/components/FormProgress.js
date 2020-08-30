@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import auth from "./auth";
-import { BrowserRouter as Router, withRouter, Link } from "react-router-dom";
-import { Navbar, Container, Nav, NavDropdown } from "react-bootstrap";
+import {  withRouter } from "react-router-dom";
 import axios from "axios";
 
 class FormProgress extends Component {

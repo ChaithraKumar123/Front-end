@@ -9,7 +9,6 @@ import Select from 'react-select'
 
 
 import { RadioGroup } from "react-radio-group";
-import { id } from "date-fns/locale";
 
 const cholesteroloptions = [
   "No",
@@ -446,7 +445,7 @@ roundedDropdown= ()=> {
       }
     )
     .then((response) => {
-      if (response.data = "Success")
+      if (response.data === "Success")
       {
         console.log(response);
     auth.login(() => {
@@ -858,7 +857,7 @@ roundedDropdown= ()=> {
             <div class="col-md-12">
               <div class="form-group custom-radio-wrapper">
                 <label className="abc">
-                  Do you suffer from frequent headaches?{" "}
+                  Do you suffer from headaches?{" "}
                 </label>
                 <label style={{ fontSize: 12, color: "red" }}>
                   {this.state.headache === "" && this.state.nameError}
@@ -980,7 +979,7 @@ roundedDropdown= ()=> {
               <div class="form-group custom-radio-wrapper">
                 <label className="abc">
                   Have you previously had any bone fractures/breaks, surgeries
-                  or trauma?
+                  or physical trauma?
                 </label>
                 <label style={{ fontSize: 12, color: "red" }}>
                   {this.state.fracture === "" && this.state.nameError}

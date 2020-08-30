@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "../../App.css";
 import axios from "axios";
-import { RadioGroup, Radio } from "react-radio-group";
+import { RadioGroup } from "react-radio-group";
 import auth from "../auth";
 
 
@@ -97,7 +97,7 @@ class RedFlagModule extends Component {
           }
         )
         .then((response) => {
-          if (response.data = "Success")
+          if (response.data === "Success")
           {
             console.log(response);
         auth.login(() => {

@@ -2,9 +2,11 @@ import React, { Component } from "react";
 //import 'react-tabs/style/react-tabs.css';
 import update from "react-addons-update";
 import axios from "axios";
+import auth from "../auth";
 
 //import {Tabs,TabPanel,TabList,Tab} from 'react-tabs'
 import InjuryQuestions from "./InjuryQuestions";
+import { withRouter } from "react-router-dom";
 
 class BodyImageTabs extends Component {
   constructor(props) {
@@ -277,6 +279,9 @@ class BodyImageTabs extends Component {
               if (response)
               {
                 console.log(response);
+                auth.login(() => {
+                  this.props.history.push("/Home");
+                });
   
               }
             })
@@ -292,7 +297,9 @@ class BodyImageTabs extends Component {
         console.log(error);
       });
 
-
+      auth.login(() => {
+        this.props.history.push("/Home");
+      });
 
   };
 
@@ -438,4 +445,4 @@ class BodyImageTabs extends Component {
   }
 }
 
-export default BodyImageTabs;
+export default withRouter(BodyImageTabs);

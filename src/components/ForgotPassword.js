@@ -1,27 +1,22 @@
 import React, { Component } from "react";
-import UserPool from "../UserPool";
-import { CognitoUser, AuthenticationDetails } from "amazon-cognito-identity-js";
+
 import auth from "./auth";
-import { BrowserRouter as Router, withRouter } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 
-const EnterCode = (state) => (
-  <div>
-    <label className="abc">Enter the code</label>
-    <input
-      className="form-control"
-      id="pass"
-      name="pass"
-      type="password"
-      value={state.code}
-      onChange={(event) => this.setState({ code: event.target.value })}
-      //  onChange={(event) => this.setState({password:event.target.value})}
-    />
-  </div>
-);
-
-var divStyle = {
-  color: "#562A6B",
-};
+// const EnterCode = (state) => (
+//   <div>
+//     <label className="abc">Enter the code</label>
+//     <input
+//       className="form-control"
+//       id="pass"
+//       name="pass"
+//       type="password"
+//       value={state.code}
+//       onChange={(event) => this.setState({ code: event.target.value })}
+//       //  onChange={(event) => this.setState({password:event.target.value})}
+//     />
+//   </div>
+// );
 
 class ForgotPassword extends Component {
   state = {
@@ -32,7 +27,7 @@ class ForgotPassword extends Component {
   };
 
   sendCode = (e) => {
-    if (this.props.state.email == "") {
+    if (this.props.state.email === "") {
       window.alert("Please enter your email");
       return;
     }
@@ -55,7 +50,10 @@ class ForgotPassword extends Component {
     };
 
     try {
-      fetch("https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/forgotpassword", requestOptions)
+      fetch(
+        "https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/forgotpassword",
+        requestOptions
+      )
         .then((response) => response.json())
         .catch(function (data) {
           window.alert("Error processing your request.");
@@ -100,12 +98,15 @@ class ForgotPassword extends Component {
     };
 
     try {
-      fetch("https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/confirmpassword", requestOptions)
+      fetch(
+        "https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/confirmpassword",
+        requestOptions
+      )
         .then((response) => response.json())
-        .catch(rejected => {
+        .catch((rejected) => {
           console.log(rejected);
           return 400;
-      })
+        })
         .then((data) => {
           if (Number(data.httpStatusCode) === 200) {
             auth.login(() => {
@@ -113,10 +114,11 @@ class ForgotPassword extends Component {
               this.props.history.push("/");
             });
           } else {
-             if (data === 400) {
-              window.alert("failed to connect to the backend")
-             }
-             else{window.alert(data.message)};
+            if (data === 400) {
+              window.alert("failed to connect to the backend");
+            } else {
+              window.alert(data.message);
+            }
           }
         });
     } catch (error) {
@@ -132,17 +134,19 @@ class ForgotPassword extends Component {
         <div className="page-title lg">
           <div className="title">
             <h1>Reset Password</h1>
-            <p>
-              Please enter the email address associated with your account and
-              we'll email you a verification code to reset your Password.
-            </p>
           </div>
         </div>
 
         <div className="row has-form">
+          <label className="abc">
+            {" "}
+            Please enter the email address associated with your account and
+            we'll email you a verification code to reset your Password.
+          </label>
+          <br></br>
           <div>
             <div className="form-group">
-              <label className="abc">Enter your email</label>
+              <label className="abc">Email</label>
               <input
                 className="form-control"
                 id="email"
@@ -205,21 +209,33 @@ class ForgotPassword extends Component {
                   />
                 </div>
               </div>
+              <div>
+                <div className="btn-block">
+                  <button
+                    className="btn btn-primary btn-block"
+                    onClick={this.continue}
+                  >
+                    submit
+                  </button>
+                </div>
+              </div>
             </div>
-          ) : null}
+          ) : (
+            <div className="btn-block prev-back-btn">
+              <button
+                className="btn btn-outline-primary btn-block"
+                onClick={this.sendCode}
+              >
+                Send code
+              </button>
+            </div>
 
-          <div class="btn-block prev-back-btn">
-            <button class="btn btn-outline-primary" onClick={this.sendCode}>
-              Send code
-            </button>
-            <button
-              class="btn btn-primary modal-btn"
-              data-modal-id="sampleModal"
-              onClick={this.continue}
-            >
-              submit
-            </button>
-          </div>
+            // <div class="btn-block prev-back-btn">
+            //   <button class="btn btn-outline-primary" onClick={this.sendCode}>
+            //     Send code
+            //   </button>
+            // </div>
+          )}
         </div>
       </div>
     );

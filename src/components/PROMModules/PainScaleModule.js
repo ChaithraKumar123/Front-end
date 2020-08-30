@@ -1,6 +1,10 @@
-import "../../css/main.css"
+// import "../../css/main.css"
 import React,{Component} from 'react'
 import axios from 'axios'
+
+import {withRouter} from "react-router-dom";
+import auth from "../auth";
+
 class PainScaleModule extends Component
 {   
     state=
@@ -27,9 +31,12 @@ class PainScaleModule extends Component
     componentDidMount()
     {
         axios
-        .get('https://localhost:44338/api/PainScaleDetails',
+        .get(
+          // 'https://localhost:44338/api/PainScaleDetails',
+          'https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/PainScaleDetails',
+
         {
-            params: { value : this.state.entityId }
+            params: { value : localStorage.getItem("KNC") }
         }) 
         .then(response => {
             console.log(response.data[0])
@@ -111,7 +118,10 @@ class PainScaleModule extends Component
             
     
         axios
-            .post('https://localhost:44338/api/PainScaleDetails', 
+            .post(
+              // 'https://localhost:44338/api/PainScaleDetails', 
+              'https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/PainScaleDetails', 
+
             {
                 Q1: this.state.Q1,
                 Q2: this.state.Q2,
@@ -126,7 +136,7 @@ class PainScaleModule extends Component
                 Q11: this.state.Q11,
                 Q12: this.state.Q12,
                 Q13: this.state.Q13,
-                EntityID :  this.state.entityId,
+                EntityID :  localStorage.getItem("KNC"),
                 OMPQID: this.state.id,
                 
     
@@ -139,13 +149,36 @@ class PainScaleModule extends Component
             })
             .catch(error => {
                 console.log(error)
+            });
+            axios
+            .post(
+              "https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/saveWorkflow",
+              // "https://localhost:44338/api/saveWorkflow",
+        
+              {
+                KNC: localStorage.getItem("KNC"),
+                DateCompleted: new Date(),
+                processID: localStorage.getItem("WorkFlowId")
+              }
+            )
+            .then((response) => {
+              if (response.data === "Success")
+              {
+                console.log(response);
+            auth.login(() => {
+              this.props.history.push("/Home");
+            });
+              }
             })
+            .catch((error) => {
+              console.log(error);
+            });
         }
     }
     render()
     {
         return(
-            <div className="container">
+            <div id="MainDiv">
             <div className="row">
             <div className="col-md-12">
             <div className="page-title title"> 
@@ -565,4 +598,4 @@ class PainScaleModule extends Component
     }
 
 }
-export default PainScaleModule
+export default withRouter(PainScaleModule)

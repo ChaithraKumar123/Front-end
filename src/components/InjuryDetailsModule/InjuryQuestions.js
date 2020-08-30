@@ -2,7 +2,7 @@ import React,{Component} from 'react'
 import Dropdown from 'react-dropdown';
 import 'react-dropdown/style.css';
 import '../../App.css'
-import { RadioGroup, Radio } from "react-radio-group";
+import { RadioGroup } from "react-radio-group";
 
 
 const pain_Side =["Right","Left","Central","Both sides"]

@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import "../../App.css";
-import { RadioGroup, Radio } from "react-radio-group";
+import { RadioGroup } from "react-radio-group";
 
 import auth from "../auth";
-import axios from "axios";
+// import axios from "axios";
 
 class ManualHandling extends Component {
   constructor(props) {
@@ -216,7 +216,7 @@ class ManualHandling extends Component {
     );
   };
   render() {
-    const { handleChange, state } = this.props;
+    // const { handleChange, state } = this.props;
 
     return (
       <div id="MainDiv">

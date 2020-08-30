@@ -1,6 +1,10 @@
-import "../../css/main.css"
+// import "../../css/main.css"
 import React,{Component} from 'react'
 import axios from 'axios'
+
+import { withRouter} from "react-router-dom";
+import auth from "../auth";
+
 class RadioButton extends Component
 {
     render() {
@@ -97,9 +101,12 @@ class DASHModule extends Component
     componentDidMount()
     {
         axios
-        .get('https://localhost:44338/api/DASHDetails',
+        .get(
+            // 'https://localhost:44338/api/DASHDetails',
+            'https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/DASHDetails',
+
         {
-            params: { value : this.state.entityId }
+            params: { value : localStorage.getItem("KNC") }
         }) 
         .then(response => {
             console.log(response.data[0])
@@ -235,7 +242,9 @@ class DASHModule extends Component
         if (isValid)
         {
         axios
-            .post('https://localhost:44338/api/DASHDetails', 
+            .post(
+                // 'https://localhost:44338/api/DASHDetails', 
+                'https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/DASHDetails',
             {
                 Q1: this.state.Q1,
                 Q2: this.state.Q2,
@@ -273,7 +282,7 @@ class DASHModule extends Component
                 WMUsualWorkPain:this.state.work_check===true?this.state.work_Q2:-0,
                 WMUsualWorkIntended:this.state.work_check===true?this.state.work_Q3:0,
                 WMUsualWorkTime:this.state.work_check===true?this.state.work_Q4:0,
-                EntityID :  this.state.entityId,
+                EntityID :  localStorage.getItem("KNC"),
                 OMPQID: this.state.id,
                 
     
@@ -286,13 +295,36 @@ class DASHModule extends Component
             })
             .catch(error => {
                 console.log(error)
+            });
+            axios
+            .post(
+              "https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/saveWorkflow",
+            //   "https://localhost:44338/api/saveWorkflow",
+        
+              {
+                KNC: localStorage.getItem("KNC"),
+                DateCompleted: new Date(),
+                processID: localStorage.getItem("WorkFlowId")
+              }
+            )
+            .then((response) => {
+              if (response.data === "Success")
+              {
+                console.log(response);
+            auth.login(() => {
+              this.props.history.push("/Home");
+            });
+              }
             })
+            .catch((error) => {
+              console.log(error);
+            });
         }
     }
     render()
     {
         return(
-            <div className="container">
+            <div id="MainDiv">
             <div className="row">
             <div className="col-md-12">
             <div className="page-title title"> 
@@ -675,4 +707,4 @@ class DASHModule extends Component
     }
 
 }
-export default DASHModule
+export default withRouter(DASHModule)

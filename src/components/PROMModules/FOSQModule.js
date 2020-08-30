@@ -1,6 +1,11 @@
-import "../../css/main.css"
+// import "../../css/main.css"
 import React,{Component} from 'react'
 import axios from 'axios'
+
+import {withRouter} from "react-router-dom";
+import auth from "../auth";
+
+
 class FOSQModule extends Component
 {   
     state=
@@ -24,9 +29,12 @@ class FOSQModule extends Component
     componentDidMount()
     {
         axios
-        .get('https://localhost:44338/api/FOSQDetails',
+        .get(
+          // 'https://localhost:44338/api/FOSQDetails',
+          'https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/FOSQDetails',
+
         {
-            params: { value : this.state.entityId }
+            params: { value : localStorage.getItem("KNC")}
         }) 
         .then(response => {
             console.log(response.data[0])
@@ -105,7 +113,10 @@ class FOSQModule extends Component
             
     
         axios
-            .post('https://localhost:44338/api/FOSQDetails', 
+            .post(
+              // 'https://localhost:44338/api/FOSQDetails', 
+              'https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/FOSQDetails', 
+
             {
                 Q1: this.state.Q1,
                 Q2: this.state.Q2,
@@ -117,7 +128,7 @@ class FOSQModule extends Component
                 Q8: this.state.Q8,
                 Q9: this.state.Q9,
                 Q10: this.state.Q10,
-                EntityID :  this.state.entityId,
+                EntityID :  localStorage.getItem("KNC"),
                 OMPQID: this.state.id,
                 
     
@@ -130,13 +141,36 @@ class FOSQModule extends Component
             })
             .catch(error => {
                 console.log(error)
+            });
+            axios
+            .post(
+              "https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/saveWorkflow",
+              // "https://localhost:44338/api/saveWorkflow",
+        
+              {
+                KNC: localStorage.getItem("KNC"),
+                DateCompleted: new Date(),
+                processID: localStorage.getItem("WorkFlowId")
+              }
+            )
+            .then((response) => {
+              if (response.data === "Success")
+              {
+                console.log(response);
+            auth.login(() => {
+              this.props.history.push("/Home");
+            });
+              }
             })
+            .catch((error) => {
+              console.log(error);
+            });
         }
     }
     render()
     {
         return(
-            <div className="container">
+            <div id="MainDiv">
             <div className="row">
             <div className="col-md-12">
             <div className="page-title title"> 
@@ -423,4 +457,4 @@ class FOSQModule extends Component
     }
 
 }
-export default FOSQModule
+export default withRouter(FOSQModule)

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "../../App.css";
-import { RadioGroup, Radio } from "react-radio-group";
+import { RadioGroup } from "react-radio-group";
 import Dropdown from "react-dropdown";
 import "react-dropdown/style.css";
 import auth from "../auth";
@@ -261,7 +261,7 @@ class IndustrySpecificModule extends Component {
     );
   };
   render() {
-    const { state } = this.props;
+    // const { state } = this.props;
 
     return (
       <div id="MainDiv">

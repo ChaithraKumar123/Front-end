@@ -1,50 +1,9 @@
 import React, { Component } from "react";
 import update from "react-addons-update";
 import "react-tabs/style/react-tabs.css";
-import ImageMapper from "react-image-mapper";
 import "../../App.css";
 import axios from "axios";
 //import 'react-notifications/lib/notifications.css';
-import Switch from '@material-ui/core/Switch';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
-import { withStyles } from '@material-ui/core/styles';
-
-const AntSwitch = withStyles((theme) => ({
-  root: {
-    width: 50,
-    height: 30,
-    padding: 0,
-    display: 'flex',
-  },
-  switchBase: {
-    padding: 2,
-    color: "#5E3976",
-    '&$checked': {
-      transform: 'translateX(28px)',
-      color: theme.palette.common.white,
-      '& + $track': {
-        opacity: 1,
-        backgroundColor: "#5E3976",
-        borderColor: theme.palette.primary.main,
-      },
-    },
-  },
-  thumb: {
-    width: 18,
-    height: 25,
-    borderRadius: "8px",
-    boxShadow: 'none',
-  },
-  track: {
-    border: `1px solid ${"#5E3976"}`,
-    borderRadius: "8px",
-    opacity: 1,
-    backgroundColor: theme.palette.common.white,
-  },
-  checked: {},
-}))(Switch);
-
 
 const BackMAP = {
   name: "my-map",
@@ -372,17 +331,6 @@ class BodyImage extends Component {
             <p> (Select up to 3 areas of pain)</p>
           </div>
         </div>
-        {/* <Grid component="label" container alignItems="center" spacing={1}>
-          <Grid item>Front</Grid>
-          <Grid item>
-            <AntSwitch
-              checked={this.state.checkedA}
-              onChange={() => this.setState({ checkedA: !this.state.checkedA })}
-              name="checkedC"
-            />
-          </Grid>
-          <Grid item>Back</Grid>
-        </Grid> */}
 
         <div className="form-group custom-radio-wrapper" style = {{"text-align-last": "center"}}>
         <div id="radio">
@@ -1554,13 +1502,22 @@ alt=""
 
         <ul className="list-group" style={{ width: `40%`, marginLeft: "180px" }}>
           {this.state.body_area.map((listitem, index) => (
-            <li className="list-group-item list-group-item-action">
+
+            <div>
+              {listitem === "" ? this.setState({body_area : []}) :
+              
+              <li className="list-group-item list-group-item-action">
               {listitem}
 
-              <button style={{ float: "right", "margin-top": "-3px", "border-color": "transparent", "background": "transparent"}} id={index} onClick={(e) => this.delete_region(e, index)}>
-              <img src={require("../../images/cross.svg")} />
-              </button>
+                            <button style={{ float: "right", "margin-top": "-3px", "border-color": "transparent", "background": "transparent"}} id={index} onClick={(e) => this.delete_region(e, index)}>
+                            <img src={require("../../images/cross.svg")} />
+                            </button>
             </li>
+
+              }
+
+            </div>
+
           ))}
         </ul>
         </div>

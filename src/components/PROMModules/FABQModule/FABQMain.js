@@ -3,6 +3,10 @@ import axios from 'axios'
 import 'react-dropdown/style.css';
 import FABQStep1 from './FABQStep1';
 
+import {withRouter} from "react-router-dom";
+import auth from "../../auth";
+
+
 class FABQMain extends Component
 {
 state=
@@ -34,9 +38,11 @@ state=
 componentDidMount()
 {
     axios
-    .get('https://localhost:44338/api/FABQDetails',
+    .get(
+        // 'https://localhost:44338/api/FABQDetails',
+        'https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/FABQDetails',
     {
-        params: { value : this.state.entityId }
+        params: { value : localStorage.getItem("KNC") }
     }) 
     .then(response => {
         console.log(response.data[0])
@@ -132,7 +138,10 @@ completeForm=event=>{
     if (isValid)
     {
     axios
-        .post('https://localhost:44338/api/FABQDetails', 
+        .post(
+            // 'https://localhost:44338/api/FABQDetails', 
+            'https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/FABQDetails', 
+
         {
             Q1: this.state.Q1,
             Q2: this.state.Q2,
@@ -150,7 +159,7 @@ completeForm=event=>{
             Q14: this.state.Q14 ,
             Q15: this.state.Q15,
             Q16: this.state.Q16,
-            EntityID :  this.state.entityId,
+            EntityID :  localStorage.getItem("KNC"),
             OMPQID: this.state.id,
             
 
@@ -163,7 +172,30 @@ completeForm=event=>{
         })
         .catch(error => {
             console.log(error)
+        });
+        axios
+        .post(
+          "https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/saveWorkflow",
+        //   "https://localhost:44338/api/saveWorkflow",
+    
+          {
+            KNC: localStorage.getItem("KNC"),
+            DateCompleted: new Date(),
+            processID: localStorage.getItem("WorkFlowId")
+          }
+        )
+        .then((response) => {
+          if (response.data === "Success")
+          {
+            console.log(response);
+        auth.login(() => {
+          this.props.history.push("/Home");
+        });
+          }
         })
+        .catch((error) => {
+          console.log(error);
+        });
     }
 }
 render()
@@ -172,4 +204,4 @@ render()
 }
 }
 
-export default  FABQMain
+export default withRouter(FABQMain)

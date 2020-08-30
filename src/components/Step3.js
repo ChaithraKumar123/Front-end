@@ -1,12 +1,9 @@
 import React, { Component } from "react";
-import Dropdown from "react-dropdown";
 import "react-dropdown/style.css";
 import Select from 'react-select'
 
-import TextField from "@material-ui/core/TextField";
-import Autocomplete from "@material-ui/lab/Autocomplete";
-const stateOptions = [{label: "QLD", value: 1}, {label: "VIC", value: 2},
-{label: "NSW", value: 3},{label: "NT", value: 4},{label: "TAS", value: 5},{label: "ACT", value: 6},{label: "SA", value: 7},
+const stateOptions = [{label: "ACT", value: 6}, {label: "NSW", value: 3},{label: "NT", value: 4}, 
+{label: "QLD", value: 1}, {label: "SA", value: 7}, {label: "TAS", value: 5}, {label: "VIC", value: 2},
 {label: "WA", value: 8} ];
 
 
@@ -24,11 +21,11 @@ class Step3 extends Component {
 
   continue = (e) => {
     if (
-      !(this.props.state.country === "") &&
-      this.props.state.addressLine1isValid &&
-      this.props.state.suburbisValid &&
-      this.props.state.stateNameisValid &&
-      this.props.state.postCodeisValid
+      // !(this.props.state.country === "") &&
+      this.props.state.addressLine1 !== "" &&
+      this.props.state.suburb !== "" &&
+      this.props.state.stateName !== "" &&
+      this.props.state.postCode !== ""
     ) {
       e.preventDefault();
       this.props.nextStep();
@@ -43,11 +40,12 @@ class Step3 extends Component {
   saveEthnicity = (data) => {
     this.setState({ Countryoptions: data });
     this.props.countryCodef(data);
-    this.props.stateCodef(stateOptions);
 
     console.log(this.Countryoptions);
   };
   componentDidMount() {
+    this.props.stateCodef(stateOptions);
+
     // Typical usage (don't forget to compare props):
     fetch(
       "https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/v1/personaldetails/Country"
@@ -82,8 +80,9 @@ class Step3 extends Component {
                 value={state.addressLine1}
                 onChange={handleChange("addressLine1")}
               />
+              <div className="errorMessage">{state.addressLine1Error}</div>
+
             </div>
-            <div className="errorMessage">{state.addressLine1Error}</div>
           </div>
 
           <div>
@@ -112,8 +111,9 @@ class Step3 extends Component {
                 value={state.suburb}
                 onChange={handleChange("suburb")}
               />
-            </div>
             <div className="errorMessage">{state.suburbError}</div>
+
+            </div>
           </div>
 
           <div>
@@ -137,9 +137,9 @@ class Step3 extends Component {
            menuPlacement="top"
             onChange={handleChange('stateName')} 
             value={state.stateName}></Select>
+            <div className="errorMessage">{state.stateNameError}</div>
 
             </div>
-            <div className="errorMessage">{state.stateNameError}</div>
           </div>
 
           <div>
@@ -157,8 +157,8 @@ class Step3 extends Component {
           </div>
 
           <div>
-            <label className="abc">Country</label>
-
+            {/* <label className="abc">Country</label> */}
+{/* 
             <Select
            options={this.state.Countryoptions} 
            theme={theme => ({
@@ -168,7 +168,7 @@ class Step3 extends Component {
            isSearchable 
            menuPlacement="top"
             onChange={handleChange('country')} 
-            value={state.country}></Select>
+            value={state.country}></Select> */}
 
             {/* <Autocomplete
               id="combo-box-demo"

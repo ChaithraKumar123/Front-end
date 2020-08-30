@@ -1,14 +1,9 @@
 import React, { Component } from "react";
 //import Dropdown from "react-dropdown";
 //import { Field, reduxForm } from 'redux-form'
-import { Dropdown } from "semantic-ui-react";
 import axios from "axios";
-
-import TextField from "@material-ui/core/TextField";
-import Autocomplete from "@material-ui/lab/Autocomplete";
 import Select from "react-select";
 
-const options = {};
 
 const Errormsg = () => (
   <div className="errorMessage">Missing or invalid fields</div>
@@ -36,7 +31,7 @@ class Step1 extends Component {
   // };
 
   saveEthnicity = (data) => {
-    this.setState({ ethnicityoptions: data });
+    this.setState({ ethnicityoptions:  data.sort((a, b) => (a.label > b.label) ? 1 : -1) });
     this.props.ethnicityCodef(data);
     console.log(this.ethnicityoptions);
   };
@@ -54,32 +49,33 @@ class Step1 extends Component {
       .then((data) => this.saveEthnicity(data));
 
 
+  axios
+  .get(
+    // "https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/medhistorydetails",
+    'https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/v1/personaldetails/'+ localStorage.getItem("KNC"),
+    // "https://localhost:44338/v1/personaldetails/" + localStorage.getItem("KNC"),
+  )
+  .then((response) => {
+    console.log(response.data[0]);
+      this.props.getdetails(response.data[0], response.data[1], response.data[2])
+  })
+  .catch((error) => {
+    console.log(error);
+  });
 
-      axios
-      .get(
-        // "https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/medhistorydetails",
-        'https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/v1/personaldetails/'+ localStorage.getItem("KNC"),
-        // "https://localhost:44338/v1/personaldetails/" + localStorage.getItem("KNC"),
-      )
-      .then((response) => {
-        console.log(response.data[0]);
-          this.props.getdetails(response.data[0], response.data[1], response.data[2])
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+
 
   }
 
   render() {
-    const { handleChange, state, getdetails } = this.props;
+    const { handleChange, state } = this.props;
 
     return (
       <div id="MainDiv">
         <div className="page-title lg">
           <div className="title">
             <h1>Personal Details</h1>
-            <p> Step 1 of 4 </p>
+            <p> Step 1 of 3 </p>
           </div>
         </div>
         <div className="contentSpacing">
@@ -91,7 +87,6 @@ class Step1 extends Component {
                   type="radio"
                   className="custom-input"
                   name="radio1"
-                  type="radio"
                   value="Mr"
                   id="titleOpt"
                   checked={state.titleOpt === "Mr"}

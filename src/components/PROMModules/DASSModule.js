@@ -1,6 +1,9 @@
-import "../../css/main.css"
+// import "../../css/main.css"
 import React,{Component} from 'react'
 import axios from 'axios'
+
+import { withRouter} from "react-router-dom";
+import auth from "../auth";
 class RadioButton extends Component
 {
     render() {
@@ -73,9 +76,12 @@ class DASSModule extends Component
     componentDidMount()
     {
         axios
-        .get('https://localhost:44338/api/DASSDetails',
+        .get(
+          // 'https://localhost:44338/api/DASSDetails',
+          'https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/DASSDetails',
+
         {
-            params: { value : this.state.entityId }
+            params: { value : localStorage.getItem("KNC") }
         }) 
         .then(response => {
             console.log(response.data[0])
@@ -180,7 +186,10 @@ class DASSModule extends Component
         if (isValid)
         {
         axios
-            .post('https://localhost:44338/api/DASSDetails', 
+            .post(
+              // 'https://localhost:44338/api/DASSDetails', 
+              'https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/DASSDetails', 
+
             {
                 Q1: this.state.Q1,
                 Q2: this.state.Q2,
@@ -203,7 +212,7 @@ class DASSModule extends Component
                 Q19: this.state.Q19,
                 Q20: this.state.Q20,
                 Q21: this.state.Q21,
-                EntityID :  this.state.entityId,
+                EntityID :  localStorage.getItem("KNC"),
                 OMPQID: this.state.id,
                 
     
@@ -216,14 +225,37 @@ class DASSModule extends Component
             })
             .catch(error => {
                 console.log(error)
+            });
+            axios
+            .post(
+              "https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/saveWorkflow",
+              // "https://localhost:44338/api/saveWorkflow",
+        
+              {
+                KNC: localStorage.getItem("KNC"),
+                DateCompleted: new Date(),
+                processID: localStorage.getItem("WorkFlowId")
+              }
+            )
+            .then((response) => {
+              if (response.data === "Success")
+              {
+                console.log(response);
+            auth.login(() => {
+              this.props.history.push("/Home");
+            });
+              }
             })
+            .catch((error) => {
+              console.log(error);
+            });
         }
     }
     
     render()
     {
         return(
-            <div className="container">
+            <div id="MainDiv">
             <div className="row">
             <div className="col-md-12">
             <div className="page-title title"> 
@@ -282,4 +314,4 @@ class DASSModule extends Component
     }
 
 }
-export default DASSModule
+export default withRouter(DASSModule)
