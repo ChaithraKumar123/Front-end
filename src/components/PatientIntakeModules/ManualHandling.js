@@ -222,7 +222,7 @@ class ManualHandling extends Component {
       <div id="MainDiv">
         <div className="page-title lg">
           <div className="title">
-            <h1>Manual Handling Module</h1>
+            <h1>Manual Handling</h1>
           </div>
         </div>
         <div className = "row has-form-forms">

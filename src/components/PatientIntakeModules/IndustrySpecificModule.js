@@ -267,7 +267,7 @@ class IndustrySpecificModule extends Component {
       <div id="MainDiv">
         <div className="page-title lg">
           <div className="title">
-            <h1>Industry Specific Module</h1>
+            <h1>Industry</h1>
           </div>
         </div>
         <div className = "row has-form-forms">

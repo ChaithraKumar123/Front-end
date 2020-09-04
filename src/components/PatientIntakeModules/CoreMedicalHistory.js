@@ -532,7 +532,7 @@ roundedDropdown= ()=> {
       <div id="MainDiv">
         <div className="page-title lg">
           <div className="title">
-            <h1>Core Medical History Module</h1>
+            <h1>Medical History</h1>
           </div>
         </div>
         <div className = "row has-form-forms">

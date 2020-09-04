@@ -20,6 +20,8 @@ class Step3 extends Component {
   };
 
   continue = (e) => {
+    const isValid = this.validate();
+
     if (
       // !(this.props.state.country === "") &&
       this.props.state.addressLine1 !== "" &&
@@ -37,6 +39,30 @@ class Step3 extends Component {
   //   this.props.nextStep();
   // };
 
+  validate = () => {
+    let nameError = "";
+
+    const val = this.props.state;
+    if (
+      (val.addressLine1 === "" )||
+      (val.suburb === "") ||
+      (val.stateName === "" )||
+      (val.postCode === "") 
+    ) {
+      nameError = "This field is required";
+    }
+    if (nameError) {
+      this.setState({ nameError });
+      return false;
+    } else {
+      this.setState({
+        nameError: "",
+      });
+      return true;
+    }
+  };
+
+
   saveEthnicity = (data) => {
     this.setState({ Countryoptions: data });
     this.props.countryCodef(data);
@@ -44,6 +70,7 @@ class Step3 extends Component {
     console.log(this.Countryoptions);
   };
   componentDidMount() {
+
     this.props.stateCodef(stateOptions);
 
     // Typical usage (don't forget to compare props):
@@ -80,7 +107,13 @@ class Step3 extends Component {
                 value={state.addressLine1}
                 onChange={handleChange("addressLine1")}
               />
-              <div className="errorMessage">{state.addressLine1Error}</div>
+
+            <div className="errorMessage">{state.addressLine1Error}</div>
+                <div className="errorMessage">
+                 {state.addressLine1Error ? null:(this.props.state.addressLine1 === "" && this.state.nameError)}
+            </div>
+
+              {/* <div className="errorMessage">{state.addressLine1Error}</div> */}
 
             </div>
           </div>
@@ -111,7 +144,12 @@ class Step3 extends Component {
                 value={state.suburb}
                 onChange={handleChange("suburb")}
               />
-            <div className="errorMessage">{state.suburbError}</div>
+                <div className="errorMessage">{state.suburbError}</div>
+                <div className="errorMessage">
+                 {state.suburbError ? null:(this.props.state.suburb === "" && this.state.nameError)}
+            </div>
+
+            {/* <div className="errorMessage">{state.suburbError}</div> */}
 
             </div>
           </div>
@@ -137,7 +175,13 @@ class Step3 extends Component {
            menuPlacement="top"
             onChange={handleChange('stateName')} 
             value={state.stateName}></Select>
-            <div className="errorMessage">{state.stateNameError}</div>
+
+<div className="errorMessage">{state.stateNameError}</div>
+                <div className="errorMessage">
+                 {state.stateNameError ? null:(this.props.state.stateName === "" && this.state.nameError)}
+            </div>
+
+            {/* <div className="errorMessage">{state.stateNameError}</div> */}
 
             </div>
           </div>
@@ -152,7 +196,12 @@ class Step3 extends Component {
                 value={state.postCode}
                 onChange={handleChange("postCode")}
               ></input>
-              <div className="errorMessage">{state.postCodeError}</div>
+
+<div className="errorMessage">{state.postCodeError}</div>
+                <div className="errorMessage">
+                 {state.postCodeError ? null:(this.props.state.postCode === "" && this.state.nameError)}
+            </div>
+              {/* <div className="errorMessage">{state.postCodeError}</div> */}
             </div>
           </div>
 
@@ -183,7 +232,7 @@ class Step3 extends Component {
             <div className="errorMessage">{state.countryError}</div>
           </div>
 
-          {this.state.submit ? <Errormsg /> : null}
+          {/* {this.state.submit ? <Errormsg /> : null} */}
 
           <div className="btn-block prev-back-btn">
             <button className="btn btn-outline-primary" onClick={this.back}>

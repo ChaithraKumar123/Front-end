@@ -217,7 +217,7 @@ class CorePsychologicalModule extends Component {
       <div id="MainDiv">
         <div className="page-title lg">
           <div className="title">
-            <h1>Core Psychological Module</h1>
+            <h1>Wellbeing</h1>
           </div>
         </div>
         <div className = "contentSpacing row has-form-forms">

@@ -30,6 +30,8 @@ class App extends Component {
     localStorage.removeItem("login");
     localStorage.removeItem("WorkFlowId");
     localStorage.removeItem("confToken");
+    localStorage.removeItem("isAuth");
+
 
     auth.logout(() => {
       this.props.history.push("/");
@@ -70,7 +72,7 @@ class App extends Component {
               width="200px"
             />
           </a>
-          {this.state.loginstat ? (
+          {this.state.loginstat || loginstat ? (
             <DropDownButtonComponent style={{ float: "right", 	"margin-top": "26px","margin-right": "17px" }} items={this.state.items} select = {this.here} iconCss='e-icons e-image' cssClass='e-caret-hide corner'/>
             // {/* <button
             //   className="logout"

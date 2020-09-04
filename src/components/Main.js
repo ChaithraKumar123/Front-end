@@ -161,7 +161,16 @@ class Main extends Component {
     ethnicityoptions: [],
     Countryoptions: [],
     countryCode: "",
-    stateOpts: [],
+    stateOpts: [
+      { label: "ACT", value: 6 },
+      { label: "NSW", value: 3 },
+      { label: "NT", value: 4 },
+      { label: "QLD", value: 1 },
+      { label: "SA", value: 7 },
+      { label: "TAS", value: 5 },
+      { label: "VIC", value: 2 },
+      { label: "WA", value: 8 },
+    ],
     stateCode: "",
     stepActivate: false,
   };
@@ -197,20 +206,40 @@ class Main extends Component {
     });
   };
 
-  getdetails = (patient, address, employment) => {
-    let sex = patient[0].gender.replace(/\s+/g, "");
-    let temp;
-    if (sex == "M") {
-      temp = "Male";
-    } else if (sex == "F") {
-      temp = "Female";
-    } else {
-      temp = "";
+  dateFormatter = (date) => {
+    var d = new Date(new Date(Date.parse(date)).toDateString()),
+      month = "" + (d.getMonth() + 1),
+      day = "" + d.getDate(),
+      year = d.getFullYear();
+
+    if (month.length < 2) {
+      month = "0" + month;
+    }
+    if (day.length < 2) {
+      day = "0" + day;
     }
 
-    let code = this.state.ethnicityoptions.findIndex(function(item, i){return item.value === patient[0].ethnicityID})
+    return [year, month, day].join("-");
+  };
 
-    if (this.state.step === 1){
+  getdetails = (patient, address, employment) => {
+    if (patient.length) {
+      let sex = patient[0].gender.replace(/\s+/g, "");
+      let temp;
+      if (sex === "M") {
+        temp = "M";
+      } else if (sex === "F") {
+        temp = "F";
+      } else if (sex === "U") {
+        temp = "U";
+      } else {
+        temp = "";
+      }
+
+      let code = this.state.ethnicityoptions.findIndex(function (item, i) {
+        return item.value === patient[0].ethnicityID;
+      });
+
       this.setState({
         titleOpt: patient[0].title ? patient[0].title : this.state.titleOpt,
         givenName: patient[0].firstName
@@ -221,7 +250,7 @@ class Main extends Component {
           ? patient[0].middleNames
           : this.state.middleName,
         DateofB: patient[0].dateOfBirth
-          ? patient[0].dateOfBirth
+          ? this.dateFormatter(patient[0].dateOfBirth)
           : this.state.DateofB,
         gender: temp ? temp : this.state.gender,
         mobileNumber:
@@ -229,22 +258,49 @@ class Main extends Component {
             ? "0" + patient[0].mobile
             : this.state.mobileNumber,
         email: patient[0].email ? patient[0].email : this.state.email,
-         culturalGroup:  code ? this.state.ethnicityoptions[code]: this.state.culturalGroup,
-        //step2
-        // CurrentPosition: "",
-        // EmpStDate: "",
-        // Department: "",
-        // LineTask: "",
-        // CompClaim: "",
-        // CompClaimDetails: "",
+        culturalGroup: code
+          ? this.state.ethnicityoptions[code]
+          : this.state.culturalGroup,
+      });
+      this.setState({
+        ethnicityCode: this.state.ethnicityoptions[code].value,
+      });
 
-        // // country: address.familyDoctor ? address.familyDoctor : "",
-        // //step4
-
+      this.setState({
+        familyDoctor: patient[0].familyDoctor
+          ? patient[0].familyDoctor
+          : this.state.familyDoctor,
+        lastVisit: patient[0].lastVisit
+          ? this.dateFormatter(patient[0].lastVisit)
+          : this.state.lastVisit,
+        reasonOfVisit: patient[0].whyLastVisit
+          ? patient[0].whyLastVisit
+          : this.state.reasonOfVisit,
+        height: patient[0].height ? patient[0].height : this.state.height,
+        weight: patient[0].weightKg ? patient[0].weightKg : this.state.weight,
+        handedness: patient[0].handedness
+          ? patient[0].handedness
+          : this.state.handedness,
       });
     }
-    if (this.state.step === 2){
-      let stcode = this.state.stateOpts.findIndex(function(item, i){return item.value === address[0].stateID})
+
+    if (address.length) {
+      let statecode = [
+        { label: "ACT", value: 6 },
+        { label: "NSW", value: 3 },
+        { label: "NT", value: 4 },
+        { label: "QLD", value: 1 },
+        { label: "SA", value: 7 },
+        { label: "TAS", value: 5 },
+        { label: "VIC", value: 2 },
+        { label: "WA", value: 8 },
+      ].findIndex(function (item, i) {
+        return item.value === address[0].stateID;
+      });
+
+      this.setState({
+        stateCode: this.state.stateOpts[statecode].value,
+      });
 
       this.setState({
         // //step3
@@ -255,21 +311,14 @@ class Main extends Component {
           ? address[0].line2
           : this.state.addressLine2,
         suburb: address[0].suburb ? address[0].suburb : this.state.suburb,
-         stateName: stcode ? this.state.stateOpts[stcode]: this.state.stateName,
-        postCode: address[0].postCode ? address[0].postCode : this.state.postCode,
-      })
-    }
-
-    if (this.state.step === 3){
-
-      this.setState({
-        familyDoctor: patient[0].familyDoctor ? patient[0].familyDoctor : this.state.familyDoctor,
-        lastVisit: patient[0].lastVisit ? patient[0].lastVisit : this.state.lastVisit,
-        reasonOfVisit: patient[0].whyLastVisit ? patient[0].whyLastVisit : this.state.reasonOfVisit,
-        height: patient[0].height ? patient[0].height : this.state.height,
-        weight: patient[0].weightKg ? patient[0].weightKg : this.state.weight,
-        handedness: patient[0].handedness ? patient[0].handedness : this.state.handedness,
-      })
+        stateName:
+          statecode == 0 || statecode
+            ? this.state.stateOpts[statecode]
+            : this.state.stateName,
+        postCode: address[0].postCode
+          ? address[0].postCode
+          : this.state.postCode,
+      });
     }
   };
 
@@ -307,7 +356,7 @@ class Main extends Component {
             DateofBisValid: false,
           });
           return false;
-        } 
+        }
         if (
           new Date().getFullYear() - e.target.valueAsDate.getFullYear() >
           110
@@ -317,8 +366,7 @@ class Main extends Component {
             DateofBisValid: false,
           });
           return false;
-        }
-        else this.setState({ DateofBisValid: true, DateofBError: "" });
+        } else this.setState({ DateofBisValid: true, DateofBError: "" });
         return true;
       } catch (err) {
         this.setState({
@@ -599,7 +647,7 @@ class Main extends Component {
         loadingCircle={<IsLoading />}
         stepReset={this.stepReset}
         state={this.state}
-        switchfunc = {this.props.switchFunc}
+        switchfunc={this.props.switchFunc}
       />
     );
   };
@@ -646,35 +694,45 @@ class Main extends Component {
           </Route> */}
 
           <Switch>
-            <Route path="/OreboModule" component={OreboModule}></Route>
-            <Route path="/painIndicator" component={BodyImageMain}></Route>
+            {/* <Route path="/OreboModule" component={OreboModule}></Route> */}
 
-            <Route
+            <ProtectedRoute path="/OreboModule" component={OreboModule} />
+
+            <ProtectedRoute
+              path="/painIndicator"
+              component={BodyImageMain}
+            ></ProtectedRoute>
+
+            <ProtectedRoute
               path="/CoreMedicalHistory"
+              switchfunc={this.props.switchFunc}
               roundedDropdown={this.roundedDropdown}
               component={CoreMedicalHistory}
-            ></Route>
+            ></ProtectedRoute>
 
-            <Route
+            <ProtectedRoute
               path="/CorePsychologicalModule"
               component={CorePsychologicalModule}
-            ></Route>
+            ></ProtectedRoute>
 
-            <Route path="/RedFlagModule" component={RedFlagModule}></Route>
+            <ProtectedRoute
+              path="/RedFlagModule"
+              component={RedFlagModule}
+            ></ProtectedRoute>
 
-            <Route
+            <ProtectedRoute
               path="/CoreLifeStyleModule"
               component={CoreLifeStyleModule}
-            ></Route>
+            ></ProtectedRoute>
 
-            <Route path="/ManualHandling">
+            <ProtectedRoute path="/ManualHandling">
               <ManualHandling state={this.state} />
-            </Route>
+            </ProtectedRoute>
             {/* <Route path="/ManualHandling" component={ManualHandling}></Route> */}
 
-            <Route path="/IndustrySpecificModule">
+            <ProtectedRoute path="/IndustrySpecificModule">
               <IndustrySpecificModule state={this.state} />
-            </Route>
+            </ProtectedRoute>
 
             {/* <Route
               path="/IndustrySpecificModule"
@@ -682,32 +740,58 @@ class Main extends Component {
               component={IndustrySpecificModule}
             ></Route> */}
 
-
-            <Route
+            <ProtectedRoute
               path="/FamilyHistoryModule"
               component={FamilyHistoryModule}
-            ></Route>
+            ></ProtectedRoute>
 
-            <Route path="/NDSModule" component={NDSModule}></Route>
+            <ProtectedRoute
+              path="/NDSModule"
+              component={NDSModule}
+            ></ProtectedRoute>
 
-            <Route path="/QuebecModule" component={QuebecModule}></Route>
+            <ProtectedRoute
+              path="/QuebecModule"
+              component={QuebecModule}
+            ></ProtectedRoute>
 
-            <Route path="/LEFSModule" component={LEFSModule}></Route>
+            <ProtectedRoute
+              path="/LEFSModule"
+              component={LEFSModule}
+            ></ProtectedRoute>
 
-            <Route path="/PSSModule" component={PSSModule}></Route>
+            <ProtectedRoute
+              path="/PSSModule"
+              component={PSSModule}
+            ></ProtectedRoute>
 
-            <Route path="/FABQMain" component={FABQMain}></Route>
+            <ProtectedRoute
+              path="/FABQMain"
+              component={FABQMain}
+            ></ProtectedRoute>
 
-            <Route path="/FOSQModule" component={FOSQModule}></Route>
-            <Route path="/PainScaleModule" component={PainScaleModule}></Route>
+            <ProtectedRoute
+              path="/FOSQModule"
+              component={FOSQModule}
+            ></ProtectedRoute>
+            <ProtectedRoute
+              path="/PainScaleModule"
+              component={PainScaleModule}
+            ></ProtectedRoute>
 
-            <Route path="/DASSModule" component={DASSModule}></Route>
-            <Route path="/DASHModule" component={DASHModule}></Route>
+            <ProtectedRoute
+              path="/DASSModule"
+              component={DASSModule}
+            ></ProtectedRoute>
+            <ProtectedRoute
+              path="/DASHModule"
+              component={DASHModule}
+            ></ProtectedRoute>
 
-            <Route
+            <ProtectedRoute
               path="/MusculoskeletonModule"
               component={MusculoskeletonModule}
-            ></Route>
+            ></ProtectedRoute>
           </Switch>
         </Switch>
       </Router>

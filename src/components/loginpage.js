@@ -52,6 +52,10 @@ class Loginpage extends Component {
 
     localStorage.setItem("login", e.authenticationResult.idToken);
 
+
+    localStorage.setItem("isAuth", true);
+
+
     var jwtDecode = require("jwt-decode");
     var decoded = jwtDecode(e.authenticationResult.idToken);
     localStorage.setItem("KNC", decoded.sub);

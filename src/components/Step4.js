@@ -28,13 +28,39 @@ class Step4 extends Component {
 
   }
 
+  validate = () => {
+    let nameError = "";
+
+    const val = this.props.state;
+    if (
+      (val.handedness === "" )||
+      (val.heightisValid === "") ||
+      (val.weightisValid === "" )
+    ) {
+      nameError = "This field is required";
+    }
+    if (nameError) {
+      this.setState({ nameError });
+      return false;
+    } else {
+      this.setState({
+        nameError: "",
+      });
+      return true;
+    }
+  };
+
 
 
   continue = (e) => {
+
+    const isValid = this.validate();
+
+
     if (
       !(this.props.state.handedness === "") &&
-      this.props.state.heightisValid &&
-      this.props.state.weightisValid    ) {
+      this.props.state.height &&
+      this.props.state.weight    ) {
 
       
  const schema ={
@@ -45,7 +71,7 @@ class Step4 extends Component {
     "MiddleNames":  this.props.state.middleName,
     "Email": this.props.state.email,
     "Gender":this.props.state.gender,
-    "culturalGroup":this.props.state.ethnicityCode,
+    "culturalGroup":this.props.state.ethnicityCode? this.props.state.ethnicityCode : 1101,
     "DateOfBirth":this.props.state.DateofB,
     "Mobile":this.props.state.mobileNumber,
 
@@ -59,7 +85,7 @@ class Step4 extends Component {
     "Line1":this.props.state.addressLine1,
     "Line2":this.props.state.addressLine2,
     "Suburb":this.props.state.suburb,
-    "StateID":this.props.state.stateCode,
+    "StateID": this.props.state.stateCode,
     "PostCode":this.props.state.postCode,
     "CountryID":this.props.state.countryCode,
 
@@ -108,6 +134,7 @@ class Step4 extends Component {
   };
 
 
+  
   // continue = (e) => {
   //   e.preventDefault();
   //   console.log("done")
@@ -148,7 +175,13 @@ class Step4 extends Component {
                 value={state.height}
                 onChange={handleChange("height")}
               ></input>
-              <div className="errorMessage">{state.heightError}</div>
+
+<div className="errorMessage">{state.heightError}</div>
+                <div className="errorMessage">
+                 {state.heightError ? null:(this.props.state.height === "" && this.state.nameError)}
+            </div>
+
+              {/* <div className="errorMessage">{state.heightError}</div> */}
 
               </div>
             </div>
@@ -163,7 +196,11 @@ class Step4 extends Component {
                 value={state.weight}
                 onChange={handleChange("weight")}
               ></input>
-              <div className="errorMessage">{state.weightError}</div>
+                          <div className="errorMessage">{state.weightError}</div>
+                <div className="errorMessage">
+                 {state.weightError ? null:(this.props.state.weight === "" && this.state.nameError)}
+            </div>
+              {/* <div className="errorMessage">{state.weightError}</div> */}
 
               </div>
             </div>
@@ -206,8 +243,16 @@ class Step4 extends Component {
               />
               <span>Ambidextrous</span>
               </div>
+
+              <div className="errorMessage">{state.handednessError}</div>
+                <div className="errorMessage">
+                 {state.handednessError ? null:(this.props.state.handedness === "" && this.state.nameError)}
+            </div>
+
               </div>
-            <div className="errorMessage">{state.handednessError}</div>
+
+
+            {/* <div className="errorMessage">{state.handednessError}</div> */}
             
             <div>
               <div className= "form-group">
@@ -250,7 +295,7 @@ class Step4 extends Component {
             </div>
   
   
-          {this.state.submit ? <Errormsg /> : null}
+          {/* {this.state.submit ? <Errormsg /> : null} */}
   
          <div className="btn-block prev-back-btn">
             <button className="btn btn-outline-primary" onClick={this.back}>

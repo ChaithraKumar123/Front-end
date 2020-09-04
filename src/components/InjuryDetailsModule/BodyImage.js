@@ -322,7 +322,7 @@ class BodyImage extends Component {
       <div id="MainDiv">
         <div className="page-title lg">
           <div className="title">
-            <h1>Pain Indicator</h1>
+            <h1>Body Chart</h1>
             <p>
               {" "}
               Please select where your most important problem is first 

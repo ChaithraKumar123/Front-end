@@ -204,6 +204,7 @@ class Signup extends Component {
               .catch((error) => {
                 console.log(error);
               });
+              localStorage.setItem("isAuth", true);
 
               localStorage.setItem("confToken", randomToken(16));
               this.setState({

@@ -498,7 +498,7 @@ class MusculoskeletonModule extends Component {
       <div id="MainDiv">
         <div className="page-title lg">
           <div className="title">
-            <h1>Musculoskeletal Pain Questionnaire</h1>
+            <h1>Musculoskeletal Screen Medical History</h1>
           </div>
         </div>
         <div className = "row has-form-forms">

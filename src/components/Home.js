@@ -99,11 +99,11 @@ class Home extends Component {
 
   continue = (e, id) => {
     localStorage.setItem("WorkFlowId", id) 
-    if (e === "Core Medical History") {
+    if (e === "Medical History") {
       auth.login(() => {
         this.props.history.push("/CoreMedicalHistory");
       });
-    } else if (e === "Lifestyle Medical History") {
+    } else if (e === "Lifestyle") {
       auth.login(() => {
         this.props.history.push("/CoreLifeStyleModule");
       });
@@ -117,7 +117,7 @@ class Home extends Component {
       auth.login(() => {
         this.props.history.push("/patientDetails");
       });
-    } else if (e === "Psychological Medical History") {
+    } else if (e === "Wellbeing") {
       auth.login(() => {
         this.props.history.push("/CorePsychologicalModule");
       });
@@ -125,23 +125,23 @@ class Home extends Component {
       auth.login(() => {
         this.props.history.push("/MusculoskeletonModule");
       });
-    } else if (e === "Red Flag Medical History") {
+    } else if (e === "Health check") {
       auth.login(() => {
         this.props.history.push("/RedFlagModule");
       });
-    } else if (e === "Family History Medical History") {
+    } else if (e === "Family History") {
       auth.login(() => {
         this.props.history.push("/FamilyHistoryModule");
       });
-    } else if (e === "Manual Handling Screen") {
+    } else if (e === "Manual Handling") {
       auth.login(() => {
         this.props.history.push("/ManualHandling");
       });
-    } else if (e === "Industry Specific Screen") {
+    } else if (e === "Industry") {
       auth.login(() => {
         this.props.history.push("/IndustrySpecificModule");
       });
-    } else if (e === "Injury Details") {
+    } else if (e === "Body Chart") {
       auth.login(() => {
         this.props.history.push("/painIndicator");
       });
@@ -359,7 +359,7 @@ class Home extends Component {
 
                 {/* {this.todoList()} */}
                 {Array.from(this.state.CurrentForm, (e, i) => {
-                  return this.todoList(e[12],e[0]);
+                  return this.todoList(e[13],e[0]);
                 })}
               </div>
             ) : null}
@@ -370,12 +370,12 @@ class Home extends Component {
 
                 {Array.from(this.state.progressList, (e, i) => {
                   if (
-                    e[12] === "Personal Details" ||
-                    e[12] === "Lifestyle Medical History" ||
-                    e[12] === "Musculoskeletal Screen Medical History" ||
-                    e[12] === "Injury Details"
+                    e[13] === "Personal Details" ||
+                    e[13] === "Lifestyle" ||
+                    e[13] === "Musculoskeletal Screen Medical History" ||
+                    e[13] === "Body Chart"
                   ) {
-                    return this.completedList(e[12], e[0]);
+                    return this.completedList(e[13], e[0]);
                   } else if (e[12] === "Current Employment Details") {
                     return null;
                   }
@@ -391,12 +391,12 @@ class Home extends Component {
 
                 {Array.from(this.state.progressList, (e, i) => {
                   if (
-                    e[12] === "Core Medical History" ||
-                    e[12] === "Psychological Medical History" ||
-                    e[12] === "Red Flag Medical History" ||
-                    e[12] === "Family History Medical History"
+                    e[13] === "Medical History" ||
+                    e[13] === "Wellbeing" ||
+                    e[13] === "Health check" ||
+                    e[13] === "Family History"
                   ) {
-                    return this.completedList(e[12], e[0]);
+                    return this.completedList(e[13], e[0]);
                   }
                 })}
 

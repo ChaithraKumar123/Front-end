@@ -180,7 +180,7 @@ class CoreLifeStyleModule extends Component {
       <div id="MainDiv">
         <div className="page-title lg">
           <div className="title">
-            <h1>Core Life Style Module</h1>
+            <h1>Lifestyle</h1>
           </div>
         </div>
 
