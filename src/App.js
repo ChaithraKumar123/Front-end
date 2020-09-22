@@ -58,6 +58,22 @@ class App extends Component {
   }
   }
 
+
+  componentDidMount(){
+
+    if (localStorage.getItem("confToken") || localStorage.getItem("login")){
+
+      
+      localStorage.setItem("isAuth", true);
+
+    }
+    else{
+      localStorage.removeItem("isAuth");
+
+    }
+    
+  }
+
   render() {
     var loginstat = localStorage.getItem("login");
     return (

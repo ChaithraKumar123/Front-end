@@ -213,11 +213,16 @@ class CorePsychologicalModule extends Component {
   };
 
   render() {
+    const {Leftarrow} = this.props.pageProps
+
     return (
       <div id="MainDiv">
         <div className="page-title lg">
           <div className="title">
-            <h1>Wellbeing</h1>
+          {Leftarrow("/")}
+          <div style = {{float: "right", marginLeft : "15px"}}>
+          <h1>Wellbeing</h1>
+            </div>
           </div>
         </div>
         <div className = "contentSpacing row has-form-forms">

@@ -37,12 +37,14 @@ render_main=()=>{
 showStep =()=>{
     const{step}=this.state;
     if(step===1)
-    return (<BodyImage  nextStep1={this.nextStep1} state={this.state}/>);
+    return (<BodyImage Leftarrow = {this.props.pageProps.Leftarrow}  nextStep1={this.nextStep1} state={this.state}/>);
     else
     return (<BodyImageTabs state={this.state} render_main={this.render_main}/>)
     }
   render()
   {
+    //const {Leftarrow} = this.props.pageProps
+  
       return (
     
         <div><p>{this.step}</p>{

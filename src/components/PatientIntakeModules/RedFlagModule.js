@@ -154,11 +154,16 @@ class RedFlagModule extends Component {
     );
   };
   render() {
+    const {Leftarrow} = this.props.pageProps
+
     return (
       <div id="MainDiv">
         <div className="page-title lg">
           <div className="title">
-            <h1>Health check</h1>
+          {Leftarrow("/")}
+          <div style = {{float: "right", marginLeft : "15px"}}>
+          <h1>Health check</h1>
+            </div>
           </div>
         </div>
         <div>

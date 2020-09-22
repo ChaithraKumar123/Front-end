@@ -127,18 +127,22 @@ class BodyImageTabs extends Component {
       )
       .then((response) => {
         console.log(response.data);
+
         for (let i = 0; i < response.data.length; i++) {
+          if (response.data[i].painRegionID === 0){
+            continue
+          }
           temp.push({
             id: i,
             region_name: response.data[i].painWhere,
             PainRegionID: response.data[i].painRegionID,
             pain_side: response.data[i].painSide,
-            pain_duration: response.data[i].occurredCurrent.split("T")[0],
+            pain_duration: response.data[i].occurredCurrent.split("T")[0] === "1900-01-01" ? null : response.data[i].occurredCurrent.split("T")[0],
             pain_duration_approx: response.data[i].occurredCurrentApprox,
             pain_firstime: response.data[i].occurrence,
             pain_first_reason: response.data[i].causes,
             pain_firstime_approx: response.data[i].occurredFirstApprox,
-            pain_firstime_date: response.data[i].occurredFirst.split("T")[0],
+            pain_firstime_date: response.data[i].occurredFirst.split("T")[0] === "1900-01-01" ? null : response.data[i].occurredFirst.split("T")[0],
             pain_type: response.data[i].painType,
             pain_type_reason: response.data[i].painTypeOther,
             pain_often: response.data[i].frequency,
@@ -170,7 +174,7 @@ class BodyImageTabs extends Component {
             //InjuryRegion: update(this.state.InjuryRegion, {[i]:people[i]})
 
             InjuryRegion: update(this.state.InjuryRegion, {
-              $splice: [[i, 1, temp[i]]],
+              $splice: [[i-1, 1, temp[i-1]]],
             }),
           });
         }
@@ -261,45 +265,47 @@ class BodyImageTabs extends Component {
         if (response.data === "Success"){
           alert("Successfully Submitted!");
           console.log(response);
-
-          if (this.state.step1 === 1){
-            axios
-            .post(
-              "https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/saveWorkflow",
-              // "https://localhost:44338/api/saveWorkflow",
-    
-              {
-                KNC: localStorage.getItem("KNC"),
-                DateCompleted: new Date(),
-                processID: localStorage.getItem("WorkFlowId")
-
-              }
-            )
-            .then((response) => {
-              if (response)
-              {
-                console.log(response);
-                auth.login(() => {
-                  this.props.history.push("/Home");
-                });
-  
-              }
-            })
-            .catch((error) => {
-              console.log(error);
-            });
-          }
         }
 
 
       })
+      .then(()=> {
+        if (this.state.step1 === 1){
+          axios
+          .post(
+            "https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/saveWorkflow",
+            // "https://localhost:44338/api/saveWorkflow",
+  
+            {
+              KNC: localStorage.getItem("KNC"),
+              DateCompleted: new Date(),
+              processID: localStorage.getItem("WorkFlowId")
+
+            }
+          )
+          .then((response) => {
+            if (response)
+            {
+              console.log(response);
+              // auth.login(() => {
+              //   this.props.history.push("/Home");
+              // });
+
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+        }
+      }
+      )
       .catch((error) => {
         console.log(error);
       });
 
-      auth.login(() => {
-        this.props.history.push("/Home");
-      });
+      // auth.login(() => {
+      //   this.props.history.push("/Home");
+      // });
 
   };
 
@@ -310,11 +316,12 @@ class BodyImageTabs extends Component {
     event.preventDefault();
     const isValid = this.validate();
     if (isValid) {
-      this.apicall(step1);
+     // this.apicall(step1);
 
-      this.setState({
+      setTimeout(()=>     this.setState({
         step1: step1 + 1,
-      });
+      }), this.apicall(step1))
+
     }
   };
 
@@ -338,8 +345,13 @@ class BodyImageTabs extends Component {
     const isValid = this.validate();
     if (isValid) {
       try{
-        var no = this.apicall(this.state.step1);
-        console.log(no);
+        
+        setTimeout(()=> console.log("wait"),  this.apicall(this.state.step1),      
+        auth.login(() => {
+            this.props.history.push("/Home");
+          }))
+
+       // console.log(no);
       }
       catch(err){
         console.log(err)
@@ -407,6 +419,9 @@ class BodyImageTabs extends Component {
           </div>
         </div>
 
+        <div className = 'row has-form-forms'>
+
+
         <InjuryQuestions
           InjuryRegion={this.state.InjuryRegion[this.state.step1 - 1]}
           handleChange={this.handleChange}
@@ -416,12 +431,13 @@ class BodyImageTabs extends Component {
 
         <div className="btn-block prev-back-btn">
           {this.state.step1 >= 1 && (
-            <button className="btn btn-outline-primary" onClick={this.prevStep}>
+            <button style = {{ "min-width": "241px"}} className="btn btn-outline-primary" onClick={this.prevStep}>
               Back
             </button>
           )}
           {this.state.step1 !== state.body_area1.length && (
             <button
+            style = {{ "min-width": "241px"}}
               className="btn btn-primary modal-btn"
               data-modal-id="sampleModal"
               onClick={this.nextStep}
@@ -431,6 +447,7 @@ class BodyImageTabs extends Component {
           )}
           {this.state.step1 === state.body_area1.length && (
             <button
+            style = {{ "min-width": "241px"}}
               className="btn btn-primary modal-btn"
               data-modal-id="sampleModal"
               onClick={this.completeForm}
@@ -441,6 +458,8 @@ class BodyImageTabs extends Component {
         </div>
 
       </div>
+      </div>
+
     );
   }
 }

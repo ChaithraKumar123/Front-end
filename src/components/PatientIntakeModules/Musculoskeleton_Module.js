@@ -494,11 +494,16 @@ class MusculoskeletonModule extends Component {
     );
   };
   render() {
+    const {Leftarrow} = this.props.pageProps
+
     return (
       <div id="MainDiv">
         <div className="page-title lg">
           <div className="title">
-            <h1>Musculoskeletal Screen Medical History</h1>
+          {Leftarrow("/")}
+          <div style = {{float: "right", marginLeft : "15px"}}>
+          <h1>Musculoskeletal Screen Medical History</h1>
+            </div>
           </div>
         </div>
         <div className = "row has-form-forms">

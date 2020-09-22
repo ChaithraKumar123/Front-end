@@ -192,6 +192,9 @@ class BodyImage extends Component {
       .then((response) => {
         console.log(response.data[0]);
         for (let i = 0; i < response.data.length; i++) {
+          if (response.data[i].painRegionID === 0){
+            continue
+          }
           temp.push(response.data[i].painWhere);
           temp1.push(response.data[i].painRegionID);
           temp2.push(response.data[i].pobcpRegionID);
@@ -199,13 +202,13 @@ class BodyImage extends Component {
           this.setState({
             //body_area: body_area,
             body_region_id: update(this.state.body_region_id, {
-              $splice: [[i, 1, temp1[i]]],
+              $splice: [[i-1, 1, temp1[i-1]]],
             }),
             data_id: update(this.state.data_id, {
-              $splice: [[i, 1, temp2[i]]],
+              $splice: [[i-1, 1, temp2[i-1]]],
             }),
             body_area: update(this.state.body_area, {
-              $splice: [[i, 1, temp[i]]],
+              $splice: [[i-1, 1, temp[i-1]]],
             }),
           });
         }
@@ -318,18 +321,27 @@ class BodyImage extends Component {
   }
 
   render() {
+    const {Leftarrow} = this.props
+
     return (
       <div id="MainDiv">
         <div className="page-title lg">
           <div className="title">
-            <h1>Body Chart</h1>
-            <p>
+          {Leftarrow("/")}
+          <div style = {{float: "right", marginLeft : "15px"}}>
+          <h1>Body Chart</h1>
+            </div>
+            {/* <p>
               {" "}
               Please select where your most important problem is first 
              {" "}
             </p>
-            <p> (Select up to 3 areas of pain)</p>
+            <p> (Select up to 3 areas of pain)</p> */}
           </div>
+        </div>
+        <div className = "row has-form-forms">
+        <label style = {{marginBottom: "35px"}} className="abc">Please select where your most important problem is first. <br></br> (Select up to 3 areas of pain)</label>
+
         </div>
 
         <div className="form-group custom-radio-wrapper" style = {{"text-align-last": "center"}}>
@@ -1484,18 +1496,6 @@ alt=""
             </div>
           </div>
         </div>
-
-        {/*         
-        <ImageMapper
-          src= {require("./BodyImage.jpeg")}
-          width={273}
-          height = {507}
-
-          map={MAP}
-          onClick={(area) => this.clicked(area)}
-          onMouseEnter={(area, event) => this.enterArea(area, event)}
-          onMouseLeave={(area) => this.leaveArea(area)}
-        /> */}
         <br />
 
         <div>
@@ -1525,7 +1525,7 @@ alt=""
 
         <br />
         {this.state.body_area.length !== 0 && (
-          <div>
+          <div className = "row has-form-forms">
             <button
               className="btn btn-primary btn-block"
               onClick={this.continue}

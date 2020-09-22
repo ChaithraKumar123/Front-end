@@ -243,7 +243,7 @@ class Signup extends Component {
       return false;
     } else if (this.state.password.length < 8) {
       this.setState({
-        passwordErr: "Password must be atleast 8 characters long",
+        passwordErr: "8 characters",
       });
       return false;
     } else {
@@ -327,7 +327,7 @@ class Signup extends Component {
               <div className="page-title lg">
                 <div className="title">
                 <h1 style = {{float : "left"}}> Let's create your account</h1>
-                <img style = {{float : "right", marginLeft : "200px",  marginBottom: "-4px", marginTop: "-19px"}} src={require("./whitelogo.png")} alt = "" height = "60px"/>   
+                {/* <img style = {{float : "right", marginLeft : "200px",  marginBottom: "-4px", marginTop: "-19px"}} src={require("./whitelogo.png")} alt = "" height = "60px"/>    */}
                   {/* <p> Let's create your account</p> */}
                 </div>
               </div>
@@ -419,7 +419,7 @@ class Signup extends Component {
                       <label className="abc">Password</label>
                       <input
                         className="form-control"
-                        placeholder = "Password must be atleast 8 characters long"
+                        placeholder = "8 characters"
                         id="pass"
                         name="pass"
                         type="password"
@@ -461,8 +461,8 @@ class Signup extends Component {
                     />
                     <span></span>
                   </div>
-                  <div style = {{float : "right" , marginRight: "55px"}}>
-                  I agree to <a style = {{"cursor":"pointer"}} onClick = {this.termslink}><b>Work Healthy Australia's terms</b></a>
+                  <div style = {{float : "right" , marginRight: "80px"}}>
+                  I agree to <a style = {{"cursor":"pointer"}} onClick = {this.termslink}><b style = {{color: "#563070"}}>Work Healthy Australia's terms</b></a>
 
                   </div>
 

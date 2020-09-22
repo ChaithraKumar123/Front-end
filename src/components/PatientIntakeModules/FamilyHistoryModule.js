@@ -198,11 +198,16 @@ class FamilyHistoryModule extends Component {
   }
 
   render() {
+    const {Leftarrow} = this.props.pageProps
+
     return (
-      <div id="MainDiv" className = {{height: "500px"}}>
+      <div id="MainDiv">
         <div className="page-title lg" style = {{    marginBottom: "80px"}}>
           <div className="title">
-            <h1>Family History</h1>
+          {Leftarrow("/")}
+          <div style = {{float: "right", marginLeft : "15px"}}>
+          <h1>Family History</h1>
+            </div>
           </div>
         </div>
         <div class="row has-form-forms">
@@ -235,7 +240,7 @@ class FamilyHistoryModule extends Component {
           })}
           options={family_disorder_options} 
           placeholder="select" 
-          menuPlacement="top"
+          // menuPlacement="top"
           isSearchable
           isMulti 
           onChange={this.onChangeMultipleSelect('family_disorder')} value={this.state.family_disorder}></Select>

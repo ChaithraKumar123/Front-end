@@ -9,6 +9,7 @@ import {
   Route,
   Link,
   Redirect,
+  withRouter,
 } from "react-router-dom";
 
 import { ProtectedRoute } from "./protected.route";
@@ -53,6 +54,9 @@ import FormProgress from "./FormProgress";
 import { Navbar, Container, Nav, NavDropdown } from "react-bootstrap";
 import { Ouroboro } from "react-spinners-css";
 
+import auth from "./auth";
+
+
 const IsLoading = () => (
   <Ouroboro
     style={{
@@ -65,17 +69,17 @@ const IsLoading = () => (
   />
 );
 
-const Auth = {
-  isAuthenticated: false,
-  authenticate(cb) {
-    this.isAuthenticated = true;
-    //setTimeout(cb, 100) // fake async
-  },
-  signout(cb) {
-    this.isAuthenticated = false;
-    setTimeout(cb, 100); // fake async
-  },
-};
+// const Auth = {
+//   isAuthenticated: false,
+//   authenticate(cb) {
+//     this.isAuthenticated = true;
+//     //setTimeout(cb, 100) // fake async
+//   },
+//   signout(cb) {
+//     this.isAuthenticated = false;
+//     setTimeout(cb, 100); // fake async
+//   },
+// };
 
 // handleChange={this.handleChange}
 // nextStep={this.nextStep}
@@ -605,6 +609,7 @@ class Main extends Component {
           ethnicityCodef={this.ethnicityCodef}
           state={this.state}
           getdetails={this.getdetails}
+          Leftarrow = {this.Leftarrow}
         />
       );
     if (step === "abc")
@@ -660,6 +665,29 @@ class Main extends Component {
     return <FormProgress state={this.state}></FormProgress>;
   };
 
+
+  Leftarrow = (hrefString) => {
+
+    return (
+      <div style = {{float: "left", "marginTop": "4px" }}>
+      {/* <button style = {{ "background": "transparent", "border": "none"}} onClick = {()=> auth.login(() => {this.props.history.push("/")})}>
+      <img  src={require("../images/left-arrow-white.svg")} height = "25px"/>
+      </button> */}
+
+      <a href= {hrefString}>
+            <img
+              src={require("../images/left-arrow-white.svg")}
+              alt=""
+              height="25px"
+            />
+          </a>
+
+    </div>
+    )
+
+
+  }
+
   render() {
     // this.props.switchFunc();
     return (
@@ -700,6 +728,8 @@ class Main extends Component {
 
             <ProtectedRoute
               path="/painIndicator"
+              Leftarrow = {this.Leftarrow}
+
               component={BodyImageMain}
             ></ProtectedRoute>
 
@@ -708,20 +738,26 @@ class Main extends Component {
               switchfunc={this.props.switchFunc}
               roundedDropdown={this.roundedDropdown}
               component={CoreMedicalHistory}
+              Leftarrow = {this.Leftarrow}
             ></ProtectedRoute>
 
             <ProtectedRoute
               path="/CorePsychologicalModule"
+              Leftarrow = {this.Leftarrow}
+
               component={CorePsychologicalModule}
             ></ProtectedRoute>
 
             <ProtectedRoute
               path="/RedFlagModule"
+              Leftarrow = {this.Leftarrow}
+
               component={RedFlagModule}
             ></ProtectedRoute>
 
             <ProtectedRoute
               path="/CoreLifeStyleModule"
+              Leftarrow = {this.Leftarrow}
               component={CoreLifeStyleModule}
             ></ProtectedRoute>
 
@@ -742,6 +778,8 @@ class Main extends Component {
 
             <ProtectedRoute
               path="/FamilyHistoryModule"
+              Leftarrow = {this.Leftarrow}
+
               component={FamilyHistoryModule}
             ></ProtectedRoute>
 
@@ -790,6 +828,8 @@ class Main extends Component {
 
             <ProtectedRoute
               path="/MusculoskeletonModule"
+              Leftarrow = {this.Leftarrow}
+
               component={MusculoskeletonModule}
             ></ProtectedRoute>
           </Switch>
@@ -799,4 +839,4 @@ class Main extends Component {
   }
 }
 
-export default Main;
+export default withRouter(Main);

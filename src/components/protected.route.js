@@ -2,10 +2,7 @@ import React from "react";
 import { Route, Redirect } from "react-router-dom";
 import auth from "./auth";
 
-export const ProtectedRoute = ({
-  component: Component,
-  ...rest
-}) => {
+export const ProtectedRoute = ({component: Component, ...rest}) => {
   const isAuth = localStorage.getItem('isAuth');
 
   return (
@@ -13,7 +10,7 @@ export const ProtectedRoute = ({
       {...rest}
       render={props => {
         if (isAuth) {
-          return <Component {...props} />;
+          return <Component {...props} pageProps={rest}/>;
         } else {
           return (
             <Redirect

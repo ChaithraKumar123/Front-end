@@ -325,30 +325,22 @@ class Home extends Component {
           <div className = "row has-form-forms">
           {this.state.todo ? null : (
             <div  style = {{marginBottom: "65px"}}>
-              <h4
-                style={{
-                  float: "left",
-                  color: "#092C4C",
-                  "font-family": "'Poppins', sans-serif",
-                }}
-              >
                 <h4 style={{ fontWeight: "700" }}>
                   Have a new injury you need to see us about?
                 </h4>
                 
-                <label  className="abc">New Complaint</label>
 
-              </h4>
               <br></br>
-              <br></br>
+              <label  className="abc" style = {{ float : "left"}}>New Complaint</label>
               <button
-                style={{ float: "right", "margin-top": "35px;" }}
-                className="btn btn-primary modal-btn"
-                data-modal-id="sampleModal"
-                onClick={() => this.begin()}
-              >
-                Begin
-              </button>
+              style={{ float: "right", "margin-top": "4px;" , "min-width": "88px"}}
+
+              className="btn btn-primary modal-btn"
+              data-modal-id="sampleModal"
+              onClick={() => this.begin()}
+            >
+              Begin
+            </button>
             </div>
           )}
 

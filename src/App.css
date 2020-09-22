@@ -12,7 +12,7 @@ main { margin-bottom: 50px; }
 
 .btn, .form-control, .custom-radio.rounded span:before, .custom-radio.rounded span:after, .custom-radio.square span:before, .custom-radio.square span:after, .custom-switch .slider, .custom-switch .slider:before, .tile-btn { transition: all 0.3s; -webkit-transition: all 0.3s; -moz-transition: all 0.3s; -ms-transition: all 0.3s; -o-transition: all 0.3s; }
 
-#MainDiv { padding: 0 16px 16px; max-width: 650px; margin: 35px auto; box-shadow: 0px 8px 10px rgba(0, 0, 0, 0.1); overflow: auto ;border-radius: 22px;    min-height: 700px;}
+#MainDiv { padding: 0 16px 16px; max-width: 650px; margin: 35px auto; box-shadow: 0px 8px 10px rgba(0, 0, 0, 0.1); overflow: auto ;border-radius: 22px;    min-height: 300px;}
 .modal-open #MainDiv, .modal-open main { filter: blur(5px); }
 .styleguide-icon-btn { display: flex; }
 .styleguide-icon-btn .btn + .btn { margin-left: 5px; }
@@ -96,7 +96,7 @@ main { margin-bottom: 50px; }
 	.btn-block.prev-back-btn { display: flex; margin-top: 33px; }
 /*.btn-block.prev-back-btn .btn-outline-primary { width: calc(36% - 8px); }
 .btn-block.prev-back-btn .btn-primary { width: calc(64% - 8px); }*/
-.btn-block.prev-back-btn .btn { min-width: 140px; }
+.btn-block.prev-back-btn .btn { min-width: 172px; }
 .btn-block.prev-back-btn .btn + .btn { margin-left: 16px; }
 
 

@@ -113,14 +113,24 @@ class Step1 extends Component {
   }
 
   render() {
-    const { handleChange, state } = this.props;
+    const { handleChange, state, Leftarrow } = this.props;
 
     return (
       <div id="MainDiv">
         <div className="page-title lg">
           <div className="title">
+            {/* <div style = {{float: "left", "marginTop": "4px" }}>
+              <button style = {{ "background": "transparent", "border": "none"}} onClick = {()=> console.log("clicked me")}>
+              <img  src={require("../images/left-arrow-white.svg")} height = "25px"/>
+              </button>
+
+            </div> */}
+            {Leftarrow("/")}
+            <div style = {{float: "right", marginLeft : "15px"}}>
             <h1>Personal Details</h1>
             <p> Step 1 of 3 </p>
+            </div>
+
           </div>
         </div>
         <div className="contentSpacing">

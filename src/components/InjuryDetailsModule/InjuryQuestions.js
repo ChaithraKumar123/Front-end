@@ -161,7 +161,7 @@ class InjuryQuestions extends Component
                       name="pain_firstime_approx"
                       className="custom-input"
                       checked={current_Injury_Region.pain_firstime_approx} onChange={handleChangeCheck('pain_firstime_approx',current_Injury_Region.id)}/>
-                      <span>Approximate</span>
+                      <span>The date given is approximate</span>
                    </div>
                     </div>
                     </div>
@@ -272,9 +272,17 @@ class InjuryQuestions extends Component
                       <label className="abc"> On a scale of 1–10 (10 being the worst possible pain), how has the pain been over the past 24 hours?</label>
                                   <label style={{ fontSize: 12, color: "red" }}>{current_Injury_Region.pain_scale==="" && propsstate.nameError}</label>
                         <div>
-                        {Array.from(Array(1,2,3,4,5,6,7,8,9,10), (e, i) => {
+                        {Array.from(Array(1,2,3,4,5,6,7,8), (e, i) => {
                           return this.RadiobtnStyle(e,"pain_scale", current_Injury_Region.pain_scale, current_Injury_Region.id);
                         })}
+                        
+
+              </div>
+              <div>
+                        {Array.from(Array(9,10), (e, i) => {
+                          return this.RadiobtnStyle(e,"pain_scale", current_Injury_Region.pain_scale, current_Injury_Region.id);
+                        })}
+                        
 
               </div>
             </div>
@@ -689,7 +697,13 @@ class InjuryQuestions extends Component
                         <label style={{ fontSize: 12, color: "red" }}>{current_Injury_Region.pain_futurerisk==="" && propsstate.nameError}</label>
                   
               <div>
-              {Array.from(Array(1,2,3,4,5,6,7,8,9,10), (e, i) => {
+              {Array.from(Array(1,2,3,4,5,6,7,8), (e, i) => {
+                return this.RadiobtnStyle(e,"pain_futurerisk", current_Injury_Region.pain_futurerisk, current_Injury_Region.id);
+              })}
+
+              </div>
+              <div>
+              {Array.from(Array(9,10), (e, i) => {
                 return this.RadiobtnStyle(e,"pain_futurerisk", current_Injury_Region.pain_futurerisk, current_Injury_Region.id);
               })}
 
