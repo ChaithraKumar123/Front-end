@@ -169,22 +169,24 @@ class CoreMedicalHistory extends Component {
     }
   };
 
-  componentDidMount() {
+  async componentDidMount() {
     this.roundedDropdown();
 
-    axios
+    try{
+      let responsemedl = await axios
       .get(
         "https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/medlist"
       )
-      .then((response) => {
-        this.setState({
-          medications_options: response.data,
-        });
-      })
-      .catch((error) => {
-        console.log(error);
+
+      this.setState({
+        medications_options: responsemedl.data,
       });
-    axios
+    }
+    catch (err){
+      console.log(err.message)
+    }
+
+    let response = await axios
       .get(
         "https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/medhistorydetails",
         // "https://localhost:44338/api/medhistorydetails",
@@ -193,7 +195,7 @@ class CoreMedicalHistory extends Component {
           params: { value: localStorage.getItem("KNC") },
         }
       )
-      .then((response) => {
+
         console.log(response.data[0]);
         this.setState({
           allergies: response.data[0].allergies.includes("|")
@@ -289,12 +291,9 @@ class CoreMedicalHistory extends Component {
 
           id: response.data[0].pobcpMedHistoryID,
           POBPatientID: response.data[0].pobPatientID,
-        });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-    axios
+        })
+
+      let medins = await axios
       .get(
         "https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/med_list_insert",
         // 'https://localhost:44338/api/med_list_insert',
@@ -303,17 +302,14 @@ class CoreMedicalHistory extends Component {
           params: { value: localStorage.getItem("KNC"), value1: this.state.id },
         }
       )
-      .then((response) => {
+
         this.setState({
-          medication_yes_temp: response.data,
+          medication_yes_temp: medins.data,
         });
         this.setState({
-          medication_yes: response.data,
-        });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+          medication_yes: medins.data,
+        })
+
   }
 
   handleChange = (input) => (e) => {

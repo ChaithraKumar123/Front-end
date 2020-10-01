@@ -211,9 +211,10 @@ class BodyImageTabs extends Component {
       }),
     });
   };
-  apicall = (step1) => {
+
+  apicall = async(step1) => {
     const save = this.state.InjuryRegion[step1 - 1];
-      axios
+      let response = await axios
       .post(
         "https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/POBdetails",
         // "https://localhost:44338/api/POBdetails",
@@ -260,56 +261,34 @@ class BodyImageTabs extends Component {
           FuturePainRisk: save.pain_futurerisk,
         }
       )
-      .then((response) => {
-
         if (response.data === "Success"){
           // alert("Successfully Submitted!");
           console.log(response);
-        }
 
-
-      })
-      .then(()=> {
-        if (this.state.step1 === 1){
-          axios
-          .post(
-            "https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/saveWorkflow",
-            // "https://localhost:44338/api/saveWorkflow",
+          if (this.state.step1 === 1){
+           let res = await  axios
+            .post(
+              "https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/saveWorkflow",
+              // "https://localhost:44338/api/saveWorkflow",
+    
+              {
+                KNC: localStorage.getItem("KNC"),
+                DateCompleted: new Date(),
+                processID: localStorage.getItem("WorkFlowId")
   
-            {
-              KNC: localStorage.getItem("KNC"),
-              DateCompleted: new Date(),
-              processID: localStorage.getItem("WorkFlowId")
+              }
+            )
 
-            }
-          )
-          .then((response) => {
-            if (response)
-            {
-              console.log(response);
-              // auth.login(() => {
-              //   this.props.history.push("/Home");
-              // });
+            if (res.data === "Success"){
 
+              console.log("updated body wf")
             }
-          })
-          .catch((error) => {
-            console.log(error);
-          });
+          }
         }
-      }
-      )
-      .catch((error) => {
-        console.log(error);
-      });
-
-      // auth.login(() => {
-      //   this.props.history.push("/Home");
-      // });
-
   };
 
-  nextStep = (event) => {
+
+  nextStep = async(event) => {
     window.scrollTo(0, 0)
 
     const { step1 } = this.state;
@@ -317,14 +296,11 @@ class BodyImageTabs extends Component {
     const isValid = this.validate();
     if (isValid) {
      // this.apicall(step1);
-
-      setTimeout(()=>     this.setState({
-        step1: step1 + 1,
-      }), this.apicall(step1))
-
-    }
-  };
-
+     this.setState({
+      step1: step1 + 1,
+    }, await this.apicall(step1))
+  }
+  }
   prevStep = () => {
     window.scrollTo(0, 0)
 
@@ -338,21 +314,19 @@ class BodyImageTabs extends Component {
     }
   };
 
-    completeForm = (event) => {
+    completeForm = async(event) => {
       window.scrollTo(0, 0)
 
     event.preventDefault();
     const isValid = this.validate();
     if (isValid) {
       try{
-        
-        setTimeout(()=> console.log("wait"),  this.apicall(this.state.step1),     
-        localStorage.setItem("ref", true), 
-        auth.login(() => {
-            this.props.history.push("/Home");
-          }))
+          await this.apicall(this.state.step1)
+          localStorage.setItem("ref", true)
 
-       // console.log(no);
+          auth.login(() => {
+            this.props.history.push("/Home");
+          })
       }
       catch(err){
         console.log(err)

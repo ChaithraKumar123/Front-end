@@ -306,7 +306,7 @@ class Step1 extends Component {
                   checked={state.gender === "U"}
                   onChange={handleChange("gender")}
                 />
-                <span>Unspecified</span>
+                <span>Other</span>
               </div>
               <div className="errorMessage">{state.genderError}</div>
             <div className="errorMessage">

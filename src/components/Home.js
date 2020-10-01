@@ -29,8 +29,10 @@ class Home extends Component {
   //   localStorage.removeItem("login");
   // };
 
+
   componentDidMount() {
-    
+
+   
     if(localStorage.getItem("ref")=== 'true'){
       window.location.reload();
       localStorage.removeItem("ref")
@@ -54,8 +56,8 @@ class Home extends Component {
         }
       )
       .then((response) => {
-        if (response.data[0][1].map(function(x) {return x[6] != null})){
-          localStorage.setItem("disablebtn", "yes")
+        if (response.data[0][1].length > 1 && response.data[0][1].map(function(x) {return x[6] != null})){
+          //localStorage.setItem("disablebtn", "yes")
           document.getElementById("myBtn").disabled = true;
         }
         if (response.data[1][0].wfeWorkflowID === -1) {

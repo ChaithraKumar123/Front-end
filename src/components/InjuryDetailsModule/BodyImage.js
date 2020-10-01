@@ -11,14 +11,16 @@ const BackMAP = {
     { id: 26, name: "Right head back", shape: "rect", coords: [95, 6, 125, 28] },
     { id: 26, name: "Left head back", shape: "rect", coords: [125, 6, 155, 28] },
     { id: 26, name: "head back", shape: "rect", coords: [95, 30, 155, 56] },
-    { id: 24, name: "Cervical back", shape: "rect", coords: [95, 57, 155, 75] },
-    { id: 1, name: "Cervicothoracic", shape: "rect", coords: [95, 75, 155, 90] },
+
+    { id: 1, name: "Cervical back", shape: "rect", coords: [95, 57, 155, 75] }, //
+    { id: 21, name: "Cervicothoracic", shape: "rect", coords: [95, 75, 155, 90] }, //
 
     {id: 7,name: "Left Shoulder Back",shape: "rect",coords: [163, 88, 211, 130],},
     { id: 7, name: "Right Shoulder Back", shape: "rect", coords: [44, 88, 92, 130] },
 
-    { id: 25, name: "Left Thoracic", shape: "rect", coords: [92, 88, 127, 130] },
-    { id: 25, name: "Right Thoracic", shape: "rect", coords: [127, 88, 163, 130] },
+    { id: 2, name: "Left Thoracic", shape: "rect", coords: [92, 88, 127, 130] }, //
+    { id: 2, name: "Right Thoracic", shape: "rect", coords: [127, 88, 163, 130] }, //
+
     { id: 13, name: "Right Upper Arm Back", shape: "rect", coords: [170, 130, 210, 170] },
 
     { id: 13, name: "Left Upper Arm Back", shape: "rect", coords: [44, 130, 80, 170] },
@@ -27,18 +29,18 @@ const BackMAP = {
 
     { id: 19, name: "Left Ribs Back", shape: "rect", coords: [85, 130, 127, 170] },
     { id: 19, name: "Right Ribs Back", shape: "rect", coords: [127, 130, 170, 170] },
-    { id: 19, name: "Central Thoracic", shape: "rect", coords: [127, 130, 170, 170] },
+    { id: 2, name: "Central Thoracic", shape: "rect", coords: [127, 130, 170, 170] },
 
 
     { id: 8, name: "Left Elbow Back", shape: "rect", coords: [30, 170, 80, 200] },
-    { id: 27, name: "Thoracolumbar ", shape: "rect", coords: [80, 170, 175, 240] },
+    { id: 22, name: "Thoracolumbar ", shape: "rect", coords: [80, 170, 175, 240] },
     { id: 8, name: "Right Elbow Back", shape: "rect", coords: [170, 170, 220, 200] },
 
     { id: 12, name: "Left Forearm Back  ", shape: "rect", coords: [20, 190, 80, 240] },  //17
     { id: 12, name: "Right Forearm Back  ", shape: "rect", coords: [175, 190, 240, 240] }, //18
 
-    { id: 12, name: "Left Lumbosacral  ", shape: "rect", coords: [175, 190, 240, 240] }, //19
-    { id: 12, name: "Right Lumbosacral  ", shape: "rect", coords: [175, 190, 240, 240] }, //20
+    { id: 23, name: "Left Lumbosacral  ", shape: "rect", coords: [175, 190, 240, 240] }, //19
+    { id: 23, name: "Right Lumbosacral  ", shape: "rect", coords: [175, 190, 240, 240] }, //20
 
 
     { id: 9, name: "Left Wrist Back  ", shape: "rect", coords: [24, 240, 60, 270] }, //21
@@ -89,7 +91,9 @@ const MAP = {
     { id: 26, name: "Right head", shape: "rect", coords: [95, 6, 125, 28] },
     { id: 26, name: "Left head", shape: "rect", coords: [125, 6, 155, 28] },
     { id: 26, name: "Central head", shape: "rect", coords: [95, 30, 155, 56] },
+
     { id: 24, name: "Jaw", shape: "rect", coords: [95, 57, 155, 75] },
+
     { id: 1, name: "Cervical", shape: "rect", coords: [95, 75, 155, 90] },
     { id: 7, name: "Right Shoulder", shape: "rect", coords: [44, 88, 92, 130] },
     { id: 7, name: "Left Shoulder", shape: "rect", coords: [163, 88, 211, 130],},

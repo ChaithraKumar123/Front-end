@@ -6,6 +6,7 @@ import { withRouter } from "react-router-dom";
 import { enableRipple } from '@syncfusion/ej2-base';
 import { DropDownButtonComponent } from '@syncfusion/ej2-react-splitbuttons';
 
+import IdleTimer from 'react-idle-timer'
 
 enableRipple(true);
 
@@ -76,10 +77,22 @@ class App extends Component {
     
   }
 
+  // handleOnIdle (event) {
+  //   console.log('user is idle', event)
+  //   console.log('last active', this.idleTimer.getLastActiveTime())
+  // }
+
+
   render() {
     var loginstat = localStorage.getItem("login");
     return (
       <div>
+          {/* <IdleTimer
+          ref={ref => { this.idleTimer = ref }}
+          timeout={1000 * 60 * 15}
+          onIdle={this.handleOnIdle}
+          debounce={250}
+        /> */}
         <div>
           <a href="/">
             <img
