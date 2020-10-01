@@ -53,6 +53,7 @@ class MusculoskeletonModule extends Component {
       HILLPainStatus: "",
 
       MSKID: -1,
+      loadingCircle: false
     };
     this.state = this.initialState;
   }
@@ -231,11 +232,18 @@ class MusculoskeletonModule extends Component {
       [input]: e.value,
     });
   };
+
+  changeLoadingCircle = (flag) => {
+    this.setState({ loadingCircle: flag });
+    return true;
+  };
+
   completeForm = (event) => {
     event.preventDefault();
     const isValid = this.validate();
     if (isValid) {
-      alert("Submitted");
+      this.changeLoadingCircle(true)
+     // alert("Submitted");
       // check if dates are null
 
       axios
@@ -402,7 +410,8 @@ class MusculoskeletonModule extends Component {
         auth.login(() => {
           this.props.history.push("/Home");
         });
-          }
+        this.changeLoadingCircle(false)
+      }
         })
         .catch((error) => {
           console.log(error);
@@ -494,10 +503,12 @@ class MusculoskeletonModule extends Component {
     );
   };
   render() {
-    const {Leftarrow} = this.props.pageProps
+    const {Leftarrow, loadingCircle} = this.props.pageProps
 
     return (
       <div id="MainDiv">
+       {this.state.loadingCircle === true ? loadingCircle : null}
+
         <div className="page-title lg">
           <div className="title">
           {Leftarrow("/")}

@@ -390,7 +390,7 @@ class Signup extends Component {
                         onChange={handleChange("mobileNumber")}
                       />
                       {/* <Errormsg arg = {state.mobileNumber}></Errormsg> */}
-                      {/* <div className="errorMessage">{state.mobileNumberError}</div> */}
+                      <div className="errorMessage">{state.mobileNumberError}</div>
                       {this.state.submit === true &&
                       state.mobileNumber === "" ? (
                         <div className="errorMessage">This field is required</div>

@@ -30,9 +30,20 @@ class Home extends Component {
   // };
 
   componentDidMount() {
+    
+    if(localStorage.getItem("ref")=== 'true'){
+      window.location.reload();
+      localStorage.removeItem("ref")
+    }
+
     this.props.switchfunc();
     this.props.stepReset("reset");
 
+    if (localStorage.getItem("KNC") === null){
+          auth.logout(() => {
+            this.props.history.push("/");
+          });
+    }
     axios
       .get(
         "https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/workflow",
@@ -43,6 +54,10 @@ class Home extends Component {
         }
       )
       .then((response) => {
+        if (response.data[0][1].map(function(x) {return x[6] != null})){
+          localStorage.setItem("disablebtn", "yes")
+          document.getElementById("myBtn").disabled = true;
+        }
         if (response.data[1][0].wfeWorkflowID === -1) {
           this.setState({ todo: false, loadingCircle:false });
           //return;
@@ -197,16 +212,6 @@ class Home extends Component {
       <div>
         <div className="todoList">
         <label style={{ float: "left" }} className="abc">{e}</label>
-          {/* <h4 className = "abc" style={{ float: "left" }}>{e}</h4> */}
-          {/* <button
-            style={{ float: "right", "margin-top": "4px;" }}
-            className="btn btn-primary modal-btn"
-            data-modal-id="sampleModal"
-            onClick={() => this.continue(e, id)}
-          >
-            Begin
-          </button> */}
-
           <button
                       style={{ float: "right", "margin-top": "4px;" , "min-width": "88px"}}
 
@@ -322,6 +327,13 @@ class Home extends Component {
               </div>
             </div>
           </div>
+          <div className="row has-form-forms">
+            <label className = "abc">
+            To ensure we can provide you with the best quality care, we seek some information from you. <br/><br/>
+            We understand there are a number of questions to answer, please do your best, they are designed to ensure we can provide you with the best quality of care.
+            </label>
+          </div>
+          <br/>
           <div className = "row has-form-forms">
           {this.state.todo ? null : (
             <div  style = {{marginBottom: "65px"}}>
@@ -333,6 +345,7 @@ class Home extends Component {
               <br></br>
               <label  className="abc" style = {{ float : "left"}}>New Complaint</label>
               <button
+              id = "myBtn"
               style={{ float: "right", "margin-top": "4px;" , "min-width": "88px"}}
 
               className="btn btn-primary modal-btn"

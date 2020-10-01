@@ -10,7 +10,7 @@ class RadioButton extends Component
         const{handleChange,Q, variable ,state,question,option1,option2,option3,option4,option5,option6}=this.props
           return (
             
-            <div className="row">
+            <div className="row has-form-forms">
             <div className="col-md-12">
             <div className="form-group custom-radio-wrapper">
             <label className="abc">{question}</label>
@@ -68,7 +68,7 @@ class NDSModule extends Component
        Q8:-1,
        Q9:-1,
        Q10:-1,
-       entityId:60,
+       entityId:"",
        id:-1,
        nameError:'',
        step:1
@@ -235,135 +235,213 @@ class NDSModule extends Component
     }
     render()
     {
-        return(
-            <div id= "MainDiv">
-            <div className="row">
-            <div className="col-md-12">
-            <div className="page-title title"> 
-            <h1>Neck Disability Index</h1>
-            </div>
-            </div>
+        const {Leftarrow, loadingCircle} = this.props.pageProps
+        return (
+          <div id="MainDiv">
+            <div className="page-title lg">
+              <div className="title">
+                {Leftarrow("/")}
+                <div style={{ float: "right", marginLeft: "15px" }}>
+                  <h1>Neck Disability Index</h1>
+                </div>
+              </div>
             </div>
             <div>
-            <h6>This questionnaire has been designed to give us information as to how your neck pain has affected your ability to manage in everyday life. 
-                Please answer every question by selecting the appropriate option</h6>
+            <div class="row has-form-forms">
+         
+            <label className="abc">
+            This questionnaire has been designed to give us information as
+                to how your neck pain has affected your ability to manage in
+                everyday life. Please answer every question by selecting the
+                appropriate option.</label>
             </div>
             <hr></hr>
-            { this.state.step===1 &&
-            
-            <div>                
-                <RadioButton state={this.state} handleChange={this.handleChange} question="Pain Intensity" 
-                    Q={this.state.Q1} variable="Q1"
-                    option1="I have no pain at the moment"
-                    option2="The pain is very mild at the moment"
-                    option3="The pain is moderate at the moment"
-                    option4="The pain is fairly severe at the moment"
-                    option5="The pain is very severe at the moment"
-                    option6="The pain is the worst imaginable at the moment"/>
+            {this.state.step === 1 && (
+              <div>
+                <RadioButton
+                  state={this.state}
+                  handleChange={this.handleChange}
+                  question="Pain Intensity"
+                  Q={this.state.Q1}
+                  variable="Q1"
+                  option1="I have no pain at the moment"
+                  option2="The pain is very mild at the moment"
+                  option3="The pain is moderate at the moment"
+                  option4="The pain is fairly severe at the moment"
+                  option5="The pain is very severe at the moment"
+                  option6="The pain is the worst imaginable at the moment"
+                />
 
-                <RadioButton state={this.state} handleChange={this.handleChange} question="Personal Care(Washing,Dressing,etc..,)" 
-                    Q={this.state.Q2} variable="Q2"
-                    option1="I can look after myself normally without causing extra pain"
-                    option2="I can look after myself normally but it causes extra pain"
-                    option3="It is painful to look after myself and I am slow and careful"
-                    option4="I need some help but can manage most of my personal care"
-                    option5="I need help every day in most aspects of self care"
-                    option6="I do not get dressed, I wash with difficulty and stay in bed"/>
+                <RadioButton
+                  state={this.state}
+                  handleChange={this.handleChange}
+                  question="Personal Care(Washing,Dressing,etc..,)"
+                  Q={this.state.Q2}
+                  variable="Q2"
+                  option1="I can look after myself normally without causing extra pain"
+                  option2="I can look after myself normally but it causes extra pain"
+                  option3="It is painful to look after myself and I am slow and careful"
+                  option4="I need some help but can manage most of my personal care"
+                  option5="I need help every day in most aspects of self care"
+                  option6="I do not get dressed, I wash with difficulty and stay in bed"
+                />
 
-
-                <RadioButton state={this.state} handleChange={this.handleChange} question="Lifting" 
-                    Q={this.state.Q3} variable="Q3"
-                    option1="I can lift heavy weights without extra pain"
-                    option2="I can lift heavy weights but it gives extra pain"
-                    option3="Pain prevents me lifting heavy weights off the floor, but I can manage if they are
+                <RadioButton
+                  state={this.state}
+                  handleChange={this.handleChange}
+                  question="Lifting"
+                  Q={this.state.Q3}
+                  variable="Q3"
+                  option1="I can lift heavy weights without extra pain"
+                  option2="I can lift heavy weights but it gives extra pain"
+                  option3="Pain prevents me lifting heavy weights off the floor, but I can manage if they are
                     conveniently placed, for example on a table"
-                    option4="Pain prevents me from lifting heavy weights but I can manage light to medium
+                  option4="Pain prevents me from lifting heavy weights but I can manage light to medium
                     weights if they are conveniently positioned"
-                    option5="I can only lift very light weights"
-                    option6="I cannot lift or carry anything"/>
+                  option5="I can only lift very light weights"
+                  option6="I cannot lift or carry anything"
+                />
 
-                <RadioButton state={this.state} handleChange={this.handleChange} question="Reading" 
-                    Q={this.state.Q4} variable="Q4"
-                    option1="I can read as much as I want to with no pain in my neck"
-                    option2="I can read as much as I want to with slight pain in my neck"
-                    option3="I can read as much as I want with moderate pain in my neck"
-                    option4="I can’t read as much as I want because of moderate pain in my neck"
-                    option5="I can hardly read at all  because of severe pain in my neck"
-                    option6="I cannot read at all"/>
+                <RadioButton
+                  state={this.state}
+                  handleChange={this.handleChange}
+                  question="Reading"
+                  Q={this.state.Q4}
+                  variable="Q4"
+                  option1="I can read as much as I want to with no pain in my neck"
+                  option2="I can read as much as I want to with slight pain in my neck"
+                  option3="I can read as much as I want with moderate pain in my neck"
+                  option4="I can’t read as much as I want because of moderate pain in my neck"
+                  option5="I can hardly read at all  because of severe pain in my neck"
+                  option6="I cannot read at all"
+                />
 
-                <RadioButton state={this.state} handleChange={this.handleChange} question="Headaches" 
-                    Q={this.state.Q5} variable="Q5"
-                    option1="I have no headaches at all"
-                    option2="I have slight headaches, which come infrequently"
-                    option3="I have moderate headaches, which come infrequently"
-                    option4="I have moderate headaches, which come frequently"
-                    option5="I have severe headaches, which come frequently"
-                    option6="I have headaches almost all the time"/>
-                <div className="btn-block prev-back-btn">
-                <button className="btn btn-outline-primary" data-modal-id="sampleModal" onClick={this.nextStep}>Continue</button>
+                <RadioButton
+                  state={this.state}
+                  handleChange={this.handleChange}
+                  question="Headaches"
+                  Q={this.state.Q5}
+                  variable="Q5"
+                  option1="I have no headaches at all"
+                  option2="I have slight headaches, which come infrequently"
+                  option3="I have moderate headaches, which come infrequently"
+                  option4="I have moderate headaches, which come frequently"
+                  option5="I have severe headaches, which come frequently"
+                  option6="I have headaches almost all the time"
+                />
+                <div className = "row has-form-forms">
+                <button
+                    style = {{"position": "relative"}}
+                    className="btn btn-primary btn-block"
+                    onClick={this.nextStep}
+                >
+            Continue
+          </button>
                 </div>
-            </div>
-            }
-             { this.state.step===2 &&
-            <div>
-                <RadioButton state={this.state} handleChange={this.handleChange} question="Concentration" 
-                    Q={this.state.Q6} variable="Q6"
-                    option1="I can concentrate fully when I want to with no difficulty"
-                    option2="I can concentrate fully when I want to with slight difficulty"
-                    option3="I have a fair degree of difficulty in concentrating when I want to"
-                    option4="I have a lot of difficulty in concentrating when I want to"
-                    option5="I have a great deal of difficulty in concentrating when I want to"
-                    option6="I cannot concentrate at all"/>
-
-                <RadioButton state={this.state} handleChange={this.handleChange} question="Work" 
-                    Q={this.state.Q7} variable="Q7"
-                    option1="I can do as much work as I want to"
-                    option2="I can only do my usual work, but no more"
-                    option3="I can do most of my usual work, but no more"
-                    option4="I cannot do my usual work"
-                    option5="I can hardly do any work at all"
-                    option6="I can’t do any work at all"/>
-
-                <RadioButton state={this.state} handleChange={this.handleChange} question="Driving" 
-                    Q={this.state.Q8} variable="Q8"
-                    option1="I can drive my car without any neck pain"
-                    option2="I can drive my car as long as I want with slight pain in my neck"
-                    option3="I can drive my car as long as I want with moderate pain in my neck"
-                    option4="I can’t drive my car as long as I want because of moderate pain in my neck"
-                    option5="I can hardly drive at all because of severe pain in my neck"
-                    option6="I can’t drive my car at all"/>
-
-                <RadioButton state={this.state} handleChange={this.handleChange} question="Sleeping" 
-                    Q={this.state.Q9} variable="Q9"
-                    option1="I have no trouble sleeping"
-                    option2="My sleep is slightly disturbed (less than 1 hr sleepless)"
-                    option3="My sleep is mildly disturbed (1-2 hrs sleepless)"
-                    option4="My sleep is moderately disturbed (2-3 hrs sleepless)"
-                    option5="My sleep is greatly disturbed (3-5 hrs sleepless)"
-                    option6="My sleep is completely disturbed (5-7 hrs sleepless)"/>
 
 
-                <RadioButton state={this.state} handleChange={this.handleChange} question="Recreation" 
-                    Q={this.state.Q10} variable="Q10"
-                    option1="I am able to engage in all my recreation activities with no neck pain at all"
-                    option2="I am able to engage in all my recreation activities, with some pain in my neck"
-                    option3="I am able to engage in most, but not all of my usual recreation activities because of
+                  {/* <button
+                    className="btn btn-outline-primary"
+                    data-modal-id="sampleModal"
+                    onClick={this.nextStep}
+                  >
+                    Continue
+                  </button> */}
+                </div>
+            )}
+            {this.state.step === 2 && (
+              <div>
+                <RadioButton
+                  state={this.state}
+                  handleChange={this.handleChange}
+                  question="Concentration"
+                  Q={this.state.Q6}
+                  variable="Q6"
+                  option1="I can concentrate fully when I want to with no difficulty"
+                  option2="I can concentrate fully when I want to with slight difficulty"
+                  option3="I have a fair degree of difficulty in concentrating when I want to"
+                  option4="I have a lot of difficulty in concentrating when I want to"
+                  option5="I have a great deal of difficulty in concentrating when I want to"
+                  option6="I cannot concentrate at all"
+                />
+
+                <RadioButton
+                  state={this.state}
+                  handleChange={this.handleChange}
+                  question="Work"
+                  Q={this.state.Q7}
+                  variable="Q7"
+                  option1="I can do as much work as I want to"
+                  option2="I can only do my usual work, but no more"
+                  option3="I can do most of my usual work, but no more"
+                  option4="I cannot do my usual work"
+                  option5="I can hardly do any work at all"
+                  option6="I can’t do any work at all"
+                />
+
+                <RadioButton
+                  state={this.state}
+                  handleChange={this.handleChange}
+                  question="Driving"
+                  Q={this.state.Q8}
+                  variable="Q8"
+                  option1="I can drive my car without any neck pain"
+                  option2="I can drive my car as long as I want with slight pain in my neck"
+                  option3="I can drive my car as long as I want with moderate pain in my neck"
+                  option4="I can’t drive my car as long as I want because of moderate pain in my neck"
+                  option5="I can hardly drive at all because of severe pain in my neck"
+                  option6="I can’t drive my car at all"
+                />
+
+                <RadioButton
+                  state={this.state}
+                  handleChange={this.handleChange}
+                  question="Sleeping"
+                  Q={this.state.Q9}
+                  variable="Q9"
+                  option1="I have no trouble sleeping"
+                  option2="My sleep is slightly disturbed (less than 1 hr sleepless)"
+                  option3="My sleep is mildly disturbed (1-2 hrs sleepless)"
+                  option4="My sleep is moderately disturbed (2-3 hrs sleepless)"
+                  option5="My sleep is greatly disturbed (3-5 hrs sleepless)"
+                  option6="My sleep is completely disturbed (5-7 hrs sleepless)"
+                />
+
+                <RadioButton
+                  state={this.state}
+                  handleChange={this.handleChange}
+                  question="Recreation"
+                  Q={this.state.Q10}
+                  variable="Q10"
+                  option1="I am able to engage in all my recreation activities with no neck pain at all"
+                  option2="I am able to engage in all my recreation activities, with some pain in my neck"
+                  option3="I am able to engage in most, but not all of my usual recreation activities because of
                     pain in my neck"
-                    option4="I am able to engage in a few of my usual recreation activities because of pain in
+                  option4="I am able to engage in a few of my usual recreation activities because of pain in
                     my neck"
-                    option5="I can hardly do any recreation activities because of pain in my neck"
-                    option6="I can’t do any recreation activities at all"/>
-                <div className="btn-block prev-back-btn">
-                <button className="btn btn-outline-primary" onClick={this.back}>Back</button>
-                <button className="btn btn-primary modal-btn" data-modal-id="sampleModal" onClick={this.completeForm}>Submit</button>
+                  option5="I can hardly do any recreation activities because of pain in my neck"
+                  option6="I can’t do any recreation activities at all"
+                />
+                <div className = "row has-form-forms">
+                <button style = {{ "min-width": "241px"}} className="btn btn-outline-primary" onClick={this.back}>
+                 Back
+                </button>
+
+                <button
+                    style = {{ minWidth: "241px", marginLeft: "4px"}}
+                    className="btn btn-primary modal-btn"
+                    data-modal-id="sampleModal"
+                    onClick={this.completeForm}
+                >
+              Submit
+            </button>
                 </div>
 
-            </div>
-            }
-            </div>
-           
-        
-        
+
+              </div>
+            )}
+          </div>
+          </div>
         );
     }
 

@@ -9,6 +9,11 @@ class Auth {
     }
   
     logout(cb) {
+      localStorage.removeItem("login");
+      localStorage.removeItem("WorkFlowId");
+      localStorage.removeItem("confToken");
+      localStorage.removeItem("isAuth");
+      localStorage.removeItem("KNC");  
       this.authenticated = false;
       cb();
     }

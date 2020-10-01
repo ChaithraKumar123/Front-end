@@ -14,8 +14,9 @@ class RedFlagModule extends Component {
       wake_up_pain: "",
       nameError: "",
       coordination_change: "",
-      POBPatientID: 60,
+      POBPatientID: "",
       id: -1,
+      loadingCircle: false
     };
     this.state = this.initialState;
   }
@@ -56,12 +57,18 @@ class RedFlagModule extends Component {
       });
     }
   };
+
+  changeLoadingCircle = (flag) => {
+    this.setState({ loadingCircle: flag });
+    return true;
+  };
   completeForm = (event) => {
     event.preventDefault();
     const isValid = this.validate();
     if (isValid) {
       this.setState(this.initialState);
-      alert("Submitted");
+      this.changeLoadingCircle(true)
+
       axios
         .post(
           "https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/medhistorydetails",
@@ -102,6 +109,8 @@ class RedFlagModule extends Component {
             console.log(response);
         auth.login(() => {
           this.props.history.push("/Home");
+          this.changeLoadingCircle(false)
+
         });
           }
         })
@@ -114,7 +123,10 @@ class RedFlagModule extends Component {
         //   this.props.history.push("/Home");
         // });
     }
+    this.changeLoadingCircle(false)
+
   };
+
 
   validate = () => {
     let nameError = "";
@@ -154,10 +166,12 @@ class RedFlagModule extends Component {
     );
   };
   render() {
-    const {Leftarrow} = this.props.pageProps
+    const {Leftarrow, loadingCircle} = this.props.pageProps
 
     return (
       <div id="MainDiv">
+       {this.state.loadingCircle === true ? loadingCircle : null}
+
         <div className="page-title lg">
           <div className="title">
           {Leftarrow("/")}

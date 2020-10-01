@@ -33,11 +33,12 @@ class RadioButton extends Component
                 <input type="radio" className="custom-input" name={variable} value="3" id="Radio3" checked={Q ==="3"} onChange={handleChange(variable)}/>
                 <span>Fairly</span>
               </div>
+              </div>
+
               <div className="custom-radio rounded">
                 <input type="radio" className="custom-input" name={variable} value="4" id="Radio3" checked={Q ==="4"} onChange={handleChange(variable)}/>
                 <span>Extremely</span>
               </div>
-                </div>
 
               <div className="custom-radio rounded">
                 <input type="radio" className="custom-input" name={variable} value="5" id="Radio3" checked={Q ==="5"} onChange={handleChange(variable)}/>
@@ -78,7 +79,7 @@ class QuebecModule extends Component
        Q19:-1,
        Q20:-1,
        
-       entityId:60,
+       entityId:"",
        id:-1,
        nameError:'',
        step:1
@@ -231,7 +232,7 @@ class QuebecModule extends Component
             )
             .then(response => {
                 console.log(response)
-                alert('Submitted')
+                // alert('Submitted')
             })
             .catch(error => {
                 console.log(error)
@@ -266,21 +267,25 @@ class QuebecModule extends Component
     }
     render()
     {
+      const {Leftarrow, loadingCircle} = this.props.pageProps
+
         return(
             <div id= "MainDiv">
-            <div className="row">
-            <div className="col-md-12">
-            <div className="page-title title"> 
-            <h1>The Quebec Back Pain Disability Scale</h1>
+          <div className="page-title lg">
+          <div className="title">
+          {Leftarrow("/")}
+          <div style = {{float: "right", marginLeft : "15px"}}>
+          <h1>The Quebec Back Pain Disability Scale</h1>
             </div>
-            </div>
-            </div>
-            <div>
-            <h6>This questionnaire is about the way your back pain is affecting your daily life. People with back problems may find it
+          </div>
+        </div>
+            <div className = "row has-form-forms">
+            <label className="abc">
+            This questionnaire is about the way your back pain is affecting your daily life. People with back problems may find it
             difficult to perform some of their daily activities. We would like to know if you find it difficult to perform any of the
             activities listed below, because of your back. Please choose one
-            response option for each activity .Today, do you find it difficult to perform the following activities because of your back?</h6>
-            </div>
+            response option for each activity .Today, do you find it difficult to perform the following activities because of your back?</label>
+
             <hr></hr>
             { this.state.step===1 &&
             <div>
@@ -294,9 +299,20 @@ class QuebecModule extends Component
                 <RadioButton state={this.state} handleChange={this.handleChange} question="Walk a few blocks (300-400 m)" Q={this.state.Q8} variable="Q8"/>
                 <RadioButton state={this.state} handleChange={this.handleChange} question="Walk several kilometres" Q={this.state.Q9} variable="Q9"/>
                 <RadioButton state={this.state} handleChange={this.handleChange} question="Reach up to high shelves" Q={this.state.Q10} variable="Q10"/>
+
+                <div className = "row">
+                <button
+                    style = {{"position": "relative"}}
+                    className="btn btn-primary btn-block"
+                    onClick={this.nextStep}
+                >
+            Continue
+          </button>
+                </div>
+{/*                 
                 <div className="btn-block prev-back-btn">
                 <button className="btn btn-outline-primary" data-modal-id="sampleModal" onClick={this.nextStep}>Continue</button>
-                </div>
+                </div> */}
             </div>
             }
              { this.state.step===2 &&
@@ -311,17 +327,34 @@ class QuebecModule extends Component
                 <RadioButton state={this.state} handleChange={this.handleChange} question="Pull or push heavy doors" Q={this.state.Q18} variable="Q18"/>
                 <RadioButton state={this.state} handleChange={this.handleChange} question="Carry two bags of groceries" Q={this.state.Q19} variable="Q19"/>
                 <RadioButton state={this.state} handleChange={this.handleChange} question="Lift and carry a heavy suitcase" Q={this.state.Q20} variable="Q20"/>
-                <div className="btn-block prev-back-btn">
+
+                <div>
+                <button style = {{ "min-width": "241px"}} className="btn btn-outline-primary" onClick={this.back}>
+                 Back
+                </button>
+
+                <button
+                    style = {{ minWidth: "241px", marginLeft: "4px"}}
+                    className="btn btn-primary modal-btn"
+                    data-modal-id="sampleModal"
+                    onClick={this.completeForm}
+                >
+              Submit
+            </button>
+                </div>
+
+                {/* <div className="btn-block prev-back-btn">
                 <button className="btn btn-outline-primary" onClick={this.back}>Back</button>
                 <button className="btn btn-primary modal-btn" data-modal-id="sampleModal" onClick={this.completeForm}>Submit</button>
-                </div>
+                </div> */}
 
             </div>
             }
             </div>
            
         
-        
+            </div>
+
         );
     }
 

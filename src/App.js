@@ -31,6 +31,8 @@ class App extends Component {
     localStorage.removeItem("WorkFlowId");
     localStorage.removeItem("confToken");
     localStorage.removeItem("isAuth");
+    localStorage.removeItem("KNC");
+
 
 
     auth.logout(() => {

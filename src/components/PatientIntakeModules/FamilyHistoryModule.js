@@ -36,9 +36,10 @@ class FamilyHistoryModule extends Component {
     this.initialState = {
       family_disorder: "",
       family_disorder_details: "",
-      POBPatientID: 60,
+      POBPatientID: "",
       id: -1,
-      other: ""
+      other: "",
+      loadingCircle: false
     };
     this.state = this.initialState;
   }
@@ -82,11 +83,20 @@ class FamilyHistoryModule extends Component {
     }
   };
 
+
+  changeLoadingCircle = (flag) => {
+    this.setState({ loadingCircle: flag });
+    return true;
+  };
+
+
   completeForm = (event) => {
     event.preventDefault();
     const isValid = this.validate();
     if (isValid) {
       this.setState(this.initialState);
+      this.changeLoadingCircle(true)
+
 
       axios
         .post(
@@ -108,7 +118,6 @@ class FamilyHistoryModule extends Component {
         )
         .then((response) => {
           console.log(response);
-          alert("Submitted");
         })
         .catch((error) => {
           console.log(error);
@@ -130,6 +139,8 @@ class FamilyHistoryModule extends Component {
           if (response.data === "Success")
           {
             console.log(response);
+            this.changeLoadingCircle(false)
+
         auth.login(() => {
           this.props.history.push("/Home");
         });
@@ -198,10 +209,12 @@ class FamilyHistoryModule extends Component {
   }
 
   render() {
-    const {Leftarrow} = this.props.pageProps
+    const {Leftarrow, loadingCircle} = this.props.pageProps
 
     return (
       <div id="MainDiv">
+        {this.state.loadingCircle === true ? loadingCircle : null}
+
         <div className="page-title lg" style = {{    marginBottom: "80px"}}>
           <div className="title">
           {Leftarrow("/")}

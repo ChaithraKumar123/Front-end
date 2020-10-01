@@ -26,8 +26,9 @@ class CorePsychologicalModule extends Component {
       depression: "",
       depression_reason: "",
       nameError: "",
-      POBPatientID: 60,
+      POBPatientID: "",
       id: -1,
+      loadingCircle: false
     };
     this.state = this.initialState;
   }
@@ -101,11 +102,18 @@ class CorePsychologicalModule extends Component {
       });
     }
   };
+
+  changeLoadingCircle = (flag) => {
+    this.setState({ loadingCircle: flag });
+    return true;
+  };
   completeForm = (event) => {
     event.preventDefault();
     const isValid = this.validate();
     if (isValid) {
       this.setState(this.initialState);
+      this.changeLoadingCircle(true)
+
 
       axios
         .post(
@@ -136,7 +144,7 @@ class CorePsychologicalModule extends Component {
         )
         .then((response) => {
           console.log(response);
-          alert("Submitted");
+          // alert("Submitted");
         })
         .catch((error) => {
           console.log(error);
@@ -158,6 +166,8 @@ class CorePsychologicalModule extends Component {
           if (response.data = "Success")
           {
             console.log(response);
+            this.changeLoadingCircle(false)
+
         auth.login(() => {
           this.props.history.push("/Home");
         });
@@ -168,6 +178,8 @@ class CorePsychologicalModule extends Component {
         });
 
     }
+    this.changeLoadingCircle(false)
+
   };
   validate = () => {
     let nameError = "";
@@ -213,10 +225,12 @@ class CorePsychologicalModule extends Component {
   };
 
   render() {
-    const {Leftarrow} = this.props.pageProps
+    const {Leftarrow, loadingCircle} = this.props.pageProps
 
     return (
       <div id="MainDiv">
+       {this.state.loadingCircle === true ? loadingCircle : null}
+
         <div className="page-title lg">
           <div className="title">
           {Leftarrow("/")}

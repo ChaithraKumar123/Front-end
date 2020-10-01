@@ -16,8 +16,9 @@ class CoreLifeStyleModule extends Component {
       recreational_hobbies: "",
       diet: "",
       sit: "",
-      POBPatientID: 60,
+      POBPatientID: "",
       id: "",
+      loadingCircle: false
     };
     this.state = this.initialState;
   }
@@ -64,12 +65,19 @@ class CoreLifeStyleModule extends Component {
     }
   };
 
+  changeLoadingCircle = (flag) => {
+    this.setState({ loadingCircle: flag });
+    return true;
+  };
+
   completeForm = (event) => {
     event.preventDefault();
     const isValid = this.validate();
     if (isValid) {
       this.setState(this.initialState);
-      alert("Submitted");
+     const abc =  this.changeLoadingCircle(true)
+
+      // alert("Submitted");
       axios
         .post(
           "https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/medhistorydetails",
@@ -112,6 +120,8 @@ class CoreLifeStyleModule extends Component {
           if (response.data = "Success")
           {
             console.log(response);
+            this.changeLoadingCircle(false)
+
         auth.login(() => {
           this.props.history.push("/Home");
         });
@@ -122,6 +132,8 @@ class CoreLifeStyleModule extends Component {
         });
 
     }
+    this.changeLoadingCircle(false)
+
   };
   validate = () => {
     let nameError = "";
@@ -176,10 +188,12 @@ class CoreLifeStyleModule extends Component {
     );
   };
   render() {
-    const {Leftarrow} = this.props.pageProps
+    const {Leftarrow, loadingCircle} = this.props.pageProps
 
     return (
       <div id="MainDiv">
+        {this.state.loadingCircle === true ? loadingCircle : null}
+
         <div className="page-title lg">
           <div className="title">
           {Leftarrow("/")}
@@ -205,7 +219,7 @@ class CoreLifeStyleModule extends Component {
                 </label>
                 <div class="center">
                 {Array.from(Array(1, 2, 3, 4, 5), (e, i) => {
-                  return this.RadioStyle(e, e, "quality_sleep", this.state.quality_sleep);
+                  return this.RadiobtnStyle(e.toString(), e.toString(), "quality_sleep", this.state.quality_sleep);
                 })}
                 </div>
               </div>
@@ -364,9 +378,16 @@ class CoreLifeStyleModule extends Component {
                 <label style={{ fontSize: 12, color: "red" }}>
                   {this.state.diet === "" && this.state.nameError}
                 </label>
-                {Array.from(Array(1, 2, 3, 4, 5, 6, 7, 8, 9, 10), (e, i) => {
-                  return this.RadioStyle(e, e, "diet", this.state.diet);
+                {Array.from(Array(1, 2, 3, 4, 5, 6, 7, 8, 9), (e, i) => {
+                  return this.RadiobtnStyle(e.toString(), e.toString(), "diet", this.state.diet);
                 })}
+                <div>
+                {
+                  this.RadiobtnStyle("10","10", "diet", this.state.diet)
+                }
+                </div>
+
+
               </div>
             </div>
           </div>

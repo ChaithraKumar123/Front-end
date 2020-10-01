@@ -51,6 +51,55 @@ class RadioButton extends Component
           );
       }
 }
+
+class RadioButtonSTEPfour extends Component
+{
+    render() {
+        const{handleChange,Q, variable ,state,question,option1,option2,option3,option4,option5}=this.props
+          return (
+            
+            
+            <div className="row">
+            <div className="col-md-12">
+            <div className="form-group custom-radio-wrapper">
+            <label className="abc">{question}</label>
+            <div id="radio">
+  
+              <div className="custom-radio rounded">
+                <input type="radio" className="custom-input" name={variable} value="1" id="Radio1" checked={Q ==="1"} onChange={handleChange(variable)}/>
+                <span>{option1}</span>
+              </div>
+              <div className="custom-radio rounded">
+                <input type="radio" className="custom-input" name={variable} value="2" id="Radio2" checked={Q ==="2"} onChange={handleChange(variable)}/>
+                <span>{option2}</span>
+              </div>
+              <div className="custom-radio rounded">
+                <input type="radio" className="custom-input" name={variable} value="3" id="Radio3" checked={Q ==="3"} onChange={handleChange(variable)}/>
+                <span>{option3}</span>
+              </div>
+              <div>
+
+              <div className="custom-radio rounded">
+                <input type="radio" className="custom-input" name={variable} value="4" id="Radio4" checked={Q ==="4"} onChange={handleChange(variable)}/>
+                <span>{option4}</span>
+              </div>
+              <div className="custom-radio rounded">
+                <input type="radio" className="custom-input" name={variable} value="5" id="Radio5" checked={Q ==="5"} onChange={handleChange(variable)}/>
+                <span>{option5}</span>
+              </div></div>
+              <div className="errorMessage">{Q===-1 && state.nameError}</div>
+            </div>
+            </div>
+            </div>
+            </div>
+         
+    
+          
+         
+    
+          );
+      }
+}
 class DASHModule extends Component
 {   
     state=
@@ -91,7 +140,7 @@ class DASHModule extends Component
        work_Q2:-1,
        work_Q3:-1,
        work_Q4:-1,
-       entityId:60,
+       entityId: "",
        id:-1,
        nameError:'',
        step:1
@@ -291,7 +340,7 @@ class DASHModule extends Component
             )
             .then(response => {
                 console.log(response)
-                alert('Submitted')
+                // alert('Submitted')
             })
             .catch(error => {
                 console.log(error)
@@ -323,24 +372,26 @@ class DASHModule extends Component
     }
     render()
     {
+        const {Leftarrow, loadingCircle} = this.props.pageProps
+
         return(
             <div id="MainDiv">
-            <div className="row">
-            <div className="col-md-12">
-            <div className="page-title title"> 
-            <div className="title">
-            <h1>Disability of the Arm, shoulder, hand </h1>
-            <p>Step {this.state.step} of 5</p>
+           <div className="page-title lg">
+          <div className="title">
+          {Leftarrow("/")}
+          <div style = {{float: "right", marginLeft : "15px"}}>
+          <h2 style = {{marginTop: "0px"}}>Disability of the Arm, shoulder, hand</h2>
+          <p>Step {this.state.step} of 5</p>
             </div>
-            </div>
-            </div>
-            </div>
+          </div>     
+        </div>
+        <div className = "row has-form-forms">
             
             { this.state.step===1 &&
             
             <div>  
                 <div className="row">
-                <h6>Please rate your difficulty in completing the following activities during the last week</h6>
+                <label className="abc">Please rate your difficulty in completing the following activities during the last week</label>
                 </div>
             <hr></hr>              
                 <RadioButton state={this.state} handleChange={this.handleChange} question="Open a tight or new jar" 
@@ -423,16 +474,25 @@ class DASHModule extends Component
                     option4="Severe"
                     option5="Unable to do"/>
 
-
-                <div className="btn-block prev-back-btn">
-                <button className="btn btn-outline-primary" data-modal-id="sampleModal" onClick={this.nextStep}>Continue</button>
+                <div className = "row has-form-forms">
+                <button
+                    style = {{"position": "relative"}}
+                    className="btn btn-primary btn-block"
+                    onClick={this.nextStep}
+                >
+                    Continue
+                </button>
                 </div>
+
+                {/* <div className="btn-block prev-back-btn">
+                <button className="btn btn-outline-primary" data-modal-id="sampleModal" onClick={this.nextStep}>Continue</button>
+                </div> */}
             </div>
             }
             { this.state.step===2 &&
             <div>
                 <div className="row">
-                <h6>Please rate your difficulty in completing the following activities during the last week</h6>
+                <label className = "abc">Please rate your difficulty in completing the following activities during the last week</label>
                 </div>
                 <hr></hr>
                  <RadioButton state={this.state} handleChange={this.handleChange} question="Carry a heavy object (over 10 lbs)" 
@@ -524,17 +584,33 @@ class DASHModule extends Component
                     option4="Severe"
                     option5="Unable to do"/>
 
-                <div className="btn-block prev-back-btn">
+                <div>
+                <button style = {{ "min-width": "241px"}} className="btn btn-outline-primary" onClick={this.back}>
+                 Back
+                </button>
+
+                <button
+                    style = {{ minWidth: "241px", marginLeft: "4px"}}
+                    className="btn btn-primary modal-btn"
+                    data-modal-id="sampleModal"
+                    onClick={this.nextStep}
+                >
+              Continue
+            </button>
+                </div>
+
+
+                {/* <div className="btn-block prev-back-btn">
                 <button className="btn btn-outline-primary" onClick={this.back}>Back</button>
                 <button className="btn btn-primary modal-btn" data-modal-id="sampleModal" onClick={this.nextStep}>Continue</button>
-                </div>
+                </div> */}
 
             </div>
             }
              { this.state.step===3 &&
             <div>
                 <div className="row">
-                <h6> Please rate the severity of the following symptoms in the last week.</h6>
+                <label className = "abc"> Please rate the severity of the following symptoms in the last week.</label>
                 </div>
                 <hr></hr>
                  <RadioButton state={this.state} handleChange={this.handleChange} question="Arm, shoulder or hand pain" 
@@ -578,18 +654,34 @@ class DASHModule extends Component
                     option5="Unable to do"/>
 
                 
+                <div>
+                <button style = {{ "min-width": "241px"}} className="btn btn-outline-primary" onClick={this.back}>
+                 Back
+                </button>
+
+                <button
+                    style = {{ minWidth: "241px", marginLeft: "4px"}}
+                    className="btn btn-primary modal-btn"
+                    data-modal-id="sampleModal"
+                    onClick={this.nextStep}
+                >
+              Continue
+            </button>
+                </div>
+
+{/*                 
 
                 <div className="btn-block prev-back-btn">
                 <button className="btn btn-outline-primary" onClick={this.back}>Back</button>
                 <button className="btn btn-primary modal-btn" data-modal-id="sampleModal" onClick={this.nextStep}>Continue</button>
-                </div>
+                </div> */}
 
             </div>
             }
               
             { this.state.step===4 &&
             <div>
-                 <RadioButton state={this.state} handleChange={this.handleChange} question="During the past week, to what extent has your arm,shoulder or hand problem interfered with your normal social activities with family, friends, neighbours or groups?" 
+                 <RadioButtonSTEPfour state={this.state} handleChange={this.handleChange} question="During the past week, to what extent has your arm,shoulder or hand problem interfered with your normal social activities with family, friends, neighbours or groups?" 
                     Q={this.state.Q22} variable="Q22"
                     option1="Not at all"
                     option2="Slightly"
@@ -597,7 +689,7 @@ class DASHModule extends Component
                     option4="Quite"
                     option5="Extremely"/>
 
-                <RadioButton state={this.state} handleChange={this.handleChange} question="During the past week, were you limited in your work or other regular daily activities as a result of your arm, shoulder or hand problem? (circle" 
+                <RadioButtonSTEPfour state={this.state} handleChange={this.handleChange} question="During the past week, were you limited in your work or other regular daily activities as a result of your arm, shoulder or hand problem? (circle" 
                     Q={this.state.Q23} variable="Q23"
                     option1="Not limited"
                     option2="Slightly limited"
@@ -605,7 +697,7 @@ class DASHModule extends Component
                     option4="Quite limited"
                     option5="Unable "/>
 
-                <RadioButton state={this.state} handleChange={this.handleChange} question="During the past week, how much difficulty have you had sleeping because of the pain in your arm, shoulder or hand?" 
+                <RadioButtonSTEPfour state={this.state} handleChange={this.handleChange} question="During the past week, how much difficulty have you had sleeping because of the pain in your arm, shoulder or hand?" 
                     Q={this.state.Q29} variable="Q29"
                     option1="No difficulty"
                     option2="Mild difficulty"
@@ -613,7 +705,7 @@ class DASHModule extends Component
                     option4="Severe difficulty"
                     option5="So much difficulty that i can't sleep"/>
 
-                <RadioButton state={this.state} handleChange={this.handleChange} question="I feel less capable, less confident or less useful because of my arm, shoulder or hand problem" 
+                <RadioButtonSTEPfour state={this.state} handleChange={this.handleChange} question="I feel less capable, less confident or less useful because of my arm, shoulder or hand problem" 
                     Q={this.state.Q30} variable="Q30"
                     option1="Strongly disagree"
                     option2="Disagree"
@@ -621,18 +713,33 @@ class DASHModule extends Component
                     option4="Agree"
                     option5="Strongly agree"/>
                     
+                <div>
+                <button style = {{ "min-width": "241px"}} className="btn btn-outline-primary" onClick={this.back}>
+                 Back
+                </button>
 
+                <button
+                    style = {{ minWidth: "241px", marginLeft: "4px"}}
+                    className="btn btn-primary modal-btn"
+                    data-modal-id="sampleModal"
+                    onClick={this.nextStep}
+                >
+              Continue
+            </button>
+                </div>
+
+{/* 
                 <div className="btn-block prev-back-btn">
                 <button className="btn btn-outline-primary" onClick={this.back}>Back</button>
                 <button className="btn btn-primary modal-btn" data-modal-id="sampleModal" onClick={this.nextStep}>Continue</button>
-                </div>
+                </div> */}
 
             </div>
             }
              { this.state.step===5 &&
             <div>
                 <div className="row">
-                <h6> WORK MODULE - The following questions ask about the impact of your arm, shoulder or hand problem on your ability to work (including homemaking if that is your main work role).</h6>
+                <label className = "abc"> WORK MODULE - The following questions ask about the impact of your arm, shoulder or hand problem on your ability to work (including homemaking if that is your main work role).</label>
                 </div>
                 <hr></hr>
 
@@ -654,7 +761,7 @@ class DASHModule extends Component
                 </div>
                 </div>
              <br/>
-             { this.state.work_check === true && <div>
+             { this.state.work_check === false && <div>
                 <p>Select that best describes your physical ability in the past week. Did you have any difficulty:</p>
                 <hr/>
                  <RadioButton state={this.state} handleChange={this.handleChange} question="using your usual technique for your work?" 
@@ -690,17 +797,34 @@ class DASHModule extends Component
                     option5="Unable"/>
                     
              </div>}
-                <div className="btn-block prev-back-btn">
+
+             
+             <div>
+                <button style = {{ "min-width": "241px"}} className="btn btn-outline-primary" onClick={this.back}>
+                 Back
+                </button>
+
+                <button
+                    style = {{ minWidth: "241px", marginLeft: "4px"}}
+                    className="btn btn-primary modal-btn"
+                    data-modal-id="sampleModal"
+                    onClick={this.completeForm}
+                >
+              Submit
+            </button>
+                </div>
+
+                {/* <div className="btn-block prev-back-btn">
                 <button className="btn btn-outline-primary" onClick={this.back}>Back</button>
                 <button className="btn btn-primary modal-btn" data-modal-id="sampleModal" onClick={this.completeForm}>Submit</button>
-                </div>
+                </div> */}
 
             </div>
             }
            
 
             </div>
-           
+            </div>
         
         
         );

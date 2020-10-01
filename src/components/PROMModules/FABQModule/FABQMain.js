@@ -28,7 +28,7 @@ state=
        Q14:-1,
        Q15:-1,
        Q16:-1,
-       entityId:60,
+       entityId:"",
        id:-1,
        
 
@@ -85,7 +85,7 @@ nextStep=()=>{
     }
     else
     {
-        alert('submitted')
+        console.log('submitted')
     }
     
 }
@@ -118,12 +118,17 @@ handleChange= input=>e=>
     }
 }
 showStep =()=>{
+
+    const {Leftarrow, loadingCircle} = this.props.pageProps
+
     
     return (<FABQStep1
         handleChange={this.handleChange}
         radioChange ={this.radioChange}
         prevStep={this.prevStep}
         nextStep={this.nextStep}
+        loadingCircle={Leftarrow}
+        Leftarrow = {Leftarrow}
         state={this.state}
         completeForm={this.completeForm}
         />);
@@ -168,7 +173,7 @@ completeForm=event=>{
         )
         .then(response => {
             console.log(response)
-            alert('Submitted')
+            // alert('Submitted')
         })
         .catch(error => {
             console.log(error)

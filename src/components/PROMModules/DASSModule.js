@@ -66,7 +66,7 @@ class DASSModule extends Component
        Q19:-1,
        Q20:-1,
        Q21:-1,
-       entityId:60,
+       entityId:"",
        id:-1,
        nameError:'',
        step:1
@@ -221,7 +221,7 @@ class DASSModule extends Component
             )
             .then(response => {
                 console.log(response)
-                alert('Submitted')
+                // alert('Submitted')
             })
             .catch(error => {
                 console.log(error)
@@ -254,20 +254,24 @@ class DASSModule extends Component
     
     render()
     {
+      const {Leftarrow, loadingCircle} = this.props.pageProps
+
         return(
             <div id="MainDiv">
-            <div className="row">
-            <div className="col-md-12">
-            <div className="page-title title"> 
-            <h1>Depression Anxiety Stress Scale</h1>
+
+        <div className="page-title lg">
+          <div className="title">
+          {Leftarrow("/")}
+          <div style = {{float: "right", marginLeft : "15px"}}>
+          <h1>Depression Anxiety Stress Scale</h1>
             </div>
-            </div>
-            </div>
-            <div className="row">
-            <h6>Please read each statement and select the option  which indicates how much the statement
+          </div>
+        </div>
+
+            <div className="row has-form-forms">
+            <label className="abc">Please read each statement and select the option  which indicates how much the statement
             applied to you over the past week. There are no right or wrong answers. Do not spend too much
-            time on any statement.</h6>
-            </div>
+            time on any statement.</label>
             <hr></hr>
             { this.state.step===1 &&
             <div>
@@ -281,9 +285,19 @@ class DASSModule extends Component
                 <RadioButton state={this.state} handleChange={this.handleChange} question="I felt that I was using a lot of nervous energy" Q={this.state.Q8} variable="Q8"/>
                 <RadioButton state={this.state} handleChange={this.handleChange} question="I was worried about situations in which I might panic and make a fool of myself" Q={this.state.Q9} variable="Q9"/>
                 <RadioButton state={this.state} handleChange={this.handleChange} question="I felt that I had nothing to look forward to" Q={this.state.Q10} variable="Q10"/>
-                <div className="btn-block prev-back-btn">
-                <button className="btn btn-outline-primary" data-modal-id="sampleModal" onClick={this.nextStep}>Continue</button>
+                <div className = "row has-form-forms">
+                <button
+                    style = {{"position": "relative"}}
+                    className="btn btn-primary btn-block"
+                    onClick={this.nextStep}
+                >
+            Continue
+          </button>
                 </div>
+
+                {/* <div className="btn-block prev-back-btn">
+                <button className="btn btn-outline-primary" data-modal-id="sampleModal" onClick={this.nextStep}>Continue</button>
+                </div> */}
             </div>
             }
              { this.state.step===2 &&
@@ -299,16 +313,34 @@ class DASSModule extends Component
                 <RadioButton state={this.state} handleChange={this.handleChange} question="I was aware of the action of my heart in the absence of physical exertion (e.g. sense of heart rate increase, heart missing a beat)" Q={this.state.Q19} variable="Q19"/>
                 <RadioButton state={this.state} handleChange={this.handleChange} question="I felt scared without any good reason" Q={this.state.Q20} variable="Q20"/>
                 <RadioButton state={this.state} handleChange={this.handleChange} question="I felt that life was meaningless" Q={this.state.Q21} variable="Q21"/>
+               
+ 
+ 
+                <div>
+                <button style = {{ "min-width": "241px"}} className="btn btn-outline-primary" onClick={this.back}>
+                 Back
+                </button>
+
+                <button
+                    style = {{ minWidth: "241px", marginLeft: "4px"}}
+                    className="btn btn-primary modal-btn"
+                    data-modal-id="sampleModal"
+                    onClick={this.completeForm}
+                >
+              Submit
+            </button>
+                </div>
+{/*                 
                 <div className="btn-block prev-back-btn">
                 <button className="btn btn-outline-primary" onClick={this.back}>Back</button>
                 <button className="btn btn-primary modal-btn" data-modal-id="sampleModal" onClick={this.completeForm}>Submit</button>
-                </div>
+                </div> */}
 
             </div>
             }
             </div>
            
-        
+        </div>
         
         );
     }

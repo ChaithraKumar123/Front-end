@@ -11,7 +11,7 @@ class BodyImageMain extends Component {
     body_area1:[],
     body_region_id1:[],
     data_id1:[],
-    POBPatientID:60
+    POBPatientID:""
 }
 nextStep1=(body_area,body_region,data_id)=>{
     const{step}=this.state;

@@ -22,7 +22,7 @@ class PainScaleModule extends Component
        Q11:-1,
        Q12:-1,
        Q13:-1,
-       entityId:60,
+       entityId:"",
        id:-1,
        nameError:'',
 
@@ -145,7 +145,7 @@ class PainScaleModule extends Component
             )
             .then(response => {
                 console.log(response)
-                alert('Submitted')
+                // alert('Submitted')
             })
             .catch(error => {
                 console.log(error)
@@ -177,16 +177,19 @@ class PainScaleModule extends Component
     }
     render()
     {
+      const {Leftarrow, loadingCircle} = this.props.pageProps
+
         return(
             <div id="MainDiv">
-            <div className="row">
-            <div className="col-md-12">
-            <div className="page-title title"> 
-            <h1>Pain Catastrophizing Scale</h1>
+           <div className="page-title lg">
+          <div className="title">
+          {Leftarrow("/")}
+          <div style = {{float: "right", marginLeft : "15px"}}>
+          <h1>Pain Catastrophizing Scale</h1>
             </div>
-            </div>
-            </div>
-
+          </div>
+        </div>
+            <div className = "row has-form-forms">
             <div className="row">
             <div className="col-md-12">
             <div className="form-group custom-radio-wrapper">
@@ -204,6 +207,7 @@ class PainScaleModule extends Component
                 <input type="radio" className="custom-input" name="Q1" value="2" id="Radio2" checked={this.state.Q1 ==="2"} onChange={this.handleChange('Q1')}/>
                 <span>To a moderate degree</span>
               </div>
+              <div>
               <div className="custom-radio rounded">
                 <input type="radio" className="custom-input" name="Q1" value="3" id="Radio3" checked={this.state.Q1 ==="3"} onChange={this.handleChange('Q1')}/>
                 <span>To a great degree</span>
@@ -211,6 +215,7 @@ class PainScaleModule extends Component
               <div className="custom-radio rounded">
                 <input type="radio" className="custom-input" name="Q1" value="4" id="Radio4" checked={this.state.Q1 ==="4"} onChange={this.handleChange('Q1')}/>
                 <span>All the time</span>
+              </div>
               </div>
               <div className="errorMessage">{this.state.Q1===-1 && this.state.nameError}</div>
             </div>
@@ -234,6 +239,7 @@ class PainScaleModule extends Component
                 <input type="radio" className="custom-input" name="Q2" value="2" id="Radio2" checked={this.state.Q2 ==="2"} onChange={this.handleChange('Q2')}/>
                 <span>To a moderate degree</span>
               </div>
+              <div>
               <div className="custom-radio rounded">
                 <input type="radio" className="custom-input" name="Q2" value="3" id="Radio3" checked={this.state.Q2 ==="3"} onChange={this.handleChange('Q2')}/>
                 <span>To a great degree</span>
@@ -241,6 +247,7 @@ class PainScaleModule extends Component
               <div className="custom-radio rounded">
                 <input type="radio" className="custom-input" name="Q2" value="4" id="Radio4" checked={this.state.Q2 ==="4"} onChange={this.handleChange('Q2')}/>
                 <span>All the time</span>
+              </div>
               </div>
             <div className="errorMessage">{this.state.Q2===-1 && this.state.nameError}</div>
             </div>
@@ -264,6 +271,7 @@ class PainScaleModule extends Component
                 <input type="radio" className="custom-input" name="Q3" value="2" id="Radio2" checked={this.state.Q3 ==="2"} onChange={this.handleChange('Q3')}/>
                 <span>To a moderate degree</span>
               </div>
+              <div>
               <div className="custom-radio rounded">
                 <input type="radio" className="custom-input" name="Q3" value="3" id="Radio3" checked={this.state.Q3 ==="3"} onChange={this.handleChange('Q3')}/>
                 <span>To a great degree</span>
@@ -271,6 +279,7 @@ class PainScaleModule extends Component
               <div className="custom-radio rounded">
                 <input type="radio" className="custom-input" name="Q3" value="4" id="Radio4" checked={this.state.Q3 ==="4"} onChange={this.handleChange('Q3')}/>
                 <span>All the time</span>
+              </div>
               </div>
               <div className="errorMessage">{this.state.Q3===-1 && this.state.nameError}</div>
             </div>
@@ -295,6 +304,7 @@ class PainScaleModule extends Component
                 <input type="radio" className="custom-input" name="Q4" value="2" id="Radio2" checked={this.state.Q4 ==="2"} onChange={this.handleChange('Q4')}/>
                 <span>To a moderate degree</span>
               </div>
+              <div>
               <div className="custom-radio rounded">
                 <input type="radio" className="custom-input" name="Q4" value="3" id="Radio3" checked={this.state.Q4 ==="3"} onChange={this.handleChange('Q4')}/>
                 <span>To a great degree</span>
@@ -302,6 +312,7 @@ class PainScaleModule extends Component
               <div className="custom-radio rounded">
                 <input type="radio" className="custom-input" name="Q4" value="4" id="Radio4" checked={this.state.Q4 ==="4"} onChange={this.handleChange('Q4')}/>
                 <span>All the time</span>
+              </div>
               </div>
               <div className="errorMessage">{this.state.Q4===-1 && this.state.nameError}</div>
             </div>
@@ -326,6 +337,7 @@ class PainScaleModule extends Component
                 <input type="radio" className="custom-input" name="Q5" value="2" id="Radio2" checked={this.state.Q5 ==="2"} onChange={this.handleChange('Q5')}/>
                 <span>To a moderate degree</span>
               </div>
+              <div>
               <div className="custom-radio rounded">
                 <input type="radio" className="custom-input" name="Q5" value="3" id="Radio3" checked={this.state.Q5 ==="3"} onChange={this.handleChange('Q5')}/>
                 <span>To a great degree</span>
@@ -333,6 +345,7 @@ class PainScaleModule extends Component
               <div className="custom-radio rounded">
                 <input type="radio" className="custom-input" name="Q5" value="4" id="Radio4" checked={this.state.Q5 ==="4"} onChange={this.handleChange('Q5')}/>
                 <span>All the time</span>
+              </div>
               </div>
               <div className="errorMessage">{this.state.Q5===-1 && this.state.nameError}</div>
             </div>
@@ -357,6 +370,7 @@ class PainScaleModule extends Component
                 <input type="radio" className="custom-input" name="Q6" value="2" id="Radio2" checked={this.state.Q6 ==="2"} onChange={this.handleChange('Q6')}/>
                 <span>To a moderate degree</span>
               </div>
+              <div>
               <div className="custom-radio rounded">
                 <input type="radio" className="custom-input" name="Q6" value="3" id="Radio3" checked={this.state.Q6 ==="3"} onChange={this.handleChange('Q6')}/>
                 <span>To a great degree</span>
@@ -364,6 +378,7 @@ class PainScaleModule extends Component
               <div className="custom-radio rounded">
                 <input type="radio" className="custom-input" name="Q6" value="4" id="Radio4" checked={this.state.Q6 ==="4"} onChange={this.handleChange('Q6')}/>
                 <span>All the time</span>
+              </div>
               </div>
               <div className="errorMessage">{this.state.Q6===-1 && this.state.nameError}</div>
             </div>
@@ -388,6 +403,7 @@ class PainScaleModule extends Component
                 <input type="radio" className="custom-input" name="Q7" value="2" id="Radio2" checked={this.state.Q7 ==="2"} onChange={this.handleChange('Q7')}/>
                 <span>To a moderate degree</span>
               </div>
+              <div>
               <div className="custom-radio rounded">
                 <input type="radio" className="custom-input" name="Q7" value="3" id="Radio3" checked={this.state.Q7 ==="3"} onChange={this.handleChange('Q7')}/>
                 <span>To a great degree</span>
@@ -395,6 +411,7 @@ class PainScaleModule extends Component
               <div className="custom-radio rounded">
                 <input type="radio" className="custom-input" name="Q7" value="4" id="Radio4" checked={this.state.Q7 ==="4"} onChange={this.handleChange('Q7')}/>
                 <span>All the time</span>
+              </div>
               </div>
               <div className="errorMessage">{this.state.Q7===-1 && this.state.nameError}</div>
             </div>
@@ -419,6 +436,7 @@ class PainScaleModule extends Component
                 <input type="radio" className="custom-input" name="Q8" value="2" id="Radio2" checked={this.state.Q8 ==="2"} onChange={this.handleChange('Q8')}/>
                 <span>To a moderate degree</span>
               </div>
+              <div>
               <div className="custom-radio rounded">
                 <input type="radio" className="custom-input" name="Q8" value="3" id="Radio3" checked={this.state.Q8 ==="3"} onChange={this.handleChange('Q8')}/>
                 <span>To a great degree</span>
@@ -426,6 +444,7 @@ class PainScaleModule extends Component
               <div className="custom-radio rounded">
                 <input type="radio" className="custom-input" name="Q8" value="4" id="Radio4" checked={this.state.Q8 ==="4"} onChange={this.handleChange('Q8')}/>
                 <span>All the time</span>
+              </div>
               </div>
               <div className="errorMessage">{this.state.Q8===-1 && this.state.nameError}</div>
             </div>
@@ -451,6 +470,7 @@ class PainScaleModule extends Component
                 <input type="radio" className="custom-input" name="Q9" value="2" id="Radio2" checked={this.state.Q9 ==="2"} onChange={this.handleChange('Q9')}/>
                 <span>To a moderate degree</span>
               </div>
+              <div>
               <div className="custom-radio rounded">
                 <input type="radio" className="custom-input" name="Q9" value="3" id="Radio3" checked={this.state.Q9 ==="3"} onChange={this.handleChange('Q9')}/>
                 <span>To a great degree</span>
@@ -458,6 +478,7 @@ class PainScaleModule extends Component
               <div className="custom-radio rounded">
                 <input type="radio" className="custom-input" name="Q9" value="4" id="Radio4" checked={this.state.Q9 ==="4"} onChange={this.handleChange('Q9')}/>
                 <span>All the time</span>
+              </div>
               </div>
               <div className="errorMessage">{this.state.Q9===-1 && this.state.nameError}</div>
             </div>
@@ -483,6 +504,7 @@ class PainScaleModule extends Component
                 <input type="radio" className="custom-input" name="Q10" value="2" id="Radio2" checked={this.state.Q10 ==="2"} onChange={this.handleChange('Q10')}/>
                 <span>To a moderate degree</span>
               </div>
+              <div>
               <div className="custom-radio rounded">
                 <input type="radio" className="custom-input" name="Q10" value="3" id="Radio3" checked={this.state.Q10 ==="3"} onChange={this.handleChange('Q10')}/>
                 <span>To a great degree</span>
@@ -490,6 +512,7 @@ class PainScaleModule extends Component
               <div className="custom-radio rounded">
                 <input type="radio" className="custom-input" name="Q10" value="4" id="Radio4" checked={this.state.Q10 ==="4"} onChange={this.handleChange('Q10')}/>
                 <span>All the time</span>
+              </div>
               </div>
               <div className="errorMessage">{this.state.Q10===-1 && this.state.nameError}</div>
             </div>
@@ -514,6 +537,7 @@ class PainScaleModule extends Component
                 <input type="radio" className="custom-input" name="Q11" value="2" id="Radio2" checked={this.state.Q11 ==="2"} onChange={this.handleChange('Q11')}/>
                 <span>To a moderate degree</span>
               </div>
+              <div>
               <div className="custom-radio rounded">
                 <input type="radio" className="custom-input" name="Q11" value="3" id="Radio3" checked={this.state.Q11 ==="3"} onChange={this.handleChange('Q11')}/>
                 <span>To a great degree</span>
@@ -521,6 +545,7 @@ class PainScaleModule extends Component
               <div className="custom-radio rounded">
                 <input type="radio" className="custom-input" name="Q11" value="4" id="Radio4" checked={this.state.Q11 ==="4"} onChange={this.handleChange('Q11')}/>
                 <span>All the time</span>
+              </div>
               </div>
               <div className="errorMessage">{this.state.Q11===-1 && this.state.nameError}</div>
             </div>
@@ -544,6 +569,7 @@ class PainScaleModule extends Component
                 <input type="radio" className="custom-input" name="Q12" value="2" id="Radio2" checked={this.state.Q12 ==="2"} onChange={this.handleChange('Q12')}/>
                 <span>To a moderate degree</span>
               </div>
+              <div>
               <div className="custom-radio rounded">
                 <input type="radio" className="custom-input" name="Q12" value="3" id="Radio3" checked={this.state.Q12 ==="3"} onChange={this.handleChange('Q12')}/>
                 <span>To a great degree</span>
@@ -551,6 +577,7 @@ class PainScaleModule extends Component
               <div className="custom-radio rounded">
                 <input type="radio" className="custom-input" name="Q12" value="4" id="Radio4" checked={this.state.Q12 ==="4"} onChange={this.handleChange('Q12')}/>
                 <span>All the time</span>
+              </div>
               </div>
               <div className="errorMessage">{this.state.Q12===-1 && this.state.nameError}</div>
             </div>
@@ -574,6 +601,7 @@ class PainScaleModule extends Component
                 <input type="radio" className="custom-input" name="Q13" value="2" id="Radio2" checked={this.state.Q13 ==="2"} onChange={this.handleChange('Q13')}/>
                 <span>To a moderate degree</span>
               </div>
+              <div>
               <div className="custom-radio rounded">
                 <input type="radio" className="custom-input" name="Q13" value="3" id="Radio3" checked={this.state.Q13 ==="3"} onChange={this.handleChange('Q13')}/>
                 <span>To a great degree</span>
@@ -582,16 +610,25 @@ class PainScaleModule extends Component
                 <input type="radio" className="custom-input" name="Q13" value="4" id="Radio4" checked={this.state.Q13 ==="4"} onChange={this.handleChange('Q13')}/>
                 <span>All the time</span>
               </div>
+              </div>
               <div className="errorMessage">{this.state.Q13===-1 && this.state.nameError}</div>
             </div>
             </div>
             </div>
             </div>
-            
-            <button className="btn btn-outline-primary" data-modal-id="sampleModal" onClick={this.completeForm}>Submit</button>
+            <div className = "row has-form-forms">
+                <button
+                    style = {{"position": "relative"}}
+                    className="btn btn-primary btn-block"
+                    onClick={this.completeForm}
+                >
+            Submit
+          </button>
+                </div>
+            {/* <button className="btn btn-outline-primary" data-modal-id="sampleModal" onClick={this.completeForm}>Submit</button> */}
 
             </div>
-
+  </div>
        
         
         );

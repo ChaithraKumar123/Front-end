@@ -20,7 +20,7 @@ class FOSQModule extends Component
        Q8:-1,
        Q9:-1,
        Q10:-1,
-       entityId:60,
+       entityId:"",
        id:-1,
        nameError:'',
 
@@ -137,7 +137,7 @@ class FOSQModule extends Component
             )
             .then(response => {
                 console.log(response)
-                alert('Submitted')
+                // alert('Submitted')
             })
             .catch(error => {
                 console.log(error)
@@ -169,15 +169,19 @@ class FOSQModule extends Component
     }
     render()
     {
+      const {Leftarrow, loadingCircle} = this.props.pageProps
+
         return(
             <div id="MainDiv">
-            <div className="row">
-            <div className="col-md-12">
-            <div className="page-title title"> 
-            <h1>Functional Outcomes of Sleep</h1>
+           <div className="page-title lg">
+          <div className="title">
+          {Leftarrow("/")}
+          <div style = {{float: "right", marginLeft : "15px"}}>
+          <h1>Functional Outcomes of Sleep</h1>
             </div>
-            </div>
-            </div>
+          </div>
+        </div>
+          <div className = "row has-form-forms">
             <div className="row">
             <div className="col-md-12">
             <div className="form-group custom-radio-wrapper">
@@ -446,12 +450,20 @@ class FOSQModule extends Component
             </div>
             </div>
             </div>
-            
-            <button className="btn btn-outline-primary" data-modal-id="sampleModal" onClick={this.completeForm}>Submit</button>
+            <div className = "row has-form-forms">
+                <button
+                    style = {{"position": "relative"}}
+                    className="btn btn-primary btn-block"
+                    onClick={this.completeForm}
+                >
+            Submit
+          </button>
+                </div>
+            {/* <button className="btn btn-outline-primary" data-modal-id="sampleModal" onClick={this.completeForm}>Submit</button> */}
 
             </div>
 
-       
+            </div>
         
         );
     }

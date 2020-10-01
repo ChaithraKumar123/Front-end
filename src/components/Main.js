@@ -253,9 +253,10 @@ class Main extends Component {
         middleName: patient[0].middleNames
           ? patient[0].middleNames
           : this.state.middleName,
-        DateofB: patient[0].dateOfBirth
-          ? this.dateFormatter(patient[0].dateOfBirth)
-          : this.state.DateofB,
+
+        DateofB: new Date(patient[0].dateOfBirth).getFullYear() === 2020 
+          ? this.state.DateofB : this.dateFormatter(patient[0].dateOfBirth),
+
         gender: temp ? temp : this.state.gender,
         mobileNumber:
           "0" + patient[0].mobile
@@ -744,12 +745,13 @@ class Main extends Component {
             <ProtectedRoute
               path="/CorePsychologicalModule"
               Leftarrow = {this.Leftarrow}
-
+              loadingCircle={<IsLoading />}
               component={CorePsychologicalModule}
             ></ProtectedRoute>
 
             <ProtectedRoute
               path="/RedFlagModule"
+              loadingCircle={<IsLoading />}
               Leftarrow = {this.Leftarrow}
 
               component={RedFlagModule}
@@ -757,6 +759,7 @@ class Main extends Component {
 
             <ProtectedRoute
               path="/CoreLifeStyleModule"
+              loadingCircle={<IsLoading />}
               Leftarrow = {this.Leftarrow}
               component={CoreLifeStyleModule}
             ></ProtectedRoute>
@@ -778,6 +781,7 @@ class Main extends Component {
 
             <ProtectedRoute
               path="/FamilyHistoryModule"
+              loadingCircle={<IsLoading />}
               Leftarrow = {this.Leftarrow}
 
               component={FamilyHistoryModule}
@@ -785,49 +789,70 @@ class Main extends Component {
 
             <ProtectedRoute
               path="/NDSModule"
+              loadingCircle={<IsLoading />}
+              Leftarrow = {this.Leftarrow}
               component={NDSModule}
             ></ProtectedRoute>
 
             <ProtectedRoute
               path="/QuebecModule"
+              loadingCircle={<IsLoading />}
+              Leftarrow = {this.Leftarrow}
               component={QuebecModule}
             ></ProtectedRoute>
 
             <ProtectedRoute
               path="/LEFSModule"
+              loadingCircle={<IsLoading />}
+              Leftarrow = {this.Leftarrow}
               component={LEFSModule}
             ></ProtectedRoute>
 
             <ProtectedRoute
               path="/PSSModule"
+              loadingCircle={<IsLoading />}
+              Leftarrow = {this.Leftarrow}
               component={PSSModule}
             ></ProtectedRoute>
 
             <ProtectedRoute
               path="/FABQMain"
+              loadingCircle={<IsLoading />}
+              Leftarrow = {this.Leftarrow}
               component={FABQMain}
             ></ProtectedRoute>
 
             <ProtectedRoute
               path="/FOSQModule"
+              loadingCircle={<IsLoading />}
+              Leftarrow = {this.Leftarrow}
               component={FOSQModule}
             ></ProtectedRoute>
+            
             <ProtectedRoute
               path="/PainScaleModule"
+              loadingCircle={<IsLoading />}
+              Leftarrow = {this.Leftarrow}
               component={PainScaleModule}
             ></ProtectedRoute>
 
             <ProtectedRoute
               path="/DASSModule"
+              loadingCircle={<IsLoading />}
+              Leftarrow = {this.Leftarrow}
               component={DASSModule}
             ></ProtectedRoute>
+            
             <ProtectedRoute
               path="/DASHModule"
+              loadingCircle={<IsLoading />}
+              Leftarrow = {this.Leftarrow}
               component={DASHModule}
             ></ProtectedRoute>
 
             <ProtectedRoute
               path="/MusculoskeletonModule"
+              loadingCircle={<IsLoading />}
               Leftarrow = {this.Leftarrow}
 
               component={MusculoskeletonModule}

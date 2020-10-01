@@ -20,7 +20,7 @@ class PSSModule extends Component
        Q8:-1,
        Q9:-1,
        Q10:-1,
-       entityId:60,
+       entityId:"",
        id:-1,
        nameError:'',
 
@@ -137,7 +137,7 @@ class PSSModule extends Component
             )
             .then(response => {
                 console.log(response)
-                alert('Submitted')
+                // alert('Submitted')
             })
             .catch(error => {
                 console.log(error)
@@ -169,15 +169,19 @@ class PSSModule extends Component
     }
     render()
     {
+      const {Leftarrow, loadingCircle} = this.props.pageProps
+
         return(
             <div id="MainDiv">
-            <div className="row">
-            <div className="col-md-12">
-            <div className="page-title title"> 
-            <h1>PSS Form</h1>
+                        <div className="page-title lg">
+          <div className="title">
+          {Leftarrow("/")}
+          <div style = {{float: "right", marginLeft : "15px"}}>
+          <h1>PSS Form</h1>
             </div>
-            </div>
-            </div>
+          </div>
+        </div>
+            <div className="row has-form-forms">
 
             <div className="row">
             <div className="col-md-12">
@@ -200,10 +204,11 @@ class PSSModule extends Component
                 <input type="radio" className="custom-input" name="Q1" value="3" id="Radio3" checked={this.state.Q1 ==="3"} onChange={this.handleChange('Q1')}/>
                 <span>Fairly Often</span>
               </div>
+              <div>
               <div className="custom-radio rounded">
                 <input type="radio" className="custom-input" name="Q1" value="4" id="Radio4" checked={this.state.Q1 ==="4"} onChange={this.handleChange('Q1')}/>
                 <span>Very Often</span>
-              </div>
+              </div></div>
               <div className="errorMessage">{this.state.Q1===-1 && this.state.nameError}</div>
             </div>
             </div>
@@ -230,10 +235,11 @@ class PSSModule extends Component
                 <input type="radio" className="custom-input" name="Q2" value="3" id="Radio3" checked={this.state.Q2 ==="3"} onChange={this.handleChange('Q2')}/>
                 <span>Fairly Often</span>
               </div>
+              <div>
               <div className="custom-radio rounded">
                 <input type="radio" className="custom-input" name="Q2" value="4" id="Radio4" checked={this.state.Q2 ==="4"} onChange={this.handleChange('Q2')}/>
                 <span>Very Often</span>
-              </div>
+              </div></div>
             <div className="errorMessage">{this.state.Q2===-1 && this.state.nameError}</div>
             </div>
             </div>
@@ -260,10 +266,11 @@ class PSSModule extends Component
                 <input type="radio" className="custom-input" name="Q3" value="3" id="Radio3" checked={this.state.Q3 ==="3"} onChange={this.handleChange('Q3')}/>
                 <span>Fairly Often</span>
               </div>
+              <div>
               <div className="custom-radio rounded">
                 <input type="radio" className="custom-input" name="Q3" value="4" id="Radio4" checked={this.state.Q3 ==="4"} onChange={this.handleChange('Q3')}/>
                 <span>Very Often</span>
-              </div>
+              </div></div>
               <div className="errorMessage">{this.state.Q3===-1 && this.state.nameError}</div>
             </div>
             
@@ -291,10 +298,11 @@ class PSSModule extends Component
                 <input type="radio" className="custom-input" name="Q4" value="3" id="Radio3" checked={this.state.Q4 ==="3"} onChange={this.handleChange('Q4')}/>
                 <span>Fairly Often</span>
               </div>
+              <div>
               <div className="custom-radio rounded">
                 <input type="radio" className="custom-input" name="Q4" value="4" id="Radio4" checked={this.state.Q4 ==="4"} onChange={this.handleChange('Q4')}/>
                 <span>Very Often</span>
-              </div>
+              </div></div>
               <div className="errorMessage">{this.state.Q4===-1 && this.state.nameError}</div>
             </div>
             
@@ -322,9 +330,11 @@ class PSSModule extends Component
                 <input type="radio" className="custom-input" name="Q5" value="3" id="Radio3" checked={this.state.Q5 ==="3"} onChange={this.handleChange('Q5')}/>
                 <span>Fairly Often</span>
               </div>
+              <div>
               <div className="custom-radio rounded">
                 <input type="radio" className="custom-input" name="Q5" value="4" id="Radio4" checked={this.state.Q5 ==="4"} onChange={this.handleChange('Q5')}/>
                 <span>Very Often</span>
+              </div>
               </div>
               <div className="errorMessage">{this.state.Q5===-1 && this.state.nameError}</div>
             </div>
@@ -353,10 +363,13 @@ class PSSModule extends Component
                 <input type="radio" className="custom-input" name="Q6" value="3" id="Radio3" checked={this.state.Q6 ==="3"} onChange={this.handleChange('Q6')}/>
                 <span>Fairly Often</span>
               </div>
+              <div>
+
+              
               <div className="custom-radio rounded">
                 <input type="radio" className="custom-input" name="Q6" value="4" id="Radio4" checked={this.state.Q6 ==="4"} onChange={this.handleChange('Q6')}/>
                 <span>Very Often</span>
-              </div>
+              </div> </div>
               <div className="errorMessage">{this.state.Q6===-1 && this.state.nameError}</div>
             </div>
             
@@ -384,10 +397,13 @@ class PSSModule extends Component
                 <input type="radio" className="custom-input" name="Q7" value="3" id="Radio3" checked={this.state.Q7 ==="3"} onChange={this.handleChange('Q7')}/>
                 <span>Fairly Often</span>
               </div>
+              <div>
+
+              
               <div className="custom-radio rounded">
                 <input type="radio" className="custom-input" name="Q7" value="4" id="Radio4" checked={this.state.Q7 ==="4"} onChange={this.handleChange('Q7')}/>
                 <span>Very Often</span>
-              </div>
+              </div></div>
               <div className="errorMessage">{this.state.Q7===-1 && this.state.nameError}</div>
             </div>
             
@@ -415,10 +431,13 @@ class PSSModule extends Component
                 <input type="radio" className="custom-input" name="Q8" value="3" id="Radio3" checked={this.state.Q8 ==="3"} onChange={this.handleChange('Q8')}/>
                 <span>Fairly Often</span>
               </div>
+              <div>
               <div className="custom-radio rounded">
                 <input type="radio" className="custom-input" name="Q8" value="4" id="Radio4" checked={this.state.Q8 ==="4"} onChange={this.handleChange('Q8')}/>
                 <span>Very Often</span>
               </div>
+              </div>
+              
               <div className="errorMessage">{this.state.Q8===-1 && this.state.nameError}</div>
             </div>
             
@@ -447,9 +466,11 @@ class PSSModule extends Component
                 <input type="radio" className="custom-input" name="Q9" value="3" id="Radio3" checked={this.state.Q9 ==="3"} onChange={this.handleChange('Q9')}/>
                 <span>Fairly Often</span>
               </div>
+              <div>
               <div className="custom-radio rounded">
                 <input type="radio" className="custom-input" name="Q9" value="4" id="Radio4" checked={this.state.Q9 ==="4"} onChange={this.handleChange('Q9')}/>
                 <span>Very Often</span>
+              </div>
               </div>
               <div className="errorMessage">{this.state.Q9===-1 && this.state.nameError}</div>
             </div>
@@ -479,9 +500,11 @@ class PSSModule extends Component
                 <input type="radio" className="custom-input" name="Q10" value="3" id="Radio3" checked={this.state.Q10 ==="3"} onChange={this.handleChange('Q10')}/>
                 <span>Fairly Often</span>
               </div>
+              <div>
               <div className="custom-radio rounded">
                 <input type="radio" className="custom-input" name="Q10" value="4" id="Radio4" checked={this.state.Q10 ==="4"} onChange={this.handleChange('Q10')}/>
                 <span>Very Often</span>
+              </div>
               </div>
               <div className="errorMessage">{this.state.Q10===-1 && this.state.nameError}</div>
             </div>
@@ -489,9 +512,20 @@ class PSSModule extends Component
             </div>
             </div>
             </div>
-            
-            <button className="btn btn-outline-primary" data-modal-id="sampleModal" onClick={this.completeForm}>Submit</button>
 
+            <div className = "row">
+                <button
+                    style = {{"position": "relative"}}
+                    className="btn btn-primary btn-block"
+                    onClick={this.completeForm}
+                >
+            Submit
+          </button>
+                </div>
+            
+            {/* <button className="btn btn-outline-primary" data-modal-id="sampleModal" onClick={this.completeForm}>Submit</button> */}
+
+            </div>
             </div>
 
        

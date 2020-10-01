@@ -59,7 +59,7 @@ class BodyImageTabs extends Component {
       InjuryRegion: people,
       nameError: "",
       emailError: "",
-      POBPatientID: 60,
+      POBPatientID: "",
     };
   }
   addExtra(k, n) {
@@ -263,7 +263,7 @@ class BodyImageTabs extends Component {
       .then((response) => {
 
         if (response.data === "Success"){
-          alert("Successfully Submitted!");
+          // alert("Successfully Submitted!");
           console.log(response);
         }
 
@@ -346,7 +346,8 @@ class BodyImageTabs extends Component {
     if (isValid) {
       try{
         
-        setTimeout(()=> console.log("wait"),  this.apicall(this.state.step1),      
+        setTimeout(()=> console.log("wait"),  this.apicall(this.state.step1),     
+        localStorage.setItem("ref", true), 
         auth.login(() => {
             this.props.history.push("/Home");
           }))

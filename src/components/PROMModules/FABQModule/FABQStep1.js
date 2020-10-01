@@ -64,21 +64,22 @@ class FABQStep1 extends Component
    
     render()
     {
-      const{handleChange,state}=this.props
+      const{handleChange,state, Leftarrow, loadingCircle}=this.props
         return(
             <div id="MainDiv">
-            <div className="row">
-            <div className="col-md-12">
-            <div className="page-title title"> 
-            <h1>Fear-Avoidance Beliefs Questionnaire (FABQ)</h1>
+           <div className="page-title lg">
+          <div className="title">
+          {Leftarrow("/")}
+          <div style = {{float: "right", marginLeft : "15px"}}>
+          <h2 style = {{ marginTop : "0px"}}>Fear-Avoidance Beliefs Questionnaire <br/>(FABQ)</h2>
             </div>
-            </div>
-            </div>
-            <div>
-            <h6>Here are some of the things which other patients have told us about their pain. 
+          </div>
+        </div>
+
+            <div className = "row has-form-forms">
+            <label className="abc">Here are some of the things which other patients have told us about their pain. 
             For each statement please circle any number from 0 to 6 to say how much physical activities 
-            such as bending, lifting, walking or driving affect or would affect your back pain.</h6>
-            </div>
+            such as bending, lifting, walking or driving affect or would affect your back pain.</label>
             <hr></hr>
             
         {
@@ -89,31 +90,61 @@ class FABQStep1 extends Component
            <RadioButtonRange handleChange = {handleChange} Q={state.Q3} variable="Q3" state={this.state} question="Physical activity might harm my back"></RadioButtonRange>
            <RadioButtonRange handleChange = {handleChange} Q={state.Q4} variable="Q4" state={this.state} question="I should not do physical activities which (might) make my pain worse"></RadioButtonRange>
            <RadioButtonRange handleChange = {handleChange} Q={state.Q5} variable="Q5" state={this.state} question="I cannot do physical activities which (might) make my pain worse"></RadioButtonRange>
+
+           <div className = "row has-form-forms">
+                <button
+                    style = {{"position": "relative"}}
+                    className="btn btn-primary btn-block"
+                    onClick={this.continue}
+                >
+            Continue
+          </button>
+                </div>
+{/* 
            <div className="btn-block prev-back-btn">
           <button className="btn btn-outline-primary" data-modal-id="sampleModal" onClick={this.continue}>Continue</button>
-          </div>
+          </div> */}
           </div>
         }
         {
           state.step===2 && 
           <div> 
-            <h6>The following statements are about how your normal work affects or would affect your back pain</h6> 
+            <label className="abc">The following statements are about how your normal work affects or would affect your back pain</label> 
             <br/>
            <RadioButtonRange handleChange = {handleChange} Q={state.Q6} variable="Q6" state={this.state} question="My pain was caused by my work or by an accident at work"></RadioButtonRange>
            <RadioButtonRange handleChange = {handleChange} Q={state.Q7} variable="Q7" state={this.state} question="My work aggravated my pain"></RadioButtonRange>
            <RadioButtonRange handleChange = {handleChange} Q={state.Q8} variable="Q8" state={this.state} question="I have a claim for compensation for my pain"></RadioButtonRange>
            <RadioButtonRange handleChange = {handleChange} Q={state.Q9} variable="Q9" state={this.state} question="My work is too heavy for me"></RadioButtonRange>
            <RadioButtonRange handleChange = {handleChange} Q={state.Q10} variable="Q10" state={this.state} question="My work makes or would make my pain worse"></RadioButtonRange>
-          <div className="btn-block prev-back-btn">
+          
+
+
+           <div>
+                <button style = {{ "min-width": "241px"}} className="btn btn-outline-primary" onClick={this.back}>
+                 Back
+                </button>
+
+                <button
+                    style = {{ minWidth: "241px", marginLeft: "4px"}}
+                    className="btn btn-primary modal-btn"
+                    data-modal-id="sampleModal"
+                    onClick={this.continue}
+                >
+              Continue
+            </button>
+                </div>
+          
+          
+          {/* <div className="btn-block prev-back-btn">
           <button className="btn btn-outline-primary" onClick={this.back}>Back</button>
           <button className="btn btn-primary modal-btn" data-modal-id="sampleModal" onClick={this.continue}>Continue</button>
-          </div>
+          </div> */}
         </div>
         }
         {
           state.step===3 && 
           <div> 
-            <h6>The following statements are about how your normal work affects or would affect your back pain</h6> 
+            <label className="abc">The following statements are about how your normal work affects or would affect your back pain</label> 
             <br/>
            <RadioButtonRange handleChange = {handleChange} Q={state.Q11} variable="Q11" state={this.state} question="My work might harm my back"></RadioButtonRange>
            <RadioButtonRange handleChange = {handleChange} Q={state.Q12} variable="Q12" state={this.state} question="I should not do my normal work with my present pain"></RadioButtonRange>
@@ -121,17 +152,35 @@ class FABQStep1 extends Component
            <RadioButtonRange handleChange = {handleChange} Q={state.Q14} variable="Q14" state={this.state} question="I cannot do my normal work till my pain is treated"></RadioButtonRange>
            <RadioButtonRange handleChange = {handleChange} Q={state.Q15} variable="Q15" state={this.state} question="I do not think that I will be back to my normal work within 3 months"></RadioButtonRange>
            <RadioButtonRange handleChange = {handleChange} Q={state.Q16} variable="Q16" state={this.state} question="I do not think that I will ever be able to go back to that work"></RadioButtonRange>
+          
+          
+           <div>
+                <button style = {{ "min-width": "241px"}} className="btn btn-outline-primary" onClick={this.back}>
+                 Back
+                </button>
+
+                <button
+                    style = {{ minWidth: "241px", marginLeft: "4px"}}
+                    className="btn btn-primary modal-btn"
+                    data-modal-id="sampleModal"
+                    onClick={this.submit}
+                >
+              Submit
+            </button>
+                </div>
+          
+{/*           
           <div className="btn-block prev-back-btn">
           
           <button className="btn btn-primary modal-btn" data-modal-id="sampleModal" onClick={this.submit}>Submit</button>
-          </div>
+          </div> */}
         </div>
         }
           
 
         </div>
 
-       
+        </div>    
         
         );
     }

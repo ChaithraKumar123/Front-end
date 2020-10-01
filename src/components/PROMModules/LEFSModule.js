@@ -32,10 +32,6 @@ class RadioButton extends Component
                 <input type="radio" className="custom-input" name={variable} value="3" id="Radio3" checked={Q ==="3"} onChange={handleChange(variable)}/>
                 <span>Little bit</span>
               </div>
-              <div className="custom-radio rounded">
-                <input type="radio" className="custom-input" name={variable} value="4" id="Radio3" checked={Q ==="4"} onChange={handleChange(variable)}/>
-                <span>Extremely</span>
-              </div>
               <div>
               <div className="custom-radio rounded">
                 <input type="radio" className="custom-input" name={variable} value="5" id="Radio3" checked={Q ==="5"} onChange={handleChange(variable)}/>
@@ -78,7 +74,7 @@ class LEFSModule extends Component
        Q19:-1,
        Q20:-1,
        
-       entityId:60,
+       entityId:"",
        id:-1,
        nameError:'',
        step:1
@@ -233,7 +229,7 @@ class LEFSModule extends Component
             )
             .then(response => {
                 console.log(response)
-                alert('Submitted')
+                // alert('Submitted')
             })
             .catch(error => {
                 console.log(error)
@@ -266,19 +262,21 @@ class LEFSModule extends Component
     }
     render()
     {
+      const {Leftarrow, loadingCircle} = this.props.pageProps
+
         return(
             <div id= "MainDiv">
-            <div className="row">
-            <div className="col-md-12">
-            <div className="page-title title"> 
-            <h1>The Lower Extremity Functional Scale</h1>
+            <div className="page-title lg">
+          <div className="title">
+          {Leftarrow("/")}
+          <div style = {{float: "right", marginLeft : "15px"}}>
+          <h1>The Lower Extremity Functional Scale</h1>
             </div>
-            </div>
-            </div>
-            <div>
-            <h6>We are interested in knowing whether you are having any difficulty at all with the activities listed below because of your lower limb problem for which you are
-          currently seeking attention.Today, do you or would you have any difficulty at all with:</h6>
-            </div>
+          </div>
+        </div>
+            <div className = "row has-form-forms">
+            <label className="abc">We are interested in knowing whether you are having any difficulty at all with the activities listed below because of your lower limb problem for which you are
+          currently seeking attention.Today, do you or would you have any difficulty at all with:</label>
             <hr></hr>
             { this.state.step===1 &&
             <div>
@@ -292,9 +290,18 @@ class LEFSModule extends Component
                 <RadioButton state={this.state} handleChange={this.handleChange} question="Performing light activities around your home." Q={this.state.Q8} variable="Q8"/>
                 <RadioButton state={this.state} handleChange={this.handleChange} question="Performing heavy activities around your home." Q={this.state.Q9} variable="Q9"/>
                 <RadioButton state={this.state} handleChange={this.handleChange} question="Getting into or out of the car." Q={this.state.Q10} variable="Q10"/>
-                <div className="btn-block prev-back-btn">
-                <button className="btn btn-outline-primary" data-modal-id="sampleModal" onClick={this.nextStep}>Continue</button>
+                <div className = "row">
+                <button
+                    style = {{"position": "relative"}}
+                    className="btn btn-primary btn-block"
+                    onClick={this.nextStep}
+                >
+            Continue
+          </button>
                 </div>
+                {/* <div className="btn-block prev-back-btn">
+                <button className="btn btn-outline-primary" data-modal-id="sampleModal" onClick={this.nextStep}>Continue</button>
+                </div> */}
             </div>
             }
              { this.state.step===2 &&
@@ -309,16 +316,34 @@ class LEFSModule extends Component
                 <RadioButton state={this.state} handleChange={this.handleChange} question="Making sharp turns while running fast." Q={this.state.Q18} variable="Q18"/>
                 <RadioButton state={this.state} handleChange={this.handleChange} question="Hopping." Q={this.state.Q19} variable="Q19"/>
                 <RadioButton state={this.state} handleChange={this.handleChange} question="Rolling over bed." Q={this.state.Q20} variable="Q20"/>
-                <div className="btn-block prev-back-btn">
+
+                <div>
+                <button style = {{ "min-width": "241px"}} className="btn btn-outline-primary" onClick={this.back}>
+                 Back
+                </button>
+
+                <button
+                    style = {{ minWidth: "241px", marginLeft: "4px"}}
+                    className="btn btn-primary modal-btn"
+                    data-modal-id="sampleModal"
+                    onClick={this.completeForm}
+                >
+              Submit
+            </button>
+                </div>
+
+
+                {/* <div className="btn-block prev-back-btn">
                 <button className="btn btn-outline-primary" onClick={this.back}>Back</button>
                 <button className="btn btn-primary modal-btn" data-modal-id="sampleModal" onClick={this.completeForm}>Submit</button>
-                </div>
+                </div> */}
 
             </div>
             }
             </div>
            
-        
+            </div>
+
         
         );
     }

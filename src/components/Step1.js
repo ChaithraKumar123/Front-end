@@ -197,11 +197,12 @@ class Step1 extends Component {
                 />
                 <span>Other</span>
               </div>
-            </div>
-            <div className="errorMessage">{state.titleOptError}</div>
+              <div className="errorMessage">{state.titleOptError}</div>
             <div className="errorMessage">
             {this.props.state.titleOpt === "" && this.state.nameError}
             </div>
+            </div>
+
 
             <div>
               <div className="form-group">
@@ -262,7 +263,7 @@ class Step1 extends Component {
                 />
                 <div className="errorMessage">{state.DateofBError}</div>
                 <div className="errorMessage">
-                {state.dateerr ? null: (!this.props.state.DateofBisValid && this.state.dateerr)}
+                {state.DateofBError ? null: (!this.props.state.DateofBisValid && this.state.dateerr)}
             </div>
               </div>
             </div>

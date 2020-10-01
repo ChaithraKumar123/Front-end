@@ -93,7 +93,7 @@ class OreboModule extends Component {
           }
         )
         .then((response) => {
-          alert("Submitted");
+          // alert("Submitted");
           console.log(response);
         })
         .catch((error) => {

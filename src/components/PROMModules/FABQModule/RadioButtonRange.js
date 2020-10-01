@@ -12,7 +12,7 @@ class RadioBtn extends Component{
         <div className="row">
         <div className="col-md-12">
         <div className="form-group custom-radio-wrapper">
-      <label>{question}</label>
+      <label className = "abc">{question}</label>
           <div className="errorMessage">{Q===-1 && state.nameError}</div>
           <div className="custom-radio secondary">
             <input type="radio" className="custom-input" name={variable} value="0" checked={Q ==="0"} onChange={handleChange(variable)} />

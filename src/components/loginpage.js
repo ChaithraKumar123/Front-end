@@ -77,8 +77,9 @@ class Loginpage extends Component {
     this.setState({ authErr: "" });
     const isValid = this.loginVAlidation(e);
     const passVal = this.passVal(e);
-    this.changeLoadingCircle();
     if (isValid && passVal) {
+        this.changeLoadingCircle();
+
       // UserPool.signUp()
       //this.props.nextStep();
       console.log("logging in");
