@@ -84,7 +84,7 @@ class InjuryQuestions extends Component
         <div className = "contentSpacing">
                 
                     <div className="row">
-                    <div class="col-md-12">
+                    <div className="col-md-12">
                     <div className="form-group">
                         <label className="abc">Select Pain Side</label>
                         <label style={{ fontSize: 12, color: "red" }}>{current_Injury_Region.pain_side==="" && propsstate.nameError}</label>
@@ -94,7 +94,7 @@ class InjuryQuestions extends Component
                     </div>
 
                     <div className="row">
-                    <div class="col-md-12">
+                    <div className="col-md-12">
                     <div className="form-group">
                     <label className="abc" >When did this problem start?</label>
                     <label style={{ fontSize: 12, color: "red" }}>{current_Injury_Region.pain_duration==="" && propsstate.nameError}</label>
@@ -114,7 +114,7 @@ class InjuryQuestions extends Component
                     </div>
                    </div>
                     
-                    <div className="row">
+                    {/* <div className="row">
                     <div class="col-md-12">
                     
               <div class="form-group custom-radio-wrapper">
@@ -137,7 +137,7 @@ class InjuryQuestions extends Component
                 </div>
               </div>
      
-          </div>
+          </div> */}
 
                     {/* <label className="abc">Is this the first time you’ve had this problem, or have you had it before? </label>
                      <label style={{ fontSize: 12, color: "red" }}>{current_Injury_Region.pain_firstime==="" && propsstate.nameError}</label>
@@ -145,7 +145,7 @@ class InjuryQuestions extends Component
                         <input type="radio" value="This is the first time" checked={current_Injury_Region.pain_firstime === "This is the first time"}  onChange={handleChange('pain_firstime',current_Injury_Region.id)}/>This is the first time  
                         <input type="radio" value="I’ve had it before" checked={current_Injury_Region.pain_firstime === "I’ve had it before"}  onChange={handleChange('pain_firstime',current_Injury_Region.id)}/>I’ve had it before 
                     </div> */}
-                    {current_Injury_Region.pain_firstime==="I’ve had it before" && 
+                    {/* {current_Injury_Region.pain_firstime==="I’ve had it before" && 
                     <div className="row">
                      <div class="col-md-12">
                     <div className="form-group">
@@ -154,7 +154,7 @@ class InjuryQuestions extends Component
                     <input className="form-control" id="" name="pain_firstime_date" type="date" 
                         placeholder="Select approximate date" value={current_Injury_Region.pain_firstime_date} onChange={handleChange('pain_firstime_date',current_Injury_Region.id)}/>
                      {/* <input name="pain_firstime_approx" type="checkbox" checked={current_Injury_Region.pain_firstime_approx} onChange={handleChangeCheck('pain_firstime_approx',current_Injury_Region.id)}/>  */}
-                     <br/>
+                     {/* <br/>
                      <div className="custom-radio square">
                     <input
                       type="checkbox"
@@ -165,7 +165,7 @@ class InjuryQuestions extends Component
                    </div>
                     </div>
                     </div>
-                    </div>}
+                    </div> */} 
 
                     <div className="row">
                      <div class="col-md-12">
@@ -306,7 +306,7 @@ class InjuryQuestions extends Component
                     </div> */}
                     </div>
 
-                    <div class="row">
+                    {/* <div class="row">
             <div class="col-md-12">
               <div class="form-group custom-radio-wrapper">
               <label className="abc"> Are you experiencing any other symptoms?</label>
@@ -333,7 +333,7 @@ class InjuryQuestions extends Component
                 </RadioGroup>
               </div>
             </div>
-          </div>
+          </div> */}
 {/* 
                    
                     <label className="abc"> Are you experiencing any other symptoms?</label>
@@ -343,7 +343,7 @@ class InjuryQuestions extends Component
                         <input type="radio" value="No" checked={current_Injury_Region.pain_symp === "No"} onChange={handleChange('pain_symp',current_Injury_Region.id)}/>No
                         <input type="radio" value="Not Sure" checked={current_Injury_Region.pain_symp === "Not Sure"} onChange={handleChange('pain_symp',current_Injury_Region.id)}/>Not Sure
                     </div> */}
-                  { (current_Injury_Region.pain_symp==="Yes" | current_Injury_Region.pain_symp==="Not Sure") ? 
+                  {/* { (current_Injury_Region.pain_symp==="Yes" | current_Injury_Region.pain_symp==="Not Sure") ? 
                   <div  className="rounddiv">
                     <div class="row">
             <div class="col-md-12">
@@ -374,7 +374,7 @@ class InjuryQuestions extends Component
                 </RadioGroup>
               </div>
             </div>
-          </div>
+          </div> */}
                     {/* <label className="abc"> ‘Pins and needles’ or numbness in your</label><br/>
                     <label className="abc">Hands?</label>
                     <label style={{ fontSize: 12, color: "red" }}>{current_Injury_Region.pain_symp==="Yes"&& current_Injury_Region.pain_symp_hand==="" && propsstate.nameError}</label>
@@ -385,7 +385,7 @@ class InjuryQuestions extends Component
                         <input type="radio" value="Not Sure" checked={current_Injury_Region.pain_symp_hand === "Not Sure"} onChange={handleChange('pain_symp_hand',current_Injury_Region.id)}/>Not Sure
                     </div> */}
 
-<div class="row">
+{/* <div class="row">
             <div class="col-md-12">
               <div class="form-group custom-radio-wrapper">
               <label className="abc">Feet?</label>
@@ -412,7 +412,7 @@ class InjuryQuestions extends Component
                 </RadioGroup>
               </div>
             </div>
-          </div> 
+          </div>  */}
                     {/* <label className="abc">Feet?</label>
                     <label style={{ fontSize: 12, color: "red" }}>{current_Injury_Region.pain_symp==="Yes"&& current_Injury_Region.pain_symp_feet==="" && propsstate.nameError}</label>
                     <div id = "radio">
@@ -420,7 +420,7 @@ class InjuryQuestions extends Component
                         <input type="radio" value="No" checked={current_Injury_Region.pain_symp_feet === "No"} onChange={handleChange('pain_symp_feet',current_Injury_Region.id)}/>No
                         <input type="radio" value="Not Sure" checked={current_Injury_Region.pain_symp_feet === "Not Sure"} onChange={handleChange('pain_symp_feet',current_Injury_Region.id)}/>Not Sure
                     </div> */}
-                                       <div class="row">
+                                       {/* <div class="row">
             <div class="col-md-12">
               <div class="form-group custom-radio-wrapper">
               <label className="abc">Swelling?</label>
@@ -448,7 +448,7 @@ class InjuryQuestions extends Component
                 </RadioGroup>
               </div>
             </div>
-          </div> 
+          </div>  */}
                     {/* <label className="abc">Swelling?</label>
                     <label style={{ fontSize: 12, color: "red" }}>{current_Injury_Region.pain_symp==="Yes"&& current_Injury_Region.pain_symp_swell==="" && propsstate.nameError}</label>
 
@@ -457,7 +457,7 @@ class InjuryQuestions extends Component
                         <input type="radio" value="No" checked={current_Injury_Region.pain_symp_swell === "No"} onChange={handleChange('pain_symp_swell',current_Injury_Region.id)}/>No
                         <input type="radio" value="Not Sure" checked={current_Injury_Region.pain_symp_swell === "Not Sure"} onChange={handleChange('pain_symp_swell',current_Injury_Region.id)}/>Not Sure
                     </div> */}
-                                        <div class="row">
+                                        {/* <div class="row">
             <div class="col-md-12">
               <div class="form-group custom-radio-wrapper">
               <label className="abc">Clicking (for example, joints cracking or popping)?</label>
@@ -484,7 +484,7 @@ class InjuryQuestions extends Component
                 </RadioGroup>
               </div>
             </div>
-          </div>
+          </div> */}
                     {/* <label className="abc">Clicking (for example, joints cracking or popping)?</label>
                     <label style={{ fontSize: 12, color: "red" }}>{current_Injury_Region.pain_symp==="Yes"&& current_Injury_Region.pain_symp_click==="" && propsstate.nameError}</label>
 
@@ -493,7 +493,7 @@ class InjuryQuestions extends Component
                         <input type="radio" value="No" checked={current_Injury_Region.pain_symp_click === "No"} onChange={handleChange('pain_symp_click',current_Injury_Region.id)}/>No
                         <input type="radio" value="Not Sure" checked={current_Injury_Region.pain_symp_click === "Not Sure"} onChange={handleChange('pain_symp_click',current_Injury_Region.id)}/>Not Sure
                     </div> */}
-                                        <div class="row">
+                                        {/* <div class="row">
             <div class="col-md-12">
               <div class="form-group custom-radio-wrapper">
               <label className="abc">Locking (for example, joint becoming stuck)?</label>
@@ -520,7 +520,7 @@ class InjuryQuestions extends Component
                 </RadioGroup>
               </div>
             </div>
-          </div>
+          </div> */}
                     {/* <label className="abc">Locking (for example, joint becoming stuck)?</label>
                     <label style={{ fontSize: 12, color: "red" }}>{current_Injury_Region.pain_symp==="Yes"&& current_Injury_Region.pain_symp_lock==="" && propsstate.nameError}</label>
 
@@ -530,7 +530,7 @@ class InjuryQuestions extends Component
                         <input type="radio" value="Not Sure" checked={current_Injury_Region.pain_symp_lock === "Not Sure"} onChange={handleChange('pain_symp_lock',current_Injury_Region.id)}/>Not Sure
                     </div> */}
 
-<div class="row">
+{/* <div class="row">
             <div class="col-md-12">
               <div class="form-group custom-radio-wrapper">
               <label className="abc">Weakness?</label>
@@ -558,7 +558,7 @@ class InjuryQuestions extends Component
                 </RadioGroup>
               </div>
             </div>
-          </div>
+          </div> */}
                    
                     {/* <label className="abc">Weakness?</label>
                     <label style={{ fontSize: 12, color: "red" }}>{current_Injury_Region.pain_symp==="Yes"&& current_Injury_Region.pain_symp_weak==="" && propsstate.nameError}</label>
@@ -569,7 +569,7 @@ class InjuryQuestions extends Component
                         <input type="radio" value="Not Sure"  checked={current_Injury_Region.pain_symp_weak === "Not Sure"} onChange={handleChange('pain_symp_weak',current_Injury_Region.id)}/>Not Sure
                     </div> */}
                     
-                    <div class="row">
+                    {/* <div class="row">
             <div class="col-md-12">
               <div class="form-group custom-radio-wrapper">
               <label className="abc">Heat, or redness?</label>
@@ -597,7 +597,7 @@ class InjuryQuestions extends Component
                 </RadioGroup>
               </div>
             </div>
-          </div>
+          </div> */}
                     {/* <label className="abc">Heat, or redness?</label>
                     <label style={{ fontSize: 12, color: "red" }}>{current_Injury_Region.pain_symp==="Yes"&& current_Injury_Region.pain_symp_heat==="" && propsstate.nameError}</label>
 
@@ -606,7 +606,7 @@ class InjuryQuestions extends Component
                         <input type="radio" value="No" checked={current_Injury_Region.pain_symp_heat === "No"} onChange={handleChange('pain_symp_heat',current_Injury_Region.id)}/>No
                         <input type="radio" value="Not Sure" checked={current_Injury_Region.pain_symp_heat === "Not Sure"} onChange={handleChange('pain_symp_heat',current_Injury_Region.id)}/>Not Sure
                     </div> */}
-                    </div> : null
+                    {/* </div> : null
                 }
                 
                   
@@ -672,7 +672,7 @@ class InjuryQuestions extends Component
                 </RadioGroup>
               </div>
             </div>
-          </div>
+          </div> */}
                     {/* <label className="abc">Is your problem limiting your work or daily life in any way?</label>
                     <label style={{ fontSize: 12, color: "red" }}>{current_Injury_Region.pain_limit_work==="" && propsstate.nameError}</label>
                     <div id="radio">
@@ -681,7 +681,7 @@ class InjuryQuestions extends Component
                         <input type="radio" value="Both" checked={current_Injury_Region.pain_limit_work === "Both"} onChange={handleChange('pain_limit_work',current_Injury_Region.id)}/>Both
                     </div> */}
 
-<div class="row">
+{/* <div class="row">
             <div class="col-md-12">
               <div class="form-group custom-radio-wrapper">
                     <label className="abc">Details?</label>
@@ -710,7 +710,7 @@ class InjuryQuestions extends Component
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
                         {/* <label className="abc"> In your view, how large is the risk that your current pain may become persistent?(1= no risk, 10= very high)</label>
                         <label style={{ fontSize: 12, color: "red" }}>{current_Injury_Region.pain_futurerisk==="" && propsstate.nameError}</label>
                         <div id = "radio">
@@ -726,7 +726,7 @@ class InjuryQuestions extends Component
                         <input type="radio" value="9" checked={current_Injury_Region.pain_futurerisk === "9"} onChange={handleChange('pain_futurerisk',current_Injury_Region.id)}/>9
                         <input type="radio" value="10" checked={current_Injury_Region.pain_futurerisk === "10"} onChange={handleChange('pain_futurerisk',current_Injury_Region.id)}/>10 
                     </div> */}
-                    </div>
+                    {/* </div> */}
           
            </div>
            

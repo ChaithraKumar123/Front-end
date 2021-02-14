@@ -170,7 +170,7 @@ class Loginpage extends Component {
                 <div style={{ textAlignLast: "center" }}>
                   <img src={require("./workhealthy.jfif")} height="150px" />
                 </div>
-                <div className="row has-form" style={{ "margin-top": "24px" }}>
+                <div className="row has-form" style={{ marginTop: "24px" }}>
                   <div>
                     <div className="form-group">
                       <label className="abc">Email</label>
@@ -220,7 +220,7 @@ class Loginpage extends Component {
                   </div>
                   <div
                     className="forg"
-                    style={{ marginTop: "16px", "text-align-last": "center" }}
+                    style={{ marginTop: "16px", textAlignLast: "center" }}
                   >
                     <Link className="passwordForgot" to="/ForgotPassword">
                       Forgot Password?
@@ -229,7 +229,7 @@ class Loginpage extends Component {
                   <div>
                     <Link
                       className="create"
-                      style={{ "text-align-last": "center" }}
+                      style={{ textAlignLast: "center" }}
                       to="/Signup"
                     >
                       Create your own account

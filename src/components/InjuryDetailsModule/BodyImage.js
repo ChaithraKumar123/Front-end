@@ -237,22 +237,22 @@ const BackMAP = {
 
     {
       id: 15,
-      name: "Right Lower Leg",
+      name: "Right Lower Leg Back",
       shape: "rect",
       coords: [90, 400, 130, 470],
     }, // 37
     {
       id: 15,
-      name: "Left Lower Leg",
+      name: "Left Lower Leg Back",
       shape: "rect",
       coords: [130, 400, 170, 470],
     }, // 38
-    { id: 6, name: "Right Ankle", shape: "rect", coords: [100, 470, 135, 490] }, //39
-    { id: 6, name: "Left Ankle", shape: "rect", coords: [125, 470, 160, 490] }, //40
-    { id: 16, name: "Right Foot", shape: "rect", coords: [100, 485, 130, 495] }, //41
-    { id: 16, name: "Left Foot", shape: "rect", coords: [130, 485, 160, 500] }, //42
-    { id: 17, name: "Right Toes", shape: "rect", coords: [95, 496, 135, 510] }, //43
-    { id: 17, name: "Left Toes", shape: "rect", coords: [130, 496, 167, 510] }, //44
+    { id: 6, name: "Right Ankle Back", shape: "rect", coords: [100, 470, 135, 490] }, //39
+    { id: 6, name: "Left Ankle Back", shape: "rect", coords: [125, 470, 160, 490] }, //40
+    { id: 16, name: "Right Foot Back", shape: "rect", coords: [100, 485, 130, 495] }, //41
+    { id: 16, name: "Left Foot Back", shape: "rect", coords: [130, 485, 160, 500] }, //42
+    { id: 17, name: "Right Toes Back", shape: "rect", coords: [95, 496, 135, 510] }, //43
+    { id: 17, name: "Left Toes Back", shape: "rect", coords: [130, 496, 167, 510] }, //44
   ],
 };
 
@@ -433,7 +433,7 @@ const MAP = {
     //{ name: "Pelvis  ", shape: "rect", coords: [80,240,130,270 ]},
     {
       id: 15,
-      name: "Right Lower Leg",
+      name: "Right Lower Leg Front",
       shape: "rect",
       coords: [90, 400, 130, 470],
     }, //34
@@ -442,16 +442,16 @@ const MAP = {
 
     {
       id: 15,
-      name: "Left Lower Leg",
+      name: "Left Lower Leg Front",
       shape: "rect",
       coords: [130, 400, 170, 470],
     }, // 35
-    { id: 6, name: "Right Ankle", shape: "rect", coords: [100, 470, 135, 490] }, //36
-    { id: 6, name: "Left Ankle", shape: "rect", coords: [125, 470, 160, 490] }, //37
-    { id: 16, name: "Right Foot", shape: "rect", coords: [100, 485, 130, 495] }, //38
-    { id: 16, name: "Left Foot", shape: "rect", coords: [130, 485, 160, 500] }, //39
-    { id: 17, name: "Right Toes", shape: "rect", coords: [95, 496, 135, 510] }, //40
-    { id: 17, name: "Left Toes", shape: "rect", coords: [130, 496, 167, 510] }, //41
+    { id: 6, name: "Right Ankle Front", shape: "rect", coords: [100, 470, 135, 490] }, //36
+    { id: 6, name: "Left Ankle Front", shape: "rect", coords: [125, 470, 160, 490] }, //37
+    { id: 16, name: "Right Foot Front", shape: "rect", coords: [100, 485, 130, 495] }, //38
+    { id: 16, name: "Left Foot Front", shape: "rect", coords: [130, 485, 160, 500] }, //39
+    { id: 17, name: "Right Toes Front", shape: "rect", coords: [95, 496, 135, 510] }, //40
+    { id: 17, name: "Left Toes Front", shape: "rect", coords: [130, 496, 167, 510] }, //41
   ],
 };
 
@@ -467,6 +467,7 @@ class BodyImage extends Component {
       body_region_id: this.props.state.body_region_id1,
       data_id: this.props.state.data_id1,
       checkedA: false,
+      
     };
   }
   componentDidMount() {
@@ -475,8 +476,8 @@ class BodyImage extends Component {
     const temp2 = [];
     axios
       .get(
-        "https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/POBdetails",
-        // "https://localhost:44338/api/POBdetails",
+        // "https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/POBdetails",
+        "https://localhost:44338/api/POBdetails",
 
         {
           params: { value: localStorage.getItem("KNC") },
@@ -545,14 +546,55 @@ class BodyImage extends Component {
       });
       //NotificationManager.success("", 'Added selected region');
     } else {
-      alert("Cannot select more than three regions");
+      alert("Cannot select more than one region");
     }
+  }
+  // // function to perforom shading on selecting different body parts
+  onSelect(e, map_index, backMap_index) {
+    if (this.state.body_area.length === 0){
+      this.state.checkedA
+      ? this.clicked(BackMAP.areas[backMap_index])
+      : this.clicked(MAP.areas[map_index]);
+    }
+    else if (this.state.body_area.includes(MAP.areas[map_index].name) ||
+    this.state.body_area.includes(BackMAP.areas[backMap_index].name)){
+      this.delete_region(e, 0);
+    }
+    else if (this.state.body_area.length !== 0){
+      this.delete_region(e, 0).then(() => {      
+        this.state.checkedA
+        ? this.clicked(BackMAP.areas[backMap_index])
+        : this.clicked(MAP.areas[map_index]);
+      })
+
+    }
+    // let selectClone = this.state.select.slice(); //creates the clone of the state
+    // for (var i=0; i< this.state.select.length; i++){
+    //   if(i !== index){
+    //     this.delete_region(e, 0);
+    //     selectClone[i] = false;
+    //     this.setState({select: selectClone})
+    //   }
+    // }
+    // if(!this.state.select[index]){
+    // this.state.checkedA
+    //   ? this.clicked(BackMAP.areas[index])
+    //   : this.clicked(MAP.areas[index]);
+    // }
+
+    // selectClone[index] = !this.state.select[index];
+    // this.setState({ select: selectClone });
+    // this.setState({ select: !this.state.select});
+    // this.state.select[index] ?
+    //   this.delete_region(e, 0)
+    //   : e.preventDefault();
   }
 
   delete_api(val, next_val, index) {
     axios
       .delete(
-        "https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/POBdetails",
+        //"https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/POBdetails",
+        "https://localhost:44338/api/POBdetails",
         {
           params: { value: val, next_val: next_val, index: index },
         }
@@ -577,7 +619,7 @@ class BodyImage extends Component {
     this.setState({ data_id: id });
   }
 
-  delete_region = (event, index) => {
+  delete_region = async (event, index) => {
     event.preventDefault();
 
     var str = "Delete Body Region -" + this.state.body_area[index] + "?";
@@ -635,16 +677,16 @@ class BodyImage extends Component {
         <div className="row has-form-forms">
           <label style={{ marginBottom: "35px" }} className="abc">
             Please select where your most important problem is first. <br></br>{" "}
-            (Select up to 3 areas of pain)
+            (Select 1 area of pain)
           </label>
         </div>
 
         <div
           className="form-group custom-radio-wrapper"
-          style={{ "text-align": "center" }}
+          style={{ textAlign: "center" }}
         >
           <div id="radio">
-            <div class="custom-radio">
+            <div className="custom-radio">
               <input
                 type="radio"
                 className="custom-input"
@@ -658,7 +700,7 @@ class BodyImage extends Component {
               />
               <span>Front</span>
             </div>
-            <div class="custom-radio">
+            <div className="custom-radio">
               <input
                 type="radio"
                 className="custom-input"
@@ -675,9 +717,9 @@ class BodyImage extends Component {
           </div>
         </div>
 
-        <div class="pain-selector-block">
-          <div class="human-body-block-outer">
-            <div id="front-body" class="human-body-block">
+        <div className="pain-selector-block">
+          <div className="human-body-block-outer">
+            <div id="front-body" className="human-body-block">
               {/* <NotificationContainer /> */}
 
               {/* <img src={require("./../../body-front/body-front.png")} class="zoom-thumb"/> */}
@@ -689,12 +731,8 @@ class BodyImage extends Component {
                 <div className="bodymap">
                   <div className="topheadfront">
                     <a
-                      Id={this.state.checkedA ? "lnkBLeftHead" : "lnkRightHead"}
-                      onClick={() => {
-                        this.state.checkedA
-                          ? this.clicked(BackMAP.areas[0])
-                          : this.clicked(MAP.areas[0]);
-                      }}
+                      id={this.state.checkedA ? "lnkBLeftHead" : "lnkRightHead"}
+                      onClick={(e) => {this.onSelect(e, 0, 0)}}
                       className={
                         this.state.checkedA
                           ? "left-head-back"
@@ -719,7 +757,10 @@ class BodyImage extends Component {
                             : require("./../../body-front/right-head.png")
                         }
                         style={
-                          this.state.hover
+                          this.state.hover ? { opacity: "50%" }
+                            : { opacity: "0%" } &&
+                          this.state.body_area.includes(MAP.areas[0].name) ||
+                          this.state.body_area.includes(BackMAP.areas[0].name)
                             ? { opacity: "100%" }
                             : { opacity: "0%" }
                         }
@@ -727,12 +768,8 @@ class BodyImage extends Component {
                     </a>
 
                     <a
-                      Id={this.state.checkedA ? "lnkBRightHead" : "lnkLeftHead"}
-                      onClick={() => {
-                        this.state.checkedA
-                          ? this.clicked(BackMAP.areas[1])
-                          : this.clicked(MAP.areas[1]);
-                      }}
+                      id={this.state.checkedA ? "lnkBRightHead" : "lnkLeftHead"}
+                      onClick={(e) => {this.onSelect(e, 1, 1)}}
                       className={
                         this.state.checkedA
                           ? "right-head-back"
@@ -755,7 +792,10 @@ class BodyImage extends Component {
                             : require("./../../body-front/left-head.png")
                         }
                         style={
-                          this.state.hover1
+                          this.state.hover1 ? { opacity: "50%" }
+                          : { opacity: "0%" } &&
+                          this.state.body_area.includes(MAP.areas[1].name) ||
+                          this.state.body_area.includes(BackMAP.areas[1].name)
                             ? { opacity: "100%" }
                             : { opacity: "0%" }
                         }
@@ -766,12 +806,8 @@ class BodyImage extends Component {
 
                   <div>
                     <a
-                      Id={this.state.checkedA ? "lnkBHead" : "lnkHead"}
-                      onClick={() => {
-                        this.state.checkedA
-                          ? this.clicked(BackMAP.areas[2])
-                          : this.clicked(MAP.areas[2]);
-                      }}
+                      id={this.state.checkedA ? "lnkBHead" : "lnkHead"}
+                      onClick={(e) => {this.onSelect(e, 2, 2)}}
                       className={
                         this.state.checkedA ? "head-back" : "head-front"
                       }
@@ -789,7 +825,10 @@ class BodyImage extends Component {
                             : require("./../../body-front/head.png")
                         }
                         style={
-                          this.state.hover2
+                          this.state.hover2 ? { opacity: "50%" }
+                          : { opacity: "0%" } &&
+                          this.state.body_area.includes(MAP.areas[2].name) ||
+                          this.state.body_area.includes(BackMAP.areas[2].name)
                             ? { opacity: "100%" }
                             : { opacity: "0%" }
                         }
@@ -800,12 +839,8 @@ class BodyImage extends Component {
 
                   <div>
                     <a
-                      Id={this.state.checkedA ? "lnkBCervical" : "lnkJaw"}
-                      onClick={() => {
-                        this.state.checkedA
-                          ? this.clicked(BackMAP.areas[3])
-                          : this.clicked(MAP.areas[3]);
-                      }}
+                      id={this.state.checkedA ? "lnkBCervical" : "lnkJaw"}
+                      onClick={(e) => {this.onSelect(e, 3, 3)}}
                       className={
                         this.state.checkedA ? "b-cervical" : "jaw-front"
                       }
@@ -823,7 +858,10 @@ class BodyImage extends Component {
                             : require("./../../body-front/jaw.png")
                         }
                         style={
-                          this.state.hover3
+                          this.state.hover3 ? { opacity: "50%" }
+                          : { opacity: "0%" } &&
+                          this.state.body_area.includes(MAP.areas[3].name) ||
+                          this.state.body_area.includes(BackMAP.areas[3].name)
                             ? { opacity: "100%" }
                             : { opacity: "0%" }
                         }
@@ -834,16 +872,12 @@ class BodyImage extends Component {
 
                   <div>
                     <a
-                      Id={
+                      id={
                         this.state.checkedA
                           ? "lnkBCervicothoracic"
                           : "lnkCervical"
                       }
-                      onClick={() => {
-                        this.state.checkedA
-                          ? this.clicked(BackMAP.areas[4])
-                          : this.clicked(MAP.areas[4]);
-                      }}
+                      onClick={(e) => {this.onSelect(e, 4, 4)}}
                       className={
                         this.state.checkedA ? "cervical-back" : "cervical-front"
                       }
@@ -864,7 +898,10 @@ class BodyImage extends Component {
                             : require("./../../body-front/cervical.png")
                         }
                         style={
-                          this.state.hover4
+                          this.state.hover4 ? { opacity: "50%" }
+                          : { opacity: "0%" } &&
+                          this.state.body_area.includes(MAP.areas[4].name) ||
+                          this.state.body_area.includes(BackMAP.areas[4].name)
                             ? { opacity: "100%" }
                             : { opacity: "0%" }
                         }
@@ -876,19 +913,15 @@ class BodyImage extends Component {
                 <div className="belowhead">
                   <div
                     className="shoulderRegion"
-                    style={{ "margin-left": "-71px" }}
+                    style={{ marginLeft: "-71px" }}
                   >
                     <a
-                      Id={
+                      id={
                         this.state.checkedA
                           ? "lnkBLeftShoulder"
                           : "lnkRightShoulder"
                       }
-                      onClick={() => {
-                        this.state.checkedA
-                          ? this.clicked(BackMAP.areas[5])
-                          : this.clicked(MAP.areas[5]);
-                      }}
+                      onClick={(e) => {this.onSelect(e, 5, 5)}}
                       className={
                         this.state.checkedA
                           ? "left-shoulder-back"
@@ -913,11 +946,10 @@ class BodyImage extends Component {
                             : require("./../../body-front/right-shoulder.png")
                         }
                         style={
-                          this.state.hover5 && this.state.checkedA
-                            ? { opacity: "100%" }
-                            : { opacity: "0%" } &&
-                              this.state.hover5 &&
-                              !this.state.checkedA
+                          this.state.hover5 ? { opacity: "50%" }
+                          : { opacity: "0%" } &&
+                          this.state.body_area.includes(MAP.areas[5].name) ||
+                          this.state.body_area.includes(BackMAP.areas[5].name)
                             ? { opacity: "100%" }
                             : { opacity: "0%" }
                         }
@@ -925,16 +957,12 @@ class BodyImage extends Component {
                     </a>
 
                     <a
-                      Id={
+                      id={
                         this.state.checkedA
                           ? "lnkBLeftThoracic"
                           : "lnkRightChest"
                       }
-                      onClick={() => {
-                        this.state.checkedA
-                          ? this.clicked(BackMAP.areas[7])
-                          : this.clicked(MAP.areas[7]);
-                      }}
+                      onClick={(e) => {this.onSelect(e, 7, 7)}}
                       className={
                         this.state.checkedA
                           ? "left-thoracic"
@@ -956,7 +984,10 @@ class BodyImage extends Component {
                             : require("./../../body-front/right-chest.png")
                         }
                         style={
-                          this.state.hover6
+                          this.state.hover6 ? { opacity: "50%" }
+                          : { opacity: "0%" } &&
+                          this.state.body_area.includes(MAP.areas[7].name) ||
+                          this.state.body_area.includes(BackMAP.areas[7].name)
                             ? { opacity: "100%" }
                             : { opacity: "0%" }
                         }
@@ -965,16 +996,12 @@ class BodyImage extends Component {
                     </a>
 
                     <a
-                      Id={
+                      id={
                         this.state.checkedA
                           ? "lnkBRightThoracic"
                           : "lnkLeftChest"
                       }
-                      onClick={() => {
-                        this.state.checkedA
-                          ? this.clicked(BackMAP.areas[8])
-                          : this.clicked(MAP.areas[8]);
-                      }}
+                      onClick={(e) => {this.onSelect(e, 8, 8)}}
                       className={
                         this.state.checkedA
                           ? "right-thoracic"
@@ -996,7 +1023,10 @@ class BodyImage extends Component {
                             : require("./../../body-front/left-chest.png")
                         }
                         style={
-                          this.state.hover7
+                          this.state.hover7 ? { opacity: "50%" }
+                          : { opacity: "0%" } &&
+                          this.state.body_area.includes(MAP.areas[8].name) ||
+                          this.state.body_area.includes(BackMAP.areas[8].name)
                             ? { opacity: "100%" }
                             : { opacity: "0%" }
                         }
@@ -1005,16 +1035,12 @@ class BodyImage extends Component {
                     </a>
 
                     <a
-                      Id={
+                      id={
                         this.state.checkedA
                           ? "lnkBRightShoulder"
                           : "lnkLeftShoulder"
                       }
-                      onClick={() => {
-                        this.state.checkedA
-                          ? this.clicked(BackMAP.areas[6])
-                          : this.clicked(MAP.areas[6]);
-                      }}
+                      onClick={(e) => {this.onSelect(e, 6, 6)}}
                       className={
                         this.state.checkedA
                           ? "right-shoulder-back"
@@ -1037,11 +1063,10 @@ class BodyImage extends Component {
                             : require("./../../body-front/left-shoulder.png")
                         }
                         style={
-                          this.state.hover8 && this.state.checkedA
-                            ? { opacity: "100%" }
-                            : { opacity: "0%" } &&
-                              this.state.hover8 &&
-                              !this.state.checkedA
+                          this.state.hover8 ? { opacity: "50%" }
+                          : { opacity: "0%" } &&
+                          this.state.body_area.includes(MAP.areas[6].name) ||
+                          this.state.body_area.includes(BackMAP.areas[6].name)
                             ? { opacity: "100%" }
                             : { opacity: "0%" }
                         }
@@ -1052,16 +1077,12 @@ class BodyImage extends Component {
 
                   <div className="ArmRibsRegion">
                     <a
-                      Id={
+                      id={
                         this.state.checkedA
                           ? "lnkBLeftUpperArm"
                           : "lnkRightUpperArm"
                       }
-                      onClick={() => {
-                        this.state.checkedA
-                          ? this.clicked(BackMAP.areas[10])
-                          : this.clicked(MAP.areas[10]);
-                      }}
+                      onClick={(e) => {this.onSelect(e, 10, 10)}}
                       className={
                         this.state.checkedA
                           ? "left-upper-arm-back"
@@ -1085,7 +1106,10 @@ class BodyImage extends Component {
                             : require("./../../body-front/right-upper-arm.png")
                         }
                         style={
-                          this.state.hover9
+                          this.state.hover9 ? { opacity: "50%" }
+                          : { opacity: "0%" } &&
+                          this.state.body_area.includes(MAP.areas[10].name) ||
+                          this.state.body_area.includes(BackMAP.areas[10].name)
                             ? { opacity: "100%" }
                             : { opacity: "0%" }
                         }
@@ -1094,12 +1118,8 @@ class BodyImage extends Component {
                     </a>
 
                     <a
-                      Id={this.state.checkedA ? "lnkBLeftRibs" : "lnkRightRibs"}
-                      onClick={() => {
-                        this.state.checkedA
-                          ? this.clicked(BackMAP.areas[11])
-                          : this.clicked(MAP.areas[11]);
-                      }}
+                      id={this.state.checkedA ? "lnkBLeftRibs" : "lnkRightRibs"}
+                      onClick={(e) => {this.onSelect(e, 11, 11)}}
                       className={
                         this.state.checkedA
                           ? "left-ribs-back"
@@ -1123,7 +1143,10 @@ class BodyImage extends Component {
                             : require("./../../body-front/right-ribs.png")
                         }
                         style={
-                          this.state.hover10
+                          this.state.hover10 ? { opacity: "50%" }
+                          : { opacity: "0%" } &&
+                          this.state.body_area.includes(MAP.areas[11].name) ||
+                          this.state.body_area.includes(BackMAP.areas[11].name)
                             ? { opacity: "100%" }
                             : { opacity: "0%" }
                         }
@@ -1133,12 +1156,8 @@ class BodyImage extends Component {
 
                     {this.state.checkedA ? (
                       <a
-                        Id="lnkBCentralThoracic"
-                        onClick={() => {
-                          this.state.checkedA
-                            ? this.clicked(BackMAP.areas[13])
-                            : this.clicked(MAP.areas[13]);
-                        }}
+                        id="lnkBCentralThoracic"
+                        onClick={(e) => {this.onSelect(e, 13, 13)}}
                         className="central-thoracic"
                         style={{ float: "left" }}
                         title="Central Thoracic"
@@ -1150,7 +1169,10 @@ class BodyImage extends Component {
                         <img
                           src={require("./../../body-back/b-central-thoracic.png")}
                           style={
-                            this.state.hover11
+                            this.state.hover11 ? { opacity: "50%" }
+                            : { opacity: "0%" } &&
+                            this.state.body_area.includes(MAP.areas[13].name) ||
+                            this.state.body_area.includes(BackMAP.areas[13].name)
                               ? { opacity: "100%" }
                               : { opacity: "0%" }
                           }
@@ -1160,12 +1182,8 @@ class BodyImage extends Component {
                     ) : null}
 
                     <a
-                      Id={this.state.checkedA ? "lnkBRightRibs" : "lnkLeftRibs"}
-                      onClick={() => {
-                        this.state.checkedA
-                          ? this.clicked(BackMAP.areas[12])
-                          : this.clicked(MAP.areas[12]);
-                      }}
+                      id={this.state.checkedA ? "lnkBRightRibs" : "lnkLeftRibs"}
+                      onClick={(e) => {this.onSelect(e, 12, 12)}}
                       className={
                         this.state.checkedA
                           ? "right-ribs-back"
@@ -1189,7 +1207,10 @@ class BodyImage extends Component {
                             : require("./../../body-front/left-ribs.png")
                         }
                         style={
-                          this.state.hover12
+                          this.state.hover12 ? { opacity: "50%" }
+                          : { opacity: "0%" } &&
+                          this.state.body_area.includes(MAP.areas[12].name) ||
+                          this.state.body_area.includes(BackMAP.areas[12].name)
                             ? { opacity: "100%" }
                             : { opacity: "0%" }
                         }
@@ -1198,16 +1219,12 @@ class BodyImage extends Component {
                     </a>
 
                     <a
-                      Id={
+                      id={
                         this.state.checkedA
                           ? "lnkBRightUpperArm"
                           : "lnkLeftUpperAre"
                       }
-                      onClick={() => {
-                        this.state.checkedA
-                          ? this.clicked(BackMAP.areas[9])
-                          : this.clicked(MAP.areas[9]);
-                      }}
+                      onClick={(e) => {this.onSelect(e, 9, 9)}}
                       className={
                         this.state.checkedA
                           ? "right-upper-arm-back"
@@ -1231,7 +1248,10 @@ class BodyImage extends Component {
                             : require("./../../body-front/left-upper-arm.png")
                         }
                         style={
-                          this.state.hover13
+                          this.state.hover13 ? { opacity: "50%" }
+                          : { opacity: "0%" } &&
+                          this.state.body_area.includes(MAP.areas[9].name) ||
+                          this.state.body_area.includes(BackMAP.areas[9].name)
                             ? { opacity: "100%" }
                             : { opacity: "0%" }
                         }
@@ -1242,14 +1262,10 @@ class BodyImage extends Component {
 
                   <div className="elbowAbdomen">
                     <a
-                      Id={
+                      id={
                         this.state.checkedA ? "lnkBLeftElbow" : "lnkRightElbow"
                       }
-                      onClick={() => {
-                        this.state.checkedA
-                          ? this.clicked(BackMAP.areas[14])
-                          : this.clicked(MAP.areas[13]);
-                      }}
+                      onClick={(e) => {this.onSelect(e, 13, 14)}}
                       className={
                         this.state.checkedA
                           ? "left-elbow-back"
@@ -1273,7 +1289,10 @@ class BodyImage extends Component {
                             : require("./../../body-front/right-elbow.png")
                         }
                         style={
-                          this.state.hover14
+                          this.state.hover14 ? { opacity: "50%" }
+                          : { opacity: "0%" } &&
+                          this.state.body_area.includes(MAP.areas[13].name) ||
+                          this.state.body_area.includes(BackMAP.areas[14].name)
                             ? { opacity: "100%" }
                             : { opacity: "0%" }
                         }
@@ -1282,14 +1301,10 @@ class BodyImage extends Component {
                     </a>
 
                     <a
-                      Id={
+                      id={
                         this.state.checkedA ? "lnkBThoracolumbar" : "lnkAbdomen"
                       }
-                      onClick={() => {
-                        this.state.checkedA
-                          ? this.clicked(BackMAP.areas[15])
-                          : this.clicked(MAP.areas[15]);
-                      }}
+                      onClick={(e) => {this.onSelect(e, 15, 15)}}
                       className={
                         this.state.checkedA ? "thoracolumbar" : "abdomen-front"
                       }
@@ -1309,7 +1324,10 @@ class BodyImage extends Component {
                             : require("./../../body-front/abdomen.png")
                         }
                         style={
-                          this.state.hover15
+                          this.state.hover15 ? { opacity: "50%" }
+                          : { opacity: "0%" } &&
+                          this.state.body_area.includes(MAP.areas[15].name) ||
+                          this.state.body_area.includes(BackMAP.areas[15].name)
                             ? { opacity: "100%" }
                             : { opacity: "0%" }
                         }
@@ -1318,14 +1336,10 @@ class BodyImage extends Component {
                     </a>
 
                     <a
-                      Id={
+                      id={
                         this.state.checkedA ? "lnkBRightElbow" : "lnkLEftElbow"
                       }
-                      onClick={() => {
-                        this.state.checkedA
-                          ? this.clicked(BackMAP.areas[16])
-                          : this.clicked(MAP.areas[14]);
-                      }}
+                      onClick={(e) => {this.onSelect(e, 14, 16)}}
                       className={
                         this.state.checkedA
                           ? "right-elbow-back"
@@ -1349,7 +1363,10 @@ class BodyImage extends Component {
                             : require("./../../body-front/left-elbow.png")
                         }
                         style={
-                          this.state.hover16
+                          this.state.hover16 ? { opacity: "50%" }
+                          : { opacity: "0%" } &&
+                          this.state.body_area.includes(MAP.areas[14].name) ||
+                          this.state.body_area.includes(BackMAP.areas[16].name)
                             ? { opacity: "100%" }
                             : { opacity: "0%" }
                         }
@@ -1360,16 +1377,12 @@ class BodyImage extends Component {
 
                   <div className="forearmPelvis">
                     <a
-                      Id={
+                      id={
                         this.state.checkedA
                           ? "lnkBLeftForearm"
                           : "lnkRightForearm"
                       }
-                      onClick={() => {
-                        this.state.checkedA
-                          ? this.clicked(BackMAP.areas[17])
-                          : this.clicked(MAP.areas[16]);
-                      }}
+                      onClick={(e) => {this.onSelect(e, 16, 17)}}
                       className={
                         this.state.checkedA
                           ? "left-forearm-back"
@@ -1393,7 +1406,10 @@ class BodyImage extends Component {
                             : require("./../../body-front/right-forearm.png")
                         }
                         style={
-                          this.state.hover17
+                          this.state.hover17 ? { opacity: "50%" }
+                          : { opacity: "0%" } &&
+                          this.state.body_area.includes(MAP.areas[16].name) ||
+                          this.state.body_area.includes(BackMAP.areas[17].name)
                             ? { opacity: "100%" }
                             : { opacity: "0%" }
                         }
@@ -1404,8 +1420,8 @@ class BodyImage extends Component {
                     {this.state.checkedA ? (
                       <div>
                         <a
-                          Id="lnkBLeftLumbosacral"
-                          onClick={() => this.clicked(BackMAP.areas[19])}
+                          id="lnkBLeftLumbosacral"
+                          onClick={(e) => {this.onSelect(e, null, 19)}}
                           className="left-lumbosacral"
                           style={{ float: "left" }}
                           title="Left Lumbosacral"
@@ -1417,7 +1433,9 @@ class BodyImage extends Component {
                           <img
                             src={require("./../../body-back/b-left-lumbosacral.png")}
                             style={
-                              this.state.hover18
+                              this.state.hover18 ? { opacity: "50%" }
+                              : { opacity: "0%" } &&
+                              this.state.body_area.includes(BackMAP.areas[19].name)
                                 ? { opacity: "100%" }
                                 : { opacity: "0%" }
                             }
@@ -1426,8 +1444,8 @@ class BodyImage extends Component {
                         </a>
 
                         <a
-                          Id="lnkBRightLumbosacral"
-                          onClick={() => this.clicked(BackMAP.areas[20])}
+                          id="lnkBRightLumbosacral"
+                          onClick={(e) => {this.onSelect(e, null, 20)}}
                           className="right-lumbosacral"
                           style={{ float: "left" }}
                           title="Right Lumbosacral"
@@ -1439,7 +1457,9 @@ class BodyImage extends Component {
                           <img
                             src={require("./../../body-back/b-right-lumbosacral.png")}
                             style={
-                              this.state.hover19
+                              this.state.hover19 ? { opacity: "50%" }
+                              : { opacity: "0%" } &&
+                              this.state.body_area.includes(BackMAP.areas[20].name)
                                 ? { opacity: "100%" }
                                 : { opacity: "0%" }
                             }
@@ -1450,16 +1470,12 @@ class BodyImage extends Component {
                     ) : null}
 
                     <a
-                      Id={
+                      id={
                         this.state.checkedA
                           ? "lnkBRightForearm"
                           : "lnkLEftForearm"
                       }
-                      onClick={() => {
-                        this.state.checkedA
-                          ? this.clicked(BackMAP.areas[18])
-                          : this.clicked(MAP.areas[17]);
-                      }}
+                      onClick={(e) => {this.onSelect(e, 17, 18)}}
                       className={
                         this.state.checkedA
                           ? "right-forearm-back"
@@ -1483,7 +1499,10 @@ class BodyImage extends Component {
                             : require("./../../body-front/left-forearm.png")
                         }
                         style={
-                          this.state.hover20
+                          this.state.hover20 ? { opacity: "50%" }
+                          : { opacity: "0%" } &&
+                          this.state.body_area.includes(MAP.areas[17].name) ||
+                          this.state.body_area.includes(BackMAP.areas[18].name)
                             ? { opacity: "100%" }
                             : { opacity: "0%" }
                         }
@@ -1494,14 +1513,10 @@ class BodyImage extends Component {
 
                   <div className="wristpelvis">
                     <a
-                      Id={
+                      id={
                         this.state.checkedA ? "lnkBLeftWrist" : "lnkRightWrist"
                       }
-                      onClick={() => {
-                        this.state.checkedA
-                          ? this.clicked(BackMAP.areas[21])
-                          : this.clicked(MAP.areas[19]);
-                      }}
+                      onClick={(e) => {this.onSelect(e, 19, 21)}}
                       className={
                         this.state.checkedA
                           ? "left-wrist-back"
@@ -1525,7 +1540,10 @@ class BodyImage extends Component {
                             : require("./../../body-front/right-wrist.png")
                         }
                         style={
-                          this.state.hover21
+                          this.state.hover21 ? { opacity: "50%" }
+                          : { opacity: "0%" } &&
+                          this.state.body_area.includes(MAP.areas[19].name) ||
+                          this.state.body_area.includes(BackMAP.areas[21].name)
                             ? { opacity: "100%" }
                             : { opacity: "0%" }
                         }
@@ -1534,16 +1552,12 @@ class BodyImage extends Component {
                     </a>
 
                     <a
-                      Id={
+                      id={
                         this.state.checkedA
                           ? "lnkBLeftPelvis"
                           : "lnkRightPelvis"
                       }
-                      onClick={() => {
-                        this.state.checkedA
-                          ? this.clicked(BackMAP.areas[23])
-                          : this.clicked(MAP.areas[20]);
-                      }}
+                      onClick={(e) => {this.onSelect(e, 20, 23)}}
                       className={
                         this.state.checkedA
                           ? "left-pelvis-back"
@@ -1567,7 +1581,10 @@ class BodyImage extends Component {
                             : require("./../../body-front/right-pelvis.png")
                         }
                         style={
-                          this.state.hover22
+                          this.state.hover22 ? { opacity: "50%" }
+                          : { opacity: "0%" } &&
+                          this.state.body_area.includes(MAP.areas[20].name) ||
+                          this.state.body_area.includes(BackMAP.areas[23].name)
                             ? { opacity: "100%" }
                             : { opacity: "0%" }
                         }
@@ -1576,16 +1593,12 @@ class BodyImage extends Component {
                     </a>
 
                     <a
-                      Id={
+                      id={
                         this.state.checkedA
                           ? "lnkBRightPelvis"
                           : "lnkLEftPelvis"
                       }
-                      onClick={() => {
-                        this.state.checkedA
-                          ? this.clicked(BackMAP.areas[24])
-                          : this.clicked(MAP.areas[21]);
-                      }}
+                      onClick={(e) => {this.onSelect(e, 21, 24)}}
                       className={
                         this.state.checkedA
                           ? "right-pelvis-back"
@@ -1609,7 +1622,10 @@ class BodyImage extends Component {
                             : require("./../../body-front/left-pelvis.png")
                         }
                         style={
-                          this.state.hover23
+                          this.state.hover23 ? { opacity: "50%" }
+                          : { opacity: "0%" } &&
+                          this.state.body_area.includes(MAP.areas[21].name) ||
+                          this.state.body_area.includes(BackMAP.areas[24].name)
                             ? { opacity: "100%" }
                             : { opacity: "0%" }
                         }
@@ -1617,14 +1633,10 @@ class BodyImage extends Component {
                       />
                     </a>
                     <a
-                      Id={
+                      id={
                         this.state.checkedA ? "lnkBRightWrist" : "lnkLeftWrist"
                       }
-                      onClick={() => {
-                        this.state.checkedA
-                          ? this.clicked(BackMAP.areas[22])
-                          : this.clicked(MAP.areas[18]);
-                      }}
+                      onClick={(e) => {this.onSelect(e, 18, 22)}}
                       className={
                         this.state.checkedA
                           ? "right-wrist-back"
@@ -1648,7 +1660,10 @@ class BodyImage extends Component {
                             : require("./../../body-front/left-wrist.png")
                         }
                         style={
-                          this.state.hover24
+                          this.state.hover24 ? { opacity: "50%" }
+                          : { opacity: "0%" } &&
+                          this.state.body_area.includes(MAP.areas[18].name) ||
+                          this.state.body_area.includes(BackMAP.areas[22].name)
                             ? { opacity: "100%" }
                             : { opacity: "0%" }
                         }
@@ -1659,14 +1674,10 @@ class BodyImage extends Component {
 
                   <div className="thumbHandHip">
                     <a
-                      Id={
+                      id={
                         this.state.checkedA ? "lnkBLeftThumb" : "lnkRightThumb"
                       }
-                      onClick={() => {
-                        this.state.checkedA
-                          ? this.clicked(BackMAP.areas[26])
-                          : this.clicked(MAP.areas[22]);
-                      }}
+                      onClick={(e) => {this.onSelect(e, 22, 26)}}
                       className={
                         this.state.checkedA
                           ? "left-thumb-back"
@@ -1690,7 +1701,10 @@ class BodyImage extends Component {
                             : require("./../../body-front/right-thumb.png")
                         }
                         style={
-                          this.state.hover25
+                          this.state.hover25 ? { opacity: "50%" }
+                          : { opacity: "0%" } &&
+                          this.state.body_area.includes(MAP.areas[22].name) ||
+                          this.state.body_area.includes(BackMAP.areas[26].name)
                             ? { opacity: "100%" }
                             : { opacity: "0%" }
                         }
@@ -1699,12 +1713,8 @@ class BodyImage extends Component {
                     </a>
 
                     <a
-                      Id={this.state.checkedA ? "lnkBLeftHand" : "lnkRightHand"}
-                      onClick={() => {
-                        this.state.checkedA
-                          ? this.clicked(BackMAP.areas[28])
-                          : this.clicked(MAP.areas[25]);
-                      }}
+                      id={this.state.checkedA ? "lnkBLeftHand" : "lnkRightHand"}
+                      onClick={(e) => {this.onSelect(e, 25, 28)}}
                       className={
                         this.state.checkedA
                           ? "left-hand-back"
@@ -1728,7 +1738,10 @@ class BodyImage extends Component {
                             : require("./../../body-front/right-hand.png")
                         }
                         style={
-                          this.state.hover26
+                          this.state.hover26 ? { opacity: "50%" }
+                          : { opacity: "0%" } &&
+                          this.state.body_area.includes(MAP.areas[25].name) ||
+                          this.state.body_area.includes(BackMAP.areas[28].name)
                             ? { opacity: "100%" }
                             : { opacity: "0%" }
                         }
@@ -1737,12 +1750,8 @@ class BodyImage extends Component {
                     </a>
 
                     <a
-                      Id={this.state.checkedA ? "lnkBLeftHip" : "lnkRightHip"}
-                      onClick={() => {
-                        this.state.checkedA
-                          ? this.clicked(BackMAP.areas[30])
-                          : this.clicked(MAP.areas[26]);
-                      }}
+                      id={this.state.checkedA ? "lnkBLeftHip" : "lnkRightHip"}
+                      onClick={(e) => {this.onSelect(e, 26, 30)}}
                       className={
                         this.state.checkedA
                           ? "left-hip-back"
@@ -1766,7 +1775,10 @@ class BodyImage extends Component {
                             : require("./../../body-front/right-hip.png")
                         }
                         style={
-                          this.state.hover27
+                          this.state.hover27 ? { opacity: "50%" }
+                          : { opacity: "0%" } &&
+                          this.state.body_area.includes(MAP.areas[26].name) ||
+                          this.state.body_area.includes(BackMAP.areas[30].name)
                             ? { opacity: "100%" }
                             : { opacity: "0%" }
                         }
@@ -1775,12 +1787,8 @@ class BodyImage extends Component {
                     </a>
 
                     <a
-                      Id={this.state.checkedA ? "lnkBRightHip" : "lnkLeftHip"}
-                      onClick={() => {
-                        this.state.checkedA
-                          ? this.clicked(BackMAP.areas[29])
-                          : this.clicked(MAP.areas[27]);
-                      }}
+                      id={this.state.checkedA ? "lnkBRightHip" : "lnkLeftHip"}
+                      onClick={(e) => {this.onSelect(e, 27, 29)}}
                       className={
                         this.state.checkedA
                           ? "right-hip-back"
@@ -1804,7 +1812,10 @@ class BodyImage extends Component {
                             : require("./../../body-front/left-hip.png")
                         }
                         style={
-                          this.state.hover28
+                          this.state.hover28 ? { opacity: "50%" }
+                          : { opacity: "0%" } &&
+                          this.state.body_area.includes(MAP.areas[27].name) ||
+                          this.state.body_area.includes(BackMAP.areas[29].name)
                             ? { opacity: "100%" }
                             : { opacity: "0%" }
                         }
@@ -1813,12 +1824,8 @@ class BodyImage extends Component {
                     </a>
 
                     <a
-                      Id={this.state.checkedA ? "lnkBRightHand" : "lnkLeftHand"}
-                      onClick={() => {
-                        this.state.checkedA
-                          ? this.clicked(BackMAP.areas[27])
-                          : this.clicked(MAP.areas[24]);
-                      }}
+                      id={this.state.checkedA ? "lnkBRightHand" : "lnkLeftHand"}
+                      onClick={(e) => {this.onSelect(e, 24, 27)}}
                       className={
                         this.state.checkedA
                           ? "right-hand-back"
@@ -1842,7 +1849,10 @@ class BodyImage extends Component {
                             : require("./../../body-front/left-hand.png")
                         }
                         style={
-                          this.state.hover29
+                          this.state.hover29 ? { opacity: "50%" }
+                          : { opacity: "0%" } &&
+                          this.state.body_area.includes(MAP.areas[24].name) ||
+                          this.state.body_area.includes(BackMAP.areas[27].name)
                             ? { opacity: "100%" }
                             : { opacity: "0%" }
                         }
@@ -1851,14 +1861,10 @@ class BodyImage extends Component {
                     </a>
 
                     <a
-                      Id={
+                      id={
                         this.state.checkedA ? "lnkBRightThumb" : "lnkLedtThumb"
                       }
-                      onClick={() => {
-                        this.state.checkedA
-                          ? this.clicked(BackMAP.areas[25])
-                          : this.clicked(MAP.areas[23]);
-                      }}
+                      onClick={(e) => {this.onSelect(e, 23, 25)}}
                       className={
                         this.state.checkedA
                           ? "right-thumb-back"
@@ -1882,7 +1888,10 @@ class BodyImage extends Component {
                             : require("./../../body-front/left-thumb.png")
                         }
                         style={
-                          this.state.hover30
+                          this.state.hover30 ? { opacity: "50%" }
+                          : { opacity: "0%" } &&
+                          this.state.body_area.includes(MAP.areas[23].name) ||
+                          this.state.body_area.includes(BackMAP.areas[25].name)
                             ? { opacity: "100%" }
                             : { opacity: "0%" }
                         }
@@ -1893,16 +1902,12 @@ class BodyImage extends Component {
 
                   <div className="fingerUppperleg">
                     <a
-                      Id={
+                      id={
                         this.state.checkedA
                           ? "lnkBLeftFingers"
                           : "lnkRightFingers"
                       }
-                      onClick={() => {
-                        this.state.checkedA
-                          ? this.clicked(BackMAP.areas[32])
-                          : this.clicked(MAP.areas[28]);
-                      }}
+                      onClick={(e) => {this.onSelect(e, 28, 32)}}
                       className={
                         this.state.checkedA
                           ? "left-fingers-back"
@@ -1926,7 +1931,10 @@ class BodyImage extends Component {
                             : require("./../../body-front/right-fingers.png")
                         }
                         style={
-                          this.state.hover31
+                          this.state.hover31 ? { opacity: "50%" }
+                          : { opacity: "0%" } &&
+                          this.state.body_area.includes(MAP.areas[28].name) ||
+                          this.state.body_area.includes(BackMAP.areas[32].name)
                             ? { opacity: "100%" }
                             : { opacity: "0%" }
                         }
@@ -1935,16 +1943,12 @@ class BodyImage extends Component {
                     </a>
 
                     <a
-                      Id={
+                      id={
                         this.state.checkedA
                           ? "lnkBLeftUpperLeg"
                           : "lnkRightUpperLeg"
                       }
-                      onClick={() => {
-                        this.state.checkedA
-                          ? this.clicked(BackMAP.areas[34])
-                          : this.clicked(MAP.areas[30]);
-                      }}
+                      onClick={(e) => {this.onSelect(e, 30, 34)}}
                       className={
                         this.state.checkedA
                           ? "left-upper-leg-back"
@@ -1968,7 +1972,10 @@ class BodyImage extends Component {
                             : require("./../../body-front/right-upper-leg.png")
                         }
                         style={
-                          this.state.hover32
+                          this.state.hover32 ? { opacity: "50%" }
+                          : { opacity: "0%" } &&
+                          this.state.body_area.includes(MAP.areas[30].name) ||
+                          this.state.body_area.includes(BackMAP.areas[34].name)
                             ? { opacity: "100%" }
                             : { opacity: "0%" }
                         }
@@ -1977,16 +1984,12 @@ class BodyImage extends Component {
                     </a>
 
                     <a
-                      Id={
+                      id={
                         this.state.checkedA
                           ? "lnkBRightUpperLeg"
                           : "lnkLeftUpperLeg"
                       }
-                      onClick={() => {
-                        this.state.checkedA
-                          ? this.clicked(BackMAP.areas[33])
-                          : this.clicked(MAP.areas[31]);
-                      }}
+                      onClick={(e) => {this.onSelect(e, 31, 33)}}
                       className={
                         this.state.checkedA
                           ? "right-upper-leg-back"
@@ -2010,7 +2013,10 @@ class BodyImage extends Component {
                             : require("./../../body-front/left-upper-leg.png")
                         }
                         style={
-                          this.state.hover33
+                          this.state.hover33 ? { opacity: "50%" }
+                          : { opacity: "0%" } &&
+                          this.state.body_area.includes(MAP.areas[31].name) ||
+                          this.state.body_area.includes(BackMAP.areas[33].name)
                             ? { opacity: "100%" }
                             : { opacity: "0%" }
                         }
@@ -2019,16 +2025,12 @@ class BodyImage extends Component {
                     </a>
 
                     <a
-                      Id={
+                      id={
                         this.state.checkedA
                           ? "lnkBRightFingers"
                           : "lnkLeftFingers"
                       }
-                      onClick={() => {
-                        this.state.checkedA
-                          ? this.clicked(BackMAP.areas[31])
-                          : this.clicked(MAP.areas[29]);
-                      }}
+                      onClick={(e) => {this.onSelect(e, 29, 31)}}
                       className={
                         this.state.checkedA
                           ? "right-fingers-back"
@@ -2052,7 +2054,10 @@ class BodyImage extends Component {
                             : require("./../../body-front/left-fingers.png")
                         }
                         style={
-                          this.state.hover34
+                          this.state.hover34 ? { opacity: "50%" }
+                          : { opacity: "0%" } &&
+                          this.state.body_area.includes(MAP.areas[29].name) ||
+                          this.state.body_area.includes(BackMAP.areas[31].name)
                             ? { opacity: "100%" }
                             : { opacity: "0%" }
                         }
@@ -2064,14 +2069,10 @@ class BodyImage extends Component {
                   <div className="lowerPartleg">
                     <div className="knee">
                       <a
-                        Id={
+                        id={
                           this.state.checkedA ? "lnkBleftKnee" : "lnkRightKnee"
                         }
-                        onClick={() => {
-                          this.state.checkedA
-                            ? this.clicked(BackMAP.areas[36])
-                            : this.clicked(MAP.areas[32]);
-                        }}
+                        onClick={(e) => {this.onSelect(e, 32, 36)}}
                         className={
                           this.state.checkedA
                             ? "left-knee-back"
@@ -2095,7 +2096,10 @@ class BodyImage extends Component {
                               : require("./../../body-front/right-knee.png")
                           }
                           style={
-                            this.state.hover35
+                            this.state.hover35 ? { opacity: "50%" }
+                            : { opacity: "0%" } &&
+                            this.state.body_area.includes(MAP.areas[32].name) ||
+                            this.state.body_area.includes(BackMAP.areas[36].name)
                               ? { opacity: "100%" }
                               : { opacity: "0%" }
                           }
@@ -2104,14 +2108,10 @@ class BodyImage extends Component {
                       </a>
 
                       <a
-                        Id={
+                        id={
                           this.state.checkedA ? "lnkBRightKnee" : "lnkLeftKnee"
                         }
-                        onClick={() => {
-                          this.state.checkedA
-                            ? this.clicked(BackMAP.areas[35])
-                            : this.clicked(MAP.areas[33]);
-                        }}
+                        onClick={(e) => {this.onSelect(e, 33, 35)}}
                         className={
                           this.state.checkedA
                             ? "right-knee-back"
@@ -2135,7 +2135,10 @@ class BodyImage extends Component {
                               : require("./../../body-front/left-knee.png")
                           }
                           style={
-                            this.state.hover36
+                            this.state.hover36 ? { opacity: "50%" }
+                            : { opacity: "0%" } &&
+                            this.state.body_area.includes(MAP.areas[33].name) ||
+                            this.state.body_area.includes(BackMAP.areas[35].name)
                               ? { opacity: "100%" }
                               : { opacity: "0%" }
                           }
@@ -2144,16 +2147,12 @@ class BodyImage extends Component {
                       </a>
                     </div>
 
-                    <div className="lowerleg">
-                      <a
-                        Id={
+                    {/* <div className="lowerleg"> */}
+                      {/* <a
+                        id={
                           this.state.checkedA ? "lnkBleftKnee" : "lnkRightKnee"
                         }
-                        onClick={() => {
-                          this.state.checkedA
-                            ? this.clicked(BackMAP.areas[36])
-                            : this.clicked(MAP.areas[32]);
-                        }}
+                        onClick={(e) => {this.onSelect(e, 32, 36)}}
                         className={
                           this.state.checkedA
                             ? "left-knee-back"
@@ -2177,23 +2176,21 @@ class BodyImage extends Component {
                               : require("./../../body-front/right-knee.png")
                           }
                           style={
-                            this.state.hover35
+                            this.state.hover35 ||
+                            this.state.body_area.includes(MAP.areas[32].name) ||
+                            this.state.body_area.includes(BackMAP.areas[36].name)
                               ? { opacity: "100%" }
                               : { opacity: "0%" }
                           }
                           alt=""
                         />
-                      </a>
+                      </a> */}
 
-                      <a
-                        Id={
+                      {/* <a
+                        id={
                           this.state.checkedA ? "lnkBRightKnee" : "lnkLeftKnee"
                         }
-                        onClick={() => {
-                          this.state.checkedA
-                            ? this.clicked(BackMAP.areas[35])
-                            : this.clicked(MAP.areas[33]);
-                        }}
+                        onClick={(e) => {this.onSelect(e, 33, 35)}}
                         className={
                           this.state.checkedA
                             ? "right-knee-back"
@@ -2217,27 +2214,25 @@ class BodyImage extends Component {
                               : require("./../../body-front/left-knee.png")
                           }
                           style={
-                            this.state.hover36
+                            this.state.hover36 ||
+                            this.state.body_area.includes(MAP.areas[33].name) ||
+                            this.state.body_area.includes(BackMAP.areas[35].name)
                               ? { opacity: "100%" }
                               : { opacity: "0%" }
                           }
                           alt=""
                         />
-                      </a>
-                    </div>
+                      </a> */}
+                    {/* </div> */}
 
                     <div className="lowerleg">
                       <a
-                        Id={
+                        id={
                           this.state.checkedA
                             ? "lnkBLeftLowerLeg"
                             : "lnkRightLowerLeg"
                         }
-                        onClick={() => {
-                          this.state.checkedA
-                            ? this.clicked(BackMAP.areas[38])
-                            : this.clicked(MAP.areas[34]);
-                        }}
+                        onClick={(e) => {this.onSelect(e, 34, 38)}}
                         className={
                           this.state.checkedA
                             ? "left-lower-leg-back"
@@ -2261,7 +2256,9 @@ class BodyImage extends Component {
                               : require("./../../body-front/right-lower-leg.png")
                           }
                           style={
-                            this.state.hover37
+                            this.state.hover37 ||
+                            this.state.body_area.includes(MAP.areas[34].name) ||
+                            this.state.body_area.includes(BackMAP.areas[38].name)
                               ? { opacity: "100%" }
                               : { opacity: "0%" }
                           }
@@ -2270,16 +2267,12 @@ class BodyImage extends Component {
                       </a>
 
                       <a
-                        Id={
+                        id={
                           this.state.checkedA
                             ? "lnkBRightLowerLeg"
                             : "lnkLeftLowerLeg"
                         }
-                        onClick={() => {
-                          this.state.checkedA
-                            ? this.clicked(BackMAP.areas[37])
-                            : this.clicked(MAP.areas[35]);
-                        }}
+                        onClick={(e) => {this.onSelect(e, 35, 37)}}
                         className={
                           this.state.checkedA
                             ? "right-lower-leg-back"
@@ -2303,7 +2296,9 @@ class BodyImage extends Component {
                               : require("./../../body-front/left-lower-leg.png")
                           }
                           style={
-                            this.state.hover38
+                            this.state.hover38 ||
+                            this.state.body_area.includes(MAP.areas[35].name) ||
+                            this.state.body_area.includes(BackMAP.areas[37].name)
                               ? { opacity: "100%" }
                               : { opacity: "0%" }
                           }
@@ -2314,16 +2309,12 @@ class BodyImage extends Component {
 
                     <div className="anklefoot">
                       <a
-                        Id={
+                        id={
                           this.state.checkedA
                             ? "lnkBleftAnkle"
                             : "lnkRightAnkle"
                         }
-                        onClick={() => {
-                          this.state.checkedA
-                            ? this.clicked(BackMAP.areas[40])
-                            : this.clicked(MAP.areas[36]);
-                        }}
+                        onClick={(e) => {this.onSelect(e, 36, 40)}}
                         className={
                           this.state.checkedA
                             ? "left-ankle-back"
@@ -2347,7 +2338,10 @@ class BodyImage extends Component {
                               : require("./../../body-front/right-ankle.png")
                           }
                           style={
-                            this.state.hover39
+                            this.state.hover39 ? { opacity: "50%" }
+                            : { opacity: "0%" } &&
+                            this.state.body_area.includes(MAP.areas[36].name) ||
+                            this.state.body_area.includes(BackMAP.areas[40].name)
                               ? { opacity: "100%" }
                               : { opacity: "0%" }
                           }
@@ -2356,16 +2350,12 @@ class BodyImage extends Component {
                       </a>
 
                       <a
-                        Id={
+                        id={
                           this.state.checkedA
                             ? "lnkBRightAnkle"
                             : "lnkLeftAnkle"
                         }
-                        onClick={() => {
-                          this.state.checkedA
-                            ? this.clicked(BackMAP.areas[39])
-                            : this.clicked(MAP.areas[37]);
-                        }}
+                        onClick={(e) => {this.onSelect(e, 37, 39)}}
                         className={
                           this.state.checkedA
                             ? "right-ankle-back"
@@ -2389,7 +2379,10 @@ class BodyImage extends Component {
                               : require("./../../body-front/left-ankle.png")
                           }
                           style={
-                            this.state.hover40
+                            this.state.hover40 ? { opacity: "50%" }
+                            : { opacity: "0%" } &&
+                            this.state.body_area.includes(MAP.areas[37].name) ||
+                            this.state.body_area.includes(BackMAP.areas[39].name)
                               ? { opacity: "100%" }
                               : { opacity: "0%" }
                           }
@@ -2400,14 +2393,10 @@ class BodyImage extends Component {
 
                     <div className="foot">
                       <a
-                        Id={
+                        id={
                           this.state.checkedA ? "lnkBLeftFoot" : "lnkRightFoot"
                         }
-                        onClick={() => {
-                          this.state.checkedA
-                            ? this.clicked(BackMAP.areas[42])
-                            : this.clicked(MAP.areas[38]);
-                        }}
+                        onClick={(e) => {this.onSelect(e, 38, 42)}}
                         className={
                           this.state.checkedA
                             ? "left-foot-back"
@@ -2431,7 +2420,10 @@ class BodyImage extends Component {
                               : require("./../../body-front/right-foot.png")
                           }
                           style={
-                            this.state.hover41
+                            this.state.hover41 ? { opacity: "50%" }
+                            : { opacity: "0%" } &&
+                            this.state.body_area.includes(MAP.areas[38].name) ||
+                            this.state.body_area.includes(BackMAP.areas[42].name)
                               ? { opacity: "100%" }
                               : { opacity: "0%" }
                           }
@@ -2440,14 +2432,10 @@ class BodyImage extends Component {
                       </a>
 
                       <a
-                        Id={
+                        id={
                           this.state.checkedA ? "lnkBrightFoot" : "lnkLeftFoot"
                         }
-                        onClick={() => {
-                          this.state.checkedA
-                            ? this.clicked(BackMAP.areas[41])
-                            : this.clicked(MAP.areas[39]);
-                        }}
+                        onClick={(e) => {this.onSelect(e, 39, 41)}}
                         className={
                           this.state.checkedA
                             ? "right-foot-back"
@@ -2471,7 +2459,10 @@ class BodyImage extends Component {
                               : require("./../../body-front/left-foot.png")
                           }
                           style={
-                            this.state.hover42
+                            this.state.hover42 ? { opacity: "50%" }
+                            : { opacity: "0%" } &&
+                            this.state.body_area.includes(MAP.areas[39].name) ||
+                            this.state.body_area.includes(BackMAP.areas[41].name)
                               ? { opacity: "100%" }
                               : { opacity: "0%" }
                           }
@@ -2482,12 +2473,8 @@ class BodyImage extends Component {
 
                     <div className="toe">
                       <a
-                        Id={this.state.checkedA ? "lnkBleftToe" : "lnkRightToe"}
-                        onClick={() => {
-                          this.state.checkedA
-                            ? this.clicked(BackMAP.areas[44])
-                            : this.clicked(MAP.areas[40]);
-                        }}
+                        id={this.state.checkedA ? "lnkBleftToe" : "lnkRightToe"}
+                        onClick={(e) => {this.onSelect(e, 40, 44)}}
                         className={
                           this.state.checkedA
                             ? "left-toe-back"
@@ -2511,7 +2498,10 @@ class BodyImage extends Component {
                               : require("./../../body-front/right-toe.png")
                           }
                           style={
-                            this.state.hover43
+                            this.state.hover43 ? { opacity: "50%" }
+                            : { opacity: "0%" } &&
+                            this.state.body_area.includes(MAP.areas[40].name) ||
+                            this.state.body_area.includes(BackMAP.areas[44].name)
                               ? { opacity: "100%" }
                               : { opacity: "0%" }
                           }
@@ -2520,12 +2510,8 @@ class BodyImage extends Component {
                       </a>
 
                       <a
-                        Id={this.state.checkedA ? "lnkBRightToe" : "lnkLeftToe"}
-                        onClick={() => {
-                          this.state.checkedA
-                            ? this.clicked(BackMAP.areas[43])
-                            : this.clicked(MAP.areas[41]);
-                        }}
+                        id={this.state.checkedA ? "lnkBRightToe" : "lnkLeftToe"}
+                        onClick={(e) => {this.onSelect(e, 41, 43)}}
                         className={
                           this.state.checkedA
                             ? "right-toe-back"
@@ -2549,7 +2535,10 @@ class BodyImage extends Component {
                               : require("./../../body-front/left-toe.png")
                           }
                           style={
-                            this.state.hover44
+                            this.state.hover44 ? { opacity: "50%" }
+                            : { opacity: "0%" } &&
+                            this.state.body_area.includes(MAP.areas[41].name) ||
+                            this.state.body_area.includes(BackMAP.areas[43].name)
                               ? { opacity: "100%" }
                               : { opacity: "0%" }
                           }
@@ -2595,7 +2584,7 @@ class BodyImage extends Component {
 
                         <button
                           style={{
-                            "border-color": "transparent",
+                            borderColor: "transparent",
                             background: "transparent",
                           }}
                           id={index}

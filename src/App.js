@@ -104,7 +104,7 @@ class App extends Component {
             />
           </a>
           {this.state.loginstat || loginstat ? (
-            <DropDownButtonComponent style={{ float: "right", 	"margin-top": "26px","margin-right": "17px" }} items={this.state.items} select = {this.here} iconCss='e-icons e-image' cssClass='e-caret-hide corner'/>
+            <DropDownButtonComponent style={{ float: "right", 	marginTop: "26px", marginRight: "17px" }} items={this.state.items} select = {this.here} iconCss='e-icons e-image' cssClass='e-caret-hide corner'/>
             // {/* <button
             //   className="logout"
             //   style={{ float: "right" }}
@@ -116,7 +116,7 @@ class App extends Component {
           ) : null}
         </div>
 
-        <hr style={{ "border-top": "1px solid #C4C4C4;" }}></hr>
+        <hr style={{ borderTop: "1px solid #C4C4C4" }}></hr>
 
         <Main state = {this.state} switchFunc = {this.switchFunc} />
       </div>

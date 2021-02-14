@@ -48,9 +48,9 @@ class Home extends Component {
     }
     axios
       .get(
-        "https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/workflow",
+        // "https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/workflow",
 
-        // "https://localhost:44338/api/workflow",
+        "https://localhost:44338/api/workflow",
         {
           params: { value: localStorage.getItem("KNC") },
         }
@@ -275,8 +275,8 @@ class Home extends Component {
     })
     axios
       .post(
-        // "https://localhost:44338/api/workflow",
-        "https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/workflow",
+        "https://localhost:44338/api/workflow",
+        // "https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/workflow",
 
         {
           KNC: localStorage.getItem("KNC"),

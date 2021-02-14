@@ -102,8 +102,8 @@ class Signup extends Component {
 
       try {
         fetch(
-          "https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/register",
-          // "https://localhost:44338/api/register",
+          // "https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/register",
+          "https://localhost:44338/api/register",
           requestOptions
         )
         .then((response) => response.json())
@@ -177,8 +177,8 @@ class Signup extends Component {
 
       try {
         fetch(
-          "https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/v1/personaldetails",
-                    // "https://localhost:44338/v1/personaldetails",
+          // "https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/v1/personaldetails",
+                    "https://localhost:44338/v1/personaldetails",
 
           requestOptions
         )
@@ -188,8 +188,8 @@ class Signup extends Component {
 
               axios
               .post(
-                // "https://localhost:44338/api/workflowNewreg",
-                "https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/workflowNewreg",
+                "https://localhost:44338/api/workflowNewreg",
+                // "https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/workflowNewreg",
         
                 {
                   KNC: localStorage.getItem("KNC"),

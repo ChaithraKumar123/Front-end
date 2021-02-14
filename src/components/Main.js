@@ -317,7 +317,7 @@ class Main extends Component {
           : this.state.addressLine2,
         suburb: address[0].suburb ? address[0].suburb : this.state.suburb,
         stateName:
-          statecode == 0 || statecode
+          statecode === 0 || statecode
             ? this.state.stateOpts[statecode]
             : this.state.stateName,
         postCode: address[0].postCode
@@ -525,7 +525,7 @@ class Main extends Component {
   };
 
   handleChange = (input) => (e) => {
-    if (input == "culturalGroup") {
+    if (input === "culturalGroup") {
       this.setState({
         [input]: e,
       });
@@ -537,7 +537,7 @@ class Main extends Component {
       this.setState({
         ethnicityCode: this.state.ethnicityoptions[index].value,
       });
-    } else if (input == "stateName") {
+    } else if (input === "stateName") {
       this.setState({
         [input]: e,
       });
@@ -551,7 +551,7 @@ class Main extends Component {
       });
 
       this.validateStateCountry(e, input);
-    } else if (input == "country") {
+    } else if (input === "country") {
       this.setState({
         [input]: e,
       });

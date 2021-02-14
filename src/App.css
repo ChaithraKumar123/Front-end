@@ -316,7 +316,7 @@ height: auto;
 	max-width: 600px;
     margin: 0 auto;
 }
-.fullbodyfront a, .fullbodyback a{position: absolute; cursor: pointer; opacity: 0;}
+.fullbodyfront a, .fullbodyback a{position: absolute; cursor: pointer; opacity: 1;}
 .fullbodyfront a:hover, .fullbodyback a:hover{opacity: 1;}
 .fullbodyfront a img, .fullbodyback a img{display: block; width: 100%;}
 

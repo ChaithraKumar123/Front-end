@@ -87,7 +87,7 @@ class Step4 extends Component {
     "Suburb":this.props.state.suburb,
     "StateID": this.props.state.stateCode,
     "PostCode":this.props.state.postCode,
-    "CountryID":this.props.state.countryCode,
+    // "CountryID":this.props.state.countryCode,
 
     "FamilyDoctor":this.props.state.familyDoctor,
     "LastVisit":this.props.state.lastVisit,
@@ -109,8 +109,8 @@ class Step4 extends Component {
 
   console.log(schema.schema)
   fetch(
-    'https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/v1/personaldetails'
-    // "https://localhost:44338/v1/personaldetails"
+    // 'https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/v1/personaldetails'
+    "https://localhost:44338/v1/personaldetails"
 
     , requestOptions)
   .then(response => response.json())
@@ -254,7 +254,7 @@ class Step4 extends Component {
 
             {/* <div className="errorMessage">{state.handednessError}</div> */}
             
-            <div>
+            {/* <div>
               <div className= "form-group">
               <label className="abc">Family Doctor<span className="optional">Optional</span></label>
               <input
@@ -292,7 +292,7 @@ class Step4 extends Component {
                 onChange={handleChange("reasonOfVisit")}
               ></input>
               </div>
-            </div>
+            </div> */}
   
   
           {/* {this.state.submit ? <Errormsg /> : null} */}
