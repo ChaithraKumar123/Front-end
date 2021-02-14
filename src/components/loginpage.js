@@ -3,6 +3,7 @@ import auth from "./auth";
 import { Redirect, Link, withRouter } from "react-router-dom";
 
 import Landingpage from "./Landingpage";
+import { createSignIn, createUserAuth } from "../services/api";
 
 // const IsLoading = () => (
 //     <Ouroboro style = {{"position": "absolute", "margin-left": "280px", "margin-top": "-57px"}} color="#F04F1D" size={200} />
@@ -38,13 +39,6 @@ class Loginpage extends Component {
 
   authenticate = (e) => {
     console.log(e);
-    if (e.httpStatusCode !== 200) {
-      this.setState({ authErr: e.message });
-      this.setState({ loadingCircle: false });
-
-      //window.alert(e.message);
-      return;
-    }
     const requestOptions = {
       method: "GET",
       headers: { Authorization: "Bearer " + e.authenticationResult.idToken },
@@ -61,7 +55,7 @@ class Loginpage extends Component {
     localStorage.setItem("KNC", decoded.sub);
 
     fetch(
-      "https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/userAuth",
+      "https://localhost:44338/api/userAuth",
       requestOptions
     )
       //  .then((response) => response.json())
@@ -78,7 +72,7 @@ class Loginpage extends Component {
     const isValid = this.loginVAlidation(e);
     const passVal = this.passVal(e);
     if (isValid && passVal) {
-        this.changeLoadingCircle();
+      this.changeLoadingCircle();
 
       // UserPool.signUp()
       //this.props.nextStep();
@@ -103,13 +97,16 @@ class Loginpage extends Component {
       };
 
       console.log(schema.schema);
-      fetch(
-        "https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/signin",
-        requestOptions
-      )
-        .then((response) => response.json())
-        .then((data) => this.authenticate(data));
-      // .then(this.setState({ loadingCircle: false }));
+      // fetch(
+      //   "https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/signin",
+      //   requestOptions
+      // )
+      createSignIn(schema.schema)
+        .then((response) => this.authenticate(response.data))
+        .catch((error) => {
+          this.setState({ authErr: error.response.data.message });
+          this.setState({ loadingCircle: false });
+        })
     }
   };
   passVal = (e) => {
@@ -153,7 +150,7 @@ class Loginpage extends Component {
   render() {
     const { loadingCircle } = this.props;
 
-    if (localStorage.getItem("login") === null && localStorage.getItem("confToken") === null ) {
+    if (localStorage.getItem("login") === null && localStorage.getItem("confToken") === null) {
       return (
         <div>
           {this.state.showLogin ? (
@@ -202,7 +199,7 @@ class Loginpage extends Component {
                         onChange={(event) =>
                           this.setState({ pass: event.target.value })
                         }
-                        //  onChange={(event) => this.setState({password:event.target.value})}
+                      //  onChange={(event) => this.setState({password:event.target.value})}
                       />
                       <div className="errorMessage">
                         {this.state.passwordErr}
@@ -239,8 +236,8 @@ class Loginpage extends Component {
               </div>
             </div>
           ) : (
-            <Landingpage loginswitch={this.loginswitch}></Landingpage>
-          )}
+              <Landingpage loginswitch={this.loginswitch}></Landingpage>
+            )}
         </div>
       );
     } else {

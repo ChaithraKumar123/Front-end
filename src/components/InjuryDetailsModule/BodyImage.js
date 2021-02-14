@@ -918,8 +918,8 @@ class BodyImage extends Component {
                             : { opacity: "0%" } &&
                               this.state.hover5 &&
                               !this.state.checkedA
-                            ? { opacity: "100%" }
-                            : { opacity: "0%" }
+                              ? { opacity: "100%" }
+                              : { opacity: "0%" }
                         }
                       />{" "}
                     </a>
@@ -1042,8 +1042,8 @@ class BodyImage extends Component {
                             : { opacity: "0%" } &&
                               this.state.hover8 &&
                               !this.state.checkedA
-                            ? { opacity: "100%" }
-                            : { opacity: "0%" }
+                              ? { opacity: "100%" }
+                              : { opacity: "0%" }
                         }
                         alt=""
                       />
@@ -2575,8 +2575,8 @@ class BodyImage extends Component {
                 {listitem === "" ? (
                   this.setState({ body_area: [] })
                 ) : (
-                  <li className="list-group-item list-group-item-action">
-                    {/* {listitem}
+                    <li className="list-group-item list-group-item-action">
+                      {/* {listitem}
 
                     <button
                       style={{
@@ -2604,8 +2604,8 @@ class BodyImage extends Component {
                           <img src={require("../../images/cross.svg")} />
                         </button>
                       </div>
-                  </li>
-                )}
+                    </li>
+                  )}
               </div>
             ))}
           </ul>

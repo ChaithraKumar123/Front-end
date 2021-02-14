@@ -4,7 +4,7 @@ import {
   withRouter,
 } from "react-router-dom";
 import auth from "./auth";
-import axios from "axios";
+import { createPersonalDetails, createRegister, createWorkFlowNewReg } from "../services/api";
 
 var randomToken = require("random-token");
 const Errormsg = () => <div className="errorMessage">Missing or invalid field</div>;
@@ -52,7 +52,7 @@ class Signup extends Component {
       renderThankyou: false,
       closed: false,
       modaldisplay: false,
-      loadingCircle : false,
+      loadingCircle: false,
       cognitoErr: ""
     };
 
@@ -89,52 +89,25 @@ class Signup extends Component {
         },
       };
 
-      const requestOptions = {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-          "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Methods": "GET,HEAD,OPTIONS,POST,PUT",
-        },
-        body: JSON.stringify(Signupschema.schema),
-      };
 
-      try {
-        fetch(
-          "https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/register",
-          // "https://localhost:44338/api/register",
-          requestOptions
-        )
-        .then((response) => response.json())
-          .catch(function (data) {
-            this.setState({
-              loadingCircle : false,
-            });
-            // window.alert(data);
-          })
-          .then((data) => this.authenticate(data));
-      } catch (error) {
-        this.setState({
-          loadingCircle : false,
-          cognitoErr: error
-        });
-        // window.alert(error);
-      }
+      createRegister(Signupschema.schema)
+        .then((response) => this.authenticate(response.data))
+        .catch((error) => {
+          this.setState({
+            loadingCircle: false,
+            cognitoErr: error.response.data.message
+          });
+        })
+
     } else if (this.state.password !== this.state.retypePassword) {
       this.setState({
         passwordErr: "Password does not match",
-        loadingCircle : false
+        loadingCircle: false
 
       });
-    } else this.setState({ submit: true, loadingCircle : false });
+    } else this.setState({ submit: true, loadingCircle: false });
   };
 
-  // continue = (e) => {
-  //   auth.login(() => {
-  //     this.props.history.push("/success");
-  //   });
-  // };
 
   back = (e) => {
     auth.login(() => {
@@ -164,63 +137,41 @@ class Signup extends Component {
 
       console.log(this.toSend.schema);
 
-      const requestOptions = {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-          "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Methods": "GET,HEAD,OPTIONS,POST,PUT",
-        },
-        body: JSON.stringify(this.toSend.schema),
-      };
 
       try {
-        fetch(
-          "https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/v1/personaldetails",
-                    // "https://localhost:44338/v1/personaldetails",
-
-          requestOptions
-        )
-          .then((response) => response.json())
-          .then((data) => {
-            if (Number(data.httpStatusCode) === 200) {
-
-              axios
-              .post(
-                // "https://localhost:44338/api/workflowNewreg",
-                "https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/workflowNewreg",
-        
-                {
-                  KNC: localStorage.getItem("KNC"),
-                  DateCompleted: new Date(),
-                }
-              )
-              .then((response) => {
-                if (response.data === "Success") {
-                  console.log(response);
-                }
-              })
-              .catch((error) => {
-                console.log(error);
-              });
+        createPersonalDetails(this.toSend.schema)
+          .then((response) => {
+            if (Number(response.data.httpStatusCode) === 200) {
+              let body = {
+                KNC: localStorage.getItem("KNC"),
+                DateCompleted: new Date(),
+              }
+              createWorkFlowNewReg(body)
+                .then((response) => {
+                  if (response.data === "Success") {
+                    console.log(response);
+                  }
+                })
+                .catch((error) => {
+                  console.log(error);
+                });
               localStorage.setItem("isAuth", true);
 
               localStorage.setItem("confToken", randomToken(16));
               this.setState({
                 renderThankyou: true,
-                loadingCircle : false
+                loadingCircle: false
               });
             } else {
               // window.alert(data.message);
               this.setState({
-                loadingCircle : false
+                loadingCircle: false
               });
             }
           });
       } catch (error) {
         this.setState({
-          loadingCircle : false,
+          loadingCircle: false,
           cognitoErr: error
 
         });
@@ -228,7 +179,7 @@ class Signup extends Component {
       }
     } else {
       this.setState({
-        loadingCircle : false,
+        loadingCircle: false,
         cognitoErr: e.message
       });
       // window.alert(e.message);
@@ -257,11 +208,11 @@ class Signup extends Component {
   //   };
   termsAgree = (e) => {
     console.log(e.target.checked);
-    this.setState({checked : ! this.state.checked});
+    this.setState({ checked: !this.state.checked });
   };
-  
+
   termslink = (e) => {
-    this.setState({modaldisplay: !this.state.modaldisplay });
+    this.setState({ modaldisplay: !this.state.modaldisplay });
   };
 
 
@@ -281,14 +232,14 @@ class Signup extends Component {
   termsmodal = () => {
     return (
       <div>
-      <div style={{ fontFamily: "Roboto, sans-serif", marginTop : "10px" }}>
-        By clicking the checkbox, you confirm the information provided
-        above is correct and agree to the following:
+        <div style={{ fontFamily: "Roboto, sans-serif", marginTop: "10px" }}>
+          By clicking the checkbox, you confirm the information provided
+          above is correct and agree to the following:
         <br />
-        <br />
-        You have been provided with a copy of the 
+          <br />
+        You have been provided with a copy of the
         {/* <a href="https://wha-consentform.s3-ap-southeast-2.amazonaws.com/WHA_Privacy_Policy_Public_V07a.pdf" download="WHA_Privacy_Policy_Public_V07a.pdf">Download Your Expense Report</a> */}
-        <a rel="noopener noreferrer" href={"https://wha-consentform.s3-ap-southeast-2.amazonaws.com/WHA_Privacy_Policy_Public_V07a.pdf"} target="_blank" download={"WHA_Privacy_Policy_Public_V07a.pdf"}> Work Healthy Australia Privacy Policy</a>
+          <a rel="noopener noreferrer" href={"https://wha-consentform.s3-ap-southeast-2.amazonaws.com/WHA_Privacy_Policy_Public_V07a.pdf"} target="_blank" download={"WHA_Privacy_Policy_Public_V07a.pdf"}> Work Healthy Australia Privacy Policy</a>
         , and you agree to the handling of your personal
         information by Work Healthy Australia in accordance with that
         Policy, including the ways in which Work Healthy Australia may
@@ -296,7 +247,7 @@ class Signup extends Component {
         personal information to the third parties specified in that
         Policy.
         <br />
-        <br />
+          <br />
         Due to the duty of care that any company has with respect to
         your health and safety, it may be necessary for the Work Healthy
         Australia provider to coordinate with the relevant persons at
@@ -309,9 +260,9 @@ class Signup extends Component {
         Rehabilitation Coordinators, and supervisors and managers at
         this workplace
       </div>
-      <br />
-      <br />
-    </div>
+        <br />
+        <br />
+      </div>
     )
   }
 
@@ -321,176 +272,176 @@ class Signup extends Component {
     if (!this.state.renderThankyou) {
       return (
         <div>
-            <div id="MainDiv">
+          <div id="MainDiv">
             {this.state.loadingCircle === true ? loadingCircle : null}
 
-              <div className="page-title lg">
-                <div className="title">
-                <h1 style = {{float : "left"}}> Let's create your account</h1>
+            <div className="page-title lg">
+              <div className="title">
+                <h1 style={{ float: "left" }}> Let's create your account</h1>
                 {/* <img style = {{float : "right", marginLeft : "200px",  marginBottom: "-4px", marginTop: "-19px"}} src={require("./whitelogo.png")} alt = "" height = "60px"/>    */}
-                  {/* <p> Let's create your account</p> */}
-                </div>
+                {/* <p> Let's create your account</p> */}
               </div>
-              <div className="contentSpacing">
-                <div className="row has-form">
-                  <div>
-                    <div className="form-group">
-                      <label className="abc">Given Name</label>
-                      <input
-                        className="form-control"
-                        id="givenName"
-                        type="text"
-                        value={state.givenName}
-                        onChange={handleChange("givenName")}
-                      />
-                      {this.state.submit === true && state.givenName === "" ? (
-                        <div className="errorMessage">This field is required</div>
-                      ) : null}
-                    </div>
+            </div>
+            <div className="contentSpacing">
+              <div className="row has-form">
+                <div>
+                  <div className="form-group">
+                    <label className="abc">Given Name</label>
+                    <input
+                      className="form-control"
+                      id="givenName"
+                      type="text"
+                      value={state.givenName}
+                      onChange={handleChange("givenName")}
+                    />
+                    {this.state.submit === true && state.givenName === "" ? (
+                      <div className="errorMessage">This field is required</div>
+                    ) : null}
                   </div>
-                  <div>
-                    <div className="form-group">
-                      <label className="abc">
-                        Middle Name <span className="optional">Optional</span>{" "}
-                      </label>
-                      <input
-                        className="form-control"
-                        id="middleName"
-                        type="text"
-                        value={state.middleName}
-                        onChange={handleChange("middleName")}
-                      />
-                    </div>
+                </div>
+                <div>
+                  <div className="form-group">
+                    <label className="abc">
+                      Middle Name <span className="optional">Optional</span>{" "}
+                    </label>
+                    <input
+                      className="form-control"
+                      id="middleName"
+                      type="text"
+                      value={state.middleName}
+                      onChange={handleChange("middleName")}
+                    />
                   </div>
-                  <div>
-                    <div className="form-group">
-                      <label className="abc">Surname</label>
-                      <input
-                        className="form-control"
-                        id="surName"
-                        type="text"
-                        value={state.surName}
-                        onChange={handleChange("surName")}
-                      />
-                      {this.state.submit === true && state.surName === "" ? (
-                        <div className="errorMessage">This field is required</div>
-                      ) : null}
+                </div>
+                <div>
+                  <div className="form-group">
+                    <label className="abc">Surname</label>
+                    <input
+                      className="form-control"
+                      id="surName"
+                      type="text"
+                      value={state.surName}
+                      onChange={handleChange("surName")}
+                    />
+                    {this.state.submit === true && state.surName === "" ? (
+                      <div className="errorMessage">This field is required</div>
+                    ) : null}
 
-                      {/* <div className="errorMessage">{state.surNameError}</div> */}
-                    </div>
+                    {/* <div className="errorMessage">{state.surNameError}</div> */}
                   </div>
-                  <div>
-                    <div className="form-group">
-                      <label className="abc">Phone Number</label>
-                      <input
-                        className="form-control"
-                        id="mobileNumber"
-                        type="text"
-                        value={state.mobileNumber}
-                        onChange={handleChange("mobileNumber")}
-                      />
-                      {/* <Errormsg arg = {state.mobileNumber}></Errormsg> */}
-                      <div className="errorMessage">{state.mobileNumberError}</div>
-                      {this.state.submit === true &&
+                </div>
+                <div>
+                  <div className="form-group">
+                    <label className="abc">Phone Number</label>
+                    <input
+                      className="form-control"
+                      id="mobileNumber"
+                      type="text"
+                      value={state.mobileNumber}
+                      onChange={handleChange("mobileNumber")}
+                    />
+                    {/* <Errormsg arg = {state.mobileNumber}></Errormsg> */}
+                    <div className="errorMessage">{state.mobileNumberError}</div>
+                    {this.state.submit === true &&
                       state.mobileNumber === "" ? (
                         <div className="errorMessage">This field is required</div>
                       ) : null}
+                  </div>
+                </div>
+                <div>
+                  <div className="form-group">
+                    <label className="abc">Email</label>
+                    <input
+                      className="form-control"
+                      id="email"
+                      type="email"
+                      value={state.email}
+                      onChange={handleChange("email")}
+                    />
+                    {/* <Errormsg arg = {state.email}></Errormsg> */}
+                    <div className="errorMessage">{state.emailError}</div>
+                    {this.state.submit === true && state.email === "" ? (
+                      <div className="errorMessage">This field is required</div>
+                    ) : null}
+                  </div>
+                </div>
+                <div>
+                  <div className="form-group">
+                    <label className="abc">Password</label>
+                    <input
+                      className="form-control"
+                      placeholder="8 characters"
+                      id="pass"
+                      name="pass"
+                      type="password"
+                      value={this.state.password}
+                      onChange={(event) =>
+                        this.setState({ password: event.target.value })
+                      }
+                    //  onChange={(event) => this.setState({password:event.target.value})}
+                    />
+                  </div>
+                </div>
+                <div>
+                  <div className="form-group">
+                    <label className="abc">Re-enter password</label>
+                    <input
+                      className="form-control"
+                      id="Repass"
+                      name="pass"
+                      type="password"
+                      value={this.state.retypePassword}
+                      onChange={(event) =>
+                        this.setState({ retypePassword: event.target.value })
+                      }
+                    //  onChange={(event) => this.setState({password:event.target.value})}
+                    />
+                    <div className="errorMessage">
+                      {this.state.passwordErr}
                     </div>
                   </div>
-                  <div>
-                    <div className="form-group">
-                      <label className="abc">Email</label>
-                      <input
-                        className="form-control"
-                        id="email"
-                        type="email"
-                        value={state.email}
-                        onChange={handleChange("email")}
-                      />
-                      {/* <Errormsg arg = {state.email}></Errormsg> */}
-                      <div className="errorMessage">{state.emailError}</div>
-                      {this.state.submit === true && state.email === "" ? (
-                        <div className="errorMessage">This field is required</div>
-                      ) : null}
-                    </div>
-                  </div>
-                  <div>
-                    <div className="form-group">
-                      <label className="abc">Password</label>
-                      <input
-                        className="form-control"
-                        placeholder = "8 characters"
-                        id="pass"
-                        name="pass"
-                        type="password"
-                        value={this.state.password}
-                        onChange={(event) =>
-                          this.setState({ password: event.target.value })
-                        }
-                        //  onChange={(event) => this.setState({password:event.target.value})}
-                      />
-                    </div>
-                  </div>
-                  <div>
-                    <div className="form-group">
-                      <label className="abc">Re-enter password</label>
-                      <input
-                        className="form-control"
-                        id="Repass"
-                        name="pass"
-                        type="password"
-                        value={this.state.retypePassword}
-                        onChange={(event) =>
-                          this.setState({ retypePassword: event.target.value })
-                        }
-                        //  onChange={(event) => this.setState({password:event.target.value})}
-                      />
-                      <div className="errorMessage">
-                        {this.state.passwordErr}
-                      </div>
-                    </div>
-                  </div>
-                  <div>
+                </div>
+                <div>
                   <div className="custom-radio square">
                     <input
-                    style = {{float: "left"}}
+                      style={{ float: "left" }}
                       type="checkbox"
                       className="custom-input"
                       checked={this.state.checked}
-                     onChange={this.termsAgree}
+                      onChange={this.termsAgree}
                     />
                     <span></span>
                   </div>
-                  <div style = {{float : "right" , marginRight: "80px"}}>
-                  I agree to <a style = {{"cursor":"pointer"}} onClick = {this.termslink}><b style = {{color: "#563070"}}>Work Healthy Australia's terms</b></a>
+                  <div style={{ float: "right", marginRight: "80px" }}>
+                    I agree to <a style={{ "cursor": "pointer" }} onClick={this.termslink}><b style={{ color: "#563070" }}>Work Healthy Australia's terms</b></a>
 
                   </div>
 
-                  </div>
-                
-                  {this.state.modaldisplay ? this.termsmodal(): null}
+                </div>
 
-                  {this.state.submit ? <Errormsg /> : null}
-                      <div className="errorMessage">{this.state.cognitoErr}</div>
-                  <div className="btn-block prev-back-btn">
-                    <button
-                      className="btn btn-outline-primary"
-                      onClick={this.back}
-                    >
-                      Back
+                {this.state.modaldisplay ? this.termsmodal() : null}
+
+                {this.state.submit ? <Errormsg /> : null}
+                <div className="errorMessage">{this.state.cognitoErr}</div>
+                <div className="btn-block prev-back-btn">
+                  <button
+                    className="btn btn-outline-primary"
+                    onClick={this.back}
+                  >
+                    Back
                     </button>
-                    <button
-                      className="btn btn-primary modal-btn"
-                      data-modal-id="sampleModal"
-                      id="stepOneSubmit"
-                      onClick={this.continue}
-                    >
-                      Continue
+                  <button
+                    className="btn btn-primary modal-btn"
+                    data-modal-id="sampleModal"
+                    id="stepOneSubmit"
+                    onClick={this.continue}
+                  >
+                    Continue
                     </button>
-                  </div>
                 </div>
               </div>
             </div>
+          </div>
         </div>
       );
     } else {

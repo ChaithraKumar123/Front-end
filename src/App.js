@@ -11,15 +11,16 @@ import IdleTimer from 'react-idle-timer'
 enableRipple(true);
 
 class App extends Component {
-  state = { loginstat: false ,
+  state = {
+    loginstat: false,
     // items : [{ text: 'Logout'}]
-    items : [
+    items: [
       {
-         // iconCss: 'e-cart-icon e-link',
-          text: 'Logout',
+        // iconCss: 'e-cart-icon e-link',
+        text: 'Logout',
       }
-  ]
-  
+    ]
+
   };
 
   logout = () => {
@@ -43,13 +44,13 @@ class App extends Component {
 
   };
 
-  switchFunc=()=> {
+  switchFunc = () => {
     this.setState({
-      loginstat : true
+      loginstat: true
     })
   }
 
-  here = (e) =>{
+  here = (e) => {
 
     //e.element.getElementsByTagName('a')[0].setAttribute('target', '_blank');
     // if (e.element.innerText === 'Logout'){
@@ -58,23 +59,22 @@ class App extends Component {
 
     if (e.item.text === 'Logout') {
       this.logout();
+    }
   }
-  }
 
 
-  componentDidMount(){
+  componentDidMount() {
+    if (localStorage.getItem("confToken") || localStorage.getItem("login")) {
 
-    if (localStorage.getItem("confToken") || localStorage.getItem("login")){
 
-      
       localStorage.setItem("isAuth", true);
 
     }
-    else{
+    else {
       localStorage.removeItem("isAuth");
 
     }
-    
+
   }
 
   // handleOnIdle (event) {
@@ -87,7 +87,7 @@ class App extends Component {
     var loginstat = localStorage.getItem("login");
     return (
       <div>
-          {/* <IdleTimer
+        {/* <IdleTimer
           ref={ref => { this.idleTimer = ref }}
           timeout={1000 * 60 * 15}
           onIdle={this.handleOnIdle}
@@ -104,7 +104,7 @@ class App extends Component {
             />
           </a>
           {this.state.loginstat || loginstat ? (
-            <DropDownButtonComponent style={{ float: "right", 	"margin-top": "26px","margin-right": "17px" }} items={this.state.items} select = {this.here} iconCss='e-icons e-image' cssClass='e-caret-hide corner'/>
+            <DropDownButtonComponent style={{ float: "right", "margin-top": "26px", "margin-right": "17px" }} items={this.state.items} select={this.here} iconCss='e-icons e-image' cssClass='e-caret-hide corner' />
             // {/* <button
             //   className="logout"
             //   style={{ float: "right" }}
@@ -118,7 +118,7 @@ class App extends Component {
 
         <hr style={{ "border-top": "1px solid #C4C4C4;" }}></hr>
 
-        <Main state = {this.state} switchFunc = {this.switchFunc} />
+        <Main state={this.state} switchFunc={this.switchFunc} />
       </div>
     );
   }
