@@ -32,9 +32,9 @@ class Landingpage extends Component {
           </div>
           <h4
             style={{
-              "text-align": "center",
+              textAlign: "center",
               color: "#092C4C",
-              "font-family": "'Poppins', sans-serif",
+              fontFamily: "'Poppins', sans-serif",
               marginTop: "60px",
             }}
           >

@@ -75,8 +75,8 @@ class Step3 extends Component {
 
     // Typical usage (don't forget to compare props):
     fetch(
-      "https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/v1/personaldetails/Country"
-      // "https://localhost:44338/v1/personaldetails/Country"
+      // "https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/v1/personaldetails/Country"
+      "https://localhost:44338/v1/personaldetails/Country"
       )
       .then((response) => response.json())
       .catch(function (data) {

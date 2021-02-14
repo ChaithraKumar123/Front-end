@@ -80,8 +80,8 @@ class Step1 extends Component {
     this.props.stepReset();
     // Typical usage (don't forget to compare props):
     fetch(
-      "https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/v1/personaldetails/Ethnicity"
-      // "https://localhost:44338/v1/personaldetails/Ethnicity"
+      // "https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/v1/personaldetails/Ethnicity"
+      "https://localhost:44338/v1/personaldetails/Ethnicity"
     )
       .then((response) => response.json())
       .catch(function (data) {
@@ -93,8 +93,8 @@ class Step1 extends Component {
       axios
       .get(
         // "https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/medhistorydetails",
-        'https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/v1/personaldetails/'+ localStorage.getItem("KNC"),
-        // "https://localhost:44338/v1/personaldetails/" + localStorage.getItem("KNC"),
+        // 'https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/v1/personaldetails/'+ localStorage.getItem("KNC"),
+        "https://localhost:44338/v1/personaldetails/" + localStorage.getItem("KNC"),
       )
       .then((response) => {
         console.log(response.data[0]);

@@ -118,8 +118,8 @@ class BodyImageTabs extends Component {
     const temp = [];
     axios
       .get(
-        "https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/POBdetails",
-        // "https://localhost:44338/api/POBdetails",
+        // "https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/POBdetails",
+        "https://localhost:44338/api/POBdetails",
 
         {
           params: { value: localStorage.getItem("KNC") },
@@ -216,8 +216,8 @@ class BodyImageTabs extends Component {
     const save = this.state.InjuryRegion[step1 - 1];
       let response = await axios
       .post(
-        "https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/POBdetails",
-        // "https://localhost:44338/api/POBdetails",
+       // "https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/POBdetails",
+         "https://localhost:44338/api/POBdetails",
 
         {
           POBPatientID: localStorage.getItem("KNC"),
@@ -258,7 +258,7 @@ class BodyImageTabs extends Component {
             save.pain_firstime === "I’ve had it before"
               ? save.pain_firstime_approx
               : false,
-          FuturePainRisk: save.pain_futurerisk,
+          // FuturePainRisk: save.pain_futurerisk,
         }
       )
         if (response.data === "Success"){
@@ -268,8 +268,8 @@ class BodyImageTabs extends Component {
           if (this.state.step1 === 1){
            let res = await  axios
             .post(
-              "https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/saveWorkflow",
-              // "https://localhost:44338/api/saveWorkflow",
+              // "https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/saveWorkflow",
+              "https://localhost:44338/api/saveWorkflow",
     
               {
                 KNC: localStorage.getItem("KNC"),
@@ -340,10 +340,10 @@ class BodyImageTabs extends Component {
     // let passwordError = "";
     const val = this.state.InjuryRegion[this.state.step1 - 1];
     if (
-      (val.pain_side === "") | (val.pain_duration === "") ||
-      val.pain_firstime === "" ||
-      (val.pain_firstime === "I’ve had it before" &&
-        val.pain_firstime_date === "") ||
+      (val.pain_side === "") || (val.pain_duration === "") ||
+      // val.pain_firstime === "" ||
+      // (val.pain_firstime === "I’ve had it before" &&
+      //   val.pain_firstime_date === "") ||
       val.pain_type === "" ||
       (val.pain_type === "Other" && val.pain_type_reason === "") ||
       val.pain_often === "" ||
@@ -351,18 +351,18 @@ class BodyImageTabs extends Component {
       val.pain_worst === "" ||
       (val.pain_worst === "Other" && val.pain_worst_reason === "") ||
       val.pain_better === "" ||
-      (val.pain_better === "Other" && val.pain_better_reason === "") ||
-      val.pain_scale === "" ||
-      val.pain_symp === "" ||
-      (val.pain_symp === "Yes" &&
-        (val.pain_symp_click === "" ||
-          val.pain_symp_feet === "" ||
-          val.pain_symp_hand === "" ||
-          val.pain_symp_lock === "" ||
-          val.pain_symp_swell === "" ||
-          val.pain_symp_weak === "")) ||
-      val.pain_treatment === "" ||
-      val.pain_limit_work === ""
+      (val.pain_better === "Other" && val.pain_better_reason === "") 
+      //|| val.pain_scale === "" ||
+      // val.pain_symp === "" ||
+      // (val.pain_symp === "Yes" &&
+      //   (val.pain_symp_click === "" ||
+      //     val.pain_symp_feet === "" ||
+      //     val.pain_symp_hand === "" ||
+      //     val.pain_symp_lock === "" ||
+      //     val.pain_symp_swell === "" ||
+      //     val.pain_symp_weak === "")) ||
+      // val.pain_treatment === "" ||
+      // val.pain_limit_work === ""
     ) {
       nameError = "This field is required";
     }
