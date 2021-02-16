@@ -5,10 +5,12 @@ import { Component } from "react";
 import { withRouter } from "react-router-dom";
 import { enableRipple } from '@syncfusion/ej2-base';
 import { DropDownButtonComponent } from '@syncfusion/ej2-react-splitbuttons';
+import LocalStorageService from "./services/localStorageService";
 
 import IdleTimer from 'react-idle-timer'
 
 enableRipple(true);
+const localStorageService = new LocalStorageService();
 
 class App extends Component {
   state = {
@@ -28,12 +30,11 @@ class App extends Component {
     this.setState({
       loginstat: false
     })
-
-    localStorage.removeItem("login");
+    localStorageService.clearToken();
     localStorage.removeItem("WorkFlowId");
-    localStorage.removeItem("confToken");
-    localStorage.removeItem("isAuth");
-    localStorage.removeItem("KNC");
+    localStorageService.clearConfToken();
+    localStorageService.clearIsAuth();
+    localStorageService.clearKNC();
 
 
 
@@ -64,14 +65,14 @@ class App extends Component {
 
 
   componentDidMount() {
-    if (localStorage.getItem("confToken") || localStorage.getItem("login")) {
+    if (localStorage.getItem("confToken") || localStorageService.getToken()) {
 
 
-      localStorage.setItem("isAuth", true);
+      localStorageService.setIsAuth(true);
 
     }
     else {
-      localStorage.removeItem("isAuth");
+      localStorageService.clearIsAuth();
 
     }
 
@@ -84,7 +85,7 @@ class App extends Component {
 
 
   render() {
-    var loginstat = localStorage.getItem("login");
+    var token = localStorageService.getToken();
     return (
       <div>
         {/* <IdleTimer
@@ -103,8 +104,8 @@ class App extends Component {
               width="200px"
             />
           </a>
-          {this.state.loginstat || loginstat ? (
-            <DropDownButtonComponent style={{ float: "right", 	marginTop: "26px", marginRight: "17px" }} items={this.state.items} select = {this.here} iconCss='e-icons e-image' cssClass='e-caret-hide corner'/>
+          {this.state.loginstat || token ? (
+            <DropDownButtonComponent style={{ float: "right", marginTop: "26px", marginRight: "17px" }} items={this.state.items} select={this.here} iconCss='e-icons e-image' cssClass='e-caret-hide corner' />
             // {/* <button
             //   className="logout"
             //   style={{ float: "right" }}

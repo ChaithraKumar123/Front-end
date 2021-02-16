@@ -3,7 +3,8 @@ import auth from "./auth";
 import { Redirect, Link, withRouter } from "react-router-dom";
 
 import Landingpage from "./Landingpage";
-import { createSignIn, createUserAuth } from "../services/api";
+import { createSignIn, getUserAuth } from "../services/api";
+import LocalStorageService from "../services/localStorageService";
 
 // const IsLoading = () => (
 //     <Ouroboro style = {{"position": "absolute", "margin-left": "280px", "margin-top": "-57px"}} color="#F04F1D" size={200} />
@@ -21,45 +22,48 @@ class Loginpage extends Component {
     authErr: "",
     showLogin: false,
   };
-
+  localStorageService = new LocalStorageService();
   returnedUserOp = (data) => {
     console.log(data);
-    if (data.ok) {
-      this.setState({ authErr: "" });
-      this.setState({ loadingCircle: false });
+    this.setState({ authErr: "" });
+    this.setState({ loadingCircle: false });
 
-      auth.login(() => {
-        this.props.history.push("/Home");
-      });
-    } else {
-      this.setState({ authErr: "login failed" });
-      this.setState({ loadingCircle: false });
-    }
+    auth.login(() => {
+      this.props.history.push("/Home");
+    });
   };
 
   authenticate = (e) => {
     console.log(e);
-    const requestOptions = {
-      method: "GET",
-      headers: { Authorization: "Bearer " + e.authenticationResult.idToken },
-    };
+    // const requestOptions = {
+    //   method: "GET",
+    //   headers: { Authorization: "Bearer " + e.authenticationResult.idToken },
+    // };
 
-    localStorage.setItem("login", e.authenticationResult.idToken);
-
-
-    localStorage.setItem("isAuth", true);
+    // localStorage.setItem("login", e.authenticationResult.idToken);
+    this.localStorageService.setToken(e);
 
 
-    var jwtDecode = require("jwt-decode");
-    var decoded = jwtDecode(e.authenticationResult.idToken);
-    localStorage.setItem("KNC", decoded.sub);
+    // localStorage.setItem("isAuth", true);
+    this.localStorageService.setIsAuth(true);
 
-    fetch(
-      "https://localhost:44338/api/userAuth",
-      requestOptions
-    )
+
+    // var jwtDecode = require("jwt-decode");
+    // var decoded = jwtDecode(e.authenticationResult.idToken);
+    // localStorage.setItem("KNC", decoded.sub);
+    this.localStorageService.setKNC(e);
+
+    // fetch(
+    //   "https://localhost:44338/api/userAuth",
+    //   requestOptions
+    // )
+    getUserAuth()
       //  .then((response) => response.json())
-      .then((data) => this.returnedUserOp(data));
+      .then(({ data }) => this.returnedUserOp(data))
+      .catch((error) => {
+        this.setState({ authErr: "login failed" });
+        this.setState({ loadingCircle: false });
+      })
   };
 
   changeLoadingCircle = () => {
@@ -85,16 +89,16 @@ class Loginpage extends Component {
         },
       };
 
-      const requestOptions = {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-          "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Methods": "GET,HEAD,OPTIONS,POST,PUT",
-        },
-        body: JSON.stringify(schema.schema),
-      };
+      // const requestOptions = {
+      //   method: "POST",
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //     Accept: "application/json",
+      //     "Access-Control-Allow-Origin": "*",
+      //     "Access-Control-Allow-Methods": "GET,HEAD,OPTIONS,POST,PUT",
+      //   },
+      //   body: JSON.stringify(schema.schema),
+      // };
 
       console.log(schema.schema);
       // fetch(
@@ -150,7 +154,7 @@ class Loginpage extends Component {
   render() {
     const { loadingCircle } = this.props;
 
-    if (localStorage.getItem("login") === null && localStorage.getItem("confToken") === null) {
+    if (this.localStorageService.getToken() === null && this.localStorageService.getConfToken() === null) {
       return (
         <div>
           {this.state.showLogin ? (

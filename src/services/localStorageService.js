@@ -1,62 +1,72 @@
 // LocalStorageService.js
-const localStorageService = (function () {
-    var _service;
-    function _getService() {
-        if (!_service) {
-            _service = this;
-            return _service
-        }
-        return _service
-    }
-    function _setToken(tokenObj) {
+class LocalStorageService {
+
+    setToken(tokenObj) {
         localStorage.setItem("access_token", tokenObj.authenticationResult.idToken);
         //   localStorage.setItem("refresh_token", tokenObj.refresh_token);
     }
-    function _getAccessToken() {
+    getToken() {
         return localStorage.getItem("access_token");
     }
     // function _getRefreshToken() {
     //   return localStorage.getItem("refresh_token");
     // }
-    function _clearToken() {
+    clearToken() {
         localStorage.removeItem("access_token");
         //   localStorage.removeItem("refresh_token");
     }
-    function _setIsAuth(value) {
+    setIsAuth(value) {
         localStorage.setItem("isAuth", value)
     }
-    function _getIsAuth() {
+    getIsAuth() {
         return localStorage.getItem("isAuth");
     }
-    function _clearIsAuth() {
+    clearIsAuth() {
         localStorage.removeItem("isAuth");
-        //   localStorage.removeItem("refresh_token");
     }
-    function _setKNC(tokenObj) {
-        var jwtDecode = require("jwt-decode");
-        var decoded = jwtDecode(tokenObj.authenticationResult.idToken);
-        localStorage.setItem("KNC", decoded.sub);
-    }
-    function _getKNC() {
-        return localStorage.getItem("KNC");
-    }
-    function _clearKNC() {
-        localStorage.removeItem("KNC");
-        //   localStorage.removeItem("refresh_token");
-    }
-    return {
-        getService: _getService,
-        setToken: _setToken,
-        getAccessToken: _getAccessToken,
-        //   getRefreshToken : _getRefreshToken,
-        clearToken: _clearToken,
-        getIsAuth: _getIsAuth,
-        setIsAuth: _setIsAuth,
-        clearIsAuth: _clearIsAuth,
-        getKNC: _getKNC,
-        setKNC: _setKNC,
-        clearKNC: _clearKNC
+    setKNC(tokenObj) {
+        if (tokenObj.authenticationResult) {
+            var jwtDecode = require("jwt-decode");
+            var decoded = jwtDecode(tokenObj.authenticationResult.idToken);
+            localStorage.setItem("KNC", decoded.sub);
+        } else {
+            localStorage.setItem("KNC", tokenObj.userSub);
+        }
 
     }
-})();
-export default localStorageService;
+    getKNC() {
+        return localStorage.getItem("KNC");
+    }
+    clearKNC() {
+        localStorage.removeItem("KNC");
+    }
+    setConfToken(tokenObj) {
+        localStorage.setItem("confToken", tokenObj)
+    }
+    getConfToken() {
+        return localStorage.getItem("confToken");
+    }
+    clearConfToken() {
+        localStorage.removeItem("confToken");
+    }
+    setRef(value) {
+        localStorage.setItem("ref", value);
+    }
+    getRef() {
+        localStorage.getItem("ref");
+    }
+    clearRef() {
+        localStorage.removeItem("ref");
+    }
+    setWorkFlowId(id) {
+        localStorage.setItem("WorkFlowId", id);
+    }
+    getWorkFlowId() {
+        localStorage.getItem("WorkFlowId");
+    }
+    clearWorkFlowId() {
+        localStorage.removeItem("WorkFlowId");
+    }
+
+}
+export default LocalStorageService;

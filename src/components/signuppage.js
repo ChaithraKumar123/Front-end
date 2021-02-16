@@ -5,8 +5,10 @@ import {
 } from "react-router-dom";
 import auth from "./auth";
 import { createPersonalDetails, createRegister, createWorkFlowNewReg } from "../services/api";
+import LocalStorageService from "../services/localStorageService";
 
 var randomToken = require("random-token");
+const localStorageService = new LocalStorageService();
 const Errormsg = () => <div className="errorMessage">Missing or invalid field</div>;
 
 const thankyou = (email) => (
@@ -131,7 +133,7 @@ class Signup extends Component {
       this.toSend.schema.KNC = e.userSub;
 
       this.props.kncset(e.userSub);
-      localStorage.setItem("KNC", e.userSub);
+      localStorageService.setKNC(e);
 
       //  this.setState({KNC: e.userSub})
 
@@ -143,7 +145,7 @@ class Signup extends Component {
           .then((response) => {
             if (Number(response.data.httpStatusCode) === 200) {
               let body = {
-                KNC: localStorage.getItem("KNC"),
+                KNC: localStorageService.getKNC(),
                 DateCompleted: new Date(),
               }
               createWorkFlowNewReg(body)
@@ -155,9 +157,9 @@ class Signup extends Component {
                 .catch((error) => {
                   console.log(error);
                 });
-              localStorage.setItem("isAuth", true);
+              localStorageService.setIsAuth(true);
 
-              localStorage.setItem("confToken", randomToken(16));
+              localStorageService.setConfToken(randomToken(16));
               this.setState({
                 renderThankyou: true,
                 loadingCircle: false

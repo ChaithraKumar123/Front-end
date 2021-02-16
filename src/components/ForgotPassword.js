@@ -2,6 +2,7 @@ import React, { Component } from "react";
 
 import auth from "./auth";
 import { withRouter } from "react-router-dom";
+import { createForgotPassword, createConfirmPassword } from "../services/api";
 
 // const EnterCode = (state) => (
 //   <div>
@@ -38,40 +39,47 @@ class ForgotPassword extends Component {
       },
     };
 
-    const requestOptions = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Methods": "GET,HEAD,OPTIONS,POST,PUT",
-      },
-      body: JSON.stringify(forgotPassword.schema),
-    };
+    // const requestOptions = {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //     Accept: "application/json",
+    //     "Access-Control-Allow-Origin": "*",
+    //     "Access-Control-Allow-Methods": "GET,HEAD,OPTIONS,POST,PUT",
+    //   },
+    //   body: JSON.stringify(forgotPassword.schema),
+    // };
 
-    try {
-      fetch(
-        "https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/forgotpassword",
-        requestOptions
-      )
-        .then((response) => response.json())
-        .catch(function (data) {
-          window.alert("Error processing your request.");
-        })
-        .then(
-          (data) =>
-            window.alert("Successfully sent verification code to your email."),
-          this.setState({ submit: true })
-        );
-    } catch (error) {
-      window.alert(error);
-    }
+    // try {
+    //   fetch(
+    //     "https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/forgotpassword",
+    //     requestOptions
+    //   )
+    //     .then((response) => response.json())
+    //     .then((data) =>
+    //       window.alert("Successfully sent verification code to your email."),
+    //       this.setState({ submit: true })
+    //     )
+    //     .catch(function (data) {
+    //       window.alert("Error processing your request.");
+    //     });
+    // } catch (error) {
+    //   window.alert(error);
+    // }
+    createForgotPassword(forgotPassword.schema)
+      .then(({ data }) => {
+        window.alert("Successfully sent verification code to your email.");
+        this.setState({ submit: true })
+      })
+      .catch((error) => {
+        window.alert("Error processing your request.")
+      })
   };
 
   continue = (e) => {
     e.preventDefault();
-    console.log(this.state.code);
-    console.log(this.state.Newpassword);
+    // console.log(this.state.code);
+    // console.log(this.state.Newpassword);
 
     if (this.state.Newpassword !== this.state.retypeNewPassword) {
       window.alert("Passwords do not match");
@@ -86,45 +94,55 @@ class ForgotPassword extends Component {
       },
     };
 
-    const requestOptions = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Methods": "GET,HEAD,OPTIONS,POST,PUT",
-      },
-      body: JSON.stringify(confirmforgotPassword.schema),
-    };
+    // const requestOptions = {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //     Accept: "application/json",
+    //     "Access-Control-Allow-Origin": "*",
+    //     "Access-Control-Allow-Methods": "GET,HEAD,OPTIONS,POST,PUT",
+    //   },
+    //   body: JSON.stringify(confirmforgotPassword.schema),
+    // };
 
-    try {
-      fetch(
-        "https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/confirmpassword",
-        requestOptions
-      )
-        .then((response) => response.json())
-        .catch((rejected) => {
-          console.log(rejected);
-          return 400;
+    // try {
+    //   fetch(
+    //     "https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/confirmpassword",
+    //     requestOptions
+    //   )
+    //     .then((response) => response.json())
+    //     .catch((rejected) => {
+    //       console.log(rejected);
+    //       return 400;
+    //     })
+    //     .then((data) => {
+    //       if (Number(data.httpStatusCode) === 200) {
+    //         auth.login(() => {
+    //           window.alert("Login using your new password");
+    //           this.props.history.push("/");
+    //         });
+    //       } else {
+    //         if (data === 400) {
+    //           window.alert("failed to connect to the backend");
+    //         } else {
+    //           window.alert(data.message);
+    //         }
+    //       }
+    //     });
+    // } catch (error) {
+    //   window.alert("failed");
+    //   console.log(error);
+    // }
+    createConfirmPassword(confirmforgotPassword.schema)
+      .then(({ data }) => {
+        auth.login(() => {
+          window.alert("Login using your new password");
+          this.props.history.push("/");
         })
-        .then((data) => {
-          if (Number(data.httpStatusCode) === 200) {
-            auth.login(() => {
-              window.alert("Login using your new password");
-              this.props.history.push("/");
-            });
-          } else {
-            if (data === 400) {
-              window.alert("failed to connect to the backend");
-            } else {
-              window.alert(data.message);
-            }
-          }
-        });
-    } catch (error) {
-      window.alert("failed");
-      console.log(error);
-    }
+      })
+      .catch((error) => {
+        window.alert(error.response.data.message);
+      })
   };
 
   render() {
@@ -221,21 +239,21 @@ class ForgotPassword extends Component {
               </div>
             </div>
           ) : (
-            <div className="btn-block prev-back-btn">
-              <button
-                className="btn btn-outline-primary btn-block"
-                onClick={this.sendCode}
-              >
-                Send code
+              <div className="btn-block prev-back-btn">
+                <button
+                  className="btn btn-outline-primary btn-block"
+                  onClick={this.sendCode}
+                >
+                  Send code
               </button>
-            </div>
+              </div>
 
-            // <div class="btn-block prev-back-btn">
-            //   <button class="btn btn-outline-primary" onClick={this.sendCode}>
-            //     Send code
-            //   </button>
-            // </div>
-          )}
+              // <div class="btn-block prev-back-btn">
+              //   <button class="btn btn-outline-primary" onClick={this.sendCode}>
+              //     Send code
+              //   </button>
+              // </div>
+            )}
         </div>
       </div>
     );

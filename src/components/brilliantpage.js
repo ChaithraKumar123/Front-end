@@ -2,10 +2,11 @@ import React, { Component } from "react";
 
 import auth from "./auth";
 import { withRouter } from "react-router-dom";
+import LocalStorageService from "../services/localStorageService";
 
 class Brilliant extends Component {
   state = {};
-
+  localStorageService = new LocalStorageService();
   continue = (e) => {
     e.preventDefault();
     // UserPool.signUp(this.state.userEmPh, this.state.pass, [], null, (err,data)=> {
@@ -19,7 +20,7 @@ class Brilliant extends Component {
 
   render() {
     // const { handleChange, state } = this.props;
-    let tempToken = localStorage.getItem("confToken");
+    let tempToken = this.localStorageService.getConfToken();
     if (tempToken !== null) {
       return (
         <div id="MainDiv">
@@ -28,7 +29,7 @@ class Brilliant extends Component {
               <h1>Success!</h1>
             </div>
           </div>
-          <div className = "row has-form">
+          <div className="row has-form">
             <h4
               style={{
                 "text-align": "center",
@@ -44,7 +45,7 @@ class Brilliant extends Component {
             <div>
               <div>
                 <button
-                          style = {{"position": "relative",   "margin-top": "100%"}}
+                  style={{ "position": "relative", "margin-top": "100%" }}
 
                   className="btn btn-primary btn-block"
                   onClick={this.continue}

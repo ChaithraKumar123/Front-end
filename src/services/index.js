@@ -6,6 +6,7 @@ encapsules the axios object within it.
 */
 
 import axios from "axios";
+import LocalStorageService from "../services/localStorageService";
 
 class Service {
     constructor() {
@@ -23,14 +24,30 @@ class Service {
             baseURL: process.env.REACT_APP_API_URL,
             headers: headers
         })
+        service.interceptors.request.use(
+            this.handleAuthorization,
+            this.handleError,
+        )
         return service;
     }
-    get(path) {
-        return this._axios.get(path);
+    handleAuthorization = (config) => {
+        const localStorageService = new LocalStorageService();
+        const token = localStorageService.getToken();
+        if (token) {
+            config.headers['Authorization'] = 'Bearer ' + token;
+        }
+        return config;
+    }
+    handleError = (error) => {
+        return Promise.reject(error);
+    }
+    get(path, param) {
+        return this._axios.get(path, { params: param });
     }
     post(path, payload) {
         return this._axios.post(path, payload);
     }
+
 
 }
 

@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import auth from "./auth";
 import { withRouter } from "react-router-dom";
-import axios from "axios";
+import { getWorkFlow, createWorkFlow } from "../services/api";
+import LocalStorageService from "../services/localStorageService";
 // import Popup from "reactjs-popup";
 // import CustomModal from "./CustomModal";
 // import { Ouroboro } from "react-spinners-css";
@@ -20,7 +21,7 @@ class Home extends Component {
     loadingCircle: true,
 
   };
-
+  localStorageService = new LocalStorageService();
   // logout = () => {
   //   auth.logout(() => {
   //     this.props.history.push("/");
@@ -33,28 +34,20 @@ class Home extends Component {
   componentDidMount() {
 
 
-    if (localStorage.getItem("ref") === 'true') {
+    if (this.localStorageService.getRef() === 'true') {
       window.location.reload();
-      localStorage.removeItem("ref")
+      this.localStorageService.clearRef();
     }
 
     this.props.switchfunc();
     this.props.stepReset("reset");
 
-    if (localStorage.getItem("KNC") === null) {
+    if (this.localStorageService.getKNC() === null) {
       auth.logout(() => {
         this.props.history.push("/");
       });
     }
-    axios
-      .get(
-        // "https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/workflow",
-
-        "https://localhost:44338/api/workflow",
-        {
-          params: { value: localStorage.getItem("KNC") },
-        }
-      )
+    getWorkFlow({ value: this.localStorageService.getKNC() })
       .then((response) => {
         if (response.data[0][1].length > 1 && response.data[0][1].map(function (x) { return x[6] != null })) {
           //localStorage.setItem("disablebtn", "yes")
@@ -66,7 +59,7 @@ class Home extends Component {
         }
         if (response.data[0][0].length !== 0) {
           this.setState({
-            CurrentForm: response.data[0][0],
+            CurrentForm: response.data[0][0][0],
             // Progress: response.data[1].Progress,
             // Total: response.data[1].Total,
             todo: true,
@@ -115,7 +108,7 @@ class Home extends Component {
 
 
   continue = (e, id) => {
-    localStorage.setItem("WorkFlowId", id)
+    this.localStorageService.setWorkFlowId(id);
     if (e === "Medical History") {
       auth.login(() => {
         this.props.history.push("/CoreMedicalHistory");
@@ -273,21 +266,16 @@ class Home extends Component {
     this.setState({
       loadingCircle: true
     })
-    axios
-      .post(
-        "https://localhost:44338/api/workflow",
-        // "https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/workflow",
-
-        {
-          KNC: localStorage.getItem("KNC"),
-          DateCompleted: new Date(),
-        }
-      )
+    let body = {
+      KNC: this.localStorageService.getKNC(),
+      DateCompleted: new Date(),
+    }
+    createWorkFlow(body)
       .then((response) => {
         if (response.status === 200) {
           this.setState({
             todo: true,
-            CurrentForm: response.data.result.result.value[0][0],
+            CurrentForm: response.data.result.result.value[0][0][0],
             Progress: response.data.result.result.value[1].Progress,
             Total: response.data.result.result.value[1].Total,
           });
@@ -329,49 +317,49 @@ class Home extends Component {
               </div>
             </div>
           </div>
-          <div className="row has-form-forms">
-            <label className="abc">
-              To ensure we can provide you with the best quality care, we seek some information from you. <br /><br />
+          {this.state.CurrentForm.length !== 0 ?
+            <div>
+              <div className="row has-form-forms">
+                <label className="abc">
+                  To ensure we can provide you with the best quality care, we seek some information from you. <br /><br />
             We understand there are a number of questions to answer, please do your best, they are designed to ensure we can provide you with the best quality of care.
             </label>
-          </div>
-          <br />
-          <div className="row has-form-forms">
-            {this.state.todo ? null : (
-              <div style={{ marginBottom: "65px" }}>
-                <h4 style={{ fontWeight: "700" }}>
-                  Have a new injury you need to see us about?
+              </div>
+              <br />
+              <div className="row has-form-forms">
+                {this.state.todo ? null : (
+                  <div style={{ marginBottom: "65px" }}>
+                    <h4 style={{ fontWeight: "700" }}>
+                      Have a new injury you need to see us about?
                 </h4>
 
 
-                <br></br>
-                <label className="abc" style={{ float: "left" }}>New Complaint</label>
-                <button
-                  id="myBtn"
-                  style={{ float: "right", "margin-top": "4px;", "min-width": "88px" }}
+                    <br></br>
+                    <label className="abc" style={{ float: "left" }}>New Complaint</label>
+                    <button
+                      id="myBtn"
+                      style={{ float: "right", "margin-top": "4px;", "min-width": "88px" }}
 
-                  className="btn btn-primary modal-btn"
-                  data-modal-id="sampleModal"
-                  onClick={() => this.begin()}
-                >
-                  Begin
+                      className="btn btn-primary modal-btn"
+                      data-modal-id="sampleModal"
+                      onClick={() => this.begin()}
+                    >
+                      Begin
             </button>
-              </div>
-            )}
+                  </div>
+                )}
 
-            <div>
-              {this.state.todo ? (
-                <div style={{ marginBottom: "10px" }}>
-                  <label className="headlinetwo">To Do</label>
+                <div>
+                  {this.state.todo ? (
+                    <div style={{ marginBottom: "10px" }}>
+                      <label className="headlinetwo">To Do</label>
 
-                  {/* {this.todoList()} */}
-                  {Array.from(this.state.CurrentForm, (e, i) => {
-                    return this.todoList(e[13], e[0]);
-                  })}
-                </div>
-              ) : null}
+                      {/* {this.todoList()} */}
+                      {this.todoList(this.state.CurrentForm[13], this.state.CurrentForm[0])}
+                    </div>
+                  ) : null}
 
-              {this.state.completedList ? (
+                  {/* {this.state.completedList ? (
                 <div style={{ marginTop: "10px" }}>
                   <h4 style={{ fontWeight: "700" }}>Completed</h4>
 
@@ -418,13 +406,13 @@ class Home extends Component {
                   </button>
                     </div>
                   </div>
-                )}
-              {/* 
+                )} */}
+                  {/* 
             {this.state.completedList && this.state.medHistory ? 
                       : null} */}
-            </div>
-          </div>
-          {/* 
+                </div>
+              </div>
+              {/* 
       <div id="MainDiv">
         <div>
           <div className="page-title lg">
@@ -434,6 +422,12 @@ class Home extends Component {
           </div>
         </div>
       </div> */}
+            </div> :
+            <div className="row has-form-forms">
+              <label className="abc">
+                Cheers Mate! Get well soon
+                </label>
+            </div>}
         </div>
       </div>
     );

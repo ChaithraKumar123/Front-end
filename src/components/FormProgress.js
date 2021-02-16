@@ -1,12 +1,13 @@
 import React, { Component } from "react";
 import auth from "./auth";
-import {  withRouter } from "react-router-dom";
-import axios from "axios";
+import { withRouter } from "react-router-dom";
+import { getWorkFlow } from "../services/api";
+import LocalStorageService from "../services/localStorageService";
 
 class FormProgress extends Component {
   state = {
-    CurrentForm: "" ,
-    NextForm:"" ,
+    CurrentForm: "",
+    NextForm: "",
     Progress: "",
     Total: "",
   };
@@ -21,118 +22,109 @@ class FormProgress extends Component {
 
   componentDidMount() {
 
+    const localStorageService = new LocalStorageService();
+    // axios
+    // .get(
+    //   // "https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/workflow", 
 
-    axios
-    .get(
-      // "https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/workflow", 
+    //   "https://localhost:44338/api/workflow",
+    //   {
+    //     params: { value: localStorage.getItem("KNC") },
+    //   }
+    // )
+    getWorkFlow({ value: localStorageService.getKNC() })
+      .then((response) => {
+        //   localStorage.setItem("CurrentForm", response.data[0].CurrentForm );
+        //   localStorage.setItem("NextForm", response.data[0].NextForm);
+        //   localStorage.setItem("Progress", response.data[1].Progress);
+        //   localStorage.setItem("Total", response.data[1].Total);
+        this.setState({
+          CurrentForm: response.data[0].CurrentForm,
+          NextForm: response.data[0].NextForm,
+          Progress: response.data[1].Progress,
+          Total: response.data[1].Total
+        })
 
-      "https://localhost:44338/api/workflow",
-      {
-        params: { value: localStorage.getItem("KNC") },
-      }
-    )
-    .then((response) => {
-    //   localStorage.setItem("CurrentForm", response.data[0].CurrentForm );
-    //   localStorage.setItem("NextForm", response.data[0].NextForm);
-    //   localStorage.setItem("Progress", response.data[1].Progress);
-    //   localStorage.setItem("Total", response.data[1].Total);
-    this.setState({
-        CurrentForm: response.data[0].CurrentForm,
-        NextForm: response.data[0].NextForm,
-        Progress: response.data[1].Progress,
-        Total: response.data[1].Total  
-    })
-  
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
 
-}
+  }
 
 
-continue = (e) =>
-{
-    if (e === "Core Medical History")
-    {
-        auth.login(() => {
-            this.props.history.push("/CoreMedicalHistory");
-          });
+  continue = (e) => {
+    if (e === "Core Medical History") {
+      auth.login(() => {
+        this.props.history.push("/CoreMedicalHistory");
+      });
     }
-    else if (e === "Lifestyle Medical History")
-    {
-        auth.login(() => {
-            this.props.history.push("/CoreLifeStyleModule");
-          });
+    else if (e === "Lifestyle Medical History") {
+      auth.login(() => {
+        this.props.history.push("/CoreLifeStyleModule");
+      });
     }
 
-    else if (e === "Personal Details" | "Current Employment Details")
-    {
-        auth.login(() => {
-            this.props.history.push("/patientDetails");
-          });
+    else if (e === "Personal Details" | "Current Employment Details") {
+      auth.login(() => {
+        this.props.history.push("/patientDetails");
+      });
     }
-    else if (e === "Psychological Medical History")
-    {
-        auth.login(() => {
-            this.props.history.push("/CorePsychologicalModule");
-          });
+    else if (e === "Psychological Medical History") {
+      auth.login(() => {
+        this.props.history.push("/CorePsychologicalModule");
+      });
     }
-    else if (e === "Musculoskeletal Screen Medical History")
-    {
-        auth.login(() => {
-            this.props.history.push("/MusculoskeletonModule");
-          });
+    else if (e === "Musculoskeletal Screen Medical History") {
+      auth.login(() => {
+        this.props.history.push("/MusculoskeletonModule");
+      });
     }
-    else if (e === "Red Flag Medical History")
-    {
-        auth.login(() => {
-            this.props.history.push("/RedFlagModule");
-          });
+    else if (e === "Red Flag Medical History") {
+      auth.login(() => {
+        this.props.history.push("/RedFlagModule");
+      });
     }
 
-    else if (e === "Family History Medical History")
-    {
-        auth.login(() => {
-            this.props.history.push("/FamilyHistoryModule");
-          });
+    else if (e === "Family History Medical History") {
+      auth.login(() => {
+        this.props.history.push("/FamilyHistoryModule");
+      });
     }
 
-    else if (e === "Manual Handling Screen")
-    {
-        auth.login(() => {
-            this.props.history.push("/ManualHandling");
-          });
+    else if (e === "Manual Handling Screen") {
+      auth.login(() => {
+        this.props.history.push("/ManualHandling");
+      });
     }
 
-    else if (e === "Industry Specific Screen")
-    {
-        auth.login(() => {
-            this.props.history.push("/IndustrySpecificModule");
-          });
+    else if (e === "Industry Specific Screen") {
+      auth.login(() => {
+        this.props.history.push("/IndustrySpecificModule");
+      });
     }
 
     else return null
 
-}
+  }
 
   todoList = () => {
     return (
       <div>
-          <div className = "todoList">
-          <h4 style = {{"float": "left"}}>
-              {this.state.CurrentForm}
-              </h4> 
-        <button
-        style = {{"float": "right", "margin-top": "4px;"}}
-          className="btn btn-primary modal-btn"
-          data-modal-id="sampleModal"
-          onClick={() => this.continue(this.state.CurrentForm)}
-        >
-          Begin
+        <div className="todoList">
+          <h4 style={{ "float": "left" }}>
+            {this.state.CurrentForm}
+          </h4>
+          <button
+            style={{ "float": "right", "margin-top": "4px;" }}
+            className="btn btn-primary modal-btn"
+            data-modal-id="sampleModal"
+            onClick={() => this.continue(this.state.CurrentForm)}
+          >
+            Begin
         </button>
-          </div>
-          <br></br>
+        </div>
+        <br></br>
 
         {/* <div className = "todoList">
          <h4 style = {{"float": "left"}}>
@@ -164,7 +156,7 @@ continue = (e) =>
           </div>
           <div>
             <h4 style={{ fontWeight: "700" }}>To Do</h4>
-<br></br>
+            <br></br>
             {this.todoList()}
 
             {/* <link
