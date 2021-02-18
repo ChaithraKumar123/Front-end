@@ -1,4 +1,8 @@
-// LocalStorageService.js
+/* LocalStorageService.js
+this is a wrapper class for local storage. Please add a getter, setter and a clear function for
+creating a new item in local storage.
+
+*/
 class LocalStorageService {
 
     setToken(tokenObj) {
@@ -25,11 +29,13 @@ class LocalStorageService {
         localStorage.removeItem("isAuth");
     }
     setKNC(tokenObj) {
-        var jwtDecode = require("jwt-decode");
-        var decoded = (tokenObj && tokenObj.authenticationResultjwtDecode
-            && tokenObj.authenticationResult.idToken) ?
-            jwtDecode(tokenObj.authenticationResult.idToken) : null;
-        localStorage.setItem("KNC", decoded.sub);
+        if (tokenObj.authenticationResult) {
+            var jwtDecode = require("jwt-decode");
+            var decoded = jwtDecode(tokenObj.authenticationResult.idToken);
+            localStorage.setItem("KNC", decoded.sub);
+        } else {
+            localStorage.setItem("KNC", tokenObj.userSub);
+        }
 
     }
     getKNC() {

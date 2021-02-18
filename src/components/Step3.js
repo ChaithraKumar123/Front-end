@@ -67,6 +67,7 @@ class Step3 extends Component {
           "KNC": this.props.state.KNC ? this.props.state.KNC : localStorageService.getKNC()
         }
       }
+      // implementing save after each page
       createPersonalDetails(schema.schema)
         .then(() => {
           e.preventDefault();

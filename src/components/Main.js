@@ -196,6 +196,7 @@ class Main extends Component {
   };
 
   stepReset = () => {
+    // logic for taking patients to the page that is yet to be filled by bypassing filled details
     if (this.state.suburb.length > 0) {
       this.setState({ step: 3 });
     } else if (this.state.titleOpt.length > 0) {

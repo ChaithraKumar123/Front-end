@@ -39,7 +39,9 @@ class Home extends Component {
       this.localStorageService.clearRef();
     }
 
-    this.props.switchfunc();
+    if (this.localStorageService.getKNC()) {
+      this.props.switchfunc();
+    }
     this.props.stepReset();
 
     if (this.localStorageService.getKNC() === null) {
@@ -59,7 +61,7 @@ class Home extends Component {
         }
         if (response.data[0][0].length !== 0) {
           this.setState({
-            CurrentForm: response.data[0][0][0],
+            CurrentForm: response.data[0][0][0], //first item in the response bag, as only the first item needs to be displayed
             // Progress: response.data[1].Progress,
             // Total: response.data[1].Total,
             todo: true,

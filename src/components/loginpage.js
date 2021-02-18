@@ -244,7 +244,8 @@ class Loginpage extends Component {
             )}
         </div>
       );
-    } else {
+    }
+    else {
       auth.login(() => {
         this.props.history.push("/Home");
       });
