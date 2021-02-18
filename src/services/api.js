@@ -9,7 +9,10 @@ import {
     PERSONAL_DETAILS,
     REGISTER, WORK_FLOW_NEW_REG,
     USER_AUTH, SIGN_IN,
-    WORKFLOW, FORGOT_PASSWORD, CONFIRM_PASSWORD
+    WORKFLOW, FORGOT_PASSWORD,
+    CONFIRM_PASSWORD, ETHNICITY,
+    COUNTRY
+
 } from './url';
 
 const _axios = new Service();
@@ -23,3 +26,6 @@ export const getWorkFlow = (params) => _axios.get(WORKFLOW, params);
 export const createWorkFlow = (body) => _axios.post(WORKFLOW, body);
 export const createForgotPassword = (body) => _axios.post(FORGOT_PASSWORD, body);
 export const createConfirmPassword = (body) => _axios.post(CONFIRM_PASSWORD, body);
+export const getEthnicity = () => _axios.get(ETHNICITY);
+export const getPersonalDetails = (KNC) => _axios.get(`${PERSONAL_DETAILS}/${KNC}`);
+export const getCountry = () => _axios.get(COUNTRY);

@@ -1,14 +1,15 @@
 import React, { Component } from "react";
 //import Dropdown from "react-dropdown";
 //import { Field, reduxForm } from 'redux-form'
-import axios from "axios";
 import Select from "react-select";
+import { createPersonalDetails, getEthnicity, getPersonalDetails } from "../services/api";
+import LocalStorageService from "../services/localStorageService";
 
 
 const Errormsg = () => (
   <div className="errorMessage">Missing or invalid fields</div>
 );
-
+const localStorageService = new LocalStorageService();
 class Step1 extends Component {
   state = { submit: false, ethnicityoptions: [], dateerr: "" };
   continue = (e) => {
@@ -17,13 +18,56 @@ class Step1 extends Component {
     if ((isValid) &&
       !(this.props.state.titleOpt === "") &&
       !(this.props.state.gender === "") &&
-      ( this.props.state.givenName !== "") &&
-      ( this.props.state.surName !== "") &&
+      (this.props.state.givenName !== "") &&
+      (this.props.state.surName !== "") &&
       this.props.state.DateofB &&
-      (this.props.state.mobileNumber !== "") 
+      (this.props.state.mobileNumber !== "")
     ) {
-      e.preventDefault();
-      this.props.nextStep();
+      const schema = {
+        "schema": {
+          "Title": this.props.state.titleOpt,
+          "FirstName": this.props.state.givenName,
+          "LastName": this.props.state.surName,
+          "MiddleNames": this.props.state.middleName,
+          "Email": this.props.state.email,
+          "Gender": this.props.state.gender,
+          "culturalGroup": this.props.state.ethnicityCode ? this.props.state.ethnicityCode : 1101,
+          "DateOfBirth": this.props.state.DateofB,
+          "Mobile": this.props.state.mobileNumber,
+
+          "CurrentPosition": this.props.state.CurrentPosition,
+          "EmpStartDate": this.props.state.EmpStDate ? this.props.state.EmpStDate : "01-01-1990",
+          "EmpDepartment": this.props.state.Department,
+          "PreviousWorkCompClaim": 0,
+          "PreviousWorkCompClaimDetails": this.props.state.CompClaimDetails,
+
+
+          "Line1": this.props.state.addressLine1,
+          "Line2": this.props.state.addressLine2,
+          "Suburb": this.props.state.suburb,
+          "StateID": 0,
+          "PostCode": 0,
+          "CountryID": 8,
+
+          "FamilyDoctor": this.props.state.familyDoctor,
+          "LastVisit": this.props.state.lastVisit,
+          "WhyLastVisit": this.props.state.reasonOfVisit ? this.props.state.reasonOfVisit : "",
+          "Height": 0,
+          "WeightKg": 0,
+          "Handedness": this.props.state.handedness,
+          "CreateDate": new Date(),
+          "KNC": this.props.state.KNC ? this.props.state.KNC : localStorageService.getKNC()
+        }
+      }
+      createPersonalDetails(schema.schema)
+        .then(() => {
+          e.preventDefault();
+          this.props.nextStep();
+        })
+        .catch((error) => {
+          window.alert(error);
+        })
+
     } else this.setState({ submit: true });
   };
 
@@ -40,16 +84,16 @@ class Step1 extends Component {
 
 
     if (
-      (val.titleOpt === "" )||
+      (val.titleOpt === "") ||
       (val.gender === "") ||
-      (val.givenName === "" )||
+      (val.givenName === "") ||
       (val.surName === "") ||
-      (val.DateofB === "" || (new Date().getFullYear() - new Date(val.DateofB).getFullYear() <  15) )||
+      (val.DateofB === "" || (new Date().getFullYear() - new Date(val.DateofB).getFullYear() < 15)) ||
       (val.mobileNumber === "")
 
 
     ) {
-     this.setState({ dateerr :"Invalid date"})
+      this.setState({ dateerr: "Invalid date" })
       nameError = "This field is required";
     }
     if (nameError) {
@@ -67,43 +111,58 @@ class Step1 extends Component {
 
 
   saveEthnicity = (data) => {
-    try{
-      this.setState({ ethnicityoptions:  data.sort((a, b) => (a.label > b.label) ? 1 : -1) });
+    try {
+      this.setState({ ethnicityoptions: data.sort((a, b) => (a.label > b.label) ? 1 : -1) });
       this.props.ethnicityCodef(data);
     }
-    catch(err){
+    catch (err) {
       console.log(err);
 
     }
   };
   componentDidMount() {
-    this.props.stepReset();
     // Typical usage (don't forget to compare props):
-    fetch(
-      // "https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/v1/personaldetails/Ethnicity"
-      "https://localhost:44338/v1/personaldetails/Ethnicity"
-    )
-      .then((response) => response.json())
-      .catch(function (data) {
-        window.alert(data);
+    // fetch(
+    //   // "https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/v1/personaldetails/Ethnicity"
+    //   "https://localhost:44338/v1/personaldetails/Ethnicity"
+    // )
+    //   .then((response) => response.json())
+    //   .catch(function (data) {
+    //     window.alert(data);
+    //   })
+    //   .then((data) => this.saveEthnicity(data))
+    //   .then (() =>
+
+    //   axios
+    //   .get(
+    //     // "https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/medhistorydetails",
+    //     // 'https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/v1/personaldetails/'+ localStorage.getItem("KNC"),
+    //     "https://localhost:44338/v1/personaldetails/" + localStorage.getItem("KNC"),
+    //   )
+    //   .then((response) => {
+    //     console.log(response.data[0]);
+    //       this.props.getdetails(response.data[0], response.data[1], response.data[2])
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //   })
+    //   )
+    getEthnicity()
+      .then(({ data }) => {
+        this.saveEthnicity(data);
       })
-      .then((data) => this.saveEthnicity(data))
-      .then (() =>
-      
-      axios
-      .get(
-        // "https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/medhistorydetails",
-        // 'https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/v1/personaldetails/'+ localStorage.getItem("KNC"),
-        "https://localhost:44338/v1/personaldetails/" + localStorage.getItem("KNC"),
-      )
-      .then((response) => {
-        console.log(response.data[0]);
-          this.props.getdetails(response.data[0], response.data[1], response.data[2])
+      .then(() => {
+        getPersonalDetails(localStorageService.getKNC())
+          .then(({ data }) => {
+            this.props.getdetails(data[0], data[1], data[2]);
+          })
+          .catch((error) => {
+            console.log(error);
+          })
       })
       .catch((error) => {
         console.log(error);
       })
-      )
 
 
 
@@ -126,9 +185,9 @@ class Step1 extends Component {
 
             </div> */}
             {Leftarrow("/")}
-            <div style = {{float: "right", marginLeft : "15px"}}>
-            <h1>Personal Details</h1>
-            <p> Step 1 of 3 </p>
+            <div style={{ float: "right", marginLeft: "15px" }}>
+              <h1>Personal Details</h1>
+              <p> Step 1 of 3 </p>
             </div>
 
           </div>
@@ -198,9 +257,9 @@ class Step1 extends Component {
                 <span>Other</span>
               </div>
               <div className="errorMessage">{state.titleOptError}</div>
-            <div className="errorMessage">
-            {this.props.state.titleOpt === "" && this.state.nameError}
-            </div>
+              <div className="errorMessage">
+                {this.props.state.titleOpt === "" && this.state.nameError}
+              </div>
             </div>
 
 
@@ -216,8 +275,8 @@ class Step1 extends Component {
                 />
                 <div className="errorMessage">{state.givenNameError}</div>
                 <div className="errorMessage">
-                 {state.givenNameError ? null:(this.props.state.givenName === "" && this.state.nameError)}
-            </div>
+                  {state.givenNameError ? null : (this.props.state.givenName === "" && this.state.nameError)}
+                </div>
               </div>
             </div>
             <div>
@@ -246,8 +305,8 @@ class Step1 extends Component {
                 />
                 <div className="errorMessage">{state.surNameError}</div>
                 <div className="errorMessage">
-            {state.surNameError ? null: (this.props.state.surName === "" && this.state.nameError)}
-            </div>
+                  {state.surNameError ? null : (this.props.state.surName === "" && this.state.nameError)}
+                </div>
               </div>
             </div>
             <div>
@@ -263,8 +322,8 @@ class Step1 extends Component {
                 />
                 <div className="errorMessage">{state.DateofBError}</div>
                 <div className="errorMessage">
-                {state.DateofBError ? null: (!this.props.state.DateofBisValid && this.state.dateerr)}
-            </div>
+                  {state.DateofBError ? null : (!this.props.state.DateofBisValid && this.state.dateerr)}
+                </div>
               </div>
             </div>
 
@@ -309,11 +368,11 @@ class Step1 extends Component {
                 <span>Other</span>
               </div>
               <div className="errorMessage">{state.genderError}</div>
-            <div className="errorMessage">
-            {/* {this.props.state.gender === "" && this.state.nameError} */}
-            {state.genderError ? null: (this.props.state.gender === "" && this.state.nameError)}
+              <div className="errorMessage">
+                {/* {this.props.state.gender === "" && this.state.nameError} */}
+                {state.genderError ? null : (this.props.state.gender === "" && this.state.nameError)}
 
-            </div>
+              </div>
             </div>
 
 
@@ -330,9 +389,9 @@ class Step1 extends Component {
 
                 <div className="errorMessage">{state.mobileNumberError}</div>
                 <div className="errorMessage">
-            {state.mobileNumberError ? null: (this.props.state.mobileNumber === "" && this.state.nameError)}
+                  {state.mobileNumberError ? null : (this.props.state.mobileNumber === "" && this.state.nameError)}
 
-            </div>
+                </div>
               </div>
             </div>
             <div>
@@ -347,10 +406,10 @@ class Step1 extends Component {
                 />
                 <div className="errorMessage">{state.emailError}</div>
                 <div className="errorMessage">
-            {/* {this.props.state.email === "" && this.state.nameError} */}
-            {state.emailError ? null: (this.props.state.email === "" && this.state.nameError)}
+                  {/* {this.props.state.email === "" && this.state.nameError} */}
+                  {state.emailError ? null : (this.props.state.email === "" && this.state.nameError)}
 
-            </div>
+                </div>
               </div>
             </div>
             <div className="form-group">

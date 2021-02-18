@@ -25,13 +25,11 @@ class LocalStorageService {
         localStorage.removeItem("isAuth");
     }
     setKNC(tokenObj) {
-        if (tokenObj.authenticationResult) {
-            var jwtDecode = require("jwt-decode");
-            var decoded = jwtDecode(tokenObj.authenticationResult.idToken);
-            localStorage.setItem("KNC", decoded.sub);
-        } else {
-            localStorage.setItem("KNC", tokenObj.userSub);
-        }
+        var jwtDecode = require("jwt-decode");
+        var decoded = (tokenObj && tokenObj.authenticationResultjwtDecode
+            && tokenObj.authenticationResult.idToken) ?
+            jwtDecode(tokenObj.authenticationResult.idToken) : null;
+        localStorage.setItem("KNC", decoded.sub);
 
     }
     getKNC() {

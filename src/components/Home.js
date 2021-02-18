@@ -40,7 +40,7 @@ class Home extends Component {
     }
 
     this.props.switchfunc();
-    this.props.stepReset("reset");
+    this.props.stepReset();
 
     if (this.localStorageService.getKNC() === null) {
       auth.logout(() => {
@@ -317,7 +317,12 @@ class Home extends Component {
               </div>
             </div>
           </div>
-          {this.state.CurrentForm.length !== 0 ?
+          {this.state.CurrentForm.length === 0 ?
+            <div className="row has-form-forms">
+              <label className="abc">
+                Cheers Mate! Get well soon
+                </label>
+            </div> :
             <div>
               <div className="row has-form-forms">
                 <label className="abc">
@@ -422,11 +427,6 @@ class Home extends Component {
           </div>
         </div>
       </div> */}
-            </div> :
-            <div className="row has-form-forms">
-              <label className="abc">
-                Cheers Mate! Get well soon
-                </label>
             </div>}
         </div>
       </div>

@@ -133,7 +133,7 @@ class Signup extends Component {
       this.toSend.schema.KNC = e.userSub;
 
       this.props.kncset(e.userSub);
-      localStorageService.setKNC(e);
+      // localStorageService.setKNC(e);
 
       //  this.setState({KNC: e.userSub})
 
@@ -145,7 +145,7 @@ class Signup extends Component {
           .then((response) => {
             if (Number(response.data.httpStatusCode) === 200) {
               let body = {
-                KNC: localStorageService.getKNC(),
+                KNC: e.userSub,
                 DateCompleted: new Date(),
               }
               createWorkFlowNewReg(body)

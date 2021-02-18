@@ -195,11 +195,13 @@ class Main extends Component {
     this.setState({ stateOpts: e });
   };
 
-  stepReset = (e) => {
-    if ((e = "reset")) {
-      this.setState({ step: 1 });
+  stepReset = () => {
+    if (this.state.suburb.length > 0) {
+      this.setState({ step: 3 });
+    } else if (this.state.titleOpt.length > 0) {
+      this.setState({ step: 2 });
     } else {
-      this.setState({ step: e });
+      this.setState({ step: 1 });
     }
   };
 
@@ -254,7 +256,7 @@ class Main extends Component {
           ? patient[0].middleNames
           : this.state.middleName,
 
-        DateofB: new Date(patient[0].dateOfBirth).getFullYear() === 2020 
+        DateofB: new Date(patient[0].dateOfBirth).getFullYear() === 2020
           ? this.state.DateofB : this.dateFormatter(patient[0].dateOfBirth),
 
         gender: temp ? temp : this.state.gender,
@@ -610,7 +612,7 @@ class Main extends Component {
           ethnicityCodef={this.ethnicityCodef}
           state={this.state}
           getdetails={this.getdetails}
-          Leftarrow = {this.Leftarrow}
+          Leftarrow={this.Leftarrow}
         />
       );
     if (step === "abc")
@@ -670,20 +672,20 @@ class Main extends Component {
   Leftarrow = (hrefString) => {
 
     return (
-      <div style = {{float: "left", "marginTop": "4px" }}>
-      {/* <button style = {{ "background": "transparent", "border": "none"}} onClick = {()=> auth.login(() => {this.props.history.push("/")})}>
+      <div style={{ float: "left", "marginTop": "4px" }}>
+        {/* <button style = {{ "background": "transparent", "border": "none"}} onClick = {()=> auth.login(() => {this.props.history.push("/")})}>
       <img  src={require("../images/left-arrow-white.svg")} height = "25px"/>
       </button> */}
 
-      <a href= {hrefString}>
-            <img
-              src={require("../images/left-arrow-white.svg")}
-              alt=""
-              height="25px"
-            />
-          </a>
+        <a href={hrefString}>
+          <img
+            src={require("../images/left-arrow-white.svg")}
+            alt=""
+            height="25px"
+          />
+        </a>
 
-    </div>
+      </div>
     )
 
 
@@ -729,7 +731,7 @@ class Main extends Component {
 
             <ProtectedRoute
               path="/painIndicator"
-              Leftarrow = {this.Leftarrow}
+              Leftarrow={this.Leftarrow}
 
               component={BodyImageMain}
             ></ProtectedRoute>
@@ -739,12 +741,12 @@ class Main extends Component {
               switchfunc={this.props.switchFunc}
               roundedDropdown={this.roundedDropdown}
               component={CoreMedicalHistory}
-              Leftarrow = {this.Leftarrow}
+              Leftarrow={this.Leftarrow}
             ></ProtectedRoute>
 
             <ProtectedRoute
               path="/CorePsychologicalModule"
-              Leftarrow = {this.Leftarrow}
+              Leftarrow={this.Leftarrow}
               loadingCircle={<IsLoading />}
               component={CorePsychologicalModule}
             ></ProtectedRoute>
@@ -752,7 +754,7 @@ class Main extends Component {
             <ProtectedRoute
               path="/RedFlagModule"
               loadingCircle={<IsLoading />}
-              Leftarrow = {this.Leftarrow}
+              Leftarrow={this.Leftarrow}
 
               component={RedFlagModule}
             ></ProtectedRoute>
@@ -760,7 +762,7 @@ class Main extends Component {
             <ProtectedRoute
               path="/CoreLifeStyleModule"
               loadingCircle={<IsLoading />}
-              Leftarrow = {this.Leftarrow}
+              Leftarrow={this.Leftarrow}
               component={CoreLifeStyleModule}
             ></ProtectedRoute>
 
@@ -782,7 +784,7 @@ class Main extends Component {
             <ProtectedRoute
               path="/FamilyHistoryModule"
               loadingCircle={<IsLoading />}
-              Leftarrow = {this.Leftarrow}
+              Leftarrow={this.Leftarrow}
 
               component={FamilyHistoryModule}
             ></ProtectedRoute>
@@ -790,70 +792,70 @@ class Main extends Component {
             <ProtectedRoute
               path="/NDSModule"
               loadingCircle={<IsLoading />}
-              Leftarrow = {this.Leftarrow}
+              Leftarrow={this.Leftarrow}
               component={NDSModule}
             ></ProtectedRoute>
 
             <ProtectedRoute
               path="/QuebecModule"
               loadingCircle={<IsLoading />}
-              Leftarrow = {this.Leftarrow}
+              Leftarrow={this.Leftarrow}
               component={QuebecModule}
             ></ProtectedRoute>
 
             <ProtectedRoute
               path="/LEFSModule"
               loadingCircle={<IsLoading />}
-              Leftarrow = {this.Leftarrow}
+              Leftarrow={this.Leftarrow}
               component={LEFSModule}
             ></ProtectedRoute>
 
             <ProtectedRoute
               path="/PSSModule"
               loadingCircle={<IsLoading />}
-              Leftarrow = {this.Leftarrow}
+              Leftarrow={this.Leftarrow}
               component={PSSModule}
             ></ProtectedRoute>
 
             <ProtectedRoute
               path="/FABQMain"
               loadingCircle={<IsLoading />}
-              Leftarrow = {this.Leftarrow}
+              Leftarrow={this.Leftarrow}
               component={FABQMain}
             ></ProtectedRoute>
 
             <ProtectedRoute
               path="/FOSQModule"
               loadingCircle={<IsLoading />}
-              Leftarrow = {this.Leftarrow}
+              Leftarrow={this.Leftarrow}
               component={FOSQModule}
             ></ProtectedRoute>
-            
+
             <ProtectedRoute
               path="/PainScaleModule"
               loadingCircle={<IsLoading />}
-              Leftarrow = {this.Leftarrow}
+              Leftarrow={this.Leftarrow}
               component={PainScaleModule}
             ></ProtectedRoute>
 
             <ProtectedRoute
               path="/DASSModule"
               loadingCircle={<IsLoading />}
-              Leftarrow = {this.Leftarrow}
+              Leftarrow={this.Leftarrow}
               component={DASSModule}
             ></ProtectedRoute>
-            
+
             <ProtectedRoute
               path="/DASHModule"
               loadingCircle={<IsLoading />}
-              Leftarrow = {this.Leftarrow}
+              Leftarrow={this.Leftarrow}
               component={DASHModule}
             ></ProtectedRoute>
 
             <ProtectedRoute
               path="/MusculoskeletonModule"
               loadingCircle={<IsLoading />}
-              Leftarrow = {this.Leftarrow}
+              Leftarrow={this.Leftarrow}
 
               component={MusculoskeletonModule}
             ></ProtectedRoute>
