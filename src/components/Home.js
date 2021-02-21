@@ -322,7 +322,7 @@ class Home extends Component {
           {this.state.CurrentForm.length === 0 ?
             <div className="row has-form-forms">
               <label className="abc">
-                Cheers Mate! Get well soon
+                Thank you for completing your injury details! We look forward to being able to help you with your injury soon.  You will have the opportunity to discuss any other questions or information about your injury during your appointment with your practitioner.
                 </label>
             </div> :
             <div>
