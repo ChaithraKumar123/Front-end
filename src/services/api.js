@@ -3,7 +3,7 @@
 accepted syntax for post: export cont functionNAme = (body) => _axios.post(URL, body)
 accepted syntax for get: export cont functionNAme = _axios.get(URL)
 */
-import Axios from "axios";
+
 import Service from "./index";
 import {
     PERSONAL_DETAILS,

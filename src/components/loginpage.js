@@ -5,6 +5,7 @@ import { Redirect, Link, withRouter } from "react-router-dom";
 import Landingpage from "./Landingpage";
 import { createSignIn, getUserAuth } from "../services/api";
 import LocalStorageService from "../services/localStorageService";
+import { encrypt } from "../util/crypto";
 
 // const IsLoading = () => (
 //     <Ouroboro style = {{"position": "absolute", "margin-left": "280px", "margin-top": "-57px"}} color="#F04F1D" size={200} />
@@ -85,7 +86,7 @@ class Loginpage extends Component {
       const schema = {
         schema: {
           Email: this.state.userEmPh,
-          Password: this.state.pass,
+          Password: encrypt(this.state.pass),
         },
       };
 
@@ -100,7 +101,7 @@ class Loginpage extends Component {
       //   body: JSON.stringify(schema.schema),
       // };
 
-      console.log(schema.schema);
+      // console.log(schema.schema);
       // fetch(
       //   "https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/signin",
       //   requestOptions

@@ -19,7 +19,7 @@ class Service {
             "Access-Control-Allow-Origin": "*",
             "Access-Control-Allow-Methods": "GET,HEAD,OPTIONS,POST,PUT",
         }
-        console.log(headers);
+        console.log(headers, process.env.REACT_APP_API_URL);
         let service = axios.create({
             baseURL: process.env.REACT_APP_API_URL,
             headers: headers
