@@ -1,14 +1,16 @@
 import React, { Component } from "react";
 //import 'react-tabs/style/react-tabs.css';
 import update from "react-addons-update";
-import axios from "axios";
 import auth from "../auth";
 
 //import {Tabs,TabPanel,TabList,Tab} from 'react-tabs'
 import InjuryQuestions from "./InjuryQuestions";
 import { withRouter } from "react-router-dom";
+import { createPOBDetails, createSaveWorkflow, getPOBDetails } from "../../services/api";
+import LocalStorageService from "../../services/localStorageService";
 
 class BodyImageTabs extends Component {
+  localStorageService = new LocalStorageService();
   constructor(props) {
     super(props);
 
@@ -116,20 +118,21 @@ class BodyImageTabs extends Component {
     window.scrollTo(0, 0)
 
     const temp = [];
-    axios
-      .get(
-        // "https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/POBdetails",
-        "https://localhost:44338/api/POBdetails",
+    // axios
+    //   .get(
+    //     // "https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/POBdetails",
+    //     "https://localhost:44338/api/POBdetails",
 
-        {
-          params: { value: localStorage.getItem("KNC") },
-        }
-      )
+    //     {
+    //       params: { value: localStorage.getItem("KNC") },
+    //     }
+    //   )
+    getPOBDetails({ value: this.localStorageService.getKNC() })
       .then((response) => {
         console.log(response.data);
 
         for (let i = 0; i < response.data.length; i++) {
-          if (response.data[i].painRegionID === 0){
+          if (response.data[i].painRegionID === 0) {
             continue
           }
           temp.push({
@@ -174,7 +177,7 @@ class BodyImageTabs extends Component {
             //InjuryRegion: update(this.state.InjuryRegion, {[i]:people[i]})
 
             InjuryRegion: update(this.state.InjuryRegion, {
-              $splice: [[i-1, 1, temp[i-1]]],
+              $splice: [[i - 1, 1, temp[i - 1]]],
             }),
           });
         }
@@ -212,94 +215,141 @@ class BodyImageTabs extends Component {
     });
   };
 
-  apicall = async(step1) => {
+  apicall = async (step1) => {
     const save = this.state.InjuryRegion[step1 - 1];
-      let response = await axios
-      .post(
-       // "https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/POBdetails",
-         "https://localhost:44338/api/POBdetails",
+    let response = await createPOBDetails({
+      POBPatientID: localStorage.getItem("KNC"),
+      POBCPRegionID: save.POBCPRegionID,
+      PainRegionID: save.PainRegionID,
+      PainSide: save.pain_side,
+      PainWhere: save.region_name,
+      MainRegion: this.state.step1 === 1 ? 1 : 0,
+      Causes: save.pain_first_reason,
+      Frequency: save.pain_often,
+      FrequencyOther: save.pain_often_reason,
+      MakesBetter: save.pain_better,
+      MakesBetterOther: save.pain_better_reason,
+      MakesWorse: save.pain_worst,
+      MakesWorseOther: save.pain_worst_reason,
+      Occurrence: save.pain_firstime,
+      PainScale: save.pain_scale,
+      PainType: save.pain_type,
+      PainTypeOther: save.pain_type_reason,
+      OtherTreatment: save.pain_treatment,
+      LimitWorkLife: save.pain_limit_work,
+      OtherSymptoms: save.pain_symp,
+      SymptomClicking: save.pain_symp_click,
+      SymptomHeat: save.pain_symp_heat,
+      SymptomLocking: save.pain_symp_lock,
+      SymptomNumbness: save.pain_symp_hand,
+      SymptomPinsNeedles: save.pain_symp_feet,
+      SymptomSwelling: save.pain_symp_swell,
+      SymptomWeakness: save.pain_symp_weak,
+      SymptomOther: save.pain_symp_reason,
+      OccurredCurrent: save.pain_duration,
+      OccurredCurrentApprox: save.pain_duration_approx,
+      OccurredFirst:
+        save.pain_firstime === "I’ve had it before"
+          ? save.pain_firstime_date
+          : "1990-01-01",
+      OccurredFirstApprox:
+        save.pain_firstime === "I’ve had it before"
+          ? save.pain_firstime_approx
+          : false,
+      // FuturePainRisk: save.pain_futurerisk,
+    })
+    // axios
+    //   .post(
+    //     // "https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/POBdetails",
+    //     "https://localhost:44338/api/POBdetails",
 
-        {
-          POBPatientID: localStorage.getItem("KNC"),
-          POBCPRegionID: save.POBCPRegionID,
-          PainRegionID: save.PainRegionID,
-          PainSide: save.pain_side,
-          PainWhere: save.region_name,
-          MainRegion: this.state.step1 === 1 ? 1 : 0,
-          Causes: save.pain_first_reason,
-          Frequency: save.pain_often,
-          FrequencyOther: save.pain_often_reason,
-          MakesBetter: save.pain_better,
-          MakesBetterOther: save.pain_better_reason,
-          MakesWorse: save.pain_worst,
-          MakesWorseOther: save.pain_worst_reason,
-          Occurrence: save.pain_firstime,
-          PainScale: save.pain_scale,
-          PainType: save.pain_type,
-          PainTypeOther: save.pain_type_reason,
-          OtherTreatment: save.pain_treatment,
-          LimitWorkLife: save.pain_limit_work,
-          OtherSymptoms: save.pain_symp,
-          SymptomClicking: save.pain_symp_click,
-          SymptomHeat: save.pain_symp_heat,
-          SymptomLocking: save.pain_symp_lock,
-          SymptomNumbness: save.pain_symp_hand,
-          SymptomPinsNeedles: save.pain_symp_feet,
-          SymptomSwelling: save.pain_symp_swell,
-          SymptomWeakness: save.pain_symp_weak,
-          SymptomOther: save.pain_symp_reason,
-          OccurredCurrent: save.pain_duration,
-          OccurredCurrentApprox: save.pain_duration_approx,
-          OccurredFirst:
-            save.pain_firstime === "I’ve had it before"
-              ? save.pain_firstime_date
-              : "1990-01-01",
-          OccurredFirstApprox:
-            save.pain_firstime === "I’ve had it before"
-              ? save.pain_firstime_approx
-              : false,
-          // FuturePainRisk: save.pain_futurerisk,
+    //     {
+    //       POBPatientID: localStorage.getItem("KNC"),
+    //       POBCPRegionID: save.POBCPRegionID,
+    //       PainRegionID: save.PainRegionID,
+    //       PainSide: save.pain_side,
+    //       PainWhere: save.region_name,
+    //       MainRegion: this.state.step1 === 1 ? 1 : 0,
+    //       Causes: save.pain_first_reason,
+    //       Frequency: save.pain_often,
+    //       FrequencyOther: save.pain_often_reason,
+    //       MakesBetter: save.pain_better,
+    //       MakesBetterOther: save.pain_better_reason,
+    //       MakesWorse: save.pain_worst,
+    //       MakesWorseOther: save.pain_worst_reason,
+    //       Occurrence: save.pain_firstime,
+    //       PainScale: save.pain_scale,
+    //       PainType: save.pain_type,
+    //       PainTypeOther: save.pain_type_reason,
+    //       OtherTreatment: save.pain_treatment,
+    //       LimitWorkLife: save.pain_limit_work,
+    //       OtherSymptoms: save.pain_symp,
+    //       SymptomClicking: save.pain_symp_click,
+    //       SymptomHeat: save.pain_symp_heat,
+    //       SymptomLocking: save.pain_symp_lock,
+    //       SymptomNumbness: save.pain_symp_hand,
+    //       SymptomPinsNeedles: save.pain_symp_feet,
+    //       SymptomSwelling: save.pain_symp_swell,
+    //       SymptomWeakness: save.pain_symp_weak,
+    //       SymptomOther: save.pain_symp_reason,
+    //       OccurredCurrent: save.pain_duration,
+    //       OccurredCurrentApprox: save.pain_duration_approx,
+    //       OccurredFirst:
+    //         save.pain_firstime === "I’ve had it before"
+    //           ? save.pain_firstime_date
+    //           : "1990-01-01",
+    //       OccurredFirstApprox:
+    //         save.pain_firstime === "I’ve had it before"
+    //           ? save.pain_firstime_approx
+    //           : false,
+    //       // FuturePainRisk: save.pain_futurerisk,
+    //     }
+    //   )
+    if (response.data === "Success") {
+      // alert("Successfully Submitted!");
+      console.log(response);
+
+      if (this.state.step1 === 1) {
+        let res = await createSaveWorkflow({
+          KNC: localStorage.getItem("KNC"),
+          DateCompleted: new Date(),
+          processID: localStorage.getItem("WorkFlowId")
+
+        })
+        // axios
+        //   .post(
+        //     // "https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/saveWorkflow",
+        //     "https://localhost:44338/api/saveWorkflow",
+
+        //     {
+        //       KNC: localStorage.getItem("KNC"),
+        //       DateCompleted: new Date(),
+        //       processID: localStorage.getItem("WorkFlowId")
+
+        //     }
+        //   )
+
+        if (res.data === "Success") {
+
+          console.log("updated body wf")
         }
-      )
-        if (response.data === "Success"){
-          // alert("Successfully Submitted!");
-          console.log(response);
-
-          if (this.state.step1 === 1){
-           let res = await  axios
-            .post(
-              // "https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/saveWorkflow",
-              "https://localhost:44338/api/saveWorkflow",
-    
-              {
-                KNC: localStorage.getItem("KNC"),
-                DateCompleted: new Date(),
-                processID: localStorage.getItem("WorkFlowId")
-  
-              }
-            )
-
-            if (res.data === "Success"){
-
-              console.log("updated body wf")
-            }
-          }
-        }
+      }
+    }
   };
 
 
-  nextStep = async(event) => {
+  nextStep = async (event) => {
     window.scrollTo(0, 0)
 
     const { step1 } = this.state;
     event.preventDefault();
     const isValid = this.validate();
     if (isValid) {
-     // this.apicall(step1);
-     this.setState({
-      step1: step1 + 1,
-    }, await this.apicall(step1))
-  }
+      // this.apicall(step1);
+      this.setState({
+        step1: step1 + 1,
+      }, await this.apicall(step1))
+    }
   }
   prevStep = () => {
     window.scrollTo(0, 0)
@@ -314,24 +364,24 @@ class BodyImageTabs extends Component {
     }
   };
 
-    completeForm = async(event) => {
-      window.scrollTo(0, 0)
+  completeForm = async (event) => {
+    window.scrollTo(0, 0)
 
     event.preventDefault();
     const isValid = this.validate();
     if (isValid) {
-      try{
-          await this.apicall(this.state.step1)
-          localStorage.setItem("ref", true)
+      try {
+        await this.apicall(this.state.step1)
+        localStorage.setItem("ref", true)
 
-          auth.login(() => {
-            this.props.history.push("/Home");
-          })
+        auth.login(() => {
+          this.props.history.push("/Home");
+        })
       }
-      catch(err){
+      catch (err) {
         console.log(err)
       }
-     // this.props.render_main();
+      // this.props.render_main();
     }
   };
   validate = () => {
@@ -351,7 +401,7 @@ class BodyImageTabs extends Component {
       val.pain_worst === "" ||
       (val.pain_worst === "Other" && val.pain_worst_reason === "") ||
       val.pain_better === "" ||
-      (val.pain_better === "Other" && val.pain_better_reason === "") 
+      (val.pain_better === "Other" && val.pain_better_reason === "")
       //|| val.pain_scale === "" ||
       // val.pain_symp === "" ||
       // (val.pain_symp === "Yes" &&
@@ -383,7 +433,7 @@ class BodyImageTabs extends Component {
         <div className="page-title lg">
           <div className="title">
             <h1>
-            Pain indicator step {this.state.step1} of {state.body_area1.length}
+              Pain indicator step {this.state.step1} of {state.body_area1.length}
             </h1>
             {this.state.step1 === 1 && (
               <p>{state.body_area1[this.state.step1 - 1]}</p>
@@ -394,45 +444,45 @@ class BodyImageTabs extends Component {
           </div>
         </div>
 
-        <div className = 'row has-form-forms'>
+        <div className='row has-form-forms'>
 
 
-        <InjuryQuestions
-          InjuryRegion={this.state.InjuryRegion[this.state.step1 - 1]}
-          handleChange={this.handleChange}
-          handleChangeCheck={this.handleChangeCheck}
-          state={this.state}
-        />
+          <InjuryQuestions
+            InjuryRegion={this.state.InjuryRegion[this.state.step1 - 1]}
+            handleChange={this.handleChange}
+            handleChangeCheck={this.handleChangeCheck}
+            state={this.state}
+          />
 
-        <div className="btn-block prev-back-btn">
-          {this.state.step1 >= 1 && (
-            <button style = {{ "min-width": "241px"}} className="btn btn-outline-primary" onClick={this.prevStep}>
-              Back
-            </button>
-          )}
-          {this.state.step1 !== state.body_area1.length && (
-            <button
-            style = {{ "min-width": "241px"}}
-              className="btn btn-primary modal-btn"
-              data-modal-id="sampleModal"
-              onClick={this.nextStep}
-            >
-              Continue
-            </button>
-          )}
-          {this.state.step1 === state.body_area1.length && (
-            <button
-            style = {{ "min-width": "241px"}}
-              className="btn btn-primary modal-btn"
-              data-modal-id="sampleModal"
-              onClick={this.completeForm}
-            >
-              Finish
-            </button>
-          )}
+          <div className="btn-block prev-back-btn">
+            {this.state.step1 >= 1 && (
+              <button style={{ "min-width": "241px" }} className="btn btn-outline-primary" onClick={this.prevStep}>
+                Back
+              </button>
+            )}
+            {this.state.step1 !== state.body_area1.length && (
+              <button
+                style={{ "min-width": "241px" }}
+                className="btn btn-primary modal-btn"
+                data-modal-id="sampleModal"
+                onClick={this.nextStep}
+              >
+                Continue
+              </button>
+            )}
+            {this.state.step1 === state.body_area1.length && (
+              <button
+                style={{ "min-width": "241px" }}
+                className="btn btn-primary modal-btn"
+                data-modal-id="sampleModal"
+                onClick={this.completeForm}
+              >
+                Finish
+              </button>
+            )}
+          </div>
+
         </div>
-
-      </div>
       </div>
 
     );

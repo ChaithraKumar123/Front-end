@@ -14,3 +14,5 @@ export const FORGOT_PASSWORD = "api/forgotpassword";
 export const CONFIRM_PASSWORD = "api/confirmpassword";
 export const ETHNICITY = "v1/personaldetails/Ethnicity";
 export const COUNTRY = "v1/personaldetails/Country";
+export const POBdetails = "api/POBdetails";
+export const SAVE_WORKFLOW = "api/saveWorkflow";

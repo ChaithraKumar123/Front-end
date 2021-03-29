@@ -11,7 +11,9 @@ import {
     USER_AUTH, SIGN_IN,
     WORKFLOW, FORGOT_PASSWORD,
     CONFIRM_PASSWORD, ETHNICITY,
-    COUNTRY
+    COUNTRY,
+    POBdetails,
+    SAVE_WORKFLOW
 
 } from './url';
 
@@ -29,3 +31,7 @@ export const createConfirmPassword = (body) => _axios.post(CONFIRM_PASSWORD, bod
 export const getEthnicity = () => _axios.get(ETHNICITY);
 export const getPersonalDetails = (KNC) => _axios.get(`${PERSONAL_DETAILS}/${KNC}`);
 export const getCountry = () => _axios.get(COUNTRY);
+export const getPOBDetails = (params) => _axios.get(POBdetails, params);
+export const deletePOBDetails = (params) => _axios.delete(POBdetails, params);
+export const createPOBDetails = (body) => _axios.post(POBdetails, body);
+export const createSaveWorkflow = (body) => _axios.post(SAVE_WORKFLOW, body);

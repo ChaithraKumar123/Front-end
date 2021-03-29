@@ -47,6 +47,9 @@ class Service {
     post(path, payload) {
         return this._axios.post(path, payload);
     }
+    delete(path, param) {
+        return this._axios.delete(path, { params: param });
+    }
 
 
 }
