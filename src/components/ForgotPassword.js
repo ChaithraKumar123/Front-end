@@ -68,7 +68,7 @@ class ForgotPassword extends Component {
     // }
     createForgotPassword(forgotPassword.schema)
       .then(({ data }) => {
-        window.alert("Successfully sent verification code to your email.");
+        window.alert("A code has been sent to your email address.");
         this.setState({ submit: true })
       })
       .catch((error) => {
@@ -163,6 +163,7 @@ class ForgotPassword extends Component {
           </label>
           <br></br>
           <div>
+            <div className="errorMessage">Please do not close this screen</div>
             <div className="form-group">
               <label className="abc">Email</label>
               <input
@@ -239,21 +240,21 @@ class ForgotPassword extends Component {
               </div>
             </div>
           ) : (
-              <div className="btn-block prev-back-btn">
-                <button
-                  className="btn btn-outline-primary btn-block"
-                  onClick={this.sendCode}
-                >
-                  Send code
+            <div className="btn-block prev-back-btn">
+              <button
+                className="btn btn-outline-primary btn-block"
+                onClick={this.sendCode}
+              >
+                Send code
               </button>
-              </div>
+            </div>
 
-              // <div class="btn-block prev-back-btn">
-              //   <button class="btn btn-outline-primary" onClick={this.sendCode}>
-              //     Send code
-              //   </button>
-              // </div>
-            )}
+            // <div class="btn-block prev-back-btn">
+            //   <button class="btn btn-outline-primary" onClick={this.sendCode}>
+            //     Send code
+            //   </button>
+            // </div>
+          )}
         </div>
       </div>
     );

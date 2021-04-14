@@ -12,7 +12,7 @@ class Brilliant extends Component {
     // UserPool.signUp(this.state.userEmPh, this.state.pass, [], null, (err,data)=> {
     //   if(err) console.error(err);
     auth.login(() => {
-      this.props.history.push("/patientDetails");
+      this.props.history.push("/Home");
     });
 
     // })
