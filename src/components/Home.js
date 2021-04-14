@@ -153,7 +153,7 @@ class Home extends Component {
       auth.login(() => {
         this.props.history.push("/IndustrySpecificModule");
       });
-    } else if (e === "Body Chart") {
+    } else if (e === "Injury Details") {
       auth.login(() => {
         this.props.history.push("/painIndicator");
       });
@@ -210,7 +210,7 @@ class Home extends Component {
         <div className="todoList">
           <label style={{ float: "left" }} className="abc">{e}</label>
           <button
-            style={{ float: "right", "margin-top": "4px;", "min-width": "88px" }}
+            style={{ float: "right", "marginTop": "4px", "minWidth": "88px" }}
 
             className="btn btn-primary modal-btn"
             data-modal-id="sampleModal"
@@ -232,7 +232,7 @@ class Home extends Component {
           <label style={{ float: "left" }} className="abc">{val}</label>
 
           <button
-            style={{ float: "right", "margin-top": "4px;" }}
+            style={{ float: "right", "marginTop": "4px" }}
             className="btn btn-outline-primary modal-btn"
             data-modal-id="sampleModal"
             onClick={() => this.setState({ completedList: false })}
@@ -246,13 +246,13 @@ class Home extends Component {
 
   completedList = (e, id) => {
     return (
-      <div>
+      <div key={id}>
         <div className="todoList">
           {/* <h4  style={{ float: "left" }}>{e}</h4> */}
           <label style={{ float: "left" }} className="abc">{e}</label>
 
           <button
-            style={{ float: "right", "margin-top": "4px;" }}
+            style={{ float: "right", "marginTop": "4px" }}
             className="btn btn-outline-primary modal-btn"
             data-modal-id="sampleModal"
             onClick={() => this.continue(e, id)}
@@ -315,7 +315,7 @@ class Home extends Component {
           <div>
             <div className="page-title lg">
               <div className="title">
-                <h1>Forms and documents</h1>
+                <h1>Your Health Manager</h1>
               </div>
             </div>
           </div>
@@ -325,101 +325,103 @@ class Home extends Component {
                 Thank you for completing your injury details! We look forward to being able to help you with your injury soon.  You will have the opportunity to discuss any other questions or information about your injury during your appointment with your practitioner.
                 </label>
             </div> :
-            <div>
-              <div className="row has-form-forms">
-                <label className="abc">
-                  To ensure we can provide you with the best quality care, we seek some information from you. <br /><br />
-            We understand there are a number of questions to answer, please do your best, they are designed to ensure we can provide you with the best quality of care.
+            <div className="row has-form-forms">
+              <label className="abc">
+                To ensure we can provide you with the best quality care, please answer the following questions.
             </label>
-              </div>
-              <br />
-              <div className="row has-form-forms">
-                {this.state.todo ? null : (
-                  <div style={{ marginBottom: "65px" }}>
-                    <h4 style={{ fontWeight: "700" }}>
-                      Have a new injury you need to see us about?
+            </div>}
+          <div>
+            <div className="row has-form-forms">
+              {this.state.todo ? null : (
+                <div style={{ marginBottom: "65px" }}>
+                  <h4 style={{ fontWeight: "700" }}>
+                    Have a new injury you need to see us about?
                 </h4>
 
 
-                    <br></br>
-                    <label className="abc" style={{ float: "left" }}>New Complaint</label>
-                    <button
-                      id="myBtn"
-                      style={{ float: "right", "margin-top": "4px;", "min-width": "88px" }}
+                  <br></br>
+                  <label className="abc" style={{ float: "left" }}>New Complaint</label>
+                  <button
+                    id="myBtn"
+                    style={{ float: "right", "marginTop": "4px", "minWidth": "88px" }}
 
-                      className="btn btn-primary modal-btn"
-                      data-modal-id="sampleModal"
-                      onClick={() => this.begin()}
-                    >
-                      Begin
+                    className="btn btn-primary modal-btn"
+                    data-modal-id="sampleModal"
+                    onClick={() => this.begin()}
+                  >
+                    Begin
             </button>
-                  </div>
-                )}
-
-                <div>
-                  {this.state.todo ? (
-                    <div style={{ marginBottom: "10px" }}>
-                      <label className="headlinetwo">To Do</label>
-
-                      {/* {this.todoList()} */}
-                      {this.todoList(this.state.CurrentForm[13], this.state.CurrentForm[0])}
-                    </div>
-                  ) : null}
-
-                  {/* {this.state.completedList ? (
-                <div style={{ marginTop: "10px" }}>
-                  <h4 style={{ fontWeight: "700" }}>Completed</h4>
-
-                  {Array.from(this.state.progressList, (e, i) => {
-                    if (
-                      e[13] === "Personal Details" ||
-                      e[13] === "Lifestyle" ||
-                      e[13] === "Musculoskeletal Screen Medical History" ||
-                      e[13] === "Body Chart"
-                    ) {
-                      return this.completedList(e[13], e[0]);
-                    } else if (e[12] === "Current Employment Details") {
-                      return null;
-                    }
-                  })}
-
-                  {this.state.medHistory
-                    ? this.viewMedHistory("Medical History")
-                    : null}
                 </div>
-              ) : (
+              )}
+
+              <div>
+                {this.state.todo ? (
+                  <div style={{ marginBottom: "10px" }}>
+                    <label className="headlinetwo">To Do</label>
+
+                    {/* {this.todoList()} */}
+                    {this.todoList(this.state.CurrentForm[13], this.state.CurrentForm[0])}
+                  </div>
+                ) : null}
+
+                {this.state.completedList ? (
                   <div style={{ marginTop: "10px" }}>
                     <h4 style={{ fontWeight: "700" }}>Completed</h4>
 
                     {Array.from(this.state.progressList, (e, i) => {
                       if (
-                        e[13] === "Medical History" ||
-                        e[13] === "Wellbeing" ||
-                        e[13] === "Health check" ||
-                        e[13] === "Family History"
+                        e[13] === "Personal Details" ||
+                        e[13] === "Lifestyle" ||
+                        e[13] === "Musculoskeletal Screen Medical History" ||
+                        e[13] === "Body Chart"
                       ) {
                         return this.completedList(e[13], e[0]);
+                      } else if (e[12] === "Current Employment Details") {
+                        return null;
                       }
                     })}
 
-                    <div className="btn-block">
-                      <button
-                        style={{ "position": "relative" }}
-
-                        className="btn btn-primary btn-block"
-                        onClick={() => this.setState({ completedList: true })}
-                      >
-                        back
-                  </button>
-                    </div>
+                    {this.state.medHistory
+                      ? this.viewMedHistory("Medical History")
+                      : null}
                   </div>
-                )} */}
+                ) : "" /* (
+                    <div style={{ marginTop: "10px" }}>
+                      <h4 style={{ fontWeight: "700" }}>Completed</h4>
+
+                      {Array.from(this.state.progressList, (e, i) => {
+                        if (
+                          e[13] === "Medical History" ||
+                          e[13] === "Wellbeing" ||
+                          e[13] === "Health check" ||
+                          e[13] === "Family History"
+                        ) {
+                          return this.completedList(e[13], e[0]);
+                        }
+                      })}
+
+                      <div className="btn-block">
+                        <button
+                          style={{ "position": "relative" }}
+
+                          className="btn btn-primary btn-block"
+                          onClick={() => this.setState({ completedList: true })}
+                        >
+                          back
+                  </button>
+                      </div>
+                    </div>
+                    )*/}
+                {/* 
                   {/* 
+                {/* 
             {this.state.completedList && this.state.medHistory ? 
                       : null} */}
-                </div>
               </div>
+            </div>
+            {/* 
               {/* 
+            {/* 
       <div id="MainDiv">
         <div>
           <div className="page-title lg">
@@ -429,7 +431,7 @@ class Home extends Component {
           </div>
         </div>
       </div> */}
-            </div>}
+          </div>
         </div>
       </div>
     );

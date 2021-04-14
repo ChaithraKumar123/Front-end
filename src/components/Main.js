@@ -61,8 +61,8 @@ const IsLoading = () => (
   <Ouroboro
     style={{
       position: "absolute",
-      "margin-left": "275px",
-      "margin-top": "400px",
+      "marginLeft": "275px",
+      "marginTop": "400px",
     }}
     color="#F04F1D"
     size={200}
@@ -197,7 +197,9 @@ class Main extends Component {
 
   stepReset = () => {
     // logic for taking patients to the page that is yet to be filled by bypassing filled details
-    if (this.state.suburb.length > 0) {
+    if (this.state.height > 0) {
+      this.setState({ step: 1 });
+    } else if (this.state.suburb.length > 0) {
       this.setState({ step: 3 });
     } else if (this.state.titleOpt.length > 0) {
       this.setState({ step: 2 });

@@ -151,7 +151,7 @@ class FormProgress extends Component {
         <div>
           <div className="page-title lg">
             <div className="title">
-              <h1>Forms and documents</h1>
+              <h1>Your Health Manager</h1>
             </div>
           </div>
           <div>
