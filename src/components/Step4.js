@@ -173,7 +173,7 @@ class Step4 extends Component {
         <div id="MainDiv">
           <div className="page-title lg">
             <div className="title">
-              <h1>Medical Details</h1>
+              <h1>Personal Details</h1>
               <p> Step 3 of 3 </p>
             </div>
           </div>
@@ -338,9 +338,9 @@ class Step4 extends Component {
         <div className="row has-form">
           <h4
             style={{
-              "text-align": "center",
+              textAlign: "center",
               color: "#092C4C",
-              "font-family": "'Poppins', sans-serif",
+              fontFamily: "'Poppins', sans-serif",
             }}
           >
             Your information has been saved.
@@ -348,9 +348,9 @@ class Step4 extends Component {
           </h4>
           <h4
             style={{
-              "text-align": "center",
+              textAlign: "center",
               color: "#092C4C",
-              "font-family": "'Poppins', sans-serif",
+              fontFamily: "'Poppins', sans-serif",
             }}
           >
             We look forward to seeing you at your next appointment.
@@ -358,7 +358,7 @@ class Step4 extends Component {
           <br></br>
           <div>
             <button
-              style={{ "position": "relative", "margin-top": "100%" }}
+              style={{ position: "relative", marginTop: "100%" }}
 
               className="btn btn-primary btn-block"
               onClick={this.finish}
