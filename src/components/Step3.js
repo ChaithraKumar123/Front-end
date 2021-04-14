@@ -143,7 +143,7 @@ class Step3 extends Component {
       <div id="MainDiv">
         <div className="page-title lg">
           <div className="title">
-            <h1>Address Details</h1>
+            <h1>Personal Details</h1>
             <p> Step 2 of 3 </p>
           </div>
         </div>
