@@ -239,9 +239,9 @@ class Signup extends Component {
           above is correct and agree to the following:
         <br />
           <br />
-        You have been provided with a copy of the
+          You have been provided a link to the
         {/* <a href="https://wha-consentform.s3-ap-southeast-2.amazonaws.com/WHA_Privacy_Policy_Public_V07a.pdf" download="WHA_Privacy_Policy_Public_V07a.pdf">Download Your Expense Report</a> */}
-          <a rel="noopener noreferrer" href={"https://wha-consentform.s3-ap-southeast-2.amazonaws.com/WHA_Privacy_Policy_Public_V07a.pdf"} target="_blank" download={"WHA_Privacy_Policy_Public_V07a.pdf"}> Work Healthy Australia Privacy Policy</a>
+          <a rel="noopener noreferrer" href={"https://www.workhealthyaustralia.com.au/privacy-policy/"} target="_blank"> Work Healthy Australia Privacy Policy</a>
         , and you agree to the handling of your personal
         information by Work Healthy Australia in accordance with that
         Policy, including the ways in which Work Healthy Australia may
@@ -346,8 +346,8 @@ class Signup extends Component {
                     <div className="errorMessage">{state.mobileNumberError}</div>
                     {this.state.submit === true &&
                       state.mobileNumber === "" ? (
-                        <div className="errorMessage">This field is required</div>
-                      ) : null}
+                      <div className="errorMessage">This field is required</div>
+                    ) : null}
                   </div>
                 </div>
                 <div>
