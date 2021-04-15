@@ -7,8 +7,6 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link,
-  Redirect,
   withRouter,
 } from "react-router-dom";
 
@@ -51,10 +49,10 @@ import DASHModule from "../components/PROMModules/DASHModule";
 
 import FormProgress from "./FormProgress";
 
-import { Navbar, Container, Nav, NavDropdown } from "react-bootstrap";
+
 import { Ouroboro } from "react-spinners-css";
 
-import auth from "./auth";
+
 
 
 const IsLoading = () => (
@@ -547,7 +545,7 @@ class Main extends Component {
         [input]: e,
       });
 
-      var index = this.state.stateOpts.findIndex(function (item, i) {
+      index = this.state.stateOpts.findIndex(function (item, i) {
         return item.label === e.label;
       });
 
@@ -561,7 +559,7 @@ class Main extends Component {
         [input]: e,
       });
 
-      var index = this.state.Countryoptions.findIndex(function (item, i) {
+      index = this.state.Countryoptions.findIndex(function (item, i) {
         return item.label === e.label;
       });
 
@@ -592,14 +590,14 @@ class Main extends Component {
           e.target.id === "handedness"
         )
       ) {
-        const isValid = this.validator(e);
+        //   const isValid = this.validator(e);
       }
     } else {
       this.setState({
         [input]: e.value,
       });
       if (!(input === "culturalGroup")) {
-        const isValid = this.validateStateCountry(e, input);
+        //   const isValid = this.validateStateCountry(e, input);
       }
     }
   };
