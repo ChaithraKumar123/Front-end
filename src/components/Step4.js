@@ -166,6 +166,15 @@ class Step4 extends Component {
     //  this.props.nextStep();
   };
 
+  injuryDetails = (e) => {
+    e.preventDefault();
+    //not a proper fix. need to come up with a proper fix after discussing with Peter
+    localStorageService.setWorkFlowId(JSON.parse(localStorageService.getWorkFlowId()) + 1);
+    auth.login(() => {
+      this.props.history.push("/painIndicator");
+    });
+  }
+
   render() {
     const { handleChange, state } = this.props;
     if (!this.state.renderThankyou) {
@@ -329,48 +338,105 @@ class Step4 extends Component {
         </div>
       );
     }
-    else return (
-      <div id="MainDiv">
-        <div className="page-title lg">
-          <div className="title">
-            <p>Thankyou!</p>
+    else if (this.state.renderThankyou && localStorageService.getWorkFlowId() < 0) {
+      return (
+        <div id="MainDiv">
+          <div className="page-title lg">
+            <div className="title">
+              <p>Thank you!</p>
+            </div>
           </div>
-        </div>
-        <div className="row has-form">
-          <h4
-            style={{
-              textAlign: "center",
-              color: "#092C4C",
-              fontFamily: "'Poppins', sans-serif",
-            }}
-          >
-            Your information has been saved.
-        <br /> <br />
-          </h4>
-          <h4
-            style={{
-              textAlign: "center",
-              color: "#092C4C",
-              fontFamily: "'Poppins', sans-serif",
-            }}
-          >
-            We look forward to seeing you at your next appointment.
-      </h4>
-          <br></br>
-          <div>
-            <button
-              style={{ position: "relative", marginTop: "100%" }}
-
-              className="btn btn-primary btn-block"
-              onClick={this.finish}
+          <div className="row has-form">
+            <h4
+              style={{
+                textAlign: "center",
+                color: "#092C4C",
+                fontFamily: "'Poppins', sans-serif",
+              }}
             >
-              Done
-        </button>
-          </div>
-        </div>
+              Your information has been saved.
+        <br /> <br />
+            </h4>
+            <h4
+              style={{
+                textAlign: "center",
+                color: "#092C4C",
+                fontFamily: "'Poppins', sans-serif",
+              }}
+            >
+              We look forward to seeing you at your next appointment.
+      </h4>
+            <br></br>
+            <div>
+              <button
+                style={{ position: "relative", marginTop: "100%" }}
 
-      </div>
-    );
+                className="btn btn-primary btn-block"
+                onClick={this.finish}
+              >
+                Done
+        </button>
+            </div>
+          </div>
+
+        </div>
+      );
+    }
+    else {
+      return (
+        <div id="MainDiv">
+          <div className="page-title lg">
+            <div className="title">
+              <p>Almost complete...</p>
+            </div>
+          </div>
+          <div className="row has-form">
+            <h4
+              style={{
+                textAlign: "center",
+                color: "#092C4C",
+                fontFamily: "'Poppins', sans-serif",
+              }}
+            >
+              Thank you for completing your personal details.
+        <br /> <br />
+            </h4>
+            <h4
+              style={{
+                textAlign: "center",
+                color: "#092C4C",
+                fontFamily: "'Poppins', sans-serif",
+              }}
+            >
+              To complete the process, we need to ask about your injury - estimated two minutes.
+      </h4>
+            <br></br>
+            <h4
+              style={{
+                textAlign: "center",
+                color: "#092C4C",
+                fontFamily: "'Poppins', sans-serif",
+              }}
+            >
+              Please click the "Injury Details" button below to highlight where you are injured.
+      </h4>
+            <br></br>
+            <div>
+              <button
+                style={{ position: "relative", marginTop: "100%" }}
+
+                className="btn btn-primary btn-block"
+                onClick={this.injuryDetails}
+              >
+                Injury Details
+        </button>
+            </div>
+          </div>
+
+        </div>
+      );
+    }
+
   }
 }
 export default withRouter(Step4);

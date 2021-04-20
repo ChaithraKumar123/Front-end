@@ -219,7 +219,7 @@ class BodyImageTabs extends Component {
   apicall = async (step1) => {
     const save = this.state.InjuryRegion[step1 - 1];
     let response = await createPOBDetails({
-      POBPatientID: localStorage.getItem("KNC"),
+      POBPatientID: this.localStorageService.getKNC(),
       POBCPRegionID: save.POBCPRegionID,
       PainRegionID: save.PainRegionID,
       PainSide: save.pain_side,
@@ -312,9 +312,9 @@ class BodyImageTabs extends Component {
 
       if (this.state.step1 === 1) {
         let res = await createSaveWorkflow({
-          KNC: localStorage.getItem("KNC"),
+          KNC: this.localStorageService.getKNC(),
           DateCompleted: new Date(),
-          processID: localStorage.getItem("WorkFlowId")
+          processID: this.localStorageService.getWorkFlowId()
 
         })
         // axios
@@ -375,7 +375,7 @@ class BodyImageTabs extends Component {
         if (this.state.workflowID > 0) {
           await this.apicall(this.state.step1)
         }
-        localStorage.setItem("ref", true)
+        this.localStorageService.setRef(true);
 
         auth.login(() => {
           this.props.history.push("/Home");
