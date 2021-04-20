@@ -52,7 +52,7 @@ class BodyImageTabs extends Component {
         pain_limit_work: "",
         pain_limit_work_reason: "",
         pain_futurerisk: "",
-        POBCPRegionID: -1,
+        POBCPRegionID: this.props.state.data_id1[i] ? this.props.state.data_id1[i] : -1,
       });
     }
 
@@ -62,6 +62,7 @@ class BodyImageTabs extends Component {
       nameError: "",
       emailError: "",
       POBPatientID: "",
+      workflowID: this.props.state.workflowID,
     };
   }
   addExtra(k, n) {
@@ -102,7 +103,7 @@ class BodyImageTabs extends Component {
         pain_limit_work: "",
         pain_limit_work_reason: "",
         pain_futurerisk: "",
-        POBCPRegionID: -1,
+        POBCPRegionID: this.props.state.data_id1[i] ? this.props.state.data_id1[i] : -1,
       });
       this.setState({
         // InjuryRegion: update(this.state.InjuryRegion, {$push: people})
@@ -177,7 +178,7 @@ class BodyImageTabs extends Component {
             //InjuryRegion: update(this.state.InjuryRegion, {[i]:people[i]})
 
             InjuryRegion: update(this.state.InjuryRegion, {
-              $splice: [[i - 1, 1, temp[i - 1]]],
+              $splice: [[i - 1, 1, temp[i]]],
             }),
           });
         }
@@ -371,7 +372,9 @@ class BodyImageTabs extends Component {
     const isValid = this.validate();
     if (isValid) {
       try {
-        await this.apicall(this.state.step1)
+        if (this.state.workflowID > 0) {
+          await this.apicall(this.state.step1)
+        }
         localStorage.setItem("ref", true)
 
         auth.login(() => {

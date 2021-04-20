@@ -57,7 +57,7 @@ class LocalStorageService {
         localStorage.setItem("ref", value);
     }
     getRef() {
-        localStorage.getItem("ref");
+        return localStorage.getItem("ref");
     }
     clearRef() {
         localStorage.removeItem("ref");
@@ -66,7 +66,7 @@ class LocalStorageService {
         localStorage.setItem("WorkFlowId", id);
     }
     getWorkFlowId() {
-        localStorage.getItem("WorkFlowId");
+        return localStorage.getItem("WorkFlowId");
     }
     clearWorkFlowId() {
         localStorage.removeItem("WorkFlowId");

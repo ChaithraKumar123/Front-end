@@ -470,6 +470,7 @@ class BodyImage extends Component {
       body_region_id: this.props.state.body_region_id1,
       data_id: this.props.state.data_id1,
       checkedA: false,
+      workflowID: this.props.state.workflowID
 
     };
   }
@@ -490,24 +491,34 @@ class BodyImage extends Component {
       .then((response) => {
         console.log(response.data[0]);
         for (let i = 0; i < response.data.length; i++) {
-          if (response.data[i].painRegionID === 0) {
-            continue;
+          if (response.data[i].painRegionID !== 0) {
+            temp1.push(response.data[i].painRegionID);
+            temp.push(response.data[i].painWhere);
+            this.setState({
+              //body_area: body_area,
+              body_region_id: update(this.state.body_region_id, {
+                $splice: [[i - 1, 1, temp1[i]]],
+              }),
+              body_area: update(this.state.body_area, {
+                $splice: [[i - 1, 1, temp[i]]],
+              }),
+            });
+
+            //   continue;
           }
-          temp.push(response.data[i].painWhere);
-          temp1.push(response.data[i].painRegionID);
           temp2.push(response.data[i].pobcpRegionID);
 
           this.setState({
             //body_area: body_area,
-            body_region_id: update(this.state.body_region_id, {
-              $splice: [[i - 1, 1, temp1[i - 1]]],
-            }),
+            // body_region_id: update(this.state.body_region_id, {
+            //   $splice: [[i - 1, 1, temp[i]]],
+            // }),
             data_id: update(this.state.data_id, {
-              $splice: [[i - 1, 1, temp2[i - 1]]],
-            }),
-            body_area: update(this.state.body_area, {
-              $splice: [[i - 1, 1, temp[i - 1]]],
-            }),
+              $splice: [[i - 1, 1, temp2[i]]],
+            })
+            // body_area: update(this.state.body_area, {
+            //   $splice: [[i - 1, 1, temp[i]]],
+            // }),
           });
         }
       })
@@ -546,7 +557,7 @@ class BodyImage extends Component {
         first1: area.name,
         body_area: [...this.state.body_area, area.name],
         body_region_id: [...this.state.body_region_id, area.id],
-        data_id: [...this.state.data_id, -1],
+        // data_id: [...this.state.data_id, -1],
       });
       //NotificationManager.success("", 'Added selected region');
     } else {
@@ -615,30 +626,30 @@ class BodyImage extends Component {
   delete_array(index) {
     var array = [...this.state.body_area];
     var array_id = [...this.state.body_region_id];
-    var id = [...this.state.data_id];
+    // var id = [...this.state.data_id];
     array.splice(index, 1);
     this.setState({ body_area: array });
     array_id.splice(index, 1);
     this.setState({ body_region_id: array_id });
-    id.splice(index, 1);
-    this.setState({ data_id: id });
+    // id.splice(index, 1);
+    // this.setState({ data_id: id });
   }
 
   delete_region = async (event, index) => {
     event.preventDefault();
 
-    var str = "Delete Body Region -" + this.state.body_area[index] + "?";
-    if (window.confirm(str)) {
-      if (this.state.data_id[index] !== -1) {
-        this.delete_api(
-          this.state.data_id[index],
-          this.state.data_id[index + 1],
-          index
-        );
-      } else {
-        this.delete_array(index);
-      }
-    }
+    // var str = "Delete Body Region -" + this.state.body_area[index] + "?";
+    // if (window.confirm(str)) {
+    // if (this.state.data_id[index] !== -1) {
+    // this.delete_api(
+    //   this.state.data_id[index],
+    //   this.state.data_id[index + 1],
+    //   index
+    // );
+    // } else {
+    this.delete_array(index);
+    // }
+    //  }
   };
   enterArea(area) {
     this.setState({
@@ -722,7 +733,7 @@ class BodyImage extends Component {
           </div>
         </div>
 
-        <div className="pain-selector-block">
+        <div className="pain-selector-block" style={this.state.workflowID < 0 ? { pointerEvents: "none" } : {}}>
           <div className="human-body-block-outer">
             <div id="front-body" className="human-body-block">
               {/* <NotificationContainer /> */}
@@ -755,19 +766,19 @@ class BodyImage extends Component {
                     >
                       {" "}
                       <i></i>
-                      <img
+                      <img alt=""
                         src={
                           this.state.checkedA
                             ? require("./../../body-back/b-left-head.png")
                             : require("./../../body-front/right-head.png")
                         }
                         style={
-                          this.state.hover ? { opacity: "50%" }
-                            : { opacity: "0%" } &&
-                              this.state.body_area.includes(MAP.areas[0].name) ||
-                              this.state.body_area.includes(BackMAP.areas[0].name)
-                              ? { opacity: "100%" }
-                              : { opacity: "0%" }
+                          (this.state.hover ? { opacity: "50%" }
+                            : { opacity: "0%" }) &&
+                          (this.state.body_area.includes(MAP.areas[0].name) ||
+                            this.state.body_area.includes(BackMAP.areas[0].name)
+                            ? { opacity: "100%" }
+                            : { opacity: "0%" })
                         }
                       />{" "}
                     </a>
@@ -2559,7 +2570,7 @@ class BodyImage extends Component {
         </div>
         <br />
 
-        <div>
+        <div style={this.state.workflowID < 0 ? { pointerEvents: "none" } : {}}>
           <ul
             className="list-group"
             style={{ maxWidth: `300px`, margin: "0 auto" }}
@@ -2569,8 +2580,8 @@ class BodyImage extends Component {
                 {listitem === "" ? (
                   this.setState({ body_area: [] })
                 ) : (
-                    <li className="list-group-item list-group-item-action">
-                      {/* {listitem}
+                  <li className="list-group-item list-group-item-action">
+                    {/* {listitem}
 
                     <button
                       style={{
@@ -2584,22 +2595,22 @@ class BodyImage extends Component {
                     >
                       <img src={require("../../images/cross.svg")} />
                     </button> */}
-                      <div>
-                        {listitem}
+                    <div>
+                      {listitem}
 
-                        <button
-                          style={{
-                            borderColor: "transparent",
-                            background: "transparent",
-                          }}
-                          id={index}
-                          onClick={(e) => this.delete_region(e, index)}
-                        >
-                          <img src={require("../../images/cross.svg")} />
-                        </button>
-                      </div>
-                    </li>
-                  )}
+                      <button
+                        style={{
+                          borderColor: "transparent",
+                          background: "transparent",
+                        }}
+                        id={index}
+                        onClick={(e) => this.delete_region(e, index)}
+                      >
+                        <img src={require("../../images/cross.svg")} alt="" />
+                      </button>
+                    </div>
+                  </li>
+                )}
               </div>
             ))}
           </ul>

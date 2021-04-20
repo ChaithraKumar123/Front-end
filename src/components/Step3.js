@@ -64,7 +64,8 @@ class Step3 extends Component {
           "WeightKg": 0,
           "Handedness": this.props.state.handedness,
           "CreateDate": new Date(),
-          "KNC": this.props.state.KNC ? this.props.state.KNC : localStorageService.getKNC()
+          "KNC": this.props.state.KNC ? this.props.state.KNC : localStorageService.getKNC(),
+          "WorkflowID": localStorageService.getWorkFlowId(),
         }
       }
       // implementing save after each page

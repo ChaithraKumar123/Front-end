@@ -305,7 +305,7 @@ class Home extends Component {
   };
 
   render() {
-    const { loadingCircle, switchfunc } = this.props;
+    const { loadingCircle } = this.props;
 
     return (
       <div>
@@ -373,9 +373,9 @@ class Home extends Component {
                         e[13] === "Personal Details" ||
                         e[13] === "Lifestyle" ||
                         e[13] === "Musculoskeletal Screen Medical History" ||
-                        e[13] === "Body Chart"
+                        e[13] === "Injury Details"
                       ) {
-                        return this.completedList(e[13], e[0]);
+                        return this.completedList(e[13], -1);
                       } else if (e[12] === "Current Employment Details") {
                         return null;
                       }

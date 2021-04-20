@@ -590,14 +590,14 @@ class Main extends Component {
           e.target.id === "handedness"
         )
       ) {
-        //   const isValid = this.validator(e);
+        this.validator(e);
       }
     } else {
       this.setState({
         [input]: e.value,
       });
       if (!(input === "culturalGroup")) {
-        //   const isValid = this.validateStateCountry(e, input);
+        this.validateStateCountry(e, input);
       }
     }
   };
