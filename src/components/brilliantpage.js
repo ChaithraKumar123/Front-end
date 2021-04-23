@@ -20,46 +20,46 @@ class Brilliant extends Component {
 
   render() {
     // const { handleChange, state } = this.props;
-    let tempToken = this.localStorageService.getConfToken();
-    if (tempToken !== null) {
-      return (
-        <div id="MainDiv">
-          <div className="page-title lg">
-            <div className="title">
-              <h1>Success!</h1>
-            </div>
+    // let tempToken = this.localStorageService.getConfToken();
+    // if (tempToken !== null) {
+    return (
+      <div id="MainDiv">
+        <div className="page-title lg">
+          <div className="title">
+            <h1>Success!</h1>
           </div>
-          <div className="row has-form">
-            <h4
-              style={{
-                "text-align": "center",
-                color: "#092C4C",
-                "font-family": "'Poppins', sans-serif",
-              }}
-            >
-              Your account has been confirmed.
+        </div>
+        <div className="row has-form">
+          <h4
+            style={{
+              "text-align": "center",
+              color: "#092C4C",
+              "font-family": "'Poppins', sans-serif",
+            }}
+          >
+            Your account has been confirmed.
               <br /> <br />
               Click continue to complete the registration process.
             </h4>
-            <br></br>
+          <br></br>
+          <div>
             <div>
-              <div>
-                <button
-                  style={{ "position": "relative", "margin-top": "100%" }}
+              <button
+                style={{ "position": "relative", "margin-top": "100%" }}
 
-                  className="btn btn-primary btn-block"
-                  onClick={this.continue}
-                >
-                  Continue
+                className="btn btn-primary btn-block"
+                onClick={this.continue}
+              >
+                Continue
                 </button>
-              </div>
             </div>
           </div>
         </div>
-      );
-    } else {
-      return <h4>Unauthorized access</h4>;
-    }
+      </div>
+    );
+    // } else {
+    //   return <h4>Unauthorized access</h4>;
+    // }
   }
 }
 export default withRouter(Brilliant);

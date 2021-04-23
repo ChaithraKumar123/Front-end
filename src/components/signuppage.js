@@ -157,9 +157,9 @@ class Signup extends Component {
                 .catch((error) => {
                   console.log(error);
                 });
-              localStorageService.setIsAuth(true);
+              // localStorageService.setIsAuth(true);
 
-              localStorageService.setConfToken(randomToken(16));
+              // localStorageService.setConfToken(randomToken(16));
               this.setState({
                 renderThankyou: true,
                 loadingCircle: false
