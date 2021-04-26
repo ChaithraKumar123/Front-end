@@ -6,7 +6,8 @@ encapsules the axios object within it.
 */
 
 import axios from "axios";
-import LocalStorageService from "../services/localStorageService";
+//import LocalStorageService from "../services/localStorageService";
+import { getCookie } from "../services/cookieService";
 
 class Service {
     constructor() {
@@ -31,10 +32,14 @@ class Service {
         return service;
     }
     handleAuthorization = (config) => {
-        const localStorageService = new LocalStorageService();
-        const token = localStorageService.getToken();
-        if (token) {
-            config.headers['Authorization'] = 'Bearer ' + token;
+        // const localStorageService = new LocalStorageService();
+        // const token = localStorageService.getToken();
+        // if (token) {
+        //     config.headers['Authorization'] = 'Bearer ' + token;
+        // }
+        const cookie = getCookie();
+        if (cookie && cookie.access_token) {
+            config.headers['Authorization'] = 'Bearer ' + cookie.access_token;
         }
         return config;
     }
