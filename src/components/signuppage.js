@@ -5,10 +5,11 @@ import {
 } from "react-router-dom";
 import auth from "./auth";
 import { createPersonalDetails, createRegister, createWorkFlowNewReg } from "../services/api";
-import LocalStorageService from "../services/localStorageService";
+import { DEFAULT_DATE } from "../services/constants";
+//import LocalStorageService from "../services/localStorageService";
 
-var randomToken = require("random-token");
-const localStorageService = new LocalStorageService();
+//var randomToken = require("random-token");
+//const localStorageService = new LocalStorageService();
 const Errormsg = () => <div className="errorMessage">Missing or invalid field</div>;
 
 const thankyou = (email) => (
@@ -126,7 +127,7 @@ class Signup extends Component {
       this.toSend.schema.MiddleNames = this.props.state.middleName;
       this.toSend.schema.Mobile = this.props.state.mobileNumber;
       this.toSend.schema.Email = this.props.state.email;
-      this.toSend.schema.DateOfBirth = new Date();
+      this.toSend.schema.DateOfBirth = new Date(DEFAULT_DATE);
       this.toSend.schema.EmpStartDate = new Date();
       this.toSend.schema.LastVisit = new Date();
       this.toSend.schema.CreateDate = new Date();

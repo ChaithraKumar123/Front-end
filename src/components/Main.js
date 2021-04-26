@@ -51,6 +51,7 @@ import FormProgress from "./FormProgress";
 
 
 import { Ouroboro } from "react-spinners-css";
+import { DEFAULT_DATE } from "../services/constants";
 
 
 
@@ -257,8 +258,8 @@ class Main extends Component {
           ? patient[0].middleNames
           : this.state.middleName,
 
-        DateofB: new Date(patient[0].dateOfBirth).getFullYear() === 2020
-          ? this.state.DateofB : this.dateFormatter(patient[0].dateOfBirth),
+        DateofB: new Date(patient[0].dateOfBirth).getFullYear() === new Date(DEFAULT_DATE).getFullYear()
+          ? null : this.dateFormatter(patient[0].dateOfBirth),
 
         gender: temp ? temp : this.state.gender,
         mobileNumber:
