@@ -6,7 +6,7 @@ import Landingpage from "./Landingpage";
 import { createSignIn, getUserAuth } from "../services/api";
 import LocalStorageService from "../services/localStorageService";
 import { encrypt } from "../util/crypto";
-//import { createCookie } from "../services/cookieService";
+import { createCookie } from "../services/cookieService";
 
 // const IsLoading = () => (
 //     <Ouroboro style = {{"position": "absolute", "margin-left": "280px", "margin-top": "-57px"}} color="#F04F1D" size={200} />
@@ -44,7 +44,7 @@ class Loginpage extends Component {
 
     // localStorage.setItem("login", e.authenticationResult.idToken);
     this.localStorageService.setToken(e);
-    //    createCookie(e);
+    createCookie(e);
 
 
     // localStorage.setItem("isAuth", true);
