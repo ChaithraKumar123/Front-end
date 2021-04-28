@@ -458,6 +458,223 @@ const MAP = {
   ],
 };
 
+// const MAP = {
+//   name: "my-map",
+//   orientation: "Front",
+//   areas: [
+//     {
+//       id: 26,
+//       name: "Head",
+//       side: "Right",
+//       shape: "rect",
+//       coords: [95, 6, 125, 28]
+//     }, //0
+//     {
+//       id: 26,
+//       name: "Head",
+//       side: "Left",
+//       shape: "rect",
+//       coords: [125, 6, 155, 28]
+//     }, //1
+//     {
+//       id: 26,
+//       name: "Central head",
+//       side: "Right",
+//       shape: "rect",
+//       coords: [95, 30, 155, 56]
+//     }, //2
+
+//     { id: 24, name: "Jaw", shape: "rect", coords: [95, 57, 155, 75] },
+
+//     { id: 1, name: "Cervical", shape: "rect", coords: [95, 75, 155, 90] },
+//     { id: 7, name: "Right Shoulder", shape: "rect", coords: [44, 88, 92, 130] },
+//     {
+//       id: 7,
+//       name: "Left Shoulder",
+//       shape: "rect",
+//       coords: [163, 88, 211, 130],
+//     },
+//     { id: 25, name: "Right Chest", shape: "rect", coords: [92, 88, 127, 130] },
+//     { id: 25, name: "Left Chest", shape: "rect", coords: [127, 88, 163, 130] },
+
+//     { id: 13, name: "Left Arm", shape: "rect", coords: [44, 130, 80, 170] },
+//     { id: 13, name: "Right Arm", shape: "rect", coords: [170, 130, 210, 170] },
+
+//     {
+//       id: 19,
+//       name: "Right Ribs Front",
+//       shape: "rect",
+//       coords: [85, 130, 127, 170],
+//     },
+//     {
+//       id: 19,
+//       name: "Left Ribs Front",
+//       shape: "rect",
+//       coords: [127, 130, 170, 170],
+//     },
+
+//     {
+//       id: 8,
+//       name: "Right Elbow Front",
+//       shape: "rect",
+//       coords: [30, 170, 80, 200],
+//     },
+//     {
+//       id: 8,
+//       name: "Left Elbow Front",
+//       shape: "rect",
+//       coords: [170, 170, 220, 200],
+//     },
+
+//     {
+//       id: 27,
+//       name: "Abdomen Front",
+//       shape: "rect",
+//       coords: [80, 170, 175, 240],
+//     },
+
+//     {
+//       id: 12,
+//       name: "Right Forearm Front  ",
+//       shape: "rect",
+//       coords: [20, 190, 80, 240],
+//     }, //16
+//     {
+//       id: 12,
+//       name: "Left Forearm Front  ",
+//       shape: "rect",
+//       coords: [175, 190, 240, 240],
+//     }, //17
+
+//     {
+//       id: 9,
+//       name: "Left Wrist Front  ",
+//       shape: "rect",
+//       coords: [24, 240, 60, 270],
+//     }, // 18
+//     {
+//       id: 9,
+//       name: "Right Wrist Front  ",
+//       shape: "rect",
+//       coords: [200, 240, 240, 270],
+//     }, //19
+
+//     {
+//       id: 18,
+//       name: "Right Pelvis Front  ",
+//       shape: "rect",
+//       coords: [80, 240, 130, 270],
+//     }, //20
+//     {
+//       id: 18,
+//       name: "Left Pelvis Front  ",
+//       shape: "rect",
+//       coords: [130, 240, 180, 270],
+//     }, //21
+
+//     {
+//       id: 10,
+//       name: "Right Thumb Front  ",
+//       shape: "rect",
+//       coords: [8, 270, 20, 300],
+//     }, //22
+//     {
+//       id: 10,
+//       name: "Left Thumb Front ",
+//       shape: "rect",
+//       coords: [240, 270, 250, 300],
+//     }, //23
+
+//     {
+//       id: 20,
+//       name: "Left Hand Front",
+//       shape: "rect",
+//       coords: [205, 270, 230, 290],
+//     }, //24
+
+//     {
+//       id: 20,
+//       name: "Right Hand Front  ",
+//       shape: "rect",
+//       coords: [25, 270, 50, 290],
+//     }, //25
+
+//     {
+//       id: 4,
+//       name: "Right Hip Front",
+//       shape: "rect",
+//       coords: [80, 270, 130, 285],
+//     }, //26
+//     {
+//       id: 4,
+//       name: "Left Hip Front",
+//       shape: "rect",
+//       coords: [125, 270, 178, 285],
+//     }, //27
+
+//     {
+//       id: 11,
+//       name: "Right Fingers Front  ",
+//       shape: "rect",
+//       coords: [15, 290, 50, 320],
+//     }, //28
+//     {
+//       id: 11,
+//       name: "Left Fingers Front ",
+//       shape: "rect",
+//       coords: [210, 285, 240, 315],
+//     }, //29
+
+//     {
+//       id: 14,
+//       name: "Right Upper Leg Front",
+//       shape: "rect",
+//       coords: [75, 280, 128, 360],
+//     }, //30
+//     {
+//       id: 14,
+//       name: "Left Upper Leg front",
+//       shape: "rect",
+//       coords: [127, 280, 180, 360],
+//     }, //31
+
+//     {
+//       id: 5,
+//       name: "Right Knee Front",
+//       shape: "rect",
+//       coords: [85, 360, 130, 400],
+//     }, //32
+//     {
+//       id: 5,
+//       name: "Left Knee Front",
+//       shape: "rect",
+//       coords: [127, 360, 170, 400],
+//     }, //33
+
+//     //{ name: "Pelvis  ", shape: "rect", coords: [80,240,130,270 ]},
+//     {
+//       id: 15,
+//       name: "Right Lower Leg Front",
+//       shape: "rect",
+//       coords: [90, 400, 130, 470],
+//     }, //34
+//     // { id: 14, name: "Right Leg", shape: "rect", coords: [75, 280, 128, 360] },
+//     // { id: 14, name: "Left Leg", shape: "rect", coords: [127, 280, 180, 360] },
+
+//     {
+//       id: 15,
+//       name: "Left Lower Leg Front",
+//       shape: "rect",
+//       coords: [130, 400, 170, 470],
+//     }, // 35
+//     { id: 6, name: "Right Ankle Front", shape: "rect", coords: [100, 470, 135, 490] }, //36
+//     { id: 6, name: "Left Ankle Front", shape: "rect", coords: [125, 470, 160, 490] }, //37
+//     { id: 16, name: "Right Foot Front", shape: "rect", coords: [100, 485, 130, 495] }, //38
+//     { id: 16, name: "Left Foot Front", shape: "rect", coords: [130, 485, 160, 500] }, //39
+//     { id: 17, name: "Right Toes Front", shape: "rect", coords: [95, 496, 135, 510] }, //40
+//     { id: 17, name: "Left Toes Front", shape: "rect", coords: [130, 496, 167, 510] }, //41
+//   ],
+// };
 class BodyImage extends Component {
   constructor(props) {
     super(props);
@@ -468,6 +685,7 @@ class BodyImage extends Component {
       first1: "",
       body_area: this.props.state.body_area1,
       body_region_id: this.props.state.body_region_id1,
+      body_side: this.props.state.body_side1,
       data_id: this.props.state.data_id1,
       checkedA: false,
       workflowID: this.props.state.workflowID
@@ -478,6 +696,7 @@ class BodyImage extends Component {
     const temp = [];
     const temp1 = [];
     const temp2 = [];
+    const temp3 = [];
     // axios
     //   .get(
     //     // "https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/POBdetails",
@@ -494,6 +713,7 @@ class BodyImage extends Component {
           if (response.data[i].painRegionID !== 0) {
             temp1.push(response.data[i].painRegionID);
             temp.push(response.data[i].painWhere);
+            temp3.push(response.data[i].painSide);
             this.setState({
               //body_area: body_area,
               body_region_id: update(this.state.body_region_id, {
@@ -501,6 +721,9 @@ class BodyImage extends Component {
               }),
               body_area: update(this.state.body_area, {
                 $splice: [[i - 1, 1, temp[i]]],
+              }),
+              body_side: update(this.state.body_side, {
+                $splice: [[i - 1, 1, temp3[i]]],
               }),
             });
 
@@ -540,7 +763,8 @@ class BodyImage extends Component {
     this.props.nextStep1(
       this.state.body_area,
       this.state.body_region_id,
-      this.state.data_id
+      this.state.data_id,
+      this.state.body_side
     );
   };
 
@@ -557,6 +781,7 @@ class BodyImage extends Component {
         first1: area.name,
         body_area: [...this.state.body_area, area.name],
         body_region_id: [...this.state.body_region_id, area.id],
+        body_side: [...this.state.body_side, area.side]
         // data_id: [...this.state.data_id, -1],
       });
       //NotificationManager.success("", 'Added selected region');
@@ -571,8 +796,8 @@ class BodyImage extends Component {
         ? this.clicked(BackMAP.areas[backMap_index])
         : this.clicked(MAP.areas[map_index]);
     }
-    else if (this.state.body_area.includes(MAP.areas[map_index].name) ||
-      this.state.body_area.includes(BackMAP.areas[backMap_index].name)) {
+    else if ((map_index && this.state.body_area.includes(MAP.areas[map_index].name)) ||
+      (backMap_index && this.state.body_area.includes(BackMAP.areas[backMap_index].name))) {
       this.delete_region(e, 0);
     }
     else if (this.state.body_area.length !== 0) {
@@ -626,11 +851,14 @@ class BodyImage extends Component {
   delete_array(index) {
     var array = [...this.state.body_area];
     var array_id = [...this.state.body_region_id];
+    var side = [...this.state.body_side]
     // var id = [...this.state.data_id];
     array.splice(index, 1);
     this.setState({ body_area: array });
     array_id.splice(index, 1);
     this.setState({ body_region_id: array_id });
+    side.splice(index, 1);
+    this.setState({ body_side: side })
     // id.splice(index, 1);
     // this.setState({ data_id: id });
   }
@@ -671,6 +899,18 @@ class BodyImage extends Component {
     };
   }
 
+  bodyStyle = (hover, frontname, backname) => {
+    if (hover) {
+      return { opacity: "50%" };
+    }
+    else if (this.state.body_area.includes(frontname) ||
+      this.state.body_area.includes(backname)) {
+      return { opacity: "100%" };
+    }
+    else {
+      return { opacity: "0%" };
+    }
+  }
   render() {
     const { Leftarrow } = this.props;
 
@@ -748,7 +988,7 @@ class BodyImage extends Component {
                   <div className="topheadfront">
                     <a
                       id={this.state.checkedA ? "lnkBLeftHead" : "lnkRightHead"}
-                      onClick={(e) => { this.onSelect(e, 0, 0) }}
+                      onClick={(e) => { this.onSelect(e, 0, 1) }}
                       className={
                         this.state.checkedA
                           ? "left-head-back"
@@ -772,20 +1012,13 @@ class BodyImage extends Component {
                             ? require("./../../body-back/b-left-head.png")
                             : require("./../../body-front/right-head.png")
                         }
-                        style={
-                          (this.state.hover ? { opacity: "50%" }
-                            : { opacity: "0%" }) &&
-                          (this.state.body_area.includes(MAP.areas[0].name) ||
-                            this.state.body_area.includes(BackMAP.areas[0].name)
-                            ? { opacity: "100%" }
-                            : { opacity: "0%" })
-                        }
+                        style={this.bodyStyle(this.state.hover, MAP.areas[0].name, BackMAP.areas[1].name)}
                       />{" "}
                     </a>
 
                     <a
                       id={this.state.checkedA ? "lnkBRightHead" : "lnkLeftHead"}
-                      onClick={(e) => { this.onSelect(e, 1, 1) }}
+                      onClick={(e) => { this.onSelect(e, 1, 0) }}
                       className={
                         this.state.checkedA
                           ? "right-head-back"
@@ -807,14 +1040,7 @@ class BodyImage extends Component {
                             ? require("./../../body-back/b-right-head.png")
                             : require("./../../body-front/left-head.png")
                         }
-                        style={
-                          this.state.hover1 ? { opacity: "50%" }
-                            : { opacity: "0%" } &&
-                              this.state.body_area.includes(MAP.areas[1].name) ||
-                              this.state.body_area.includes(BackMAP.areas[1].name)
-                              ? { opacity: "100%" }
-                              : { opacity: "0%" }
-                        }
+                        style={this.bodyStyle(this.state.hover1, MAP.areas[1].name, BackMAP.areas[0].name)}
                         alt=""
                       />
                     </a>
@@ -840,14 +1066,8 @@ class BodyImage extends Component {
                             ? require("./../../body-back/b-head.png")
                             : require("./../../body-front/head.png")
                         }
-                        style={
-                          this.state.hover2 ? { opacity: "50%" }
-                            : { opacity: "0%" } &&
-                              this.state.body_area.includes(MAP.areas[2].name) ||
-                              this.state.body_area.includes(BackMAP.areas[2].name)
-                              ? { opacity: "100%" }
-                              : { opacity: "0%" }
-                        }
+                        style={this.bodyStyle(this.state.hover2, MAP.areas[2].name,
+                          BackMAP.areas[2].name)}
                         alt=""
                       />
                     </a>
@@ -873,14 +1093,8 @@ class BodyImage extends Component {
                             ? require("./../../body-back/b-cervical.png")
                             : require("./../../body-front/jaw.png")
                         }
-                        style={
-                          this.state.hover3 ? { opacity: "50%" }
-                            : { opacity: "0%" } &&
-                              this.state.body_area.includes(MAP.areas[3].name) ||
-                              this.state.body_area.includes(BackMAP.areas[3].name)
-                              ? { opacity: "100%" }
-                              : { opacity: "0%" }
-                        }
+                        style={this.bodyStyle(this.state.hover3, MAP.areas[3].name,
+                          BackMAP.areas[3].name)}
                         alt=""
                       />
                     </a>
@@ -913,14 +1127,8 @@ class BodyImage extends Component {
                             ? require("./../../body-back/b-cervicothoracic.png")
                             : require("./../../body-front/cervical.png")
                         }
-                        style={
-                          this.state.hover4 ? { opacity: "50%" }
-                            : { opacity: "0%" } &&
-                              this.state.body_area.includes(MAP.areas[4].name) ||
-                              this.state.body_area.includes(BackMAP.areas[4].name)
-                              ? { opacity: "100%" }
-                              : { opacity: "0%" }
-                        }
+                        style={this.bodyStyle(this.state.hover4, MAP.areas[4].name,
+                          BackMAP.areas[4].name)}
                         alt=""
                       />
                     </a>
@@ -961,14 +1169,9 @@ class BodyImage extends Component {
                             ? require("./../../body-back/b-left-shoulder.png")
                             : require("./../../body-front/right-shoulder.png")
                         }
-                        style={
-                          this.state.hover5 ? { opacity: "50%" }
-                            : { opacity: "0%" } &&
-                              this.state.body_area.includes(MAP.areas[5].name) ||
-                              this.state.body_area.includes(BackMAP.areas[5].name)
-                              ? { opacity: "100%" }
-                              : { opacity: "0%" }
-                        }
+                        alt=""
+                        style={this.bodyStyle(this.state.hover5, MAP.areas[5].name,
+                          BackMAP.areas[5].name)}
                       />{" "}
                     </a>
 
@@ -999,14 +1202,8 @@ class BodyImage extends Component {
                             ? require("./../../body-back/b-left-thoracic.png")
                             : require("./../../body-front/right-chest.png")
                         }
-                        style={
-                          this.state.hover6 ? { opacity: "50%" }
-                            : { opacity: "0%" } &&
-                              this.state.body_area.includes(MAP.areas[7].name) ||
-                              this.state.body_area.includes(BackMAP.areas[7].name)
-                              ? { opacity: "100%" }
-                              : { opacity: "0%" }
-                        }
+                        style={this.bodyStyle(this.state.hover6, MAP.areas[7].name,
+                          BackMAP.areas[7].name)}
                         alt=""
                       />
                     </a>
@@ -1038,14 +1235,8 @@ class BodyImage extends Component {
                             ? require("./../../body-back/b-right-thoracic.png")
                             : require("./../../body-front/left-chest.png")
                         }
-                        style={
-                          this.state.hover7 ? { opacity: "50%" }
-                            : { opacity: "0%" } &&
-                              this.state.body_area.includes(MAP.areas[8].name) ||
-                              this.state.body_area.includes(BackMAP.areas[8].name)
-                              ? { opacity: "100%" }
-                              : { opacity: "0%" }
-                        }
+                        style={this.bodyStyle(this.state.hover7, MAP.areas[8].name,
+                          BackMAP.areas[8].name)}
                         alt=""
                       />
                     </a>
@@ -1078,14 +1269,8 @@ class BodyImage extends Component {
                             ? require("./../../body-back/b-right-shoulder.png")
                             : require("./../../body-front/left-shoulder.png")
                         }
-                        style={
-                          this.state.hover8 ? { opacity: "50%" }
-                            : { opacity: "0%" } &&
-                              this.state.body_area.includes(MAP.areas[6].name) ||
-                              this.state.body_area.includes(BackMAP.areas[6].name)
-                              ? { opacity: "100%" }
-                              : { opacity: "0%" }
-                        }
+                        style={this.bodyStyle(this.state.hover8, MAP.areas[6].name,
+                          BackMAP.areas[6].name)}
                         alt=""
                       />
                     </a>
@@ -1121,14 +1306,8 @@ class BodyImage extends Component {
                             ? require("./../../body-back/b-left-upper-arm.png")
                             : require("./../../body-front/right-upper-arm.png")
                         }
-                        style={
-                          this.state.hover9 ? { opacity: "50%" }
-                            : { opacity: "0%" } &&
-                              this.state.body_area.includes(MAP.areas[10].name) ||
-                              this.state.body_area.includes(BackMAP.areas[10].name)
-                              ? { opacity: "100%" }
-                              : { opacity: "0%" }
-                        }
+                        style={this.bodyStyle(this.state.hover9, MAP.areas[10].name,
+                          BackMAP.areas[10].name)}
                         alt=""
                       />
                     </a>
@@ -1158,14 +1337,8 @@ class BodyImage extends Component {
                             ? require("./../../body-back/b-left-ribs.png")
                             : require("./../../body-front/right-ribs.png")
                         }
-                        style={
-                          this.state.hover10 ? { opacity: "50%" }
-                            : { opacity: "0%" } &&
-                              this.state.body_area.includes(MAP.areas[11].name) ||
-                              this.state.body_area.includes(BackMAP.areas[11].name)
-                              ? { opacity: "100%" }
-                              : { opacity: "0%" }
-                        }
+                        style={this.bodyStyle(this.state.hover10, MAP.areas[11].name,
+                          BackMAP.areas[11].name)}
                         alt=""
                       />
                     </a>
@@ -1184,14 +1357,8 @@ class BodyImage extends Component {
                         <i></i>
                         <img
                           src={require("./../../body-back/b-central-thoracic.png")}
-                          style={
-                            this.state.hover11 ? { opacity: "50%" }
-                              : { opacity: "0%" } &&
-                                this.state.body_area.includes(MAP.areas[13].name) ||
-                                this.state.body_area.includes(BackMAP.areas[13].name)
-                                ? { opacity: "100%" }
-                                : { opacity: "0%" }
-                          }
+                          style={this.bodyStyle(this.state.hover11, MAP.areas[13].name,
+                            BackMAP.areas[13].name)}
                           alt=""
                         />
                       </a>
@@ -1222,14 +1389,8 @@ class BodyImage extends Component {
                             ? require("./../../body-back/b-right-ribs.png")
                             : require("./../../body-front/left-ribs.png")
                         }
-                        style={
-                          this.state.hover12 ? { opacity: "50%" }
-                            : { opacity: "0%" } &&
-                              this.state.body_area.includes(MAP.areas[12].name) ||
-                              this.state.body_area.includes(BackMAP.areas[12].name)
-                              ? { opacity: "100%" }
-                              : { opacity: "0%" }
-                        }
+                        style={this.bodyStyle(this.state.hover12, MAP.areas[12].name,
+                          BackMAP.areas[12].name)}
                         alt=""
                       />
                     </a>
@@ -1263,14 +1424,8 @@ class BodyImage extends Component {
                             ? require("./../../body-back/b-right-upper-arm.png")
                             : require("./../../body-front/left-upper-arm.png")
                         }
-                        style={
-                          this.state.hover13 ? { opacity: "50%" }
-                            : { opacity: "0%" } &&
-                              this.state.body_area.includes(MAP.areas[9].name) ||
-                              this.state.body_area.includes(BackMAP.areas[9].name)
-                              ? { opacity: "100%" }
-                              : { opacity: "0%" }
-                        }
+                        style={this.bodyStyle(this.state.hover13, MAP.areas[9].name,
+                          BackMAP.areas[9].name)}
                         alt=""
                       />
                     </a>
@@ -1304,14 +1459,8 @@ class BodyImage extends Component {
                             ? require("./../../body-back/b-left-elbow.png")
                             : require("./../../body-front/right-elbow.png")
                         }
-                        style={
-                          this.state.hover14 ? { opacity: "50%" }
-                            : { opacity: "0%" } &&
-                              this.state.body_area.includes(MAP.areas[13].name) ||
-                              this.state.body_area.includes(BackMAP.areas[14].name)
-                              ? { opacity: "100%" }
-                              : { opacity: "0%" }
-                        }
+                        style={this.bodyStyle(this.state.hover14, MAP.areas[13].name,
+                          BackMAP.areas[14].name)}
                         alt=""
                       />
                     </a>
@@ -1339,14 +1488,8 @@ class BodyImage extends Component {
                             ? require("./../../body-back/b-thoracolumbar.png")
                             : require("./../../body-front/abdomen.png")
                         }
-                        style={
-                          this.state.hover15 ? { opacity: "50%" }
-                            : { opacity: "0%" } &&
-                              this.state.body_area.includes(MAP.areas[15].name) ||
-                              this.state.body_area.includes(BackMAP.areas[15].name)
-                              ? { opacity: "100%" }
-                              : { opacity: "0%" }
-                        }
+                        style={this.bodyStyle(this.state.hover15, MAP.areas[15].name,
+                          BackMAP.areas[15].name)}
                         alt=""
                       />
                     </a>
@@ -1378,14 +1521,8 @@ class BodyImage extends Component {
                             ? require("./../../body-back/b-right-elbow.png")
                             : require("./../../body-front/left-elbow.png")
                         }
-                        style={
-                          this.state.hover16 ? { opacity: "50%" }
-                            : { opacity: "0%" } &&
-                              this.state.body_area.includes(MAP.areas[14].name) ||
-                              this.state.body_area.includes(BackMAP.areas[16].name)
-                              ? { opacity: "100%" }
-                              : { opacity: "0%" }
-                        }
+                        style={this.bodyStyle(this.state.hover16, MAP.areas[14].name,
+                          BackMAP.areas[16].name)}
                         alt=""
                       />
                     </a>
@@ -1421,14 +1558,8 @@ class BodyImage extends Component {
                             ? require("./../../body-back/b-left-forearm.png")
                             : require("./../../body-front/right-forearm.png")
                         }
-                        style={
-                          this.state.hover17 ? { opacity: "50%" }
-                            : { opacity: "0%" } &&
-                              this.state.body_area.includes(MAP.areas[16].name) ||
-                              this.state.body_area.includes(BackMAP.areas[17].name)
-                              ? { opacity: "100%" }
-                              : { opacity: "0%" }
-                        }
+                        style={this.bodyStyle(this.state.hover17, MAP.areas[16].name,
+                          BackMAP.areas[17].name)}
                         alt=""
                       />
                     </a>
@@ -1448,13 +1579,8 @@ class BodyImage extends Component {
                           <i></i>
                           <img
                             src={require("./../../body-back/b-left-lumbosacral.png")}
-                            style={
-                              this.state.hover18 ? { opacity: "50%" }
-                                : { opacity: "0%" } &&
-                                  this.state.body_area.includes(BackMAP.areas[19].name)
-                                  ? { opacity: "100%" }
-                                  : { opacity: "0%" }
-                            }
+                            style={this.bodyStyle(this.state.hover18, null,
+                              BackMAP.areas[19].name)}
                             alt=""
                           />
                         </a>
@@ -1472,13 +1598,8 @@ class BodyImage extends Component {
                           <i></i>
                           <img
                             src={require("./../../body-back/b-right-lumbosacral.png")}
-                            style={
-                              this.state.hover19 ? { opacity: "50%" }
-                                : { opacity: "0%" } &&
-                                  this.state.body_area.includes(BackMAP.areas[20].name)
-                                  ? { opacity: "100%" }
-                                  : { opacity: "0%" }
-                            }
+                            style={this.bodyStyle(this.state.hover19, null,
+                              BackMAP.areas[20].name)}
                             alt=""
                           />
                         </a>
@@ -1514,14 +1635,8 @@ class BodyImage extends Component {
                             ? require("./../../body-back/b-right-forearm.png")
                             : require("./../../body-front/left-forearm.png")
                         }
-                        style={
-                          this.state.hover20 ? { opacity: "50%" }
-                            : { opacity: "0%" } &&
-                              this.state.body_area.includes(MAP.areas[17].name) ||
-                              this.state.body_area.includes(BackMAP.areas[18].name)
-                              ? { opacity: "100%" }
-                              : { opacity: "0%" }
-                        }
+                        style={this.bodyStyle(this.state.hover20, MAP.areas[17].name,
+                          BackMAP.areas[18].name)}
                         alt=""
                       />
                     </a>
@@ -1555,14 +1670,8 @@ class BodyImage extends Component {
                             ? require("./../../body-back/b-left-wrist.png")
                             : require("./../../body-front/right-wrist.png")
                         }
-                        style={
-                          this.state.hover21 ? { opacity: "50%" }
-                            : { opacity: "0%" } &&
-                              this.state.body_area.includes(MAP.areas[19].name) ||
-                              this.state.body_area.includes(BackMAP.areas[21].name)
-                              ? { opacity: "100%" }
-                              : { opacity: "0%" }
-                        }
+                        style={this.bodyStyle(this.state.hover21, MAP.areas[19].name,
+                          BackMAP.areas[21].name)}
                         alt=""
                       />
                     </a>
@@ -1596,14 +1705,8 @@ class BodyImage extends Component {
                             ? require("./../../body-back/b-left-pelvis.png")
                             : require("./../../body-front/right-pelvis.png")
                         }
-                        style={
-                          this.state.hover22 ? { opacity: "50%" }
-                            : { opacity: "0%" } &&
-                              this.state.body_area.includes(MAP.areas[20].name) ||
-                              this.state.body_area.includes(BackMAP.areas[23].name)
-                              ? { opacity: "100%" }
-                              : { opacity: "0%" }
-                        }
+                        style={this.bodyStyle(this.state.hover22, MAP.areas[20].name,
+                          BackMAP.areas[23].name)}
                         alt=""
                       />
                     </a>
@@ -1637,14 +1740,8 @@ class BodyImage extends Component {
                             ? require("./../../body-back/b-right-pelvis.png")
                             : require("./../../body-front/left-pelvis.png")
                         }
-                        style={
-                          this.state.hover23 ? { opacity: "50%" }
-                            : { opacity: "0%" } &&
-                              this.state.body_area.includes(MAP.areas[21].name) ||
-                              this.state.body_area.includes(BackMAP.areas[24].name)
-                              ? { opacity: "100%" }
-                              : { opacity: "0%" }
-                        }
+                        style={this.bodyStyle(this.state.hover23, MAP.areas[21].name,
+                          BackMAP.areas[24].name)}
                         alt=""
                       />
                     </a>
@@ -1675,14 +1772,8 @@ class BodyImage extends Component {
                             ? require("./../../body-back/b-right-wrist.png")
                             : require("./../../body-front/left-wrist.png")
                         }
-                        style={
-                          this.state.hover24 ? { opacity: "50%" }
-                            : { opacity: "0%" } &&
-                              this.state.body_area.includes(MAP.areas[18].name) ||
-                              this.state.body_area.includes(BackMAP.areas[22].name)
-                              ? { opacity: "100%" }
-                              : { opacity: "0%" }
-                        }
+                        style={this.bodyStyle(this.state.hover24, MAP.areas[18].name,
+                          BackMAP.areas[22].name)}
                         alt=""
                       />
                     </a>
@@ -1716,14 +1807,8 @@ class BodyImage extends Component {
                             ? require("./../../body-back/b-left-thumb.png")
                             : require("./../../body-front/right-thumb.png")
                         }
-                        style={
-                          this.state.hover25 ? { opacity: "50%" }
-                            : { opacity: "0%" } &&
-                              this.state.body_area.includes(MAP.areas[22].name) ||
-                              this.state.body_area.includes(BackMAP.areas[26].name)
-                              ? { opacity: "100%" }
-                              : { opacity: "0%" }
-                        }
+                        style={this.bodyStyle(this.state.hover25, MAP.areas[22].name,
+                          BackMAP.areas[26].name)}
                         alt=""
                       />
                     </a>
@@ -1753,14 +1838,8 @@ class BodyImage extends Component {
                             ? require("./../../body-back/b-left-hand.png")
                             : require("./../../body-front/right-hand.png")
                         }
-                        style={
-                          this.state.hover26 ? { opacity: "50%" }
-                            : { opacity: "0%" } &&
-                              this.state.body_area.includes(MAP.areas[25].name) ||
-                              this.state.body_area.includes(BackMAP.areas[28].name)
-                              ? { opacity: "100%" }
-                              : { opacity: "0%" }
-                        }
+                        style={this.bodyStyle(this.state.hover26, MAP.areas[25].name,
+                          BackMAP.areas[28].name)}
                         alt=""
                       />
                     </a>
@@ -1790,14 +1869,8 @@ class BodyImage extends Component {
                             ? require("./../../body-back/b-left-hip.png")
                             : require("./../../body-front/right-hip.png")
                         }
-                        style={
-                          this.state.hover27 ? { opacity: "50%" }
-                            : { opacity: "0%" } &&
-                              this.state.body_area.includes(MAP.areas[26].name) ||
-                              this.state.body_area.includes(BackMAP.areas[30].name)
-                              ? { opacity: "100%" }
-                              : { opacity: "0%" }
-                        }
+                        style={this.bodyStyle(this.state.hover27, MAP.areas[26].name,
+                          BackMAP.areas[30].name)}
                         alt=""
                       />
                     </a>
@@ -1827,14 +1900,8 @@ class BodyImage extends Component {
                             ? require("./../../body-back/b-right-hip.png")
                             : require("./../../body-front/left-hip.png")
                         }
-                        style={
-                          this.state.hover28 ? { opacity: "50%" }
-                            : { opacity: "0%" } &&
-                              this.state.body_area.includes(MAP.areas[27].name) ||
-                              this.state.body_area.includes(BackMAP.areas[29].name)
-                              ? { opacity: "100%" }
-                              : { opacity: "0%" }
-                        }
+                        style={this.bodyStyle(this.state.hover28, MAP.areas[27].name,
+                          BackMAP.areas[29].name)}
                         alt=""
                       />
                     </a>
@@ -1864,14 +1931,8 @@ class BodyImage extends Component {
                             ? require("./../../body-back/b-right-hand.png")
                             : require("./../../body-front/left-hand.png")
                         }
-                        style={
-                          this.state.hover29 ? { opacity: "50%" }
-                            : { opacity: "0%" } &&
-                              this.state.body_area.includes(MAP.areas[24].name) ||
-                              this.state.body_area.includes(BackMAP.areas[27].name)
-                              ? { opacity: "100%" }
-                              : { opacity: "0%" }
-                        }
+                        style={this.bodyStyle(this.state.hover29, MAP.areas[24].name,
+                          BackMAP.areas[27].name)}
                         alt=""
                       />
                     </a>
@@ -1903,14 +1964,8 @@ class BodyImage extends Component {
                             ? require("./../../body-back/b-right-thumb.png")
                             : require("./../../body-front/left-thumb.png")
                         }
-                        style={
-                          this.state.hover30 ? { opacity: "50%" }
-                            : { opacity: "0%" } &&
-                              this.state.body_area.includes(MAP.areas[23].name) ||
-                              this.state.body_area.includes(BackMAP.areas[25].name)
-                              ? { opacity: "100%" }
-                              : { opacity: "0%" }
-                        }
+                        style={this.bodyStyle(this.state.hover30, MAP.areas[23].name,
+                          BackMAP.areas[25].name)}
                         alt=""
                       />
                     </a>
@@ -1946,14 +2001,8 @@ class BodyImage extends Component {
                             ? require("./../../body-back/b-left-fingers.png")
                             : require("./../../body-front/right-fingers.png")
                         }
-                        style={
-                          this.state.hover31 ? { opacity: "50%" }
-                            : { opacity: "0%" } &&
-                              this.state.body_area.includes(MAP.areas[28].name) ||
-                              this.state.body_area.includes(BackMAP.areas[32].name)
-                              ? { opacity: "100%" }
-                              : { opacity: "0%" }
-                        }
+                        style={this.bodyStyle(this.state.hover31, MAP.areas[28].name,
+                          BackMAP.areas[32].name)}
                         alt=""
                       />
                     </a>
@@ -1987,14 +2036,9 @@ class BodyImage extends Component {
                             ? require("./../../body-back/b-left-upper-leg.png")
                             : require("./../../body-front/right-upper-leg.png")
                         }
-                        style={
-                          this.state.hover32 ? { opacity: "50%" }
-                            : { opacity: "0%" } &&
-                              this.state.body_area.includes(MAP.areas[30].name) ||
-                              this.state.body_area.includes(BackMAP.areas[34].name)
-                              ? { opacity: "100%" }
-                              : { opacity: "0%" }
-                        }
+                        style={this.bodyStyle(this.state.hover32, MAP.areas[30].name,
+                          BackMAP.areas[34].name)}
+
                         alt=""
                       />
                     </a>
@@ -2028,14 +2072,8 @@ class BodyImage extends Component {
                             ? require("./../../body-back/b-right-upper-leg.png")
                             : require("./../../body-front/left-upper-leg.png")
                         }
-                        style={
-                          this.state.hover33 ? { opacity: "50%" }
-                            : { opacity: "0%" } &&
-                              this.state.body_area.includes(MAP.areas[31].name) ||
-                              this.state.body_area.includes(BackMAP.areas[33].name)
-                              ? { opacity: "100%" }
-                              : { opacity: "0%" }
-                        }
+                        style={this.bodyStyle(this.state.hover33, MAP.areas[31].name,
+                          BackMAP.areas[33].name)}
                         alt=""
                       />
                     </a>
@@ -2069,14 +2107,8 @@ class BodyImage extends Component {
                             ? require("./../../body-back/b-right-fingers.png")
                             : require("./../../body-front/left-fingers.png")
                         }
-                        style={
-                          this.state.hover34 ? { opacity: "50%" }
-                            : { opacity: "0%" } &&
-                              this.state.body_area.includes(MAP.areas[29].name) ||
-                              this.state.body_area.includes(BackMAP.areas[31].name)
-                              ? { opacity: "100%" }
-                              : { opacity: "0%" }
-                        }
+                        style={this.bodyStyle(this.state.hover34, MAP.areas[29].name,
+                          BackMAP.areas[31].name)}
                         alt=""
                       />
                     </a>
@@ -2111,14 +2143,8 @@ class BodyImage extends Component {
                               ? require("./../../body-back/b-left-knee.png")
                               : require("./../../body-front/right-knee.png")
                           }
-                          style={
-                            this.state.hover35 ? { opacity: "50%" }
-                              : { opacity: "0%" } &&
-                                this.state.body_area.includes(MAP.areas[32].name) ||
-                                this.state.body_area.includes(BackMAP.areas[36].name)
-                                ? { opacity: "100%" }
-                                : { opacity: "0%" }
-                          }
+                          style={this.bodyStyle(this.state.hover35, MAP.areas[32].name,
+                            BackMAP.areas[36].name)}
                           alt=""
                         />
                       </a>
@@ -2150,97 +2176,12 @@ class BodyImage extends Component {
                               ? require("./../../body-back/b-right-knee.png")
                               : require("./../../body-front/left-knee.png")
                           }
-                          style={
-                            this.state.hover36 ? { opacity: "50%" }
-                              : { opacity: "0%" } &&
-                                this.state.body_area.includes(MAP.areas[33].name) ||
-                                this.state.body_area.includes(BackMAP.areas[35].name)
-                                ? { opacity: "100%" }
-                                : { opacity: "0%" }
-                          }
+                          style={this.bodyStyle(this.state.hover36, MAP.areas[33].name,
+                            BackMAP.areas[35].name)}
                           alt=""
                         />
                       </a>
                     </div>
-
-                    {/* <div className="lowerleg"> */}
-                    {/* <a
-                        id={
-                          this.state.checkedA ? "lnkBleftKnee" : "lnkRightKnee"
-                        }
-                        onClick={(e) => {this.onSelect(e, 32, 36)}}
-                        className={
-                          this.state.checkedA
-                            ? "left-knee-back"
-                            : "right-knee-front"
-                        }
-                        //  style={{ float: "left" }}
-                        title={
-                          this.state.checkedA
-                            ? "Left Knee Back"
-                            : "Right Knee Front"
-                        }
-                        onMouseEnter={() => this.setState({ hover35: true })}
-                        onMouseLeave={() => this.setState({ hover35: false })}
-                      >
-                        {" "}
-                        <i></i>
-                        <img
-                          src={
-                            this.state.checkedA
-                              ? require("./../../body-back/b-left-knee.png")
-                              : require("./../../body-front/right-knee.png")
-                          }
-                          style={
-                            this.state.hover35 ||
-                            this.state.body_area.includes(MAP.areas[32].name) ||
-                            this.state.body_area.includes(BackMAP.areas[36].name)
-                              ? { opacity: "100%" }
-                              : { opacity: "0%" }
-                          }
-                          alt=""
-                        />
-                      </a> */}
-
-                    {/* <a
-                        id={
-                          this.state.checkedA ? "lnkBRightKnee" : "lnkLeftKnee"
-                        }
-                        onClick={(e) => {this.onSelect(e, 33, 35)}}
-                        className={
-                          this.state.checkedA
-                            ? "right-knee-back"
-                            : "left-knee-front"
-                        }
-                        //  style={{ float: "left" }}
-                        title={
-                          this.state.checkedA
-                            ? "Right Knee Back"
-                            : "Left Knee Front"
-                        }
-                        onMouseEnter={() => this.setState({ hover36: true })}
-                        onMouseLeave={() => this.setState({ hover36: false })}
-                      >
-                        {" "}
-                        <i></i>
-                        <img
-                          src={
-                            this.state.checkedA
-                              ? require("./../../body-back/b-right-knee.png")
-                              : require("./../../body-front/left-knee.png")
-                          }
-                          style={
-                            this.state.hover36 ||
-                            this.state.body_area.includes(MAP.areas[33].name) ||
-                            this.state.body_area.includes(BackMAP.areas[35].name)
-                              ? { opacity: "100%" }
-                              : { opacity: "0%" }
-                          }
-                          alt=""
-                        />
-                      </a> */}
-                    {/* </div> */}
-
                     <div className="lowerleg">
                       <a
                         id={
@@ -2271,13 +2212,8 @@ class BodyImage extends Component {
                               ? require("./../../body-back/b-left-lower-leg.png")
                               : require("./../../body-front/right-lower-leg.png")
                           }
-                          style={
-                            this.state.hover37 ||
-                              this.state.body_area.includes(MAP.areas[34].name) ||
-                              this.state.body_area.includes(BackMAP.areas[38].name)
-                              ? { opacity: "100%" }
-                              : { opacity: "0%" }
-                          }
+                          style={this.bodyStyle(this.state.hover37, MAP.areas[34].name,
+                            BackMAP.areas[38].name)}
                           alt=""
                         />
                       </a>
@@ -2311,13 +2247,8 @@ class BodyImage extends Component {
                               ? require("./../../body-back/b-right-lower-leg.png")
                               : require("./../../body-front/left-lower-leg.png")
                           }
-                          style={
-                            this.state.hover38 ||
-                              this.state.body_area.includes(MAP.areas[35].name) ||
-                              this.state.body_area.includes(BackMAP.areas[37].name)
-                              ? { opacity: "100%" }
-                              : { opacity: "0%" }
-                          }
+                          style={this.bodyStyle(this.state.hover38, MAP.areas[35].name,
+                            BackMAP.areas[37].name)}
                           alt=""
                         />
                       </a>
@@ -2353,14 +2284,8 @@ class BodyImage extends Component {
                               ? require("./../../body-back/b-left-ankle.png")
                               : require("./../../body-front/right-ankle.png")
                           }
-                          style={
-                            this.state.hover39 ? { opacity: "50%" }
-                              : { opacity: "0%" } &&
-                                this.state.body_area.includes(MAP.areas[36].name) ||
-                                this.state.body_area.includes(BackMAP.areas[40].name)
-                                ? { opacity: "100%" }
-                                : { opacity: "0%" }
-                          }
+                          style={this.bodyStyle(this.state.hover39, MAP.areas[36].name,
+                            BackMAP.areas[40].name)}
                           alt=""
                         />
                       </a>
@@ -2394,14 +2319,8 @@ class BodyImage extends Component {
                               ? require("./../../body-back/b-right-ankle.png")
                               : require("./../../body-front/left-ankle.png")
                           }
-                          style={
-                            this.state.hover40 ? { opacity: "50%" }
-                              : { opacity: "0%" } &&
-                                this.state.body_area.includes(MAP.areas[37].name) ||
-                                this.state.body_area.includes(BackMAP.areas[39].name)
-                                ? { opacity: "100%" }
-                                : { opacity: "0%" }
-                          }
+                          style={this.bodyStyle(this.state.hover40, MAP.areas[37].name,
+                            BackMAP.areas[39].name)}
                           alt=""
                         />
                       </a>
@@ -2435,14 +2354,8 @@ class BodyImage extends Component {
                               ? require("./../../body-back/b-left-foot.png")
                               : require("./../../body-front/right-foot.png")
                           }
-                          style={
-                            this.state.hover41 ? { opacity: "50%" }
-                              : { opacity: "0%" } &&
-                                this.state.body_area.includes(MAP.areas[38].name) ||
-                                this.state.body_area.includes(BackMAP.areas[42].name)
-                                ? { opacity: "100%" }
-                                : { opacity: "0%" }
-                          }
+                          style={this.bodyStyle(this.state.hover41, MAP.areas[38].name,
+                            BackMAP.areas[42].name)}
                           alt=""
                         />
                       </a>
@@ -2474,14 +2387,8 @@ class BodyImage extends Component {
                               ? require("./../../body-back/b-right-foot.png")
                               : require("./../../body-front/left-foot.png")
                           }
-                          style={
-                            this.state.hover42 ? { opacity: "50%" }
-                              : { opacity: "0%" } &&
-                                this.state.body_area.includes(MAP.areas[39].name) ||
-                                this.state.body_area.includes(BackMAP.areas[41].name)
-                                ? { opacity: "100%" }
-                                : { opacity: "0%" }
-                          }
+                          style={this.bodyStyle(this.state.hover42, MAP.areas[39].name,
+                            BackMAP.areas[41].name)}
                           alt=""
                         />
                       </a>
@@ -2513,14 +2420,8 @@ class BodyImage extends Component {
                               ? require("./../../body-back/b-left-toe.png")
                               : require("./../../body-front/right-toe.png")
                           }
-                          style={
-                            this.state.hover43 ? { opacity: "50%" }
-                              : { opacity: "0%" } &&
-                                this.state.body_area.includes(MAP.areas[40].name) ||
-                                this.state.body_area.includes(BackMAP.areas[44].name)
-                                ? { opacity: "100%" }
-                                : { opacity: "0%" }
-                          }
+                          style={this.bodyStyle(this.state.hover43, MAP.areas[40].name,
+                            BackMAP.areas[44].name)}
                           alt=""
                         />
                       </a>
@@ -2550,14 +2451,8 @@ class BodyImage extends Component {
                               ? require("./../../body-back/b-right-toe.png")
                               : require("./../../body-front/left-toe.png")
                           }
-                          style={
-                            this.state.hover44 ? { opacity: "50%" }
-                              : { opacity: "0%" } &&
-                                this.state.body_area.includes(MAP.areas[41].name) ||
-                                this.state.body_area.includes(BackMAP.areas[43].name)
-                                ? { opacity: "100%" }
-                                : { opacity: "0%" }
-                          }
+                          style={this.bodyStyle(this.state.hover44, MAP.areas[41].name,
+                            BackMAP.areas[43].name)}
                           alt=""
                         />
                       </a>
@@ -2576,7 +2471,7 @@ class BodyImage extends Component {
             style={{ maxWidth: `300px`, margin: "0 auto" }}
           >
             {this.state.body_area.map((listitem, index) => (
-              <div>
+              <div key={index}>
                 {listitem === "" ? (
                   this.setState({ body_area: [] })
                 ) : (
