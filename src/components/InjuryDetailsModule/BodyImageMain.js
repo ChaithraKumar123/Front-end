@@ -11,17 +11,23 @@ class BodyImageMain extends Component {
         step: 1,
         body_area1: [],
         body_region_id1: [],
+        body_side1: [],
+        body_orientation1: [],
+        body_desc1: [],
         data_id1: [],
         POBPatientID: "",
         workflowID: JSON.parse(this.localStorageService.getWorkFlowId())
     }
-    nextStep1 = (body_area, body_region, data_id) => {
+    nextStep1 = (body_area, body_region, data_id, body_side, body_orientation, body_desc) => {
         const { step } = this.state;
         this.setState({
             step: step + 1,
             body_area1: body_area,
             data_id1: data_id,
             body_region_id1: body_region,
+            body_side1: body_side,
+            body_orientation1: body_orientation,
+            body_desc1: body_desc
         })
 
     }

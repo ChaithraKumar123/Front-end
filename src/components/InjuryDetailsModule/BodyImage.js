@@ -8,673 +8,757 @@ import LocalStorageService from "../../services/localStorageService";
 //import 'react-notifications/lib/notifications.css';
 
 const localStorageService = new LocalStorageService();
+
 const BackMAP = {
-  name: "my-map",
+  //joint: "my-map",
+  orientation: "Back",
   areas: [
     {
-      id: 26,
-      name: "Right head back",
+      jointId: 26,
+      joint: "Head",
+      desc: "Right head back",
+      side: "Right",
       shape: "rect",
       coords: [95, 6, 125, 28],
-    },
+    }, //0
     {
-      id: 26,
-      name: "Left head back",
+      jointId: 26,
+      joint: "Head",
+      desc: "Left head back",
+      side: "Left",
       shape: "rect",
       coords: [125, 6, 155, 28],
-    },
-    { id: 26, name: "head back", shape: "rect", coords: [95, 30, 155, 56] },
-
-    { id: 1, name: "Cervical back", shape: "rect", coords: [95, 57, 155, 75] }, //
+    }, //1
     {
-      id: 21,
-      name: "Cervicothoracic",
+      jointId: 26,
+      joint: "Head",
+      desc: "Central head back",
+      side: "Central",
+      shape: "rect",
+      coords: [95, 30, 155, 56]
+    }, //2
+
+    {
+      jointId: 1,
+      joint: "Cervical",
+      desc: "Cervical back",
+      side: "Central",
+      shape: "rect",
+      coords: [95, 57, 155, 75]
+    }, //3
+    {
+      jointId: 21,
+      joint: "Cervicothoracic",
+      desc: "Cervicothoracic",
+      side: "Central",
       shape: "rect",
       coords: [95, 75, 155, 90],
-    }, //
+    }, //4
 
     {
-      id: 7,
-      name: "Left Shoulder Back",
+      jointId: 7,
+      joint: "Shoulder",
+      desc: "Left Shoulder Back",
+      side: "Left",
       shape: "rect",
       coords: [163, 88, 211, 130],
-    },
+    }, //5
     {
-      id: 7,
-      name: "Right Shoulder Back",
+      jointId: 7,
+      joint: "Shoulder",
+      desc: "Right Shoulder Back",
+      side: "Right",
       shape: "rect",
       coords: [44, 88, 92, 130],
-    },
+    }, //6
 
-    { id: 2, name: "Left Thoracic", shape: "rect", coords: [92, 88, 127, 130] }, //
     {
-      id: 2,
-      name: "Right Thoracic",
+      jointId: 2,
+      joint: "Thoracic",
+      desc: "Left Thoracic",
+      side: "Left",
+      shape: "rect",
+      coords: [92, 88, 127, 130]
+    }, //7
+    {
+      jointId: 2,
+      joint: "Thoracic",
+      desc: "Right Thoracic",
+      side: "Right",
       shape: "rect",
       coords: [127, 88, 163, 130],
-    }, //
+    }, //8
 
     {
-      id: 13,
-      name: "Right Upper Arm Back",
+      jointId: 13,
+      joint: "Upper Arm",
+      desc: "Right Upper Arm Back",
+      side: "Right",
       shape: "rect",
       coords: [170, 130, 210, 170],
-    },
+    }, //9
 
     {
-      id: 13,
-      name: "Left Upper Arm Back",
+      jointId: 13,
+      joint: "Upper Arm",
+      desc: "Left Upper Arm Back",
+      side: "Left",
       shape: "rect",
       coords: [44, 130, 80, 170],
-    },
+    }, //10
 
     {
-      id: 19,
-      name: "Left Ribs Back",
+      jointId: 19,
+      joint: "Ribs",
+      desc: "Left Ribs Back",
+      side: "Left",
       shape: "rect",
       coords: [85, 130, 127, 170],
-    },
+    }, //11
     {
-      id: 19,
-      name: "Right Ribs Back",
+      jointId: 19,
+      joint: "Ribs",
+      desc: "Right Ribs Back",
+      side: "Right",
       shape: "rect",
       coords: [127, 130, 170, 170],
-    },
+    },//12
     {
-      id: 2,
-      name: "Central Thoracic",
+      jointId: 2,
+      joint: "Thoracic",
+      desc: "Central Thoracic",
+      side: "Central",
       shape: "rect",
       coords: [127, 130, 170, 170],
-    },
+    }, //13
 
     {
-      id: 8,
-      name: "Left Elbow Back",
+      jointId: 8,
+      joint: "Elbow",
+      desc: "Left Elbow Back",
+      side: "Left",
       shape: "rect",
       coords: [30, 170, 80, 200],
-    },
+    }, //14
     {
-      id: 22,
-      name: "Thoracolumbar ",
+      jointId: 22,
+      joint: "Thoracolumbar",
+      desc: "Thoracolumbar",
+      side: "Central",
       shape: "rect",
       coords: [80, 170, 175, 240],
     },
     {
-      id: 8,
-      name: "Right Elbow Back",
+      jointId: 8,
+      joint: "Elbow",
+      desc: "Right Elbow Back",
+      side: "Right",
       shape: "rect",
       coords: [170, 170, 220, 200],
     },
 
     {
-      id: 12,
-      name: "Left Forearm Back  ",
+      jointId: 12,
+      joint: "Forearm",
+      desc: "Left Forearm Back",
+      side: "Left",
       shape: "rect",
       coords: [20, 190, 80, 240],
     }, //17
     {
-      id: 12,
-      name: "Right Forearm Back  ",
+      jointId: 12,
+      joint: "Forearm",
+      desc: "Right Forearm Back",
+      side: "Right",
       shape: "rect",
       coords: [175, 190, 240, 240],
     }, //18
 
     {
-      id: 23,
-      name: "Left Lumbosacral  ",
+      jointId: 23,
+      joint: "Lumbosacral",
+      desc: "Left Lumbosacral",
+      side: "Left",
       shape: "rect",
       coords: [175, 190, 240, 240],
     }, //19
     {
-      id: 23,
-      name: "Right Lumbosacral  ",
+      jointId: 23,
+      joint: "Lumbosacral",
+      desc: "Right Lumbosacral",
+      side: "Right",
       shape: "rect",
       coords: [175, 190, 240, 240],
     }, //20
 
     {
-      id: 9,
-      name: "Left Wrist Back  ",
+      jointId: 9,
+      joint: "Wrist",
+      desc: "Left Wrist Back",
+      side: "Left",
       shape: "rect",
       coords: [24, 240, 60, 270],
     }, //21
     {
-      id: 9,
-      name: "Right Wrist Back  ",
+      jointId: 9,
+      joint: "Wrist",
+      desc: "Right Wrist Back",
+      side: "Right",
       shape: "rect",
       coords: [200, 240, 240, 270],
     }, //22
 
     {
-      id: 18,
-      name: "Left Pelvis Back  ",
+      jointId: 18,
+      joint: "Pelvis",
+      desc: "Left Pelvis Back",
+      side: "Left",
       shape: "rect",
       coords: [80, 240, 130, 270],
     }, //23
     {
-      id: 18,
-      name: "Right Pelvis Back  ",
+      jointId: 18,
+      joint: "Pelvis",
+      desc: "Right Pelvis Back",
+      side: "Right",
       shape: "rect",
       coords: [130, 240, 180, 270],
     }, //24
 
     {
-      id: 10,
-      name: "Right Thumb Back  ",
+      jointId: 10,
+      joint: "Thumb",
+      desc: "Right Thumb Back",
+      side: "Right",
       shape: "rect",
       coords: [8, 270, 20, 300],
     }, // 25
     {
-      id: 10,
-      name: "Left Thumb Back  ",
+      jointId: 10,
+      joint: "Thumb",
+      desc: "Left Thumb Back",
+      side: "Left",
       shape: "rect",
       coords: [240, 270, 250, 300],
     }, //26
 
     {
-      id: 20,
-      name: "Right Hand Back  ",
+      jointId: 20,
+      joint: "Hand",
+      desc: "Right Hand Back",
+      side: "Right",
       shape: "rect",
       coords: [25, 270, 50, 290],
     }, //27
     {
-      id: 20,
-      name: "Left Hand Back",
+      jointId: 20,
+      joint: "Hand",
+      desc: "Left Hand Back",
+      side: "Left",
       shape: "rect",
       coords: [205, 270, 230, 290],
     }, //28
 
     {
-      id: 4,
-      name: "Right Hip Back",
+      jointId: 4,
+      joint: "Hip",
+      desc: "Right Hip Back",
+      side: "Right",
       shape: "rect",
       coords: [80, 270, 130, 285],
     }, //29
     {
-      id: 4,
-      name: "Left Hip Back",
+      jointId: 4,
+      joint: "Hip",
+      desc: "Left Hip Back",
+      side: "Left",
       shape: "rect",
       coords: [125, 270, 178, 285],
     }, //30
 
     {
-      id: 11,
-      name: "Right Fingers Back  ",
+      jointId: 11,
+      joint: "Fingers",
+      desc: "Right Fingers Back",
+      side: "Right",
       shape: "rect",
       coords: [15, 290, 50, 320],
     }, //31
     {
-      id: 11,
-      name: "Left Fingers Back  ",
+      jointId: 11,
+      joint: "Fingers",
+      desc: "Left Fingers Back",
+      side: "Left",
       shape: "rect",
       coords: [210, 285, 240, 315],
     }, //32
 
     {
-      id: 14,
-      name: "Right Upper Leg Back",
+      jointId: 14,
+      joint: "Upper Leg",
+      desc: "Right Upper Leg Back",
+      side: "Right",
       shape: "rect",
       coords: [75, 280, 128, 360],
     }, //33
     {
-      id: 14,
-      name: "Left Upper Leg Back",
+      jointId: 14,
+      joint: "Upper Leg",
+      desc: "Left Upper Leg Back",
+      side: "Left",
       shape: "rect",
       coords: [127, 280, 180, 360],
     }, //34
 
     {
-      id: 5,
-      name: "Right Knee Back",
+      jointId: 5,
+      joint: "Knee",
+      desc: "Right Knee Back",
+      side: "Right",
       shape: "rect",
       coords: [85, 360, 130, 400],
     }, //35
     {
-      id: 5,
-      name: "Left Knee Back",
+      jointId: 5,
+      joint: "Knee",
+      desc: "Left Knee Back",
+      side: "Left",
       shape: "rect",
       coords: [127, 360, 170, 400],
     }, //36
 
-    //{ name: "Pelvis  ", shape: "rect", coords: [80,240,130,270 ]},
+    //{ joint: "Pelvis  ", shape: "rect", coords: [80,240,130,270 ]},
 
     {
-      id: 15,
-      name: "Right Lower Leg Back",
+      jointId: 15,
+      joint: "Lower Leg",
+      desc: "Right Lower Leg Back",
+      side: "Right",
       shape: "rect",
       coords: [90, 400, 130, 470],
     }, // 37
     {
-      id: 15,
-      name: "Left Lower Leg Back",
+      jointId: 15,
+      joint: "Lower Leg",
+      desc: "Left Lower Leg Back",
+      side: "Left",
       shape: "rect",
       coords: [130, 400, 170, 470],
     }, // 38
-    { id: 6, name: "Right Ankle Back", shape: "rect", coords: [100, 470, 135, 490] }, //39
-    { id: 6, name: "Left Ankle Back", shape: "rect", coords: [125, 470, 160, 490] }, //40
-    { id: 16, name: "Right Foot Back", shape: "rect", coords: [100, 485, 130, 495] }, //41
-    { id: 16, name: "Left Foot Back", shape: "rect", coords: [130, 485, 160, 500] }, //42
-    { id: 17, name: "Right Toes Back", shape: "rect", coords: [95, 496, 135, 510] }, //43
-    { id: 17, name: "Left Toes Back", shape: "rect", coords: [130, 496, 167, 510] }, //44
+    {
+      jointId: 6,
+      joint: "Ankle",
+      desc: "Right Ankle Back",
+      side: "Right",
+      shape: "rect",
+      coords: [100, 470, 135, 490]
+    }, //39
+    {
+      jointId: 6,
+      joint: "Ankle",
+      desc: "Left Ankle Back",
+      side: "Left",
+      shape: "rect",
+      coords: [125, 470, 160, 490]
+    }, //40
+    {
+      jointId: 16,
+      joint: "Foot",
+      desc: "Right Foot Back",
+      side: "Right",
+      shape: "rect",
+      coords: [100, 485, 130, 495]
+    }, //41
+    {
+      jointId: 16,
+      joint: "Foot",
+      desc: "Left Foot Back",
+      side: "Left",
+      shape: "rect",
+      coords: [130, 485, 160, 500]
+    }, //42
+    {
+      jointId: 17,
+      joint: "Toes",
+      desc: "Right Toes Back",
+      side: "Right",
+      shape: "rect",
+      coords: [95, 496, 135, 510]
+    }, //43
+    {
+      jointId: 17,
+      joint: "Left",
+      desc: "Left Toes Back",
+      side: "Left",
+      shape: "rect",
+      coords: [130, 496, 167, 510]
+    }, //44
   ],
 };
 
 const MAP = {
-  name: "my-map",
+  //joint: "my-map",
+  orientation: "Front",
   areas: [
-    { id: 26, name: "Right head", shape: "rect", coords: [95, 6, 125, 28] },
-    { id: 26, name: "Left head", shape: "rect", coords: [125, 6, 155, 28] },
-    { id: 26, name: "Central head", shape: "rect", coords: [95, 30, 155, 56] },
-
-    { id: 24, name: "Jaw", shape: "rect", coords: [95, 57, 155, 75] },
-
-    { id: 1, name: "Cervical", shape: "rect", coords: [95, 75, 155, 90] },
-    { id: 7, name: "Right Shoulder", shape: "rect", coords: [44, 88, 92, 130] },
     {
-      id: 7,
-      name: "Left Shoulder",
+      jointId: 26,
+      desc: "Right head front",
+      joint: "Head",
+      side: "Right",
+      shape: "rect",
+      coords: [95, 6, 125, 28]
+    }, //0
+    {
+      jointId: 26,
+      desc: "Left head front",
+      joint: "Head",
+      side: "Left",
+      shape: "rect",
+      coords: [125, 6, 155, 28]
+    }, //1
+    {
+      jointId: 26,
+      desc: "Central head front",
+      joint: "Head",
+      side: "Central",
+      shape: "rect",
+      coords: [95, 30, 155, 56]
+    }, //2
+
+    {
+      jointId: 24,
+      joint: "Jaw",
+      desc: "Jaw front",
+      side: "Central",
+      shape: "rect",
+      coords: [95, 57, 155, 75]
+    }, //3
+
+    {
+      jointId: 1,
+      joint: "Cervical",
+      desc: "Cervial front",
+      side: "Central",
+      shape: "rect",
+      coords: [95, 75, 155, 90]
+    }, //4
+    {
+      jointId: 7,
+      joint: "Shoulder",
+      desc: "Right Shoulder front",
+      side: "Right",
+      shape: "rect",
+      coords: [44, 88, 92, 130]
+    }, //5
+    {
+      jointId: 7,
+      joint: "Shoulder",
+      desc: "Left Shoulder front",
+      side: "Left",
       shape: "rect",
       coords: [163, 88, 211, 130],
-    },
-    { id: 25, name: "Right Chest", shape: "rect", coords: [92, 88, 127, 130] },
-    { id: 25, name: "Left Chest", shape: "rect", coords: [127, 88, 163, 130] },
-
-    { id: 13, name: "Left Arm", shape: "rect", coords: [44, 130, 80, 170] },
-    { id: 13, name: "Right Arm", shape: "rect", coords: [170, 130, 210, 170] },
+    }, //6
+    {
+      jointId: 25,
+      joint: "Chest",
+      desc: "Right Chest front",
+      side: "Right",
+      shape: "rect",
+      coords: [92, 88, 127, 130]
+    }, //7
+    {
+      jointId: 25,
+      joint: "Chest",
+      desc: "Left Chest front",
+      side: "Left",
+      shape: "rect",
+      coords: [127, 88, 163, 130]
+    }, //8
 
     {
-      id: 19,
-      name: "Right Ribs Front",
+      jointId: 13,
+      joint: "Arm",
+      desc: "Left Arm front",
+      side: "Left",
+      shape: "rect",
+      coords: [44, 130, 80, 170]
+    }, //9
+    {
+      jointId: 13,
+      joint: "Arm",
+      desc: "Right Arm front",
+      side: "Right",
+      shape: "rect",
+      coords: [170, 130, 210, 170]
+    }, //10
+
+    {
+      jointId: 19,
+      joint: "Ribs",
+      desc: "Right Ribs Front",
+      side: "Right",
       shape: "rect",
       coords: [85, 130, 127, 170],
-    },
+    }, //11
     {
-      id: 19,
-      name: "Left Ribs Front",
+      jointId: 19,
+      joint: "Ribs",
+      desc: "Left Ribs Front",
+      side: "Left",
       shape: "rect",
       coords: [127, 130, 170, 170],
-    },
+    },//12 
 
     {
-      id: 8,
-      name: "Right Elbow Front",
+      jointId: 8,
+      joint: "Elbow",
+      desc: "Right Elbow Front",
+      side: "Right",
       shape: "rect",
       coords: [30, 170, 80, 200],
-    },
+    },//13
     {
-      id: 8,
-      name: "Left Elbow Front",
+      jointId: 8,
+      joint: "Elbow",
+      desc: "Left Elbow Front",
+      side: "Left",
       shape: "rect",
       coords: [170, 170, 220, 200],
-    },
+    }, //14
 
     {
-      id: 27,
-      name: "Abdomen Front",
+      jointId: 27,
+      joint: "Abdomen",
+      desc: "Abdomen Front",
+      side: "Central",
       shape: "rect",
       coords: [80, 170, 175, 240],
-    },
+    }, //15
 
     {
-      id: 12,
-      name: "Right Forearm Front  ",
+      jointId: 12,
+      joint: "Forearm",
+      desc: "Right Forearm Front",
+      side: "Right",
       shape: "rect",
       coords: [20, 190, 80, 240],
     }, //16
     {
-      id: 12,
-      name: "Left Forearm Front  ",
+      jointId: 12,
+      joint: "Forearm",
+      desc: "Left Forearm Front",
+      side: "Left",
       shape: "rect",
       coords: [175, 190, 240, 240],
     }, //17
 
     {
-      id: 9,
-      name: "Left Wrist Front  ",
+      jointId: 9,
+      joint: "Wrist",
+      desc: "Left Wrist Front",
+      side: "Left",
       shape: "rect",
       coords: [24, 240, 60, 270],
     }, // 18
     {
-      id: 9,
-      name: "Right Wrist Front  ",
+      jointId: 9,
+      joint: "Wrist",
+      desc: "Right Wrist Front",
+      side: "Right",
       shape: "rect",
       coords: [200, 240, 240, 270],
     }, //19
 
     {
-      id: 18,
-      name: "Right Pelvis Front  ",
+      jointId: 18,
+      joint: "Pelvis",
+      desc: "Right Pelvis Front",
+      side: "Right",
       shape: "rect",
       coords: [80, 240, 130, 270],
     }, //20
     {
-      id: 18,
-      name: "Left Pelvis Front  ",
+      jointId: 18,
+      joint: "Pelvis",
+      desc: "Left Pelvis Front ",
+      side: "Left",
       shape: "rect",
       coords: [130, 240, 180, 270],
     }, //21
 
     {
-      id: 10,
-      name: "Right Thumb Front  ",
+      jointId: 10,
+      joint: "Thumb",
+      desc: "Right Thumb Front",
+      side: "Right",
       shape: "rect",
       coords: [8, 270, 20, 300],
     }, //22
     {
-      id: 10,
-      name: "Left Thumb Front ",
+      jointId: 10,
+      joint: "Thumb",
+      desc: "Left Thumb Front ",
+      side: "Left",
       shape: "rect",
       coords: [240, 270, 250, 300],
     }, //23
 
     {
-      id: 20,
-      name: "Left Hand Front",
+      jointId: 20,
+      joint: "Hand",
+      desc: "Left Hand Front",
+      side: "Left",
       shape: "rect",
       coords: [205, 270, 230, 290],
     }, //24
 
     {
-      id: 20,
-      name: "Right Hand Front  ",
+      jointId: 20,
+      joint: "Hand",
+      desc: "Right Hand Front",
+      side: "Right",
       shape: "rect",
       coords: [25, 270, 50, 290],
     }, //25
 
     {
-      id: 4,
-      name: "Right Hip Front",
+      jointId: 4,
+      joint: "Hip",
+      desc: "Right Hip Front",
+      side: "Right",
       shape: "rect",
       coords: [80, 270, 130, 285],
     }, //26
     {
-      id: 4,
-      name: "Left Hip Front",
+      jointId: 4,
+      joint: "Hip",
+      desc: "Left Hip Front",
+      side: "Left",
       shape: "rect",
       coords: [125, 270, 178, 285],
     }, //27
 
     {
-      id: 11,
-      name: "Right Fingers Front  ",
+      jointId: 11,
+      joint: "Fingers",
+      desc: "Right Fingers Front",
+      side: "Right",
       shape: "rect",
       coords: [15, 290, 50, 320],
     }, //28
     {
-      id: 11,
-      name: "Left Fingers Front ",
+      jointId: 11,
+      joint: "Fingers",
+      desc: "Left Fingers Front ",
+      side: "Left",
       shape: "rect",
       coords: [210, 285, 240, 315],
     }, //29
 
     {
-      id: 14,
-      name: "Right Upper Leg Front",
+      jointId: 14,
+      joint: "Upper Leg",
+      desc: "Right Upper Leg Front",
+      side: "Right",
       shape: "rect",
       coords: [75, 280, 128, 360],
     }, //30
     {
-      id: 14,
-      name: "Left Upper Leg front",
+      jointId: 14,
+      joint: "Upper Leg",
+      desc: "Left Upper Leg front",
+      side: "Left",
       shape: "rect",
       coords: [127, 280, 180, 360],
     }, //31
 
     {
-      id: 5,
-      name: "Right Knee Front",
+      jointId: 5,
+      joint: "Knee",
+      desc: "Right Knee Front",
+      side: "Right",
       shape: "rect",
       coords: [85, 360, 130, 400],
     }, //32
     {
-      id: 5,
-      name: "Left Knee Front",
+      jointId: 5,
+      joint: "Knee",
+      desc: "Left Knee Front",
+      side: "Left",
       shape: "rect",
       coords: [127, 360, 170, 400],
     }, //33
 
-    //{ name: "Pelvis  ", shape: "rect", coords: [80,240,130,270 ]},
+    //{ joint: "Pelvis  ", shape: "rect", coords: [80,240,130,270 ]},
     {
-      id: 15,
-      name: "Right Lower Leg Front",
+      jointId: 15,
+      joint: "Lower Leg",
+      desc: "Right Lower Leg Front",
+      side: "Right",
       shape: "rect",
       coords: [90, 400, 130, 470],
     }, //34
-    // { id: 14, name: "Right Leg", shape: "rect", coords: [75, 280, 128, 360] },
-    // { id: 14, name: "Left Leg", shape: "rect", coords: [127, 280, 180, 360] },
+    // { jointId: 14, joint: "Right Leg", shape: "rect", coords: [75, 280, 128, 360] },
+    // { jointId: 14, joint: "Left Leg", shape: "rect", coords: [127, 280, 180, 360] },
 
     {
-      id: 15,
-      name: "Left Lower Leg Front",
+      jointId: 15,
+      joint: "Lower Leg",
+      desc: "Left Lower Leg Front",
+      side: "Left",
       shape: "rect",
       coords: [130, 400, 170, 470],
     }, // 35
-    { id: 6, name: "Right Ankle Front", shape: "rect", coords: [100, 470, 135, 490] }, //36
-    { id: 6, name: "Left Ankle Front", shape: "rect", coords: [125, 470, 160, 490] }, //37
-    { id: 16, name: "Right Foot Front", shape: "rect", coords: [100, 485, 130, 495] }, //38
-    { id: 16, name: "Left Foot Front", shape: "rect", coords: [130, 485, 160, 500] }, //39
-    { id: 17, name: "Right Toes Front", shape: "rect", coords: [95, 496, 135, 510] }, //40
-    { id: 17, name: "Left Toes Front", shape: "rect", coords: [130, 496, 167, 510] }, //41
+    {
+      jointId: 6,
+      joint: "Ankle",
+      desc: "Right Ankle Front",
+      side: "Right",
+      shape: "rect",
+      coords: [100, 470, 135, 490]
+    }, //36
+    {
+      jointId: 6,
+      joint: "Ankle",
+      desc: "Left Ankle Front",
+      side: "Left",
+      shape: "rect",
+      coords: [125, 470, 160, 490]
+    }, //37
+    {
+      jointId: 16,
+      joint: "Foot",
+      desc: "Right Foot Front",
+      side: "Right",
+      shape: "rect",
+      coords: [100, 485, 130, 495]
+    }, //38
+    {
+      jointId: 16,
+      joint: "Foot",
+      desc: "Left Foot Front",
+      side: "Left",
+      shape: "rect",
+      coords: [130, 485, 160, 500]
+    }, //39
+    {
+      jointId: 17,
+      joint: "Toes",
+      desc: "Right Toes Front",
+      side: "Right",
+      shape: "rect",
+      coords: [95, 496, 135, 510]
+    }, //40
+    {
+      jointId: 17,
+      joint: "Toes",
+      desc: "Left Toes Front",
+      side: "Left",
+      shape: "rect",
+      coords: [130, 496, 167, 510]
+    }, //41
   ],
 };
-
-// const MAP = {
-//   name: "my-map",
-//   orientation: "Front",
-//   areas: [
-//     {
-//       id: 26,
-//       name: "Head",
-//       side: "Right",
-//       shape: "rect",
-//       coords: [95, 6, 125, 28]
-//     }, //0
-//     {
-//       id: 26,
-//       name: "Head",
-//       side: "Left",
-//       shape: "rect",
-//       coords: [125, 6, 155, 28]
-//     }, //1
-//     {
-//       id: 26,
-//       name: "Central head",
-//       side: "Right",
-//       shape: "rect",
-//       coords: [95, 30, 155, 56]
-//     }, //2
-
-//     { id: 24, name: "Jaw", shape: "rect", coords: [95, 57, 155, 75] },
-
-//     { id: 1, name: "Cervical", shape: "rect", coords: [95, 75, 155, 90] },
-//     { id: 7, name: "Right Shoulder", shape: "rect", coords: [44, 88, 92, 130] },
-//     {
-//       id: 7,
-//       name: "Left Shoulder",
-//       shape: "rect",
-//       coords: [163, 88, 211, 130],
-//     },
-//     { id: 25, name: "Right Chest", shape: "rect", coords: [92, 88, 127, 130] },
-//     { id: 25, name: "Left Chest", shape: "rect", coords: [127, 88, 163, 130] },
-
-//     { id: 13, name: "Left Arm", shape: "rect", coords: [44, 130, 80, 170] },
-//     { id: 13, name: "Right Arm", shape: "rect", coords: [170, 130, 210, 170] },
-
-//     {
-//       id: 19,
-//       name: "Right Ribs Front",
-//       shape: "rect",
-//       coords: [85, 130, 127, 170],
-//     },
-//     {
-//       id: 19,
-//       name: "Left Ribs Front",
-//       shape: "rect",
-//       coords: [127, 130, 170, 170],
-//     },
-
-//     {
-//       id: 8,
-//       name: "Right Elbow Front",
-//       shape: "rect",
-//       coords: [30, 170, 80, 200],
-//     },
-//     {
-//       id: 8,
-//       name: "Left Elbow Front",
-//       shape: "rect",
-//       coords: [170, 170, 220, 200],
-//     },
-
-//     {
-//       id: 27,
-//       name: "Abdomen Front",
-//       shape: "rect",
-//       coords: [80, 170, 175, 240],
-//     },
-
-//     {
-//       id: 12,
-//       name: "Right Forearm Front  ",
-//       shape: "rect",
-//       coords: [20, 190, 80, 240],
-//     }, //16
-//     {
-//       id: 12,
-//       name: "Left Forearm Front  ",
-//       shape: "rect",
-//       coords: [175, 190, 240, 240],
-//     }, //17
-
-//     {
-//       id: 9,
-//       name: "Left Wrist Front  ",
-//       shape: "rect",
-//       coords: [24, 240, 60, 270],
-//     }, // 18
-//     {
-//       id: 9,
-//       name: "Right Wrist Front  ",
-//       shape: "rect",
-//       coords: [200, 240, 240, 270],
-//     }, //19
-
-//     {
-//       id: 18,
-//       name: "Right Pelvis Front  ",
-//       shape: "rect",
-//       coords: [80, 240, 130, 270],
-//     }, //20
-//     {
-//       id: 18,
-//       name: "Left Pelvis Front  ",
-//       shape: "rect",
-//       coords: [130, 240, 180, 270],
-//     }, //21
-
-//     {
-//       id: 10,
-//       name: "Right Thumb Front  ",
-//       shape: "rect",
-//       coords: [8, 270, 20, 300],
-//     }, //22
-//     {
-//       id: 10,
-//       name: "Left Thumb Front ",
-//       shape: "rect",
-//       coords: [240, 270, 250, 300],
-//     }, //23
-
-//     {
-//       id: 20,
-//       name: "Left Hand Front",
-//       shape: "rect",
-//       coords: [205, 270, 230, 290],
-//     }, //24
-
-//     {
-//       id: 20,
-//       name: "Right Hand Front  ",
-//       shape: "rect",
-//       coords: [25, 270, 50, 290],
-//     }, //25
-
-//     {
-//       id: 4,
-//       name: "Right Hip Front",
-//       shape: "rect",
-//       coords: [80, 270, 130, 285],
-//     }, //26
-//     {
-//       id: 4,
-//       name: "Left Hip Front",
-//       shape: "rect",
-//       coords: [125, 270, 178, 285],
-//     }, //27
-
-//     {
-//       id: 11,
-//       name: "Right Fingers Front  ",
-//       shape: "rect",
-//       coords: [15, 290, 50, 320],
-//     }, //28
-//     {
-//       id: 11,
-//       name: "Left Fingers Front ",
-//       shape: "rect",
-//       coords: [210, 285, 240, 315],
-//     }, //29
-
-//     {
-//       id: 14,
-//       name: "Right Upper Leg Front",
-//       shape: "rect",
-//       coords: [75, 280, 128, 360],
-//     }, //30
-//     {
-//       id: 14,
-//       name: "Left Upper Leg front",
-//       shape: "rect",
-//       coords: [127, 280, 180, 360],
-//     }, //31
-
-//     {
-//       id: 5,
-//       name: "Right Knee Front",
-//       shape: "rect",
-//       coords: [85, 360, 130, 400],
-//     }, //32
-//     {
-//       id: 5,
-//       name: "Left Knee Front",
-//       shape: "rect",
-//       coords: [127, 360, 170, 400],
-//     }, //33
-
-//     //{ name: "Pelvis  ", shape: "rect", coords: [80,240,130,270 ]},
-//     {
-//       id: 15,
-//       name: "Right Lower Leg Front",
-//       shape: "rect",
-//       coords: [90, 400, 130, 470],
-//     }, //34
-//     // { id: 14, name: "Right Leg", shape: "rect", coords: [75, 280, 128, 360] },
-//     // { id: 14, name: "Left Leg", shape: "rect", coords: [127, 280, 180, 360] },
-
-//     {
-//       id: 15,
-//       name: "Left Lower Leg Front",
-//       shape: "rect",
-//       coords: [130, 400, 170, 470],
-//     }, // 35
-//     { id: 6, name: "Right Ankle Front", shape: "rect", coords: [100, 470, 135, 490] }, //36
-//     { id: 6, name: "Left Ankle Front", shape: "rect", coords: [125, 470, 160, 490] }, //37
-//     { id: 16, name: "Right Foot Front", shape: "rect", coords: [100, 485, 130, 495] }, //38
-//     { id: 16, name: "Left Foot Front", shape: "rect", coords: [130, 485, 160, 500] }, //39
-//     { id: 17, name: "Right Toes Front", shape: "rect", coords: [95, 496, 135, 510] }, //40
-//     { id: 17, name: "Left Toes Front", shape: "rect", coords: [130, 496, 167, 510] }, //41
-//   ],
-// };
 class BodyImage extends Component {
   constructor(props) {
     super(props);
@@ -686,6 +770,8 @@ class BodyImage extends Component {
       body_area: this.props.state.body_area1,
       body_region_id: this.props.state.body_region_id1,
       body_side: this.props.state.body_side1,
+      body_orientation: this.props.state.body_orientation1,
+      body_desc: this.props.state.body_desc1,
       data_id: this.props.state.data_id1,
       checkedA: false,
       workflowID: this.props.state.workflowID
@@ -697,6 +783,7 @@ class BodyImage extends Component {
     const temp1 = [];
     const temp2 = [];
     const temp3 = [];
+    const temp4 = [];
     // axios
     //   .get(
     //     // "https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/POBdetails",
@@ -714,6 +801,7 @@ class BodyImage extends Component {
             temp1.push(response.data[i].painRegionID);
             temp.push(response.data[i].painWhere);
             temp3.push(response.data[i].painSide);
+            temp4.push(response.data[i].orientation);
             this.setState({
               //body_area: body_area,
               body_region_id: update(this.state.body_region_id, {
@@ -724,6 +812,9 @@ class BodyImage extends Component {
               }),
               body_side: update(this.state.body_side, {
                 $splice: [[i - 1, 1, temp3[i]]],
+              }),
+              body_orientation: update(this.state.body_orientation, {
+                $splice: [[i - 1, 1, temp4[i]]],
               }),
             });
 
@@ -764,7 +855,9 @@ class BodyImage extends Component {
       this.state.body_area,
       this.state.body_region_id,
       this.state.data_id,
-      this.state.body_side
+      this.state.body_side,
+      this.state.body_orientation,
+      this.state.body_desc
     );
   };
 
@@ -776,12 +869,16 @@ class BodyImage extends Component {
     //     region_id:area.id,
     // })
     if (this.state.body_area.length < 3) {
+      //use the checkedA flag to determine BACKMAP or MAP, then use it
+      var orientation = this.state.checkedA ? BackMAP.orientation : MAP.orientation;
       this.setState({
         hoveredArea: "",
-        first1: area.name,
-        body_area: [...this.state.body_area, area.name],
-        body_region_id: [...this.state.body_region_id, area.id],
-        body_side: [...this.state.body_side, area.side]
+        first1: area.name, //first1 reflects primary region, all others when asking for more than 1 are secondary
+        body_area: [...this.state.body_area, area.joint],
+        body_region_id: [...this.state.body_region_id, area.jointId],
+        body_side: [...this.state.body_side, area.side],
+        body_orientation: [...this.state.body_side, orientation],
+        body_desc: [...this.state.body_desc, area.desc]
         // data_id: [...this.state.data_id, -1],
       });
       //NotificationManager.success("", 'Added selected region');
@@ -789,18 +886,18 @@ class BodyImage extends Component {
       alert("Cannot select more than one region");
     }
   }
-  // // function to perforom shading on selecting different body parts
+  // function to perform shading on selecting different body parts
   onSelect(e, map_index, backMap_index) {
-    if (this.state.body_area.length === 0) {
+    if (this.state.body_desc.length === 0) {
       this.state.checkedA
         ? this.clicked(BackMAP.areas[backMap_index])
         : this.clicked(MAP.areas[map_index]);
     }
-    else if ((map_index && this.state.body_area.includes(MAP.areas[map_index].name)) ||
-      (backMap_index && this.state.body_area.includes(BackMAP.areas[backMap_index].name))) {
+    else if ((map_index && this.state.body_desc.includes(MAP.areas[map_index].desc)) ||
+      (backMap_index && this.state.body_desc.includes(BackMAP.areas[backMap_index].desc))) {
       this.delete_region(e, 0);
     }
-    else if (this.state.body_area.length !== 0) {
+    else if (this.state.body_desc.length !== 0) {
       this.delete_region(e, 0).then(() => {
         this.state.checkedA
           ? this.clicked(BackMAP.areas[backMap_index])
@@ -851,7 +948,9 @@ class BodyImage extends Component {
   delete_array(index) {
     var array = [...this.state.body_area];
     var array_id = [...this.state.body_region_id];
-    var side = [...this.state.body_side]
+    var side = [...this.state.body_side];
+    var orientation = [...this.state.body_orientation];
+    var desc = [...this.state.body_desc];
     // var id = [...this.state.data_id];
     array.splice(index, 1);
     this.setState({ body_area: array });
@@ -859,6 +958,10 @@ class BodyImage extends Component {
     this.setState({ body_region_id: array_id });
     side.splice(index, 1);
     this.setState({ body_side: side })
+    orientation.splice(index, 1);
+    this.setState({ body_orientation: orientation })
+    desc.splice(index, 1);
+    this.setState({ body_desc: desc })
     // id.splice(index, 1);
     // this.setState({ data_id: id });
   }
@@ -903,8 +1006,8 @@ class BodyImage extends Component {
     if (hover) {
       return { opacity: "50%" };
     }
-    else if (this.state.body_area.includes(frontname) ||
-      this.state.body_area.includes(backname)) {
+    else if (this.state.body_desc.includes(frontname) ||
+      this.state.body_desc.includes(backname)) {
       return { opacity: "100%" };
     }
     else {
@@ -1012,7 +1115,7 @@ class BodyImage extends Component {
                             ? require("./../../body-back/b-left-head.png")
                             : require("./../../body-front/right-head.png")
                         }
-                        style={this.bodyStyle(this.state.hover, MAP.areas[0].name, BackMAP.areas[1].name)}
+                        style={this.bodyStyle(this.state.hover, MAP.areas[0].desc, BackMAP.areas[1].desc)}
                       />{" "}
                     </a>
 
@@ -1040,7 +1143,7 @@ class BodyImage extends Component {
                             ? require("./../../body-back/b-right-head.png")
                             : require("./../../body-front/left-head.png")
                         }
-                        style={this.bodyStyle(this.state.hover1, MAP.areas[1].name, BackMAP.areas[0].name)}
+                        style={this.bodyStyle(this.state.hover1, MAP.areas[1].desc, BackMAP.areas[0].desc)}
                         alt=""
                       />
                     </a>
@@ -1066,8 +1169,8 @@ class BodyImage extends Component {
                             ? require("./../../body-back/b-head.png")
                             : require("./../../body-front/head.png")
                         }
-                        style={this.bodyStyle(this.state.hover2, MAP.areas[2].name,
-                          BackMAP.areas[2].name)}
+                        style={this.bodyStyle(this.state.hover2, MAP.areas[2].desc,
+                          BackMAP.areas[2].desc)}
                         alt=""
                       />
                     </a>
@@ -1093,8 +1196,8 @@ class BodyImage extends Component {
                             ? require("./../../body-back/b-cervical.png")
                             : require("./../../body-front/jaw.png")
                         }
-                        style={this.bodyStyle(this.state.hover3, MAP.areas[3].name,
-                          BackMAP.areas[3].name)}
+                        style={this.bodyStyle(this.state.hover3, MAP.areas[3].desc,
+                          BackMAP.areas[3].desc)}
                         alt=""
                       />
                     </a>
@@ -1127,8 +1230,8 @@ class BodyImage extends Component {
                             ? require("./../../body-back/b-cervicothoracic.png")
                             : require("./../../body-front/cervical.png")
                         }
-                        style={this.bodyStyle(this.state.hover4, MAP.areas[4].name,
-                          BackMAP.areas[4].name)}
+                        style={this.bodyStyle(this.state.hover4, MAP.areas[4].desc,
+                          BackMAP.areas[4].desc)}
                         alt=""
                       />
                     </a>
@@ -1170,8 +1273,8 @@ class BodyImage extends Component {
                             : require("./../../body-front/right-shoulder.png")
                         }
                         alt=""
-                        style={this.bodyStyle(this.state.hover5, MAP.areas[5].name,
-                          BackMAP.areas[5].name)}
+                        style={this.bodyStyle(this.state.hover5, MAP.areas[5].desc,
+                          BackMAP.areas[5].desc)}
                       />{" "}
                     </a>
 
@@ -1202,8 +1305,8 @@ class BodyImage extends Component {
                             ? require("./../../body-back/b-left-thoracic.png")
                             : require("./../../body-front/right-chest.png")
                         }
-                        style={this.bodyStyle(this.state.hover6, MAP.areas[7].name,
-                          BackMAP.areas[7].name)}
+                        style={this.bodyStyle(this.state.hover6, MAP.areas[7].desc,
+                          BackMAP.areas[7].desc)}
                         alt=""
                       />
                     </a>
@@ -1235,8 +1338,8 @@ class BodyImage extends Component {
                             ? require("./../../body-back/b-right-thoracic.png")
                             : require("./../../body-front/left-chest.png")
                         }
-                        style={this.bodyStyle(this.state.hover7, MAP.areas[8].name,
-                          BackMAP.areas[8].name)}
+                        style={this.bodyStyle(this.state.hover7, MAP.areas[8].desc,
+                          BackMAP.areas[8].desc)}
                         alt=""
                       />
                     </a>
@@ -1269,8 +1372,8 @@ class BodyImage extends Component {
                             ? require("./../../body-back/b-right-shoulder.png")
                             : require("./../../body-front/left-shoulder.png")
                         }
-                        style={this.bodyStyle(this.state.hover8, MAP.areas[6].name,
-                          BackMAP.areas[6].name)}
+                        style={this.bodyStyle(this.state.hover8, MAP.areas[6].desc,
+                          BackMAP.areas[6].desc)}
                         alt=""
                       />
                     </a>
@@ -1306,8 +1409,8 @@ class BodyImage extends Component {
                             ? require("./../../body-back/b-left-upper-arm.png")
                             : require("./../../body-front/right-upper-arm.png")
                         }
-                        style={this.bodyStyle(this.state.hover9, MAP.areas[10].name,
-                          BackMAP.areas[10].name)}
+                        style={this.bodyStyle(this.state.hover9, MAP.areas[10].desc,
+                          BackMAP.areas[10].desc)}
                         alt=""
                       />
                     </a>
@@ -1337,8 +1440,8 @@ class BodyImage extends Component {
                             ? require("./../../body-back/b-left-ribs.png")
                             : require("./../../body-front/right-ribs.png")
                         }
-                        style={this.bodyStyle(this.state.hover10, MAP.areas[11].name,
-                          BackMAP.areas[11].name)}
+                        style={this.bodyStyle(this.state.hover10, MAP.areas[11].desc,
+                          BackMAP.areas[11].desc)}
                         alt=""
                       />
                     </a>
@@ -1357,8 +1460,8 @@ class BodyImage extends Component {
                         <i></i>
                         <img
                           src={require("./../../body-back/b-central-thoracic.png")}
-                          style={this.bodyStyle(this.state.hover11, MAP.areas[13].name,
-                            BackMAP.areas[13].name)}
+                          style={this.bodyStyle(this.state.hover11, MAP.areas[13].desc,
+                            BackMAP.areas[13].desc)}
                           alt=""
                         />
                       </a>
@@ -1389,8 +1492,8 @@ class BodyImage extends Component {
                             ? require("./../../body-back/b-right-ribs.png")
                             : require("./../../body-front/left-ribs.png")
                         }
-                        style={this.bodyStyle(this.state.hover12, MAP.areas[12].name,
-                          BackMAP.areas[12].name)}
+                        style={this.bodyStyle(this.state.hover12, MAP.areas[12].desc,
+                          BackMAP.areas[12].desc)}
                         alt=""
                       />
                     </a>
@@ -1424,8 +1527,8 @@ class BodyImage extends Component {
                             ? require("./../../body-back/b-right-upper-arm.png")
                             : require("./../../body-front/left-upper-arm.png")
                         }
-                        style={this.bodyStyle(this.state.hover13, MAP.areas[9].name,
-                          BackMAP.areas[9].name)}
+                        style={this.bodyStyle(this.state.hover13, MAP.areas[9].desc,
+                          BackMAP.areas[9].desc)}
                         alt=""
                       />
                     </a>
@@ -1459,8 +1562,8 @@ class BodyImage extends Component {
                             ? require("./../../body-back/b-left-elbow.png")
                             : require("./../../body-front/right-elbow.png")
                         }
-                        style={this.bodyStyle(this.state.hover14, MAP.areas[13].name,
-                          BackMAP.areas[14].name)}
+                        style={this.bodyStyle(this.state.hover14, MAP.areas[13].desc,
+                          BackMAP.areas[14].desc)}
                         alt=""
                       />
                     </a>
@@ -1488,8 +1591,8 @@ class BodyImage extends Component {
                             ? require("./../../body-back/b-thoracolumbar.png")
                             : require("./../../body-front/abdomen.png")
                         }
-                        style={this.bodyStyle(this.state.hover15, MAP.areas[15].name,
-                          BackMAP.areas[15].name)}
+                        style={this.bodyStyle(this.state.hover15, MAP.areas[15].desc,
+                          BackMAP.areas[15].desc)}
                         alt=""
                       />
                     </a>
@@ -1521,8 +1624,8 @@ class BodyImage extends Component {
                             ? require("./../../body-back/b-right-elbow.png")
                             : require("./../../body-front/left-elbow.png")
                         }
-                        style={this.bodyStyle(this.state.hover16, MAP.areas[14].name,
-                          BackMAP.areas[16].name)}
+                        style={this.bodyStyle(this.state.hover16, MAP.areas[14].desc,
+                          BackMAP.areas[16].desc)}
                         alt=""
                       />
                     </a>
@@ -1558,8 +1661,8 @@ class BodyImage extends Component {
                             ? require("./../../body-back/b-left-forearm.png")
                             : require("./../../body-front/right-forearm.png")
                         }
-                        style={this.bodyStyle(this.state.hover17, MAP.areas[16].name,
-                          BackMAP.areas[17].name)}
+                        style={this.bodyStyle(this.state.hover17, MAP.areas[16].desc,
+                          BackMAP.areas[17].desc)}
                         alt=""
                       />
                     </a>
@@ -1580,7 +1683,7 @@ class BodyImage extends Component {
                           <img
                             src={require("./../../body-back/b-left-lumbosacral.png")}
                             style={this.bodyStyle(this.state.hover18, null,
-                              BackMAP.areas[19].name)}
+                              BackMAP.areas[19].desc)}
                             alt=""
                           />
                         </a>
@@ -1599,7 +1702,7 @@ class BodyImage extends Component {
                           <img
                             src={require("./../../body-back/b-right-lumbosacral.png")}
                             style={this.bodyStyle(this.state.hover19, null,
-                              BackMAP.areas[20].name)}
+                              BackMAP.areas[20].desc)}
                             alt=""
                           />
                         </a>
@@ -1635,8 +1738,8 @@ class BodyImage extends Component {
                             ? require("./../../body-back/b-right-forearm.png")
                             : require("./../../body-front/left-forearm.png")
                         }
-                        style={this.bodyStyle(this.state.hover20, MAP.areas[17].name,
-                          BackMAP.areas[18].name)}
+                        style={this.bodyStyle(this.state.hover20, MAP.areas[17].desc,
+                          BackMAP.areas[18].desc)}
                         alt=""
                       />
                     </a>
@@ -1670,8 +1773,8 @@ class BodyImage extends Component {
                             ? require("./../../body-back/b-left-wrist.png")
                             : require("./../../body-front/right-wrist.png")
                         }
-                        style={this.bodyStyle(this.state.hover21, MAP.areas[19].name,
-                          BackMAP.areas[21].name)}
+                        style={this.bodyStyle(this.state.hover21, MAP.areas[19].desc,
+                          BackMAP.areas[21].desc)}
                         alt=""
                       />
                     </a>
@@ -1705,8 +1808,8 @@ class BodyImage extends Component {
                             ? require("./../../body-back/b-left-pelvis.png")
                             : require("./../../body-front/right-pelvis.png")
                         }
-                        style={this.bodyStyle(this.state.hover22, MAP.areas[20].name,
-                          BackMAP.areas[23].name)}
+                        style={this.bodyStyle(this.state.hover22, MAP.areas[20].desc,
+                          BackMAP.areas[23].desc)}
                         alt=""
                       />
                     </a>
@@ -1740,8 +1843,8 @@ class BodyImage extends Component {
                             ? require("./../../body-back/b-right-pelvis.png")
                             : require("./../../body-front/left-pelvis.png")
                         }
-                        style={this.bodyStyle(this.state.hover23, MAP.areas[21].name,
-                          BackMAP.areas[24].name)}
+                        style={this.bodyStyle(this.state.hover23, MAP.areas[21].desc,
+                          BackMAP.areas[24].desc)}
                         alt=""
                       />
                     </a>
@@ -1772,8 +1875,8 @@ class BodyImage extends Component {
                             ? require("./../../body-back/b-right-wrist.png")
                             : require("./../../body-front/left-wrist.png")
                         }
-                        style={this.bodyStyle(this.state.hover24, MAP.areas[18].name,
-                          BackMAP.areas[22].name)}
+                        style={this.bodyStyle(this.state.hover24, MAP.areas[18].desc,
+                          BackMAP.areas[22].desc)}
                         alt=""
                       />
                     </a>
@@ -1807,8 +1910,8 @@ class BodyImage extends Component {
                             ? require("./../../body-back/b-left-thumb.png")
                             : require("./../../body-front/right-thumb.png")
                         }
-                        style={this.bodyStyle(this.state.hover25, MAP.areas[22].name,
-                          BackMAP.areas[26].name)}
+                        style={this.bodyStyle(this.state.hover25, MAP.areas[22].desc,
+                          BackMAP.areas[26].desc)}
                         alt=""
                       />
                     </a>
@@ -1838,8 +1941,8 @@ class BodyImage extends Component {
                             ? require("./../../body-back/b-left-hand.png")
                             : require("./../../body-front/right-hand.png")
                         }
-                        style={this.bodyStyle(this.state.hover26, MAP.areas[25].name,
-                          BackMAP.areas[28].name)}
+                        style={this.bodyStyle(this.state.hover26, MAP.areas[25].desc,
+                          BackMAP.areas[28].desc)}
                         alt=""
                       />
                     </a>
@@ -1869,8 +1972,8 @@ class BodyImage extends Component {
                             ? require("./../../body-back/b-left-hip.png")
                             : require("./../../body-front/right-hip.png")
                         }
-                        style={this.bodyStyle(this.state.hover27, MAP.areas[26].name,
-                          BackMAP.areas[30].name)}
+                        style={this.bodyStyle(this.state.hover27, MAP.areas[26].desc,
+                          BackMAP.areas[30].desc)}
                         alt=""
                       />
                     </a>
@@ -1900,8 +2003,8 @@ class BodyImage extends Component {
                             ? require("./../../body-back/b-right-hip.png")
                             : require("./../../body-front/left-hip.png")
                         }
-                        style={this.bodyStyle(this.state.hover28, MAP.areas[27].name,
-                          BackMAP.areas[29].name)}
+                        style={this.bodyStyle(this.state.hover28, MAP.areas[27].desc,
+                          BackMAP.areas[29].desc)}
                         alt=""
                       />
                     </a>
@@ -1931,8 +2034,8 @@ class BodyImage extends Component {
                             ? require("./../../body-back/b-right-hand.png")
                             : require("./../../body-front/left-hand.png")
                         }
-                        style={this.bodyStyle(this.state.hover29, MAP.areas[24].name,
-                          BackMAP.areas[27].name)}
+                        style={this.bodyStyle(this.state.hover29, MAP.areas[24].desc,
+                          BackMAP.areas[27].desc)}
                         alt=""
                       />
                     </a>
@@ -1964,8 +2067,8 @@ class BodyImage extends Component {
                             ? require("./../../body-back/b-right-thumb.png")
                             : require("./../../body-front/left-thumb.png")
                         }
-                        style={this.bodyStyle(this.state.hover30, MAP.areas[23].name,
-                          BackMAP.areas[25].name)}
+                        style={this.bodyStyle(this.state.hover30, MAP.areas[23].desc,
+                          BackMAP.areas[25].desc)}
                         alt=""
                       />
                     </a>
@@ -2001,8 +2104,8 @@ class BodyImage extends Component {
                             ? require("./../../body-back/b-left-fingers.png")
                             : require("./../../body-front/right-fingers.png")
                         }
-                        style={this.bodyStyle(this.state.hover31, MAP.areas[28].name,
-                          BackMAP.areas[32].name)}
+                        style={this.bodyStyle(this.state.hover31, MAP.areas[28].desc,
+                          BackMAP.areas[32].desc)}
                         alt=""
                       />
                     </a>
@@ -2036,8 +2139,8 @@ class BodyImage extends Component {
                             ? require("./../../body-back/b-left-upper-leg.png")
                             : require("./../../body-front/right-upper-leg.png")
                         }
-                        style={this.bodyStyle(this.state.hover32, MAP.areas[30].name,
-                          BackMAP.areas[34].name)}
+                        style={this.bodyStyle(this.state.hover32, MAP.areas[30].desc,
+                          BackMAP.areas[34].desc)}
 
                         alt=""
                       />
@@ -2072,8 +2175,8 @@ class BodyImage extends Component {
                             ? require("./../../body-back/b-right-upper-leg.png")
                             : require("./../../body-front/left-upper-leg.png")
                         }
-                        style={this.bodyStyle(this.state.hover33, MAP.areas[31].name,
-                          BackMAP.areas[33].name)}
+                        style={this.bodyStyle(this.state.hover33, MAP.areas[31].desc,
+                          BackMAP.areas[33].desc)}
                         alt=""
                       />
                     </a>
@@ -2107,8 +2210,8 @@ class BodyImage extends Component {
                             ? require("./../../body-back/b-right-fingers.png")
                             : require("./../../body-front/left-fingers.png")
                         }
-                        style={this.bodyStyle(this.state.hover34, MAP.areas[29].name,
-                          BackMAP.areas[31].name)}
+                        style={this.bodyStyle(this.state.hover34, MAP.areas[29].desc,
+                          BackMAP.areas[31].desc)}
                         alt=""
                       />
                     </a>
@@ -2143,8 +2246,8 @@ class BodyImage extends Component {
                               ? require("./../../body-back/b-left-knee.png")
                               : require("./../../body-front/right-knee.png")
                           }
-                          style={this.bodyStyle(this.state.hover35, MAP.areas[32].name,
-                            BackMAP.areas[36].name)}
+                          style={this.bodyStyle(this.state.hover35, MAP.areas[32].desc,
+                            BackMAP.areas[36].desc)}
                           alt=""
                         />
                       </a>
@@ -2176,8 +2279,8 @@ class BodyImage extends Component {
                               ? require("./../../body-back/b-right-knee.png")
                               : require("./../../body-front/left-knee.png")
                           }
-                          style={this.bodyStyle(this.state.hover36, MAP.areas[33].name,
-                            BackMAP.areas[35].name)}
+                          style={this.bodyStyle(this.state.hover36, MAP.areas[33].desc,
+                            BackMAP.areas[35].desc)}
                           alt=""
                         />
                       </a>
@@ -2212,8 +2315,8 @@ class BodyImage extends Component {
                               ? require("./../../body-back/b-left-lower-leg.png")
                               : require("./../../body-front/right-lower-leg.png")
                           }
-                          style={this.bodyStyle(this.state.hover37, MAP.areas[34].name,
-                            BackMAP.areas[38].name)}
+                          style={this.bodyStyle(this.state.hover37, MAP.areas[34].desc,
+                            BackMAP.areas[38].desc)}
                           alt=""
                         />
                       </a>
@@ -2247,8 +2350,8 @@ class BodyImage extends Component {
                               ? require("./../../body-back/b-right-lower-leg.png")
                               : require("./../../body-front/left-lower-leg.png")
                           }
-                          style={this.bodyStyle(this.state.hover38, MAP.areas[35].name,
-                            BackMAP.areas[37].name)}
+                          style={this.bodyStyle(this.state.hover38, MAP.areas[35].desc,
+                            BackMAP.areas[37].desc)}
                           alt=""
                         />
                       </a>
@@ -2284,8 +2387,8 @@ class BodyImage extends Component {
                               ? require("./../../body-back/b-left-ankle.png")
                               : require("./../../body-front/right-ankle.png")
                           }
-                          style={this.bodyStyle(this.state.hover39, MAP.areas[36].name,
-                            BackMAP.areas[40].name)}
+                          style={this.bodyStyle(this.state.hover39, MAP.areas[36].desc,
+                            BackMAP.areas[40].desc)}
                           alt=""
                         />
                       </a>
@@ -2319,8 +2422,8 @@ class BodyImage extends Component {
                               ? require("./../../body-back/b-right-ankle.png")
                               : require("./../../body-front/left-ankle.png")
                           }
-                          style={this.bodyStyle(this.state.hover40, MAP.areas[37].name,
-                            BackMAP.areas[39].name)}
+                          style={this.bodyStyle(this.state.hover40, MAP.areas[37].desc,
+                            BackMAP.areas[39].desc)}
                           alt=""
                         />
                       </a>
@@ -2354,8 +2457,8 @@ class BodyImage extends Component {
                               ? require("./../../body-back/b-left-foot.png")
                               : require("./../../body-front/right-foot.png")
                           }
-                          style={this.bodyStyle(this.state.hover41, MAP.areas[38].name,
-                            BackMAP.areas[42].name)}
+                          style={this.bodyStyle(this.state.hover41, MAP.areas[38].desc,
+                            BackMAP.areas[42].desc)}
                           alt=""
                         />
                       </a>
@@ -2387,8 +2490,8 @@ class BodyImage extends Component {
                               ? require("./../../body-back/b-right-foot.png")
                               : require("./../../body-front/left-foot.png")
                           }
-                          style={this.bodyStyle(this.state.hover42, MAP.areas[39].name,
-                            BackMAP.areas[41].name)}
+                          style={this.bodyStyle(this.state.hover42, MAP.areas[39].desc,
+                            BackMAP.areas[41].desc)}
                           alt=""
                         />
                       </a>
@@ -2420,8 +2523,8 @@ class BodyImage extends Component {
                               ? require("./../../body-back/b-left-toe.png")
                               : require("./../../body-front/right-toe.png")
                           }
-                          style={this.bodyStyle(this.state.hover43, MAP.areas[40].name,
-                            BackMAP.areas[44].name)}
+                          style={this.bodyStyle(this.state.hover43, MAP.areas[40].desc,
+                            BackMAP.areas[44].desc)}
                           alt=""
                         />
                       </a>
@@ -2451,8 +2554,8 @@ class BodyImage extends Component {
                               ? require("./../../body-back/b-right-toe.png")
                               : require("./../../body-front/left-toe.png")
                           }
-                          style={this.bodyStyle(this.state.hover44, MAP.areas[41].name,
-                            BackMAP.areas[43].name)}
+                          style={this.bodyStyle(this.state.hover44, MAP.areas[41].desc,
+                            BackMAP.areas[43].desc)}
                           alt=""
                         />
                       </a>
@@ -2470,7 +2573,7 @@ class BodyImage extends Component {
             className="list-group"
             style={{ maxWidth: `300px`, margin: "0 auto" }}
           >
-            {this.state.body_area.map((listitem, index) => (
+            {this.state.body_desc.map((listitem, index) => (
               <div key={index}>
                 {listitem === "" ? (
                   this.setState({ body_area: [] })
