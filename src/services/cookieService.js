@@ -27,7 +27,6 @@ export const createCookie = (
         {
             maxAge: authenticationResult.expiresIn,
             path: '/',
-            secure: true,
         },
     );
 };

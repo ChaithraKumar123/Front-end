@@ -67,8 +67,8 @@ class App extends Component {
 
 
   componentDidMount() {
-    // if (localStorage.getItem("confToken") || localStorageService.getToken()) {
-    if (this.cookie && this.cookie.access_token) {
+    if (localStorage.getItem("confToken") || localStorageService.getToken()) {
+      //  if (this.cookie && this.cookie.access_token) {
       console.log(this.cookie);
 
 
