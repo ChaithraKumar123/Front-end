@@ -16,3 +16,7 @@ export const ETHNICITY = "v1/personaldetails/Ethnicity";
 export const COUNTRY = "v1/personaldetails/Country";
 export const POBdetails = "api/POBdetails";
 export const SAVE_WORKFLOW = "api/saveWorkflow";
+export const SIGNUP = "v1/signup/personaldetails";
+export const NAME_DETAILS = "v1/personaldetails/namedetails"
+export const ADDRESS_DETAILS = "v1/personaldetails/saveaddress"
+export const ATTRIBUTE_DETAILS = "v1/personaldetails/saveattribute"

@@ -111,7 +111,7 @@ class Loginpage extends Component {
       createSignIn(schema.schema)
         .then((response) => this.authenticate(response.data))
         .catch((error) => {
-          this.setState({ authErr: error.response.data.message });
+          this.setState({ authErr: error.response.data });
           this.setState({ loadingCircle: false });
         })
     }

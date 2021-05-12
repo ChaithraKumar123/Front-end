@@ -13,7 +13,11 @@ import {
     CONFIRM_PASSWORD, ETHNICITY,
     COUNTRY,
     POBdetails,
-    SAVE_WORKFLOW
+    SAVE_WORKFLOW,
+    SIGNUP,
+    NAME_DETAILS,
+    ADDRESS_DETAILS,
+    ATTRIBUTE_DETAILS
 
 } from './url';
 
@@ -29,9 +33,13 @@ export const createWorkFlow = (body) => _axios.post(WORKFLOW, body);
 export const createForgotPassword = (body) => _axios.post(FORGOT_PASSWORD, body);
 export const createConfirmPassword = (body) => _axios.post(CONFIRM_PASSWORD, body);
 export const getEthnicity = () => _axios.get(ETHNICITY);
-export const getPersonalDetails = (KNC) => _axios.get(`${PERSONAL_DETAILS}/${KNC}`);
+export const getPersonalDetails = (params) => _axios.get(PERSONAL_DETAILS, params);
 export const getCountry = () => _axios.get(COUNTRY);
 export const getPOBDetails = (params) => _axios.get(POBdetails, params);
 export const deletePOBDetails = (params) => _axios.delete(POBdetails, params);
 export const createPOBDetails = (body) => _axios.post(POBdetails, body);
 export const createSaveWorkflow = (body) => _axios.post(SAVE_WORKFLOW, body);
+export const createSignUpPatient = (body) => _axios.post(SIGNUP, body);
+export const saveNameDetails = (body) => _axios.post(NAME_DETAILS, body);
+export const saveAddressDetails = (body) => _axios.post(ADDRESS_DETAILS, body);
+export const savePersonAttributesDetails = (body) => _axios.post(ATTRIBUTE_DETAILS, body);

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "react-dropdown/style.css";
 import Select from 'react-select';
-import { getCountry, createPersonalDetails } from "../services/api";
+import { saveAddressDetails } from "../services/api";
 import LocalStorageService from "../services/localStorageService";
 
 const stateOptions = [{ label: "ACT", value: 6 }, { label: "NSW", value: 3 }, { label: "NT", value: 4 },
@@ -33,43 +33,17 @@ class Step3 extends Component {
     ) {
       const schema = {
         "schema": {
-          "Title": this.props.state.titleOpt,
-          "FirstName": this.props.state.givenName,
-          "LastName": this.props.state.surName,
-          "MiddleNames": this.props.state.middleName,
-          "Email": this.props.state.email,
-          "Gender": this.props.state.gender,
-          "culturalGroup": this.props.state.ethnicityCode ? this.props.state.ethnicityCode : 1101,
-          "DateOfBirth": this.props.state.DateofB,
-          "Mobile": this.props.state.mobileNumber,
-
-          "CurrentPosition": this.props.state.CurrentPosition,
-          "EmpStartDate": this.props.state.EmpStDate ? this.props.state.EmpStDate : "01-01-1990",
-          "EmpDepartment": this.props.state.Department,
-          "PreviousWorkCompClaim": 0,
-          "PreviousWorkCompClaimDetails": this.props.state.CompClaimDetails,
-
-
           "Line1": this.props.state.addressLine1,
           "Line2": this.props.state.addressLine2,
           "Suburb": this.props.state.suburb,
           "StateID": this.props.state.stateCode,
           "PostCode": this.props.state.postCode,
           "CountryID": 8,
-
-          "FamilyDoctor": this.props.state.familyDoctor,
-          "LastVisit": this.props.state.lastVisit,
-          "WhyLastVisit": this.props.state.reasonOfVisit ? this.props.state.reasonOfVisit : "",
-          "Height": 0,
-          "WeightKg": 0,
-          "Handedness": this.props.state.handedness,
-          "CreateDate": new Date(),
-          "KNC": this.props.state.KNC ? this.props.state.KNC : localStorageService.getKNC(),
-          "WorkflowID": localStorageService.getWorkFlowId(),
+          "UUID": this.props.state.KNC ? this.props.state.KNC : localStorageService.getKNC(),
         }
       }
       // implementing save after each page
-      createPersonalDetails(schema.schema)
+      saveAddressDetails(schema.schema)
         .then(() => {
           e.preventDefault();
           this.props.nextStep();
@@ -129,13 +103,13 @@ class Step3 extends Component {
     //     window.alert(data);
     //   })
     //   .then((data) => this.saveCountry(data));
-    getCountry()
-      .then(({ data }) => {
-        this.saveCountry(data);
-      })
-      .catch((error) => {
-        window.alert(error);
-      })
+    // getCountry()
+    //   .then(({ data }) => {
+    //     this.saveCountry(data);
+    //   })
+    //   .catch((error) => {
+    //     window.alert(error);
+    //   })
   }
 
   render() {

@@ -55,10 +55,10 @@ class Home extends Component {
           //localStorage.setItem("disablebtn", "yes")
           document.getElementById("myBtn").disabled = true;
         }
-        if (response.data[1][0].wfeWorkflowID === -1) {
-          this.setState({ todo: false, loadingCircle: false });
-          //return;
-        }
+        // if (response.data[1][0].wfeWorkflowID === -1) {
+        //   this.setState({ todo: false, loadingCircle: false });
+        //   //return;
+        // }
         if (response.data[0][0].length !== 0) {
           this.setState({
             CurrentForm: response.data[0][0][0], //first item in the response bag, as only the first item needs to be displayed

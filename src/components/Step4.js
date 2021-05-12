@@ -7,7 +7,7 @@ import {
   withRouter
 } from "react-router-dom";
 
-import { createPersonalDetails } from "../services/api";
+import { savePersonAttributesDetails } from "../services/api";
 import LocalStorageService from "../services/localStorageService";
 
 const localStorageService = new LocalStorageService();
@@ -69,74 +69,18 @@ class Step4 extends Component {
 
       const schema = {
         "schema": {
-          "Title": this.props.state.titleOpt,
-          "FirstName": this.props.state.givenName,
-          "LastName": this.props.state.surName,
-          "MiddleNames": this.props.state.middleName,
-          "Email": this.props.state.email,
-          "Gender": this.props.state.gender,
-          "culturalGroup": this.props.state.ethnicityCode ? this.props.state.ethnicityCode : 1101,
-          "DateOfBirth": this.props.state.DateofB,
-          "Mobile": this.props.state.mobileNumber,
-
-          "CurrentPosition": this.props.state.CurrentPosition,
-          "EmpStartDate": this.props.state.EmpStDate ? this.props.state.EmpStDate : "01-01-1990",
-          "EmpDepartment": this.props.state.Department,
-          "PreviousWorkCompClaim": Number(this.props.state.CompClaim),
-          "PreviousWorkCompClaimDetails": this.props.state.CompClaimDetails,
-
-
-          "Line1": this.props.state.addressLine1,
-          "Line2": this.props.state.addressLine2,
-          "Suburb": this.props.state.suburb,
-          "StateID": this.props.state.stateCode,
-          "PostCode": this.props.state.postCode,
-          // "CountryID":this.props.state.countryCode,
-
-          "FamilyDoctor": this.props.state.familyDoctor,
-          "LastVisit": this.props.state.lastVisit,
-          "WhyLastVisit": this.props.state.reasonOfVisit ? this.props.state.reasonOfVisit : "",
+          // "FamilyDoctor": this.props.state.familyDoctor,
+          // "LastVisit": this.props.state.lastVisit,
+          // "WhyLastVisit": this.props.state.reasonOfVisit ? this.props.state.reasonOfVisit : "",
           "Height": this.props.state.height,
           "WeightKg": this.props.state.weight,
           "Handedness": this.props.state.handedness,
-          "CreateDate": new Date(),
-          "KNC": this.props.state.KNC ? this.props.state.KNC : localStorageService.getKNC(),
           "WorkflowID": localStorageService.getWorkFlowId(),
+          "UUID": this.props.state.KNC ? this.props.state.KNC : localStorageService.getKNC(),
         }
       }
 
-
-      //   const requestOptions = {
-      //     method: 'POST',
-      //     headers: { 'Content-Type': 'application/json','Accept': 'application/json',  "Access-Control-Allow-Origin": "*","Access-Control-Allow-Methods": "GET,HEAD,OPTIONS,POST,PUT",},
-      //     body: JSON.stringify(schema.schema)
-      // };
-
-      //   console.log(schema.schema)
-      //   fetch(
-      //     // 'https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/v1/personaldetails'
-      //     "https://localhost:44338/v1/personaldetails"
-
-      //     , requestOptions)
-      //   .then(response => response.json())
-      //   .then(data => {
-      //     if(Number(data.httpStatusCode) ===200){
-      //       // window.confirm("Form Completed")
-      //       this.setState({
-      //         renderThankyou: true
-      //       })
-      //       // localStorage.removeItem("confToken")
-      //       // auth.login(() => {
-      //       //   this.props.history.push("/Home");
-      //       // });
-      //     }
-      //     else{
-      //       window.confirm(data.message)
-      //     }
-
-      //   });
-      //     } else this.setState({ submit: true });
-      createPersonalDetails(schema.schema)
+      savePersonAttributesDetails(schema.schema)
         .then(() => {
           this.setState({
             renderThankyou: true

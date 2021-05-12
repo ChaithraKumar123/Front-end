@@ -4,7 +4,7 @@ import {
   withRouter,
 } from "react-router-dom";
 import auth from "./auth";
-import { createPersonalDetails, createRegister, createWorkFlowNewReg } from "../services/api";
+import { createRegister, createSignUpPatient } from "../services/api";
 import { DEFAULT_DATE } from "../services/constants";
 //import LocalStorageService from "../services/localStorageService";
 
@@ -98,7 +98,7 @@ class Signup extends Component {
         .catch((error) => {
           this.setState({
             loadingCircle: false,
-            cognitoErr: error.response.data.message
+            cognitoErr: error.response.data
           });
         })
 
@@ -131,9 +131,9 @@ class Signup extends Component {
       this.toSend.schema.EmpStartDate = new Date();
       this.toSend.schema.LastVisit = new Date();
       this.toSend.schema.CreateDate = new Date();
-      this.toSend.schema.KNC = e.userSub;
+      this.toSend.schema.UUID = e.userSub;
 
-      this.props.kncset(e.userSub);
+      this.props.uuidset(e.userSub);
       // localStorageService.setKNC(e);
 
       //  this.setState({KNC: e.userSub})
@@ -142,35 +142,13 @@ class Signup extends Component {
 
 
       try {
-        createPersonalDetails(this.toSend.schema)
+        createSignUpPatient(this.toSend.schema)
           .then((response) => {
-            if (Number(response.data.httpStatusCode) === 200) {
-              let body = {
-                KNC: e.userSub,
-                DateCompleted: new Date(),
-              }
-              createWorkFlowNewReg(body)
-                .then((response) => {
-                  if (response.data === "Success") {
-                    console.log(response);
-                  }
-                })
-                .catch((error) => {
-                  console.log(error);
-                });
-              // localStorageService.setIsAuth(true);
+            this.setState({
+              renderThankyou: true,
+              loadingCircle: false
+            });
 
-              // localStorageService.setConfToken(randomToken(16));
-              this.setState({
-                renderThankyou: true,
-                loadingCircle: false
-              });
-            } else {
-              // window.alert(data.message);
-              this.setState({
-                loadingCircle: false
-              });
-            }
           });
       } catch (error) {
         this.setState({

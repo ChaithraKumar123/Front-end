@@ -2,7 +2,7 @@ import React, { Component } from "react";
 //import Dropdown from "react-dropdown";
 //import { Field, reduxForm } from 'redux-form'
 import Select from "react-select";
-import { createPersonalDetails, getEthnicity, getPersonalDetails } from "../services/api";
+import { saveNameDetails, getPersonalDetails } from "../services/api";
 import LocalStorageService from "../services/localStorageService";
 
 
@@ -11,7 +11,7 @@ const Errormsg = () => (
 );
 const localStorageService = new LocalStorageService();
 class Step1 extends Component {
-  state = { submit: false, ethnicityoptions: [], dateerr: "" };
+  state = { submit: false, ethnicityoptions: this.props.state.ethnicityoptions, dateerr: "" };
   continue = (e) => {
     const isValid = this.validate();
 
@@ -29,39 +29,15 @@ class Step1 extends Component {
           "FirstName": this.props.state.givenName,
           "LastName": this.props.state.surName,
           "MiddleNames": this.props.state.middleName,
-          "Email": this.props.state.email,
           "Gender": this.props.state.gender,
           "culturalGroup": this.props.state.ethnicityCode ? this.props.state.ethnicityCode : 1101,
           "DateOfBirth": this.props.state.DateofB,
           "Mobile": this.props.state.mobileNumber,
-
-          "CurrentPosition": this.props.state.CurrentPosition,
-          "EmpStartDate": this.props.state.EmpStDate ? this.props.state.EmpStDate : "01-01-1990",
-          "EmpDepartment": this.props.state.Department,
-          "PreviousWorkCompClaim": 0,
-          "PreviousWorkCompClaimDetails": this.props.state.CompClaimDetails,
-
-
-          "Line1": this.props.state.addressLine1,
-          "Line2": this.props.state.addressLine2,
-          "Suburb": this.props.state.suburb,
-          "StateID": 0,
-          "PostCode": 0,
-          "CountryID": 8,
-
-          "FamilyDoctor": this.props.state.familyDoctor,
-          "LastVisit": this.props.state.lastVisit,
-          "WhyLastVisit": this.props.state.reasonOfVisit ? this.props.state.reasonOfVisit : "",
-          "Height": 0,
-          "WeightKg": 0,
-          "Handedness": this.props.state.handedness,
-          "CreateDate": new Date(),
-          "KNC": this.props.state.KNC ? this.props.state.KNC : localStorageService.getKNC(),
-          "WorkflowID": localStorageService.getWorkFlowId()
+          "UUID": this.props.state.KNC ? this.props.state.KNC : localStorageService.getKNC(),
         }
       }
       //implementing save after each page
-      createPersonalDetails(schema.schema)
+      saveNameDetails(schema.schema)
         .then(() => {
           e.preventDefault();
           this.props.nextStep();
@@ -114,7 +90,7 @@ class Step1 extends Component {
 
   saveEthnicity = (data) => {
     try {
-      this.setState({ ethnicityoptions: data.sort((a, b) => (a.label > b.label) ? 1 : -1) });
+      this.setState({ ethnicityoptions: this.props.state.ethnicityoptions });
       this.props.ethnicityCodef(data);
     }
     catch (err) {
@@ -149,24 +125,31 @@ class Step1 extends Component {
     //     console.log(error);
     //   })
     //   )
-    getEthnicity()
+    // getEthnicity()
+    //   .then(({ data }) => {
+    //     this.saveEthnicity(data);
+    //   })
+    //   .then(() => {
+    //     getPersonalDetails(localStorageService.getKNC())
+    //       .then(({ data }) => {
+    //         this.props.getdetails(data[0], data[1], data[2]);
+    //       })
+    //       .catch((error) => {
+    //         console.log(error);
+    //       })
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //   })
+
+    getPersonalDetails({ value: localStorageService.getKNC() })
       .then(({ data }) => {
-        this.saveEthnicity(data);
-      })
-      .then(() => {
-        getPersonalDetails(localStorageService.getKNC())
-          .then(({ data }) => {
-            this.props.getdetails(data[0], data[1], data[2]);
-          })
-          .catch((error) => {
-            console.log(error);
-          })
+        this.props.getdetails(data[0], data[1], data[2]);
+
       })
       .catch((error) => {
         console.log(error);
       })
-
-
 
 
 

@@ -23,6 +23,7 @@ class BodyImageTabs extends Component {
         PainRegionID: this.props.state.body_region_id1[i],
         pain_side: this.props.state.body_side1[i],
         body_orientation: this.props.state.body_orientation1[i],
+        body_desc: this.props.state.body_desc1[i],
         pain_duration: "",
         pain_duration_approx: false,
         pain_firstime: "",
@@ -75,6 +76,7 @@ class BodyImageTabs extends Component {
         PainRegionID: this.props.state.body_region_id1[i],
         pain_side: this.props.state.body_side1[i],
         body_orientation: this.props.state.body_orientation1[i],
+        body_desc: this.props.state.body_desc1[i],
         pain_duration: "",
         pain_duration_approx: false,
         pain_firstime: "",
@@ -135,7 +137,7 @@ class BodyImageTabs extends Component {
         console.log(response.data);
 
         for (let i = 0; i < response.data.length; i++) {
-          if (response.data[i].painRegionID === 0) {
+          if (!response.data[i].painRegionID) {
             continue
           }
           temp.push({
@@ -143,7 +145,8 @@ class BodyImageTabs extends Component {
             region_name: response.data[i].painWhere,
             PainRegionID: response.data[i].painRegionID,
             pain_side: response.data[i].painSide,
-            body_orientation: response.orientation,
+            body_orientation: response.data[i].painOrientation,
+            body_desc: response.data[i].painBodyMapDescription,
             pain_duration: response.data[i].occurredCurrent.split("T")[0] === "1900-01-01" ? null : response.data[i].occurredCurrent.split("T")[0],
             pain_duration_approx: response.data[i].occurredCurrentApprox,
             pain_firstime: response.data[i].occurrence,
@@ -222,11 +225,12 @@ class BodyImageTabs extends Component {
   apicall = async (step1) => {
     const save = this.state.InjuryRegion[step1 - 1];
     let response = await createPOBDetails({
-      POBPatientID: this.localStorageService.getKNC(),
+      UUID: this.localStorageService.getKNC(),
       POBCPRegionID: save.POBCPRegionID,
       PainRegionID: save.PainRegionID,
       PainSide: save.pain_side,
-      Orientation: save.body_orientation,
+      PainOrientation: save.body_orientation,
+      PainBodyMapDescription: save.body_desc,
       PainWhere: save.region_name,
       MainRegion: this.state.step1 === 1 ? 1 : 0,
       Causes: save.pain_first_reason,
@@ -263,62 +267,15 @@ class BodyImageTabs extends Component {
           : false,
       // FuturePainRisk: save.pain_futurerisk,
     })
-    // axios
-    //   .post(
-    //     // "https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/POBdetails",
-    //     "https://localhost:44338/api/POBdetails",
-
-    //     {
-    //       POBPatientID: localStorage.getItem("KNC"),
-    //       POBCPRegionID: save.POBCPRegionID,
-    //       PainRegionID: save.PainRegionID,
-    //       PainSide: save.pain_side,
-    //       PainWhere: save.region_name,
-    //       MainRegion: this.state.step1 === 1 ? 1 : 0,
-    //       Causes: save.pain_first_reason,
-    //       Frequency: save.pain_often,
-    //       FrequencyOther: save.pain_often_reason,
-    //       MakesBetter: save.pain_better,
-    //       MakesBetterOther: save.pain_better_reason,
-    //       MakesWorse: save.pain_worst,
-    //       MakesWorseOther: save.pain_worst_reason,
-    //       Occurrence: save.pain_firstime,
-    //       PainScale: save.pain_scale,
-    //       PainType: save.pain_type,
-    //       PainTypeOther: save.pain_type_reason,
-    //       OtherTreatment: save.pain_treatment,
-    //       LimitWorkLife: save.pain_limit_work,
-    //       OtherSymptoms: save.pain_symp,
-    //       SymptomClicking: save.pain_symp_click,
-    //       SymptomHeat: save.pain_symp_heat,
-    //       SymptomLocking: save.pain_symp_lock,
-    //       SymptomNumbness: save.pain_symp_hand,
-    //       SymptomPinsNeedles: save.pain_symp_feet,
-    //       SymptomSwelling: save.pain_symp_swell,
-    //       SymptomWeakness: save.pain_symp_weak,
-    //       SymptomOther: save.pain_symp_reason,
-    //       OccurredCurrent: save.pain_duration,
-    //       OccurredCurrentApprox: save.pain_duration_approx,
-    //       OccurredFirst:
-    //         save.pain_firstime === "I’ve had it before"
-    //           ? save.pain_firstime_date
-    //           : "1990-01-01",
-    //       OccurredFirstApprox:
-    //         save.pain_firstime === "I’ve had it before"
-    //           ? save.pain_firstime_approx
-    //           : false,
-    //       // FuturePainRisk: save.pain_futurerisk,
-    //     }
-    //   )
     if (response.data === "Success") {
       // alert("Successfully Submitted!");
       console.log(response);
 
       if (this.state.step1 === 1) {
         let res = await createSaveWorkflow({
-          KNC: this.localStorageService.getKNC(),
+          UUID: this.localStorageService.getKNC(),
           DateCompleted: new Date(),
-          processID: this.localStorageService.getWorkFlowId()
+          workflowID: this.localStorageService.getWorkFlowId()
 
         })
         // axios

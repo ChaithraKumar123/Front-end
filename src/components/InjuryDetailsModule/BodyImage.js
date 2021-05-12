@@ -784,6 +784,7 @@ class BodyImage extends Component {
     const temp2 = [];
     const temp3 = [];
     const temp4 = [];
+    const temp5 = [];
     // axios
     //   .get(
     //     // "https://1pdfjy5bcg.execute-api.ap-southeast-2.amazonaws.com/Prod/api/POBdetails",
@@ -797,11 +798,12 @@ class BodyImage extends Component {
       .then((response) => {
         console.log(response.data[0]);
         for (let i = 0; i < response.data.length; i++) {
-          if (response.data[i].painRegionID !== 0) {
+          if (response.data[i].painRegionID) {
             temp1.push(response.data[i].painRegionID);
             temp.push(response.data[i].painWhere);
             temp3.push(response.data[i].painSide);
-            temp4.push(response.data[i].orientation);
+            temp4.push(response.data[i].painOrientation);
+            temp5.push(response.data[i].painBodyMapDescription)
             this.setState({
               //body_area: body_area,
               body_region_id: update(this.state.body_region_id, {
@@ -815,6 +817,9 @@ class BodyImage extends Component {
               }),
               body_orientation: update(this.state.body_orientation, {
                 $splice: [[i - 1, 1, temp4[i]]],
+              }),
+              body_desc: update(this.state.body_desc, {
+                $splice: [[i - 1, 1, temp5[i]]],
               }),
             });
 
