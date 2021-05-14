@@ -7,7 +7,7 @@ import {
   withRouter
 } from "react-router-dom";
 
-import { savePersonAttributesDetails } from "../services/api";
+import { savePersonAttributesDetails, getNextWorkFlowDetails } from "../services/api";
 import LocalStorageService from "../services/localStorageService";
 
 const localStorageService = new LocalStorageService();
@@ -19,6 +19,7 @@ const Errormsg = () => (
 
 class Step4 extends Component {
   state = { submit: false, op: null, renderThankyou: false };
+  workflow = [];
   back = (e) => {
     e.preventDefault();
     this.props.prevStep();
@@ -77,14 +78,26 @@ class Step4 extends Component {
           "Handedness": this.props.state.handedness,
           "WorkflowID": localStorageService.getWorkFlowId(),
           "UUID": this.props.state.KNC ? this.props.state.KNC : localStorageService.getKNC(),
-        }
+        },
+        "workflowValues": this.props.workflow[8] + "," + this.props.workflow[9] + "," + this.props.workflow[1]
       }
 
-      savePersonAttributesDetails(schema.schema)
-        .then(() => {
-          this.setState({
-            renderThankyou: true
-          })
+
+      getNextWorkFlowDetails({ workflowValues: schema.workflowValues })
+        .then((response) => {
+          let nextWorkFlowResponse = response.data.table;
+          if (nextWorkFlowResponse[0].nextWorkflowID > 0) {
+            this.workflow = Object.values(response.data.table1[0]);
+          }
+          else {
+            localStorageService.setWorkFlowId(-1);
+          }
+          savePersonAttributesDetails(schema.schema)
+            .then(() => {
+              this.setState({
+                renderThankyou: true
+              })
+            })
         })
         .catch((error) => {
           window.alert(error);
@@ -115,7 +128,10 @@ class Step4 extends Component {
     //not a proper fix. need to come up with a proper fix after discussing with Peter
     localStorageService.setWorkFlowId(JSON.parse(localStorageService.getWorkFlowId()) + 1);
     auth.login(() => {
-      this.props.history.push("/painIndicator");
+      this.props.history.push({
+        pathname: '/painIndicator',
+        state: { workflow: this.workflow }
+      });
     });
   }
 
@@ -282,7 +298,7 @@ class Step4 extends Component {
         </div>
       );
     }
-    else if (this.state.renderThankyou && localStorageService.getWorkFlowId() < 0) {
+    else if (this.state.renderThankyou && this.props.workflow[6]) {
       return (
         <div id="MainDiv">
           <div className="page-title lg">

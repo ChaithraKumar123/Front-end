@@ -49,11 +49,16 @@ class Home extends Component {
         this.props.history.push("/");
       });
     }
+    this.getWorkflow();
+
+  }
+
+  getWorkflow = () => {
     getWorkFlow({ value: this.localStorageService.getKNC() })
       .then((response) => {
         if (response.data[0][1].length > 1 && response.data[0][1].map(function (x) { return x[6] != null })) {
           //localStorage.setItem("disablebtn", "yes")
-          document.getElementById("myBtn").disabled = true;
+          //  document.getElementById("myBtn").disabled = true;
         }
         // if (response.data[1][0].wfeWorkflowID === -1) {
         //   this.setState({ todo: false, loadingCircle: false });
@@ -107,101 +112,106 @@ class Home extends Component {
         this.setState({ loadingCircle: false })
       });
   }
-
-
-  continue = (e, id) => {
-    this.localStorageService.setWorkFlowId(id);
-    if (e === "Medical History") {
+  continue = (e, workflow) => {
+    this.localStorageService.setWorkFlowId(workflow[0]);
+    if (e === "Personal Details") {
       auth.login(() => {
-        this.props.history.push("/CoreMedicalHistory");
-      });
-    } else if (e === "Lifestyle") {
-      auth.login(() => {
-        this.props.history.push("/CoreLifeStyleModule");
-      });
-    } else if (e === "Personal Details") {
-      auth.login(() => {
-        this.props.history.push("/patientDetails");
-      });
-    } else if (e === "Current Employment Details") {
-      // this.props.stepReset(2);
-
-      auth.login(() => {
-        this.props.history.push("/patientDetails");
-      });
-    } else if (e === "Wellbeing") {
-      auth.login(() => {
-        this.props.history.push("/CorePsychologicalModule");
-      });
-    } else if (e === "Musculoskeletal Screen Medical History") {
-      auth.login(() => {
-        this.props.history.push("/MusculoskeletonModule");
-      });
-    } else if (e === "Health check") {
-      auth.login(() => {
-        this.props.history.push("/RedFlagModule");
-      });
-    } else if (e === "Family History") {
-      auth.login(() => {
-        this.props.history.push("/FamilyHistoryModule");
-      });
-    } else if (e === "Manual Handling") {
-      auth.login(() => {
-        this.props.history.push("/ManualHandling");
-      });
-    } else if (e === "Industry") {
-      auth.login(() => {
-        this.props.history.push("/IndustrySpecificModule");
+        this.props.history.push({
+          pathname: '/patientDetails',
+          state: { workflow: workflow }
+        });
       });
     } else if (e === "Injury Details") {
       auth.login(() => {
-        this.props.history.push("/painIndicator");
-      });
-    } else if (e === "PROM NDS - Neck Disability Index") {
-      auth.login(() => {
-        this.props.history.push("/NDSModule");
-      });
-    } else if (e === "PROM QBPD - Quebec Back Pain Disability Scale") {
-      auth.login(() => {
-        this.props.history.push("/QuebecModule");
-      });
-    }
-    else if (e === "PROM LEFS - Lower Extremity Functional Scale") {
-      auth.login(() => {
-        this.props.history.push("/LEFSModule");
-      });
-    }
-    else if (e === "PROM PSS Perceived Stress Scale") {
-      auth.login(() => {
-        this.props.history.push("/PSSModule");
-      });
-    }
-    else if (e === "PROM FABQ - Fear Avoidance Belief Questionnaire") {
-      auth.login(() => {
-        this.props.history.push("/FABQMain");
-      });
-    }
-    else if (e === "PROM FOSQ - Functional Outcomes of Sleep Questionnaire") {
-      auth.login(() => {
-        this.props.history.push("/FOSQModule");
-      });
-    }
-    else if (e === "PROM PCS - Pain Catastrophising Scale") {
-      auth.login(() => {
-        this.props.history.push("/PainScaleModule");
-      });
-    }
-    else if (e === "PROM DASS21 - Depression Anxiety Stress Scale") {
-      auth.login(() => {
-        this.props.history.push("/DASSModule");
-      });
-    }
-    else if (e === "PROM DASH - Disability of the Arm, shoulder, hand") {
-      auth.login(() => {
-        this.props.history.push("/DASHModule");
+        this.props.history.push({
+          pathname: '/painIndicator',
+          state: { workflow: workflow }
+        });
       });
     }
     else return null;
+    // if (e === "Medical History") {
+    //   auth.login(() => {
+    //     this.props.history.push("/CoreMedicalHistory");
+    //   });
+    // } else if (e === "Lifestyle") {
+    //   auth.login(() => {
+    //     this.props.history.push("/CoreLifeStyleModule");
+    //   });
+    // } else 
+    // } else if (e === "Current Employment Details") {
+    //   // this.props.stepReset(2);
+
+    //   auth.login(() => {
+    //     this.props.history.push("/patientDetails");
+    //   });
+    // } else if (e === "Wellbeing") {
+    //   auth.login(() => {
+    //     this.props.history.push("/CorePsychologicalModule");
+    //   });
+    // } else if (e === "Musculoskeletal Screen Medical History") {
+    //   auth.login(() => {
+    //     this.props.history.push("/MusculoskeletonModule");
+    //   });
+    // } else if (e === "Health check") {
+    //   auth.login(() => {
+    //     this.props.history.push("/RedFlagModule");
+    //   });
+    // } else if (e === "Family History") {
+    //   auth.login(() => {
+    //     this.props.history.push("/FamilyHistoryModule");
+    //   });
+    // } else if (e === "Manual Handling") {
+    //   auth.login(() => {
+    //     this.props.history.push("/ManualHandling");
+    //   });
+    // } else if (e === "Industry") {
+    //   auth.login(() => {
+    //     this.props.history.push("/IndustrySpecificModule");
+    //   });
+    // } else if (e === "PROM NDS - Neck Disability Index") {
+    //   auth.login(() => {
+    //     this.props.history.push("/NDSModule");
+    //   });
+    // } else if (e === "PROM QBPD - Quebec Back Pain Disability Scale") {
+    //   auth.login(() => {
+    //     this.props.history.push("/QuebecModule");
+    //   });
+    // }
+    // else if (e === "PROM LEFS - Lower Extremity Functional Scale") {
+    //   auth.login(() => {
+    //     this.props.history.push("/LEFSModule");
+    //   });
+    // }
+    // else if (e === "PROM PSS Perceived Stress Scale") {
+    //   auth.login(() => {
+    //     this.props.history.push("/PSSModule");
+    //   });
+    // }
+    // else if (e === "PROM FABQ - Fear Avoidance Belief Questionnaire") {
+    //   auth.login(() => {
+    //     this.props.history.push("/FABQMain");
+    //   });
+    // }
+    // else if (e === "PROM FOSQ - Functional Outcomes of Sleep Questionnaire") {
+    //   auth.login(() => {
+    //     this.props.history.push("/FOSQModule");
+    //   });
+    // }
+    // else if (e === "PROM PCS - Pain Catastrophising Scale") {
+    //   auth.login(() => {
+    //     this.props.history.push("/PainScaleModule");
+    //   });
+    // }
+    // else if (e === "PROM DASS21 - Depression Anxiety Stress Scale") {
+    //   auth.login(() => {
+    //     this.props.history.push("/DASSModule");
+    //   });
+    // }
+    // else if (e === "PROM DASH - Disability of the Arm, shoulder, hand") {
+    //   auth.login(() => {
+    //     this.props.history.push("/DASHModule");
+    //   });
   };
 
   todoList = (e, id) => {
@@ -269,32 +279,25 @@ class Home extends Component {
       loadingCircle: true
     })
     let body = {
-      KNC: this.localStorageService.getKNC(),
+      UUID: this.localStorageService.getKNC(),
       DateCompleted: new Date(),
     }
     createWorkFlow(body)
       .then((response) => {
-        if (response.status === 200) {
-          this.setState({
-            todo: true,
-            CurrentForm: response.data.result.result.value[0][0][0],
-            Progress: response.data.result.result.value[1].Progress,
-            Total: response.data.result.result.value[1].Total,
-          });
-          // auth.login(() => {
-          //   this.props.history.push("/formprogress");
-          // });
-          console.log(this.state.todo);
-          this.setState({
-            loadingCircle: false
-          })
-        } else {
-          this.setState({
-            loadingCircle: false
-          })
-          console.log(response);
-
-        }
+        this.getWorkflow()
+        // this.setState({
+        //   todo: true,
+        //   CurrentForm: response.data.result.result.value[0][0][0],
+        //   Progress: response.data.result.result.value[1].Progress,
+        //   Total: response.data.result.result.value[1].Total,
+        // });
+        // auth.login(() => {
+        //   this.props.history.push("/formprogress");
+        // });
+        // console.log(this.state.todo);
+        // this.setState({
+        //   loadingCircle: false
+        // })
       })
       .catch((error) => {
         this.setState({
@@ -340,7 +343,7 @@ class Home extends Component {
 
 
                   <br></br>
-                  <label className="abc" style={{ float: "left" }}>New Complaint</label>
+                  <label className="abc" style={{ float: "left" }}>New Injury</label>
                   <button
                     id="myBtn"
                     style={{ float: "right", "marginTop": "4px", "minWidth": "88px" }}
@@ -360,7 +363,7 @@ class Home extends Component {
                     <label className="headlinetwo">To Do</label>
 
                     {/* {this.todoList()} */}
-                    {this.todoList(this.state.CurrentForm[13], this.state.CurrentForm[0])}
+                    {this.todoList(this.state.CurrentForm[13], this.state.CurrentForm)}
                   </div>
                 ) : null}
 
@@ -375,7 +378,7 @@ class Home extends Component {
                         e[13] === "Musculoskeletal Screen Medical History" ||
                         e[13] === "Injury Details"
                       ) {
-                        return this.completedList(e[13], -1);
+                        return this.completedList(e[13], e);
                       } else if (e[12] === "Current Employment Details") {
                         return null;
                       }

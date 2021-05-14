@@ -17,7 +17,8 @@ import {
     SIGNUP,
     NAME_DETAILS,
     ADDRESS_DETAILS,
-    ATTRIBUTE_DETAILS
+    ATTRIBUTE_DETAILS,
+    NEXT_WORKFLOW
 
 } from './url';
 
@@ -43,3 +44,4 @@ export const createSignUpPatient = (body) => _axios.post(SIGNUP, body);
 export const saveNameDetails = (body) => _axios.post(NAME_DETAILS, body);
 export const saveAddressDetails = (body) => _axios.post(ADDRESS_DETAILS, body);
 export const savePersonAttributesDetails = (body) => _axios.post(ATTRIBUTE_DETAILS, body);
+export const getNextWorkFlowDetails = (params) => _axios.get(NEXT_WORKFLOW, params);

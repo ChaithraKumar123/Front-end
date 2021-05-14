@@ -65,6 +65,7 @@ class BodyImageTabs extends Component {
       emailError: "",
       POBPatientID: "",
       workflowID: this.props.state.workflowID,
+      workflow: this.props.state.workflow
     };
   }
   addExtra(k, n) {
@@ -132,7 +133,7 @@ class BodyImageTabs extends Component {
     //       params: { value: localStorage.getItem("KNC") },
     //     }
     //   )
-    getPOBDetails({ value: this.localStorageService.getKNC() })
+    getPOBDetails({ POBCPRegionID: this.state.workflow[3] })
       .then((response) => {
         console.log(response.data);
 
@@ -178,6 +179,7 @@ class BodyImageTabs extends Component {
             // pain_limit_work_reason:response.data[i].Limi,
             pain_futurerisk: response.data[i].futurePainRisk.toString(),
             POBCPRegionID: response.data[i].pobcpRegionID,
+            patientCompleteDate: response.data[i].patientCompleteDate
           });
           this.setState({
             // InjuryRegion: update(this.state.InjuryRegion, {$push: people})
@@ -186,6 +188,7 @@ class BodyImageTabs extends Component {
             InjuryRegion: update(this.state.InjuryRegion, {
               $splice: [[i - 1, 1, temp[i]]],
             }),
+            patientCompleteDate: response.data[i].patientCompleteDate
           });
         }
         // if (temp.length !== 0)
@@ -333,7 +336,7 @@ class BodyImageTabs extends Component {
     const isValid = this.validate();
     if (isValid) {
       try {
-        if (this.state.workflowID > 0) {
+        if (!this.state.patientCompleteDate) {
           await this.apicall(this.state.step1)
         }
         this.localStorageService.setRef(true);

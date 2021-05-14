@@ -77,7 +77,7 @@ class InjuryQuestions extends Component {
 
 
     return (
-      <div className="Container" style={propsstate.workflowID < 0 ? { pointerEvents: "none" } : {}}>
+      <div className="Container" style={!current_Injury_Region.patientCompleteDate ? {} : { pointerEvents: "none" }}>
         <div className="contentSpacing">
 
           <div className="row">

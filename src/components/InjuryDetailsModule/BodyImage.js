@@ -774,7 +774,8 @@ class BodyImage extends Component {
       body_desc: this.props.state.body_desc1,
       data_id: this.props.state.data_id1,
       checkedA: false,
-      workflowID: this.props.state.workflowID
+      workflowID: this.props.state.workflowID,
+      workflow: this.props.state.workflow
 
     };
   }
@@ -794,7 +795,7 @@ class BodyImage extends Component {
     //       params: { value: localStorage.getItem("KNC") },
     //     }
     //   )
-    getPOBDetails({ value: localStorageService.getKNC() })
+    getPOBDetails({ POBCPRegionID: this.state.workflow[3] })
       .then((response) => {
         console.log(response.data[0]);
         for (let i = 0; i < response.data.length; i++) {
@@ -834,7 +835,8 @@ class BodyImage extends Component {
             // }),
             data_id: update(this.state.data_id, {
               $splice: [[i - 1, 1, temp2[i]]],
-            })
+            }),
+            patientCompleteDate: response.data[i].patientCompleteDate
             // body_area: update(this.state.body_area, {
             //   $splice: [[i - 1, 1, temp[i]]],
             // }),
@@ -1081,7 +1083,7 @@ class BodyImage extends Component {
           </div>
         </div>
 
-        <div className="pain-selector-block" style={this.state.workflowID < 0 ? { pointerEvents: "none" } : {}}>
+        <div className="pain-selector-block" style={!this.state.patientCompleteDate ? {} : { pointerEvents: "none" }}>
           <div className="human-body-block-outer">
             <div id="front-body" className="human-body-block">
               {/* <NotificationContainer /> */}
@@ -2573,7 +2575,7 @@ class BodyImage extends Component {
         </div>
         <br />
 
-        <div style={this.state.workflowID < 0 ? { pointerEvents: "none" } : {}}>
+        <div style={!this.state.patientCompleteDate ? {} : { pointerEvents: "none" }}>
           <ul
             className="list-group"
             style={{ maxWidth: `300px`, margin: "0 auto" }}

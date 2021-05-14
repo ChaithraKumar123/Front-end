@@ -881,8 +881,9 @@ class Main extends Component {
     }
   };
 
-  showStep = () => {
+  showStep = (props) => {
     const { step } = this.state;
+
     if (step === 1)
       return (
         <Step1
@@ -922,6 +923,7 @@ class Main extends Component {
           nextStep={this.nextStep}
           prevStep={this.prevStep}
           state={this.state}
+          workflow={props.location.state.workflow}
         />
       );
   };

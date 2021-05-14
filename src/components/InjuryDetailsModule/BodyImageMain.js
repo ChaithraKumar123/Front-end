@@ -16,7 +16,8 @@ class BodyImageMain extends Component {
         body_desc1: [],
         data_id1: [],
         POBPatientID: "",
-        workflowID: JSON.parse(this.localStorageService.getWorkFlowId())
+        workflowID: JSON.parse(this.localStorageService.getWorkFlowId()),
+        workflow: this.props.location.state.workflow
     }
     nextStep1 = (body_area, body_region, data_id, body_side, body_orientation, body_desc) => {
         const { step } = this.state;
