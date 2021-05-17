@@ -3,6 +3,7 @@ import auth from "./auth";
 import { withRouter } from "react-router-dom";
 import { getWorkFlow, createWorkFlow } from "../services/api";
 import LocalStorageService from "../services/localStorageService";
+import { WFE_MODULE } from "../services/constants";
 // import Popup from "reactjs-popup";
 // import CustomModal from "./CustomModal";
 // import { Ouroboro } from "react-spinners-css";
@@ -114,14 +115,14 @@ class Home extends Component {
   }
   continue = (e, workflow) => {
     this.localStorageService.setWorkFlowId(workflow[0]);
-    if (e === "Personal Details") {
+    if (e === WFE_MODULE.PERSONAL_DETAILS) {
       auth.login(() => {
         this.props.history.push({
           pathname: '/patientDetails',
           state: { workflow: workflow }
         });
       });
-    } else if (e === "Injury Details") {
+    } else if (e === WFE_MODULE.INJURY_DETAILS) {
       auth.login(() => {
         this.props.history.push({
           pathname: '/painIndicator',
@@ -134,7 +135,7 @@ class Home extends Component {
     //   auth.login(() => {
     //     this.props.history.push("/CoreMedicalHistory");
     //   });
-    // } else if (e === "Lifestyle") {
+    // } else if (e === WFE_MODULE.LIFESTYLE_MEDICAL_HISTORY) {
     //   auth.login(() => {
     //     this.props.history.push("/CoreLifeStyleModule");
     //   });
@@ -373,10 +374,10 @@ class Home extends Component {
 
                     {Array.from(this.state.progressList, (e, i) => {
                       if (
-                        e[13] === "Personal Details" ||
-                        e[13] === "Lifestyle" ||
+                        e[13] === WFE_MODULE.PERSONAL_DETAILS ||
+                        e[13] === WFE_MODULE.LIFESTYLE_MEDICAL_HISTORY ||
                         e[13] === "Musculoskeletal Screen Medical History" ||
-                        e[13] === "Injury Details"
+                        e[13] === WFE_MODULE.INJURY_DETAILS
                       ) {
                         return this.completedList(e[13], e);
                       } else if (e[12] === "Current Employment Details") {
