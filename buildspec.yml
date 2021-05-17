@@ -11,6 +11,7 @@ phases:
     commands:
       - echo Installing dependencies...
       - npm install
+      - npm install universal-cookie
   build:
     commands:
       - echo Building...
